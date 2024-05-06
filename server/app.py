@@ -801,7 +801,7 @@ def filtre(filters, isQ):
             """)
 
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-            cursor.execute(f"SELECT * FROM questions{filtr}")
+            cursor.execute(f"SELECT * FROM states{filtr}")
             result = cursor.fetchall()
 
             return_data = []
@@ -827,19 +827,79 @@ def add_img( base, name, isAvatar, isQ,id):
         name = 'a_'+id+dote
         with open(os.path.join('/avatat/', name), "wb") as file:
             file.write(decoded_bytes)
-        return 'http://127.0.0.1:5000/avatar/'+name
+        return 'http://127.0.0.1:5000/avatar/' + name
     
     if isQ:
         name = 'q_'+id+dote
         with open(os.path.join('/media/', name), "wb") as file:
                 file.write(decoded_bytes)
-        return 'http://127.0.0.1:5000/media/'+name
+        return 'http://127.0.0.1:5000/media/' + name
     
     name = 's_'+id+dote
     with open(os.path.join('/media/', name), "wb") as file:
             file.write(decoded_bytes)
-    return 'http://127.0.0.1:5000/media/'+name
+    return 'http://127.0.0.1:5000/media/' + name
 
+
+def search(text, isQ):
+    if isQ:
+        try:
+            pg = psycopg2.connect(f"""
+                host=localhost
+                dbname=postgres
+                user=postgres
+                password={os.getenv('PASSWORD_PG')}
+                port={os.getenv('PORT_PG')}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+            cursor.execute(f"SELECT * FROM questions WHERE title like '%{text}%'")
+            result = cursor.fetchall()
+
+            return_data = []
+            for row in result:
+                return_data.append(dict(row))
+
+        except (Exception, Error) as error:
+            print(f"Ошибка получения данных: {error}")
+            return_data = 'Error'
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                print("Соединение с PostgreSQL закрыто")
+                return return_data
+    else: 
+        try:
+            pg = psycopg2.connect(f"""
+                host=localhost
+                dbname=postgres
+                user=postgres
+                password={os.getenv('PASSWORD_PG')}
+                port={os.getenv('PORT_PG')}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
+            cursor.execute(f"SELECT * FROM states WHERE title LIKE '%{text}%'")
+            result = cursor.fetchall()
+
+            return_data = []
+            for row in result:
+                return_data.append(dict(row))
+
+        except (Exception, Error) as error:
+            print(f"Ошибка получения данных: {error}")
+            return_data = 'Error'
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                print("Соединение с PostgreSQL закрыто")
+                return return_data
+            
+            
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Главная страница
@@ -1116,3 +1176,23 @@ def check_():
 if __name__ == '__main__':
     app.run()
 
+
+# поиск вопросов
+@app.route('/search-questions', methods=['GET'])
+def search_route():
+    response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
+
+    response_object['all'] = search(post_data.get('search'), True)
+
+    return jsonify(response_object)
+
+# поиск вопросов
+@app.route('/search-states', methods=['GET'])
+def search_route():
+    response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
+
+    response_object['all'] = search(post_data.get('search'), False)
+
+    return jsonify(response_object)
