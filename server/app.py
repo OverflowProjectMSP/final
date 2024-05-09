@@ -225,7 +225,10 @@ def render_questions():
 
         logging.info('Вопросы отображены')
 
-        return_data = all_questions
+        return_data = []
+
+        for row in all_questions:
+            return_data.append(dict(row))
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -663,24 +666,10 @@ def render_states():
         
         all_states = cursor.fetchall()  
         logging.info('все статьи отображены')
-        return_data = all_states
-        # dict = {
-        #     'id' : '',
-        #     'discriptions': '',
-        #     'details': '',
-        #     'tag': '',
-        #     'user_id': ''
-        # }
-        
-        # a = all_states[0]
-        # cnt = -1
-        # for key in dict:
-        #     cnt+=1
-        #     for i in range (len(a)):
-        #         if cnt==i:
-        #             dict[key] = a[i]   
+        return_data = []
 
-        # return_data = dict
+        for row in all_states:
+            return_data.append(dict(row))
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -953,6 +942,11 @@ def show_avatar(id):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
+        
+# def to_dict(d):
+#     res = {
+#         'id': d['id']
+#     }
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Главная страница
@@ -1035,7 +1029,7 @@ def create_state():
 @app.route('/show-questions', methods=['GET'])
 def show_questions():
     response_object = {'status': 'success'} #БаZа
-    response_object['message'] = render_questions() #Вызов и возврат ответа на клиент функции для получения всех вопросов
+    response_object['all'] = render_questions() #Вызов и возврат ответа на клиент функции для получения всех вопросов
     
     return jsonify(response_object)
 
@@ -1187,7 +1181,7 @@ def change_():
 def show_sates():
     response_object = {'status': 'success'} #БаZа
 
-    response_object['message'] = render_states() #Вызов и возврат ответа на клиент функции для получения всех вопросов
+    response_object['all'] = render_states() #Вызов и возврат ответа на клиент функции для получения всех вопросов
     
     return jsonify(response_object)
 
@@ -1251,4 +1245,3 @@ def serve_file(filename):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
