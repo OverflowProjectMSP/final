@@ -80,15 +80,15 @@ export default {
             <p class="wehave-title">В данный момент на нашем сайте:</p>
             <div class="wehave-items">
                 <div class="wehave-item">
-                    <img src="../../assets/icons/user1.png" style="width: 40px;" alt="">
+                    <img src="../../assets/Main/user1.png" style="width: 40px;" alt="">
                     <p class="wehave-item-desc">Зарегистрированно более <br> 10000 пользователей</p>
                 </div>
                 <div class="wehave-item">
-                    <img src="../../assets/icons/expert.png" alt="">
+                    <img src="../../assets/Main/expert.png" alt="">
                     <p class="wehave-item-desc">10 экспертов в сети <br> и помогают сейчас</p>
                 </div>
                 <div class="wehave-item">
-                    <img src="../../assets/icons/users.png" alt="">
+                    <img src="../../assets/Main/users.png" alt="">
                     <p class="wehave-item-desc">100 участников <br> онлайн</p>
                 </div>
             </div>

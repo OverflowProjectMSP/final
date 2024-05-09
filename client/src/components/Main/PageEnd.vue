@@ -45,7 +45,8 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px
+    gap: 20px;
+    margin-bottom: 0;
 }
 
 .join-us-title {
@@ -93,6 +94,27 @@ a {
     .pageend {
         margin-top: 150px;
     }
+}
+@media (max-width: 850px) {
+    
+         .pageend{
+            margin-bottom: 80px;
+        }
+    
+        @media (max-width: 540px) {
+    
+    .pageend{
+       margin-bottom: 150px;
+   }
+
+}
+@media (max-width: 450px) {
+    
+    .pageend{
+       margin-bottom: 180px;
+   }
+
+}
 }
 
 @media (max-width: 589px) {

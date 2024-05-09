@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios';
+
 // import BlindWindow from '../СomponetsForPages/BlindWindow.vue'
 
 export default {
@@ -9,21 +11,30 @@ export default {
 
   data() {
     return {
-      Show: false,
       Errors: [{
         title: `Функция в разработке.`,
 
-      }]
+      }],
+      ShowLogin: true,
     }
+
   },
   methods: {
-    Close(Show) {
-      this.Show = !this.Show;
-
-    },
     Open() {
       this.Show = !this.Show;
+    },
+    async loadLogin() {
+      let res = await axios.get(`/check-r`);
+      this.ShowLogin = res.data;
+      if (this.ShowLogin == "true") {
+        this.ShowLogin = true;
+      } else if (this.ShowLogin == "false") {
+        this.ShowLogin = false;
+      }
     }
+  },
+  mounted() {
+    this.loadLogin()
   }
 }
 
@@ -31,11 +42,11 @@ export default {
 <template>
 
 
-  <header>
+  <header id="1">
     <nav class="navbar navbar-expand-xl  d-flex align-items-center rounded-0">
       <div class="container-fluid ">
         <a class="navbar-brand" href="/">
-          <div class="logo-container mt-1"><img src="../../assets/Logo.png" alt="" class="logo"></div>
+          <div class="logo-container mt-1"><img src="../../assets/Header/Logo.png" alt="" class="logo"></div>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,8 +79,8 @@ export default {
             <input class="form-control  inp " type="search" placeholder="Найти статью" aria-label="Search">
 
           </form> -->
-          <div class="them-container" @click="Open">
-            <img src="../../assets/sun_112421.png" alt="" class="them">
+          <div class="them-container" v-if="true">
+            <button type="button" class=" btn-login">Войти</button>
           </div>
           <div class="ava-container">
             <a href="#/Profile"> <img
@@ -84,10 +95,18 @@ export default {
 
 </template>
 <style scoped>
+.btn-login{
+background: rgb(255, 255, 255);
+border: none;
+height: 45px;
+width: 100px;
+border-radius: 10px;
+}
 .head{
   margin-left: 30px;
   font-weight: 700;
   font-size: 30px;
+
 }
 .icon-btn {
   margin-top: -20px;
@@ -102,7 +121,7 @@ header {
 
 .ava {
   width: 52px;
-  height: 52px;
+  height: 49px;
   margin-right: 2px;
   margin-left: 5px;
   border-radius: 10px;
@@ -213,7 +232,11 @@ li {
   width: 50px;
   height: 50px;
 }
-
+.btn-login:hover{
+background-color: #000000;
+color: white;
+transition: all, 0.7s;
+}
 @media (max-width: 1200px) {
 
   .navbar-nav {
@@ -222,13 +245,13 @@ li {
   }
 
   .ava {
-    margin-top: -60px;
+    margin-top: -70px;
+    margin-left: 110px;
   }
+.head{
+  margin-left: 10px;
+}
 
-  .them {
-    margin-left: 7%;
-    margin-top: 5%;
-  }
 }
 
 @media (max-width: 1000px) {
@@ -239,7 +262,7 @@ li {
   }
 
   .ava {
-    margin-top: -60px;
+    margin-top: -70px;
   }
 
   .them {
@@ -250,6 +273,7 @@ li {
   .form input {
     width: 210px;
   }
+
 }
 
 @media (max-width: 800px) {

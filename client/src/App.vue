@@ -31,5 +31,6 @@ main {
 
 template {
     font-family: Rubik !important;
+      margin: 0;
 }
 </style>
