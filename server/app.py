@@ -849,7 +849,40 @@ def add_img( base, name, isAvatar, isQ,id):
 
 # Добовление ответа
 def add_ans(text, isQ, idO, id_u):
-    pass
+    date = datetime.now().isoformat()
+    to_write = (uuid.uuid4().hex, id_u, idO, text, date)   
+    if isQ:
+        obj = "answers(id, id_user, id_q, text, data)"
+    else:
+        obj = "comments(id, id_user, id_s, text, data)"
+
+    try:
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute(f"INSERT INTO {obj} VALUES{to_write}")      
+        pg.commit()  
+
+        logging.info("200\n", to_write)
+
+        return_data = "Комментарий добавлен!"
+
+    except (Exception, Error) as error:
+        logging.error(error)
+        return_data = f"Ошибка добавления в базу данных: {error}" 
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 
 def show_answers(isQ, idO):
     if isQ:
