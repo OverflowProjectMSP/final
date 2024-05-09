@@ -1239,6 +1239,7 @@ def ava():
     response_object['link'] = show_avatar(session.get('id'))
 
     return jsonify(response_object)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
