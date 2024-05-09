@@ -922,6 +922,37 @@ def show_answers(isQ, idO):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
+        
+def show_avatar(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''SELECT avatar FROM users
+                      WHERE id = $${id}$$''')
+        
+        link = cursor.fetchall()[0]
+
+        if link == None:
+            return_data = 'No'
+        else: return_data = link
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'No'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Главная страница
@@ -1201,7 +1232,13 @@ def add_a():
     response_object['res'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
     return jsonify(response_object)
 
+@app.route('/avatar', methods=['GET'])
+def ava():
+    response_object = {'status': 'success'} #БаZа
 
+    response_object['link'] = show_avatar(session.get('id'))
+
+    return jsonify(response_object)
 if __name__ == '__main__':
     app.run(debug=True)
 
