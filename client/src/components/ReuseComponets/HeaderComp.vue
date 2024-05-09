@@ -16,12 +16,23 @@ export default {
 
       }],
       ShowLogin: true,
+      avatar: 'src/assets/Header/AvatarDef.svg',
+
     }
 
   },
   methods: {
     Open() {
       this.Show = !this.Show;
+    },
+    async loadAvatar() {
+      let res = await axios.get('/avatar');
+      this.avatar = res.data.link;
+      if (this.avatar == "No") {
+        this.avatar = "src/assets/Header/AvatarDef.svg";
+      } else {
+        this.avatar = this.avatar;
+      }
     },
     async loadLogin() {
       let res = await axios.get(`/check-r`);
@@ -83,8 +94,8 @@ export default {
             <button type="button" class=" btn-login">Войти</button>
           </div>
           <div class="ava-container">
-            <a href="#/Profile"> <img
-                src="https://avatars.dzeninfra.ru/get-zen_doc/1578906/pub_5cdbdfbd635d0800b447ae37_5cdbdfc2e1368c00b3e27ce3/scale_1200"
+            <a href="/Profile"> <img
+                :src="avatar"
                 alt="" class="ava"></a>
           </div>
         </div>
