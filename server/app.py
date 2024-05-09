@@ -3,16 +3,23 @@ import uuid
 import psycopg2
 from psycopg2 import extras, Error
 from flask import Flask, jsonify, request, session, make_response
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
 import random
 from datetime import datetime
 from dotenv import load_dotenv
 import base64
-
+import logging
 
 load_dotenv()
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y—%m—%d %H:%M:%S",
+)
+
 
 app = Flask(__name__)
 
@@ -24,9 +31,19 @@ app.config["SESSION_COOKIE_SECURE"] =  'None'
 # enable CORS
 CORS(app, resources={r"*": {"origins": "http://localhost:5173", 'supports_credentials': True}})
 
-
 # Обновление доп данных о 
-def refresh_data(name = '', surname='', interestings='', about='', contacts='', country='', region='', city='', avatar='',filename='', id=''):
+def refresh_data(info, id):
+    data = ''
+    for i in info:
+        logging.info(i)
+        if info[i] != 'false':
+            if i == 'avatar' or i == 'filename':
+                continue
+            if data == '':
+                data += f' {i}=$${info[i]}$$'
+            else:
+                data += f', {i}=$${info[i]}$$'
+
     try:
         pg = psycopg2.connect(f"""
             host=localhost
@@ -37,33 +54,25 @@ def refresh_data(name = '', surname='', interestings='', about='', contacts='', 
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        print(id)
-        src = add_img(avatar, filename, True, False, session.get('id') )
+        
+        # src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
         # UPDATE user-info
         cursor.execute(f"""UPDATE users 
-                    SET name = $${name}$$,
-                        surname = $${surname}$$,
-                        interestings = $${interestings}$$,
-                        about = $${about}$$,
-                        contacts = $${contacts}$$,
-                        country = $${country}$$,
-                        region=$${region}$$,
-                        city=$${city}$$,
-                        avatar=$${src}$$
-                    WHERE id=$${id}$$;""")
+                    SET {data}
+                    WHERE id='f527d19af56b4614bab663800ed79825';""")
         pg.commit()
 
         return_data = "Данные изменены"
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -91,25 +100,25 @@ def login_user(email, pas):
             if user[3] == pas: 
                 return_data = user[2]
 
-                print(f"Вход выполнен! Здравствуйте, {user[2]}")
+                logging.info(f"Вход выполнен! Здравствуйте, {user[2]}")
                 return_data=['ok', user[0]]
 
             else: 
-                print("Неверный пароль!")
+                logging.warning("Неверный пароль!")
                 return_data = 'Неверный пароль!'
         else: 
-            print("Аккаунта с такой почтой не существует!")
+            logging.warning("Аккаунта с такой почтой не существует!")
             return_data = "Аккаунта с такой почтой не существует!"
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -144,16 +153,17 @@ def add_user_todb(name, email, pas):
 
         else:
             return_data = "Пользователь с таким именем или почтой уже существует!"
+            logging.warning(return_data)
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка добавления в базу данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -176,22 +186,23 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         send_question.append(cursor.fetchone())
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
-            print(details, 1)
+            logging.info(details, 1)
             question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id)
-            cursor.execute(f"INSERT INTO question(id, discriptions, details, dificulty, tag, user_id) VALUES {question_to_write}")      
+            cursor.execute(f"INSERT INTO questions(id, discriptions, details, dificulty, tag, user_id) VALUES {question_to_write}")      
             pg.commit()
             
             
         return_data = "Вопрос добавлен"
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
+        
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -208,23 +219,24 @@ def render_questions():
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * from question")
+        cursor.execute(f"SELECT * from questions")
 
         all_questions = cursor.fetchall()  
 
-        print('Вопросы отображены')
+        logging.info('Вопросы отображены')
 
         return_data = all_questions
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
+
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -247,20 +259,21 @@ def change_password(password, old_password, email):
                             ''')
             pg.commit()
 
-            print('Пароль изменен')
+            logging.info('Пароль изменен')
 
             return_data = True
 
         else: return_data = False
 
     except (Exception, Error) as error:
+        logging.error('DB:', error)
         return_data = f"Ошибка получения данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -280,18 +293,18 @@ def check_old_password(email, password):
 
         if password_to_check == password:
             return_data = True
-            print('Пароли не совпадают')
+            logging.info('Пароли не совпадают')
         else: return_data = False
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -319,7 +332,7 @@ def change_password_send(password, email):
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -350,7 +363,7 @@ def send_code(email):
     session['code'] = code_pas
     session.modified = True
 
-    print('Пароль отправлен на почту')
+    logging.info('Пароль отправлен на почту')
 
     return 0
 
@@ -359,9 +372,9 @@ def send_code(email):
 def check_password(password, true_password):
     if password == true_password:
         return_data = True
-        print('Пароли совпали')
+        logging.info('Пароли совпали')
     else: 
-        print('Пароли не совпали')
+        logging.info('Пароли не совпали')
         return_data = False
     session.pop('sent-password', None)
     return return_data
@@ -385,19 +398,19 @@ def chat(id, time, msg):
         cursor.execute(f"INSERT INTO messages(message_id, user_id, time, msg) VALUES {message_to_write}")
         pg.commit()
 
-        print('Сообщение добавлено')
+        logging.info('Сообщение добавлено')
 
         return_data = message_id
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -413,7 +426,7 @@ def add_states(discriptions='', details='', id='', tag=''):
         """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        print(id)
+        logging.info(id)
 
         send_state = []
 
@@ -422,23 +435,23 @@ def add_states(discriptions='', details='', id='', tag=''):
 
         # Существует ли таккая же
         if send_state[0][0]==0:
-            print(details, 1)
-            question_to_write = (uuid.uuid4().hex, discriptions, details,tag ,id)
-            cursor.execute(f"INSERT INTO states(id, discriptions, details, tag, user_id) VALUES {question_to_write}")      
+            logging.info(details, 1)
+            state_to_write = (uuid.uuid4().hex, discriptions, details,tag ,id)
+            cursor.execute(f"INSERT INTO states(id, discriptions, details, tag, user_id) VALUES {state_to_write}")      
             pg.commit()
             
-        print('Статья добавлена')
+        logging.info('Статья добавлена')
 
         return_data = "Статья добавлена"
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -454,28 +467,30 @@ def show_all_by_user(id):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        logging.info(id)
+        cursor.execute(f'SELECT * FROM questions WHERE user_=$${id}$$')
+        questions = cursor.fetchall()
+        cursor.execute(f'''SELEСT * FROM states
+                                WHERE user_=$${id}$$''')
+        
+        states = cursor.fetchall()
+        logging.info('Информация отпраленна')
 
-        questions = cursor.execute(f'''SELECT * FROM question
-                                WHERE id=$${id}$$''')
-        
-        states = cursor.execute(f'''SELEСT * FROM states
-                                WHERE id=$${id}$$''')
-        
-        print('Информация отпраленна')
 
         return_data = {
             'questions': questions,
             'states': states
         }
+
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -492,20 +507,20 @@ def delete(id, isQ):
             """)
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-            cursor.execute(f'''DELETE FROM question WHERE id=$${id}$$''')
+            cursor.execute(f'''DELETE FROM questions WHERE id=$${id}$$''')
 
             pg.commit()
             return_data = 'ok'
             
         except (Exception, Error) as error:
-            print(f'DB ERROR: ', error)
+            logging.error(f'DB: ', error)
             return_data = f"Ошибка обращения к базе данных: {error}" 
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     else:
         try: 
@@ -517,20 +532,20 @@ def delete(id, isQ):
                 port={os.getenv('PORT_PG')}
             """)
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-            print(type(id))
+            logging.info(type(id))
             cursor.execute(f'''DELETE FROM states WHERE id=$${id}$$;''')
 
             pg.commit()
             return_data = 'ok'
         except (Exception, Error) as error:
-            print(f'DB ERROR: ', error)
+            logging.error(f'DB: ', error)
             return_data = f"Ошибка обращения к базе данных: {error}" 
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
 
 
@@ -549,7 +564,7 @@ def change(id, info, isQ):
         
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-            cursor.excute(f'''UPDATE question
+            cursor.excute(f'''UPDATE questions
                         SET (information)
                           WHEREE id=$${id}$$''')
 
@@ -557,14 +572,14 @@ def change(id, info, isQ):
             return_data = 'ok'
             
         except (Exception, Error) as error:
-            print(f'DB ERROR: ', error)
+            logging.error(f'DB: ', error)
             return_data = f"Ошибка обращения к базе данных: {error}" 
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     else:
         try: 
@@ -583,14 +598,14 @@ def change(id, info, isQ):
             pg.commit()
             return_data = 'ok'
         except (Exception, Error) as error:
-            print(f'DB ERROR: ', error)
+            logging.error(f'DB: ', error)
             return_data = f"Ошибка обращения к базе данных: {error}" 
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
 
 
@@ -607,25 +622,27 @@ def show_forum(filtre):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        states = cursor.excute(f'''SELECT * FROM states WHERE tag=$${filtre}$$''')
-        questions = cursor.excute(f'''SELECT * FROM question WHERE tag=$${filtre}$$''')
+        cursor.execute(f'''SELECT * FROM states WHERE tag=$${filtre}$$''')
+        states = cursor.fetchall()
+        cursor.execute(f'''SELECT * FROM questions WHERE tag=$${filtre}$$''')
+        questions = cursor.fetchall()
         
         return_data = {
             "states": states,
             "questions": questions
         }
 
-        print(f'Вся информация о форуме {filtre} была отправлена')
+        logging.info(f'Вся информация о форуме {filtre} была отправлена')
         pg.commit()
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 
@@ -645,7 +662,7 @@ def render_states():
         cursor.execute(f"SELECT * from states")
         
         all_states = cursor.fetchall()  
-        print('все статьи отображены')
+        logging.info('все статьи отображены')
 
         dict = {
             'id' : '',
@@ -666,14 +683,14 @@ def render_states():
         return_data = dict
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
         
 
@@ -694,8 +711,8 @@ def show_one(id, isQ):
             cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
             
             all_states = cursor.fetchall()[0]
-            cursor.execute(f"SELECT * from answers WHERE o_id = $${id}$$")
-            all_asw = cursor.fetchall()
+            
+            all_asw = show_answers(True, id)
 
 
             return_data = {
@@ -704,14 +721,14 @@ def show_one(id, isQ):
                            }
 
         except (Exception, Error) as error:
-            print(f'DB ERROR: ', error)
+            logging.error(f'DB: ', error)
             return_data = f"Ошибка обращения к базе данных: {error}" 
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     try: 
         pg = psycopg2.connect(f"""
@@ -727,8 +744,9 @@ def show_one(id, isQ):
         cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
         
         all_states = cursor.fetchall()[0]
-        cursor.execute(f"SELECT * from answers WHERE o_id = $${id}$$")
-        all_asw = cursor.fetchall()
+
+        all_asw = all_asw = show_answers(True, id)
+
 
         return_data = {
                 'states': all_states,
@@ -736,14 +754,14 @@ def show_one(id, isQ):
                            }
 
     except (Exception, Error) as error:
-        print(f'DB ERROR: ', error)
+        logging.error(f'DB: ', error)
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
         if pg:
             cursor.close
             pg.close
-            print("Соединение с PostgreSQL закрыто")
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
         
 
@@ -754,7 +772,7 @@ def filtre(filters, isQ):
     elif filters["filtr"]:
         filtr = ' WHERE'
         for i in filters:
-            print(i)
+            logging.info(i)
             if filters[i] != 'false':
                 if i == 'filtr':
                     continue
@@ -773,22 +791,22 @@ def filtre(filters, isQ):
             """)
 
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-            cursor.execute(f"SELECT * FROM question{filtr}")
+            cursor.execute(f"SELECT * FROM questions{filtr}")
             result = cursor.fetchall()
-            print(f"SELECT * FROM question{filtr}")
+            logging.info(f"SELECT * FROM questions{filtr}")
             return_data = []
             for row in result:
                 return_data.append(dict(row))
 
         except (Exception, Error) as error:
-            print(f"Ошибка получения данных: {error}")
+            logging.info(f"Ошибка получения данных: {error}")
             return_data = 'Error'
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     else: 
         try:
@@ -801,7 +819,7 @@ def filtre(filters, isQ):
             """)
 
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
-            cursor.execute(f"SELECT * FROM questions{filtr}")
+            cursor.execute(f"SELECT * FROM states{filtr}")
             result = cursor.fetchall()
 
             return_data = []
@@ -809,14 +827,14 @@ def filtre(filters, isQ):
                 return_data.append(dict(row))
 
         except (Exception, Error) as error:
-            print(f"Ошибка получения данных: {error}")
+            logging.info(f"Ошибка получения данных: {error}")
             return_data = 'Error'
 
         finally:
             if pg:
                 cursor.close
                 pg.close
-                print("Соединение с PostgreSQL закрыто")
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
             
 def add_img( base, name, isAvatar, isQ,id):
@@ -840,6 +858,70 @@ def add_img( base, name, isAvatar, isQ,id):
             file.write(decoded_bytes)
     return 'http://127.0.0.1:5000/media/'+name
 
+# Добовление ответа
+def add_ans(text, isQ, idO, id_u):
+    pass
+
+def show_answers(isQ, idO):
+    if isQ:
+        try:
+            pg = psycopg2.connect(f"""
+                host=localhost
+                dbname=postgres
+                user=postgres
+                password={os.getenv('PASSWORD_PG')}
+                port={os.getenv('PORT_PG')}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            
+            cursor.execute(f'''SELECT * FROM answers 
+                       WHERE id_q = $${idO}$$
+                       ORDER BY date''')
+            
+            return_data = cursor.fetchall()
+
+            logging.info('Все ответы добавлены')
+
+        except (Exception, Error) as error:
+            logging.info(f"Ошибка получения данных: {error}")
+            return_data = 'Error'
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
+    try:
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''SELECT * FROM comments 
+                       WHERE id_s = $${idO}$$
+                       ORDER BY date''')
+        
+        return_data = cursor.fetchall()
+
+        logging.info('Все комментарии добавлены')
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Error'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Главная страница
@@ -848,8 +930,9 @@ def home():
 
     response_object = {'status': 'success'} #БаZа
     response_object['message'] = session.get('id')
-
-    print(session.get('id')) #debug
+    logging.warning('1')
+    logging.info(session.get('id')) #debug
+    logging.warning(response_object)
 
     return jsonify(response_object)
 
@@ -860,7 +943,7 @@ def user_registration():
 
     if request.method == 'POST':
         post_data = request.get_json()
-        print(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
+        logging.info(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
 
     return jsonify(response_object)
 
@@ -873,17 +956,7 @@ def user_info():
         #Вызов функции обновления бд
         post_data = request.get_json()
         post_data = post_data.get('form')
-        refresh_data(post_data.get('Name'), 
-                     post_data.get('Surname'), 
-                     post_data.get('interestings'), 
-                     post_data.get('about'), 
-                     post_data.get('contacts'), # contactsType 
-                     post_data.get('Country'), 
-                     post_data.get('Region'), 
-                     post_data.get('City'),
-                     post_data.get('Avatar'),
-                     post_data.get('Filename'),
-                     session.get('id'))
+        refresh_data(post_data, session.get('id'))
 
     return jsonify(response_object)
 
@@ -912,7 +985,7 @@ def new_question():
 
     post_data = request.get_json()
     post_data = post_data.get('form')
-    print(add_question(post_data.get('discriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id'))) #Вызов и debug функции добавления вопроса в бд
+    logging.info(add_question(post_data.get('discriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id'))) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(response_object)
 
@@ -922,8 +995,8 @@ def create_state():
     responce_object = {'status' : 'success'} #БаZа
 
     post_data = request.get_json().get('form')
-    print(1)
-    print(add_states(post_data.get('discriptions'), post_data.get('details'), session.get('id'), post_data.get('tag'))) #Вызов и debug функции добавления вопроса в бд
+    logging.info(1)
+    logging.info(add_states(post_data.get('discriptions'), post_data.get('details'), session.get('id'), post_data.get('tag'))) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(responce_object)
 
@@ -945,7 +1018,7 @@ def new_password_with_old():
     #Вызов, debug и возврат ответа на клиент функции обновления пароля
     if request.method=='PUT':
         response_object['changeable'] = change_password(post_data.get('new_password'),post_data.get('old_passord') ,post_data.get('email'))
-        print(response_object['changeable'])
+        logging.info(response_object['changeable'])
     
     return jsonify(response_object)
 
@@ -961,7 +1034,7 @@ def new_password_with_email():
     
     elif request.method == 'POST' and post_data.get('email'):
         #Восстановление пароля если мы НЕ в аккаунте
-        print(send_code(post_data.get('email')))
+        logging.info(send_code(post_data.get('email')))
     
     else:
         # ХЗ, вроде проверка кода подтверждения
@@ -984,12 +1057,12 @@ def chat_forum():
 
 
 # Фильтр статей
-@app.route("/filtre-states", methods=['GET'])
+@app.route("/filtre-states", methods=['POST'])
 def filtre_states():
     responce_object = {'status' : 'success'} #БаZа
 
-    post_data = request.get_json()
-
+    post_data = request.get_json().get('body')
+    logging.info(post_data)
     responce_object['all'] = filtre(post_data.get('filters'), False)
 
     return jsonify(responce_object)
@@ -1000,7 +1073,7 @@ def filtre_questions():
     responce_object = {'status' : 'success'} #БаZа
 
     post_data = request.get_json().get('body')
-    print(post_data)
+    logging.info(post_data)
     responce_object['all'] = filtre(post_data.get('filters'), True)
 
     return jsonify(responce_object)
@@ -1010,9 +1083,10 @@ def filtre_questions():
 def show_f():
     responce_object = {'status' : 'success'} #БаZа
 
-    post_data = request.get_json()
+    post_data = request.args.get('language')
 
-    responce_object['all'] = show_forum(post_data.get('filters'))
+
+    responce_object['all'] = show_forum(post_data)
 
     return jsonify(responce_object)
 
@@ -1057,7 +1131,7 @@ def delete_():
     else:
         responce_object['all'] = delete(post_data, False) 
     
-    print(responce_object['all'])
+    logging.info(responce_object['all'])
 
     return jsonify(responce_object)
 
@@ -1073,7 +1147,7 @@ def change_():
     else: 
         responce_object['all'] = change(post_data.get('id'), post_data.get('all'), False) # а что - решим потом (название поменять надо)
 
-    print(responce_object['all'])
+    logging.info(responce_object['all'])
 
     return jsonify(responce_object)
 
@@ -1087,32 +1161,47 @@ def show_sates():
     return jsonify(response_object)
 
 # проверка может ли юзер исправлять что-то
-@app.route('/check-user', methods=['GET'])
+@app.route('/check', methods=['GET'])
 def check():
     response_object = {'status': 'success'} #БаZа
+    id = request.args.get('id')
 
-    post_data = request.get_json()
+    logging.info(id)
 
-    if post_data.get('id') == request.cookies.get('all'):
-        response_object['isEdit'] = True
+    if id == session.get('id'):
+        response_object['isEdit'] = 'True'
 
     else:
-        response_object['isEdit'] = False
+        response_object['isEdit'] = 'False'
 
     return  jsonify(response_object)
 
-# проверка может ли юзер исправлять что-то
+# все от одного юзера
 @app.route('/show-all-by-user', methods=['GET'])
 def check_():
     response_object = {'status': 'success'} #БаZа
 
+    post_data = request.args.get('id')
+
+    response_object['all'] = show_all_by_user(post_data)
+
+    logging.info('Отправлено')
+    return jsonify(response_object)
+
+@app.route('/answers', methods=['POST'])
+def add_a():
+    response_object = {'status': 'success'} #БаZа
+
     post_data = request.get_json()
+    text = post_data.get('text')
 
-    response_object['all'] = show_all_by_user(post_data.get('id'))
+    if post_data.get('q'):
+        response_object['res'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
+        return jsonify(response_object)
+    response_object['res'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
+    return jsonify(response_object)
 
-    print('Отправлено')
-    return  jsonify(response_object)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
