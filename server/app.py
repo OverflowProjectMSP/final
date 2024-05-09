@@ -1019,7 +1019,7 @@ def user_info():
     return jsonify(response_object)
 
 #Вход
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     response_object = {'status': 'success'} #БаZа
 
@@ -1075,7 +1075,7 @@ def new_password_with_old():
 
     #Вызов, debug и возврат ответа на клиент функции обновления пароля
     if request.method=='PUT':
-        response_object['changeable'] = change_password(post_data.get('new_password'),post_data.get('old_passord') ,post_data.get('email'))
+        response_object['res'] = change_password(post_data.get('new_password'),post_data.get('old_passord') ,post_data.get('email'))
         logging.info(response_object['changeable'])
     
     return jsonify(response_object)
@@ -1096,7 +1096,7 @@ def new_password_with_email():
     
     else:
         # ХЗ, вроде проверка кода подтверждения
-        response_object['stat'] = check_password(post_data.get('password'), session.get('code'))
+        response_object['stat'] = check_password(post_data.get('emailCode'), session.get('code'))
     
     return jsonify(response_object)
 
