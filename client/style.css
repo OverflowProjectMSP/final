@@ -1,0 +1,34 @@
+*{
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit;
+    transition: all 300ms;
+}
+
+ul {
+    list-style: none !important;
+}
+
+.w-fit {
+    width: fit-content;
+}
+
+.h-fit {
+    height: fit-content;
+}
+
+input, textarea {
+    border: 1px solid #000 !important;
+    border-radius: 5.75px !important;
+    color: #000 !important;
+}
+
+.form-control:focus,.form-control:focus-visible  {
+    outline: none !important;
+    box-shadow: none !important;
+}

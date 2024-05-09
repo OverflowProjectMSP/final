@@ -41,7 +41,7 @@ body {
     flex-direction: column;
     align-items: center;
     height: 600px;
-    background-image: url(../../assets/mountainsjpeg.jpeg);
+    background-image: url(../../assets/Main/mountainsjpeg.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

@@ -5,14 +5,14 @@
 <template>
     <div class="background">
         <h1>404</h1>
-        <a href="#/Main"><button>На главную</button></a>
+        <a href="/"><button>На главную</button></a>
     </div>
 </template>
 
 <style scoped>
 .background {
     width: 100%;
-    height: 100vh;
+    height: 92vh;
 
     display: flex;
     justify-content: center;
