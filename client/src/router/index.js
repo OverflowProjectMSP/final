@@ -12,11 +12,15 @@ export default createRouter({
     },
     {
       path: "/States",
-      component: () => import("../components/Main/MainComp.vue"),
+      component: () => import("../components/States/States.vue"),
     },
     {
       path: "/Quetions",
       component: () => import("../components/Main/MainComp.vue"),
+    },
+    {
+      path: "/Test",
+      component: () => import("../components/ReuseComponets/VidjetComp.vue"),
     },
   ],
 });

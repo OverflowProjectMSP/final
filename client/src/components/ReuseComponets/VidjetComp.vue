@@ -1,0 +1,290 @@
+<script>
+export default {
+    data() {
+        return {
+            username: "JavaScript",
+            avatar: "ava1.png",
+            text: "Как установить VUE через терминал в файл?",
+            subs: 15,
+            date: "05.01.2024 12:31",
+            view: 473,
+            answerCount: 1,
+            isCheck: false,
+            isCheck_class: "check-false",
+        }
+    }
+}
+</script>
+
+<template>
+    <div class="window">
+        <div class="main-container">
+            <div class="content">
+                <div class="account">
+                    <img :src="'src/assets/' + avatar" alt="">
+                    <a href="#!"><p>{{ username }}</p></a>
+                    <a href="#!">+2 ЕЩЁ</a>
+                </div>
+                <div class="text">
+                    <h5>{{ text }}</h5>
+                </div>
+                <div class="info">
+                    <p>{{ subs }} подписчиков</p>
+                    <p>{{ date }}</p>
+                    <p>{{ view }} просмотров</p>
+                </div>
+            </div>
+            <div class="ans_check">
+                <a href="#!"><button>Ответить</button></a>
+                <div class="check">
+                    <img v-if="isCheck" width="15" src="../assets/check.svg" alt="">
+                    <p :class="isCheck_class">{{ answerCount }}</p>
+                </div>
+                <p :class="isCheck_class">Ответ</p>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .window {
+        display: flex;
+        justify-content: center;
+    }
+
+    .main-container {
+        margin: 20px;
+
+        width: 1586px;
+        height: auto;
+        border: 1px solid #121212;
+        border-radius: 15px;
+
+        padding: 20px;
+
+        display: flex;
+        align-items: center;
+        gap: 235px;
+    }
+
+    .account {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        
+    }
+
+    .account p {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 700;
+        color: #8355E3;
+
+        font-family: "Baloo Chettan 2", sans-serif;
+    }
+
+    .account p:hover {
+        color: #663ebc;
+    }
+
+    .account p:active {
+        color: #51309a;
+    }
+
+    .account a {
+        font-size: 25px;
+        text-decoration: none;
+    }
+
+    .account img {
+        width: 86px;
+        border-radius: 50px;
+        border: 1px solid #121212; 
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        /* margin-top: -45px; */
+    }
+
+    .text h5 {
+        font-size: 45px;
+    }
+
+    .info {
+        margin-top: -5px;
+        display: flex;
+    }
+    
+    .info p {
+        font-size: 25px;
+        color: #3B82F6;
+        border-right: 1.5px solid #3B82F6;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .info p:last-child {
+        border-right: none;
+    }
+
+    .info p:first-child {
+        padding-left: 0px;
+    }
+
+    .ans_check {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ans_check button {
+        width: 202px;
+        height: auto;
+        font-size: 30px;
+        background-color: #3B82F6;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+
+        margin-bottom: 15px;
+        transition: all 100ms;
+    }
+
+    .ans_check button:hover {
+        background-color: #2e6ac9;
+    }
+
+    .ans_check button:active {
+        background-color: #1d52a6;
+    }
+
+    .check-false {
+        margin: 0;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 700;
+        color: #AEB8BC;
+    }
+
+    .check-true {
+        margin: 0;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 700;
+        color: #65C178;
+    }
+
+    .check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* АДАПТИВКА */
+
+    @media (max-width: 1583px) {
+        .main-container {
+            width: 1200px;
+        }
+
+        .text h5 {
+            font-size: 28px;
+        }
+
+        .info p {
+            font-size: 18px;
+        }
+
+    }
+
+    @media (max-width: 1200px) {
+        .main-container {
+            width: 800px;
+            gap: 40px
+        }
+
+        .text h5 {
+            font-size: 24px;
+        }
+
+        .ans_check button {
+            width: 150px;
+            font-size: 22px;
+        }
+
+        .ans_check p {
+            font-size: 28px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .main-container {
+            flex-direction: column;
+            align-items: start;
+            
+        }
+
+        .ans_check button {
+            width: 250px;
+            margin-right: 70px;
+            margin-bottom: 0;
+        }
+
+        .ans_check {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .account img {
+            width: 60px;
+        }
+
+        .account p {
+            font-size: 20px;
+        }
+
+        .account a {
+            font-size: 18px;
+        }
+
+        .info {
+            flex-direction: column;
+        }
+
+        .info p {
+            border-right: none;
+            padding: 0;
+            border-bottom: 2px solid #3B82F6;
+            width: 150px;
+            padding-bottom: 10px;
+        }
+
+        .text h5 {
+            font-size: 18px;
+        }
+
+        .ans_check {
+            gap: 0;
+        }
+
+        .ans_check button {
+            margin-right: 30px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .ans_check {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ans_check button {
+            width: 250px;
+        }
+    }
+</style>

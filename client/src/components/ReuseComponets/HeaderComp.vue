@@ -75,7 +75,7 @@ export default {
               <a class="nav-link text-white" href="#/Quetions">Вопросы</a>
             </li>
             <li class="nav-item dropdown mt-1">
-              <a class="nav-link  text-white" href="#/States">
+              <a class="nav-link  text-white" href="/States">
                 Статьи
               </a>
 
@@ -103,7 +103,6 @@ export default {
       </div>
     </nav>
   </header>
-  <!-- <blind-window v-if="Show" :title="Errors[0].title" :Show="Show" @Close="Close" class="model modal" /> -->
 
 </template>
 <style scoped>
