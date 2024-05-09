@@ -2,7 +2,7 @@ import os
 import uuid
 import psycopg2
 from psycopg2 import extras, Error
-from flask import Flask, jsonify, request, session, make_response
+from flask import Flask, jsonify, request, session, make_response, send_from_directory
 from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
@@ -1239,6 +1239,15 @@ def ava():
     response_object['link'] = show_avatar(session.get('id'))
 
     return jsonify(response_object)
+
+@app.route('/avatr/<path:filename>')
+def serve_file(filename):
+    path = filename
+    print('/avatar/'+path)
+    if not os.path.exists('{}/{}'.format('/avatar/', '/'+filename)):
+        return jsonify({'error': 'File not found'}), 404
+
+    return send_from_directory(directory='/avatar/', path=path)
 
 if __name__ == '__main__':
     app.run(debug=True)
