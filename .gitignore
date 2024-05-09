@@ -1,0 +1,7 @@
+/client/vue/testing/node_modules
+/server/.env
+/server/media
+/server/avatar
+/client/vue/testing/node_modules
+/server/basic.log
+/server/__pycache__
