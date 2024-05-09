@@ -74,7 +74,7 @@ export default {
               <a class="nav-link text-white" href="#/Quetions">Вопросы</a>
             </li>
             <li class="nav-item dropdown mt-1">
-              <a class="nav-link  text-white" href="#/States">
+              <a class="nav-link  text-white" href="/States">
                 Статьи
               </a>
 
