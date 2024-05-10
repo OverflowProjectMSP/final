@@ -225,7 +225,10 @@ def render_questions():
 
         logging.info('Вопросы отображены')
 
-        return_data = all_questions
+        return_data = []
+
+        for row in all_questions:
+            return_data.append(dict(row))
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -663,24 +666,10 @@ def render_states():
         
         all_states = cursor.fetchall()  
         logging.info('все статьи отображены')
-        return_data = all_states
-        # dict = {
-        #     'id' : '',
-        #     'discriptions': '',
-        #     'details': '',
-        #     'tag': '',
-        #     'user_id': ''
-        # }
-        
-        # a = all_states[0]
-        # cnt = -1
-        # for key in dict:
-        #     cnt+=1
-        #     for i in range (len(a)):
-        #         if cnt==i:
-        #             dict[key] = a[i]   
+        return_data = []
 
-        # return_data = dict
+        for row in all_states:
+            return_data.append(dict(row))
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -860,7 +849,40 @@ def add_img( base, name, isAvatar, isQ,id):
 
 # Добовление ответа
 def add_ans(text, isQ, idO, id_u):
-    pass
+    date = datetime.now().isoformat()
+    to_write = (uuid.uuid4().hex, id_u, idO, text, date)   
+    if isQ:
+        obj = "answers(id, id_user, id_q, text, data)"
+    else:
+        obj = "comments(id, id_user, id_s, text, data)"
+
+    try:
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute(f"INSERT INTO {obj} VALUES{to_write}")      
+        pg.commit()  
+
+        logging.info("200\n", to_write)
+
+        return_data = "Комментарий добавлен!"
+
+    except (Exception, Error) as error:
+        logging.error(error)
+        return_data = f"Ошибка добавления в базу данных: {error}" 
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 
 def show_answers(isQ, idO):
     if isQ:
@@ -953,6 +975,11 @@ def show_avatar(id):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
+        
+# def to_dict(d):
+#     res = {
+#         'id': d['id']
+#     }
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Главная страница
@@ -992,7 +1019,7 @@ def user_info():
     return jsonify(response_object)
 
 #Вход
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     response_object = {'status': 'success'} #БаZа
 
@@ -1035,7 +1062,7 @@ def create_state():
 @app.route('/show-questions', methods=['GET'])
 def show_questions():
     response_object = {'status': 'success'} #БаZа
-    response_object['message'] = render_questions() #Вызов и возврат ответа на клиент функции для получения всех вопросов
+    response_object['all'] = render_questions() #Вызов и возврат ответа на клиент функции для получения всех вопросов
     
     return jsonify(response_object)
 
@@ -1048,7 +1075,7 @@ def new_password_with_old():
 
     #Вызов, debug и возврат ответа на клиент функции обновления пароля
     if request.method=='PUT':
-        response_object['changeable'] = change_password(post_data.get('new_password'),post_data.get('old_passord') ,post_data.get('email'))
+        response_object['res'] = change_password(post_data.get('new_password'),post_data.get('old_passord') ,post_data.get('email'))
         logging.info(response_object['changeable'])
     
     return jsonify(response_object)
@@ -1069,7 +1096,7 @@ def new_password_with_email():
     
     else:
         # ХЗ, вроде проверка кода подтверждения
-        response_object['stat'] = check_password(post_data.get('password'), session.get('code'))
+        response_object['stat'] = check_password(post_data.get('emailCode'), session.get('code'))
     
     return jsonify(response_object)
 
@@ -1187,7 +1214,7 @@ def change_():
 def show_sates():
     response_object = {'status': 'success'} #БаZа
 
-    response_object['message'] = render_states() #Вызов и возврат ответа на клиент функции для получения всех вопросов
+    response_object['all'] = render_states() #Вызов и возврат ответа на клиент функции для получения всех вопросов
     
     return jsonify(response_object)
 
@@ -1251,4 +1278,3 @@ def serve_file(filename):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
