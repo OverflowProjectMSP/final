@@ -22,5 +22,31 @@ export default createRouter({
       path: "/Test",
       component: () => import("../components/ReuseComponets/VidjetComp.vue"),
     },
+    {
+      path: "/Login",
+      component: () => import("../components/Login/EnterPage.vue"),
+    },
+    {
+      path: "/SignUp",
+      component: () => import("../components/Login/RegisterPage.vue"),
+    },
+    {
+      path: "/RecoveryPassPage",
+      component: () => import("../components/Login/RecoveryPassPage.vue"),
+    },
+    {
+      path: "/EnterCodePage",
+      component: () => import("../components/Login/EnterCodePage.vue"),
+    },
+    {
+      path: "/EnterNewPassword",
+      component: () => import("../components/Login/EnterNewPassword.vue"),
+    },
+    {
+      path: "/FAQ",
+      component: () => import("../components/FAQ/FAQ.vue"),
+    },
+    
   ],
 });
+// EnterNewPassword

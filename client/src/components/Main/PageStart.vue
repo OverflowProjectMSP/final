@@ -13,7 +13,7 @@ export default {
         <div class="greetings">
             <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
             <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
-            <a href="#/Registration"><button class="btn-join user-select-none">Присоединиться</button></a>
+            <a href="/SignUp"><button class="btn-join user-select-none">Присоединиться</button></a>
         </div>
     </div>
 </template>

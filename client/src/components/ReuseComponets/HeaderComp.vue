@@ -25,6 +25,9 @@ export default {
     Open() {
       this.Show = !this.Show;
     },
+    LoginPage() {
+      this.$router.push('/Login');
+    },
     async loadAvatar() {
       let res = await axios.get('/avatar');
       this.avatar = res.data.link;
@@ -92,7 +95,7 @@ export default {
 
           </form> -->
           <div class="them-container" v-if="true">
-            <button type="button" class=" btn-login">Войти</button>
+            <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container">
             <a href="/Profile"> <img

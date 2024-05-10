@@ -13,7 +13,7 @@
             <p class="text">Upfollow</p>
             <hr class="hr">
             <p class="text_FAQ"><a href="/FAQ">FAQ</a></p>
-            <a href="#1"><img class="arrow user-select-none" alt="arrows" src="../../assets/Footer/arrows.png"></a>
+            <a href="#"><img class="arrow user-select-none" alt="arrows" src="../../assets/Footer/arrows.png"></a>
     </div>
 </div>  
 </template>

@@ -4,13 +4,13 @@ export default {
         return {
             username: "JavaScript",
             avatar: "ava1.png",
-            text: "Как установить VUE через терминал в файл?",
+            text: "Как установицукйцкйцкцукццццццуууууууууууууууууууууууууууууууууууууууууууууууууууть VUE через терминал в файл?",
             subs: 15,
             date: "05.01.2024 12:31",
             view: 473,
             answerCount: 1,
-            isCheck: false,
-            isCheck_class: "check-false",
+            isCheck: true,
+            isCheck_class: "ch check-true",
         }
     }
 }
@@ -55,16 +55,16 @@ export default {
     .main-container {
         margin: 20px;
 
-        width: 1586px;
+        width: 650px;
         height: auto;
         border: 1px solid #121212;
         border-radius: 15px;
 
-        padding: 20px;
+        padding: 10px;
 
         display: flex;
         align-items: center;
-        gap: 235px;
+        gap: 50px;
     }
 
     .account {
@@ -76,7 +76,7 @@ export default {
 
     .account p {
         margin: 0;
-        font-size: 30px;
+        font-size: 18px;
         font-weight: 700;
         color: #8355E3;
 
@@ -92,12 +92,12 @@ export default {
     }
 
     .account a {
-        font-size: 25px;
+        font-size: 12px;
         text-decoration: none;
     }
 
     .account img {
-        width: 86px;
+        width: 40px;
         border-radius: 50px;
         border: 1px solid #121212; 
     }
@@ -110,7 +110,12 @@ export default {
     }
 
     .text h5 {
-        font-size: 45px;
+        font-size: 20px;
+
+        width: 38ch;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .info {
@@ -119,7 +124,7 @@ export default {
     }
     
     .info p {
-        font-size: 25px;
+        font-size: 15px;
         color: #3B82F6;
         border-right: 1.5px solid #3B82F6;
         padding-right: 8px;
@@ -140,9 +145,9 @@ export default {
     }
 
     .ans_check button {
-        width: 202px;
+        width: 130px;
         height: auto;
-        font-size: 30px;
+        font-size: 18px;
         background-color: #3B82F6;
         border: none;
         border-radius: 8px;
@@ -160,19 +165,18 @@ export default {
         background-color: #1d52a6;
     }
 
-    .check-false {
+    .ch {
         margin: 0;
         text-align: center;
-        font-size: 40px;
+        font-size: 22px;
         font-weight: 700;
+    }
+
+    .check-false {
         color: #AEB8BC;
     }
 
     .check-true {
-        margin: 0;
-        text-align: center;
-        font-size: 40px;
-        font-weight: 700;
         color: #65C178;
     }
 
@@ -183,41 +187,6 @@ export default {
     }
 
     /* АДАПТИВКА */
-
-    @media (max-width: 1583px) {
-        .main-container {
-            width: 1200px;
-        }
-
-        .text h5 {
-            font-size: 28px;
-        }
-
-        .info p {
-            font-size: 18px;
-        }
-
-    }
-
-    @media (max-width: 1200px) {
-        .main-container {
-            width: 800px;
-            gap: 40px
-        }
-
-        .text h5 {
-            font-size: 24px;
-        }
-
-        .ans_check button {
-            width: 150px;
-            font-size: 22px;
-        }
-
-        .ans_check p {
-            font-size: 28px;
-        }
-    }
 
     @media (max-width: 600px) {
         .main-container {

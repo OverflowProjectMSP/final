@@ -1,48 +1,26 @@
 <script>
 import axios from 'axios';
-import VidComp from './components/MainComponents/VidComp.vue'
-import ModelWind from './components/СomponetsForPages/ModelWind.vue';
+// import VidComp from './components/MainComponents/VidComp.vue'
+// import ModelWind from './components/СomponetsForPages/ModelWind.vue';
 export default {
     components: {
-    VidComp,
-    ModelWind,  
+    // VidComp,
+    // ModelWind,  
     },
     data() {
         return {
             states: [
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Python',
-                //     complexity: 'Средне',
-                //     id: 0,
-                //     question: false,            
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'C++',
-                //     complexity: 'Средне',
-                //     id: 1,
-                //     question: false,            
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 45,
-                //     hours: 0,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Асембелер',
-                //     complexity: 'Средне',
-                //     id: 2,
-                //     question: false,                
-                // },
+                {
+                    title: `Как создать переменную?`,
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    language: 'Python',
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
             ],
             Show: false,
             filters: {
@@ -114,7 +92,7 @@ export default {
       </div>
       <!-- плюсик -->
       <div class="contain" @click="OpenModal" >
-        <img src="./assets/add.png" class="add" alt="">
+        <img src="../../assets/States/add.png" class="add" alt="">
       </div>
       <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Отфильровать</button>
 
@@ -125,14 +103,14 @@ export default {
 
 
 <!-- Див с виджетами -->
-<div class="con mt-3" v-for="item in states">
+<!-- <div class="con mt-3" v-for="item in states">
 <a :href="`#/CommentsPost?id=` + item.id + `&question=` + item.question">
     <vid-comp :item="item" role="button" />
 </a>
 </div>
 
 
-<model-wind v-if="Show" @CloseModal="CloseModal"/>
+<model-wind v-if="Show" @CloseModal="CloseModal"/> -->
 
 
 </template>
