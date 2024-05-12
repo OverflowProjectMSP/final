@@ -2,10 +2,12 @@
 import axios from 'axios';
 // import VidComp from './components/MainComponents/VidComp.vue'
 // import ModelWind from './components/СomponetsForPages/ModelWind.vue';
+import VidjetComp from '../ReuseComponets/VidjetComp.vue';
 export default {
     components: {
     // VidComp,
-    // ModelWind,  
+        // ModelWind,
+    VidjetComp  
     },
     data() {
         return {
@@ -103,19 +105,28 @@ export default {
 
 
 <!-- Див с виджетами -->
-<!-- <div class="con mt-3" v-for="item in states">
+<div class="conr container">
+<div class="con mt-3" v-for="item in states">
 <a :href="`#/CommentsPost?id=` + item.id + `&question=` + item.question">
-    <vid-comp :item="item" role="button" />
+    <!-- <vid-comp :item="item" role="button" /> -->
+    <vidjet-comp/>
 </a>
 </div>
+</div>
 
-
-<model-wind v-if="Show" @CloseModal="CloseModal"/> -->
+<model-wind v-if="Show" @CloseModal="CloseModal"/>
 
 
 </template>
 
 <style scoped>
+.conr{
+    overflow: scroll;
+    height: 555px;
+    width: auto;
+    /* margin-left: auto;
+    margin-right: auto; */
+}
 a {
     text-decoration: none;
     color: #000;
@@ -203,5 +214,10 @@ h4{
     h4 {
         font-size: 30px;
     }
+}
+@media (max-width: 635px) {
+  .content .form-control{
+    width: 400px;
+   }
 }
 </style>

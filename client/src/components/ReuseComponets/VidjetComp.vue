@@ -9,9 +9,24 @@ export default {
             date: "05.01.2024 12:31",
             view: 473,
             answerCount: 1,
-            isCheck: true,
-            isCheck_class: "ch check-true",
+            isCheck: false,
+            isCheck_class: "ch check-false",
+            item: {
+                title: `Как создать переменную?`,
+                subscribers: 50,
+                hours: 43,
+                views: 43,
+                answers: 423,
+                language: 'JavaScript',
+                complexity: 'Средне',
+                id: 0
+            }
+
         }
+    },
+    props: {
+        // item: Object,
+        Show: Boolean,
     }
 }
 </script>
@@ -19,10 +34,10 @@ export default {
 <template>
     <div class="window">
         <div class="main-container">
-            <div class="content">
+            <div class="cont">
                 <div class="account">
-                    <img :src="'src/assets/' + avatar" alt="">
-                    <a href="#!"><p>{{ username }}</p></a>
+                    <!-- <img :src="'src/assets/' + avatar" alt=""> -->
+                    <a href="#!"><p>{{ item.language }}</p></a>
                     <a href="#!">+2 ЕЩЁ</a>
                 </div>
                 <div class="text">
@@ -37,7 +52,7 @@ export default {
             <div class="ans_check">
                 <a href="#!"><button>Ответить</button></a>
                 <div class="check">
-                    <img v-if="isCheck" width="15" src="../assets/check.svg" alt="">
+                    <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
                     <p :class="isCheck_class">{{ answerCount }}</p>
                 </div>
                 <p :class="isCheck_class">Ответ</p>
@@ -55,7 +70,7 @@ export default {
     .main-container {
         margin: 20px;
 
-        width: 650px;
+        width: auto;
         height: auto;
         border: 1px solid #121212;
         border-radius: 15px;
@@ -102,7 +117,7 @@ export default {
         border: 1px solid #121212; 
     }
 
-    .content {
+    .cont {
         display: flex;
         flex-direction: column;
         gap: 15px;
@@ -188,7 +203,7 @@ export default {
 
     /* АДАПТИВКА */
 
-    @media (max-width: 600px) {
+    @media (max-width: 750px) {
         .main-container {
             flex-direction: column;
             align-items: start;
@@ -205,10 +220,11 @@ export default {
             flex-direction: row;
             align-items: center;
             gap: 10px;
+            margin-top: -40px;
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 540px) {
         .account img {
             width: 60px;
         }
@@ -255,5 +271,58 @@ export default {
         .ans_check button {
             width: 250px;
         }
+
+        .text h5 {
+            width: 30ch;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .account img {
+            width: 40px;
+        }
+
+        .account p {
+            font-size: 16px;
+        }
+
+        .account a {
+            font-size: 12px;
+        }
+
+        .text h5 {
+            width: 20ch;
+        }
+
+        .main-container {
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        .info p {
+            width: 120px;
+        }
+
+        .ans_check button {
+            width: 100px;
+            margin-top: 100px;
+            margin-left: -30px;
+        }
+
+        .ans_check {
+            align-items: flex-start;
+        }
+
+        .check {
+            margin-left: 35px;
+        }
+
+        /* .ans_check button {
+            width: 100px;
+            font-size: 16px;
+            margin-right: -20;
+
+        } */
     }
 </style>

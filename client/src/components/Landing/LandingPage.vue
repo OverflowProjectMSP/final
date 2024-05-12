@@ -1,0 +1,666 @@
+<script>
+
+</script>
+
+<template>
+<body>
+  <div class="bodydiv">
+    <main>
+      <div class="container-second">
+          <h3>
+            <b>Upfollow - исследуй, общайся, делись.</b>
+          </h3>
+          <p>
+              Присоединяйтесь к сообществу, где каждый вопрос находит ответ, а каждый ответ может стать ценным знанием для других.
+          </p>
+          <button type="button" class="btn">
+            <span class="text"><b>Обратный отсчет</b></span>
+          </button>
+          <div class="deviceimg">
+            <img src="../assets/main.png" class="mainimg">
+          </div>
+      </div>
+      <h3 class="best">
+            <b>Преимущества</b>
+          </h3>
+      <div class="container-third">
+        <div class="third-mini1">
+          <span class="circle">
+            <img src="../assets/search.png">
+          </span>
+          <h5 class="circleh5" id="search">
+            <b>Поиск</b>
+          </h5>
+          <p class="search">
+            Вы точно найдете ответ на свой вопрос
+          </p>
+        </div>
+        <div class="third-mini2">
+          <span class="circle">
+            <img src="../assets/user.png">
+          </span>
+          <h5 class="circleh5" id="support">
+            <b>Поддержка</b>
+          </h5>
+          <p class="support">
+            Поддержка сопроводит вас по любому вопросу
+          </p>
+        </div>
+        <div class="third-mini3">
+          <span class="circle">
+            <img src="../assets/menu.png">
+          </span>
+          <h5 class="circleh5" id="interface">
+            <b>Интерфейс</b>
+          </h5>
+          <p class="interface">
+            Пользование будет приносить удовольствие
+          </p>
+        </div>
+      </div>
+      <div class="container-quadro">
+        <div class="quadro-mini1">
+          <h3 id="funct">
+            <b>Функционал сайта</b>
+          </h3>
+          <p>
+            Разнообразие инструментов и возможностей для эффективного обмена знаниями и опытом.
+          </p>
+        </div>
+        <div class="quadro-mini2">
+          <div class="functionimg">
+            <img src="../assets/gp.png" class="secondimg1">
+          </div>
+          <h5>
+            <b>Задавайте свои вопросы</b>
+          </h5>
+          <p>
+            Задавайте любые вопросы, связанные с разработкой. 
+            Наши пользователи готовы помочь вам стать лучше в своей области. 
+            Не стесняйтесь задавать любые вопросы и расширять свои знания.
+          </p>
+        </div>
+        <hr>
+        <div class="quadro-mini3">
+          <div class="functionimg">
+            <img src="../assets/rm.png" class="secondimg2">
+          </div>
+          <h5>
+            <b>Помогайте другим</b>
+          </h5>
+          <p>
+            Поделитесь своими знаниями и опытом, отвечая на вопросы других участников. 
+            Помогите другим стать лучше, делитесь своими идеями и решениями. 
+            Ваш ответ может быть ключом к успешному развитию другого члена сообщества. 
+          </p>
+        </div>
+      </div>
+      <div class="container-five">
+        <div class="bg-time">
+          <h3 id="team">
+            <b>Обратный отсчет</b>
+          </h3>
+          <h5>
+            <b>23:59:59</b>
+          </h5>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</template>
+
+<style scoped>
+/* 1. Базовые стили  */
+@import url('https://fonts.cdnfonts.com/css/rubik');
+html{
+    margin: 0;
+    background-color: #EEF1F4;
+}
+main{
+    margin: 10px
+}
+body{
+    font-family: Rubik !important;
+}
+
+/* 2. Мэйн */
+
+/* 2.1 Главная */
+
+.container-second {
+  margin: 100px 120px 100px 120px;
+  height: 600px;
+}
+
+.container-second h3 {
+  color: #2B2D33;
+  padding: 8% 0 2% 0;
+  font-size: 70px;
+  width: 60%;
+}
+
+.container-second p {
+  font-size: 16px;
+  width: 40%;
+  color: #555A65;
+}
+
+.btn {
+  margin-top: 2%;
+  background-color: #2D72D9;
+  color: #F7F8FA;
+  width: 190px;
+  height: 8%;
+  border-radius: 10px;
+}
+
+.text {
+  font-size: 14px;
+  margin-left: -20px;
+}
+
+.deviceimg {
+  margin-top: -536px;
+  margin-left: 640px;
+  width: 45%;
+  height: 600px;
+  border-radius: 10px;
+}
+
+.mainimg {
+  width: 57%;
+  margin-left: 120px;
+}
+
+/* 2.2 Преимущества */
+.container-third {
+  margin: 100px 0 100px 0;
+}
+
+.container-third h3 {
+  color: #2B2D33;
+  font-size: 60px;
+  text-align: center;
+}
+
+.container-third p {
+  color: #555A65;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  height: 50px;
+  width: 50px;
+  border-radius: 90px;
+  background-color: #F7F8FA;
+}
+
+.container-third {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 100px;
+  gap: 50px;
+  margin-left: 50px;
+}
+
+.container-third span {
+  margin-left: 130px;
+  margin-bottom: 20px;
+}
+
+.container-third h5 {
+  font-size: 25px;
+}
+
+.third-mini1 span {
+  margin-left: 130px;
+}
+
+.third-mini2 span {
+  margin-left: 160px;
+}
+
+.third-mini3 span {
+  margin-left: 145px;
+}
+
+.best {
+  font-size: 50px;
+  margin-left: 500px;
+}
+
+/* 2.3 Функционал */
+
+.container-six {
+  margin-bottom: 75px;
+}
+
+/* 2.3.1  */
+.quadro-mini1 {
+  margin: 120px 80px 80px 120px;
+}
+
+.quadro-mini1 h3 {
+  font-size: 50px;
+  width: 30%;
+  color: #2B2D33;
+}
+
+.quadro-mini1 p {
+  margin-top: 30px;
+  font-size: 20px;
+  width: 35%;
+  color: #555A65;
+}
+
+/* 2.3.2 */
+
+.quadro-mini2 {
+  margin-bottom: 200px;
+}
+
+.quadro-mini2 h5 {
+  margin-bottom: 25px;
+  margin-left: 830px;
+  margin-top: -300px;
+  font-size: 25px;
+}
+
+.quadro-mini2 p {
+  margin-left: 830px;
+  color: #555A65;
+  width: 32%;
+  font-size: 15px;
+}
+
+.functionimg {
+  margin-left: 5%;
+  width: 45%;
+  height: 500px;
+  border-radius: 10px;
+}
+
+.secondimg1 {
+  width: 48%;
+  margin-top: -26px;
+  margin-left: 150px;
+}
+
+.secondimg2 {
+  width: 41%;
+  margin-top: -5px;
+  margin-left: 170px;
+}
+
+/* 2.3.3 */
+
+.quadro-mini3 h5 {
+  margin-bottom: 25px;
+  margin-left: 830px;
+  margin-top: -300px;
+  font-size: 25px;
+}
+
+.quadro-mini3 p {
+  margin-left: 830px;
+  color: #555A65;
+  width: 33%;
+  font-size: 15px;
+}
+
+/* 2.4 Отсчёт/переход */
+.container-five {
+  margin-top: 300px;
+  margin-left: 5%;
+  width: 90%;
+  margin-bottom: 100px;
+}
+
+.bg-time {
+  border-radius: 15px;
+  background-color: #F7F8FA;
+  height: 250px;
+}
+
+.container-five h3 {
+  padding-top: 40px;
+  color: #2B2D33;
+  font-size: 60px;
+  text-align: center;
+}
+
+.container-five h5 {
+  padding-top: 20px;
+  color: #555A65;
+  font-size: 60px;
+  text-align: center;
+}
+
+/* 3. Адаптивка */
+
+/* 320px */
+
+@media only screen and (max-width: 320px) {
+
+/* Мейн */
+
+  .deviceimg {
+    width: 250px;
+    margin-top: 30px;
+    margin-left: -230px;
+  }
+
+  .container-second {
+    margin-bottom: 250px;
+  }
+
+  .container-second h3 {
+    font-size: 25px;
+    margin-left: -112px;
+    margin-top: -90px;
+    width: 150px;
+    text-align: center
+  }
+
+  .container-second p {
+    width: 150px;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-left: -115px;
+    text-align: center;
+  }
+
+  .container-second button {
+    margin-left: -113px;
+    width: 150px;
+  }
+
+  .text {
+    padding-left: 16px;
+    text-align: center;
+  }
+
+/* Преимущества */
+
+  .best {
+    font-size: 20px;
+    margin-top: -200px;
+    margin-left: 5px;
+    margin-bottom: -50px;
+  }
+
+  .container-third {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    width: 150px;
+  }
+
+  .container-third h5 {
+    font-size: 15px;
+  }
+
+  .container-third span {
+    margin-left: 50px;
+  }
+
+ /* Функционал */
+
+ #funct {
+    font-size: 20px;
+    margin-left: -102px;
+    margin-top: 120px;
+    margin-bottom: -50px;
+    display: flex;
+    text-align: center;
+  }
+  
+  .quadro-mini1 p {
+    display: flex;
+    text-align: center;
+    width: 160px;
+    margin-top: 60px;
+    margin-left: -117px;
+    font-size: 12px;
+  }
+  
+  .secondimg1 {
+    width: 150px;
+    margin-left: -25px;
+  }
+
+  .quadro-mini2 h5 {
+    margin-left: 5px;
+    font-size: 15px;
+    width: 150px;
+    margin-top: -250px;
+  }
+
+  .quadro-mini2 p {
+    margin-left: 5px;
+    width: 150px;
+    font-size: 12px;
+  }
+
+  hr {
+    width: 222px;
+    margin-top: -150px;
+    margin-left: -50px;
+  }
+
+  .secondimg2 {
+    width: 130px;
+    margin-left: 110px;
+  }
+
+  .quadro-mini3 {
+    margin-left: -100px;
+  }
+
+  .quadro-mini3 h5 {
+    margin-top: -240px;
+    margin-left: 170px;
+    width: 100px;
+    font-size: 15px;
+  }
+
+  .quadro-mini3 p {
+    margin-left: 105px;
+    width: 150px;
+    font-size: 12px;
+    display: flex;
+    text-align: right;
+  }
+ 
+  /* Отсчет */
+
+  .container-five {
+    margin-left: -3px;
+    width: 170px;
+  }
+
+  .container-five h3 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 25px;
+  }
+
+  .container-five h5 {
+    padding-top: 1px;
+    font-size: 30px;
+  }
+
+  .bg-time {
+    height: 170px;
+    margin-top: -150px;
+  } 
+}
+@media only screen and (min-width: 321px) and (max-width: 576px) {
+
+  /* Мейн */
+
+  .deviceimg {
+    width: 800px;
+    margin-top: 60px;
+    margin-left: -180px;
+  }
+
+  .container-second {
+    margin-bottom: 1000px;
+  }
+
+  .container-second h3 {
+    font-size: 90px;
+    margin-left: -125px;
+    margin-top: -60px;
+    width: 600px;
+    text-align: center
+  }
+
+  .container-second p {
+    width: 500px;
+    margin-left: -81px;
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .container-second button {
+    margin-left: -35px;
+    width: 400px;
+    height: 120px;
+    border-radius: 25px;
+  }
+  
+  .text {
+    font-size: 40px;
+    margin-left: -5px;
+  }
+
+/* Преимущества */
+
+  .best  {
+    font-size: 65px;
+    margin-top: 1500px;
+    margin-left: 35px;
+    margin-bottom: -30px;
+  }
+
+  .container-third {
+    display: flex;
+    flex-direction: column;
+    margin-left: 90px;
+    width: 400px;
+  }
+
+  .container-third h5 {
+    font-size: 50px;
+  }
+
+  .container-third p {
+    font-size: 40px;
+  }
+
+  .container-third span {
+    margin-left: 140px;
+    height: 130px;
+    padding: 30px;
+    width: 130px;
+  }
+
+/* Функционал */
+
+  #funct {
+    font-size: 65px;
+    margin-left: -75px;
+    margin-top: 120px;
+    margin-bottom: -50px;
+  }
+  
+  .quadro-mini1 p {
+    display: flex;
+    width: 500px;
+    margin-top: 60px;
+    margin-left: -75px;
+    font-size: 40px;
+  }
+  
+  .secondimg1 {
+    width: 450px;
+    margin-left: 1px;
+  }
+
+  .quadro-mini2 h5 {
+    margin-left: 70px;
+    font-size: 70px;
+    width: 600px;
+    margin-top: 300px;
+  }
+
+  .quadro-mini2 p {
+    margin-left: 70px;
+    width: 650px;
+    font-size: 30px;
+  }
+
+  hr {
+    width: 1075px;
+    margin-top: -150px;
+    margin-left: -50px;
+  }
+
+  .secondimg2 {
+    width: 385px;
+    margin-left: 600px;
+    margin-top: 80px;
+  }
+
+  .quadro-mini3 {
+    margin-left: -100px;
+  }
+
+  .quadro-mini3 h5 {
+    margin-top: 370px;
+    margin-left: 620px;
+    font-size: 70px;
+    display: flex;
+    text-align: right;
+  }
+
+  .quadro-mini3 p {
+    margin-left: 505px;
+    width: 500px;
+    font-size: 30px;
+    display: flex;
+    text-align: right;
+  }
+
+  /* Отсчет */
+
+  .container-five {
+    margin-left: 5px;
+    width: 950px;
+  }
+
+  .container-five h3 {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    font-size: 85px;
+  }
+
+  .container-five h5 {
+    padding-top: 1px;
+    font-size: 80px;
+  }
+
+  .bg-time {
+    margin-top: -250px;
+  }
+}
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  
+}
+</style>

@@ -19,10 +19,6 @@ export default createRouter({
       component: () => import("../components/Main/MainComp.vue"),
     },
     {
-      path: "/Test",
-      component: () => import("../components/ReuseComponets/VidjetComp.vue"),
-    },
-    {
       path: "/Login",
       component: () => import("../components/Login/EnterPage.vue"),
     },
@@ -45,6 +41,14 @@ export default createRouter({
     {
       path: "/FAQ",
       component: () => import("../components/FAQ/FAQ.vue"),
+    },
+    {
+      path: "/NewState",
+      component: () => import("../components/States/NewState.vue"),
+    },
+    {
+      path: "/TestLanding",
+      component: () => import("../components/Landing/LandingPage.vue"),
     },
     
   ],
