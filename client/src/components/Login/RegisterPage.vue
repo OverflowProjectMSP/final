@@ -265,6 +265,10 @@ export default {
             margin-left: 0;
             margin-right: 0;
         }
+
+        .regist button {
+            width: 100%;
+        }
     }
 
     @media (max-width: 440px) {
