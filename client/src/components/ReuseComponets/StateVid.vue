@@ -37,11 +37,10 @@ export default {
             <div class="cont">
                 <div class="account">
                     <!-- <img :src="'src/assets/' + avatar" alt=""> -->
-                    <a href="#!"><p>{{ item.language }}</p></a>
-                    <a href="#!">+2 ЕЩЁ</a>
+                    <a href="#!"><p>{{ item.tag }}</p></a>
                 </div>
                 <div class="text">
-                    <h5>{{ item.title }}</h5>
+                    <h5>{{ item.discriptions }}</h5>
                 </div>
                 <div class="info">
                     <p>{{ subs }} подписчиков</p>

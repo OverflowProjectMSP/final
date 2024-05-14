@@ -13,12 +13,12 @@ export default {
         return {
             states: [
                 {
-                    title: `VUE JS IS PARASHА??`,
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
                     subscribers: 50,
                     hours: 43,
                     views: 43,
                     answers: 423,
-                    language: 'Python',
                     complexity: 'Средне',
                     id: 0,
                     question: false,            
