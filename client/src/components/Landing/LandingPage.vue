@@ -17,7 +17,7 @@
             <span class="text"><b>Обратный отсчет</b></span>
           </button>
           <div class="deviceimg">
-            <img src="../assets/main.png" class="mainimg">
+            <img src="../../assets/Lending/main.png" class="mainimg">
           </div>
       </div>
       <h3 class="best">
@@ -26,7 +26,7 @@
       <div class="container-third">
         <div class="third-mini1">
           <span class="circle">
-            <img src="../assets/search.png">
+            <img src="../../assets/Lending/search.png">
           </span>
           <h5 class="circleh5" id="search">
             <b>Поиск</b>
@@ -37,7 +37,7 @@
         </div>
         <div class="third-mini2">
           <span class="circle">
-            <img src="../assets/user.png">
+            <img src="../../assets/Lending/user.png">
           </span>
           <h5 class="circleh5" id="support">
             <b>Поддержка</b>
@@ -48,7 +48,7 @@
         </div>
         <div class="third-mini3">
           <span class="circle">
-            <img src="../assets/menu.png">
+            <img src="../../assets/Lending/menu.png">
           </span>
           <h5 class="circleh5" id="interface">
             <b>Интерфейс</b>
@@ -69,7 +69,7 @@
         </div>
         <div class="quadro-mini2">
           <div class="functionimg">
-            <img src="../assets/gp.png" class="secondimg1">
+            <img src="../../assets/Lending/gp.png" class="secondimg1">
           </div>
           <h5>
             <b>Задавайте свои вопросы</b>
@@ -83,7 +83,7 @@
         <hr>
         <div class="quadro-mini3">
           <div class="functionimg">
-            <img src="../assets/rm.png" class="secondimg2">
+            <img src="../../assets/Lending/rm.png" class="secondimg2">
           </div>
           <h5>
             <b>Помогайте другим</b>
