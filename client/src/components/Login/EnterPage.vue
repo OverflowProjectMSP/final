@@ -13,7 +13,7 @@ export default {
             eyeOpen1: true,
             eyeOpen2: true,
             eyeImg1: '/src/assets/eye.svg',
-            eyeImg2: '/src/assets/eye.svg',
+            eyeImg2: '/src/assets/eye.svg', 
             isShowPassword: false,
             showPassword: 'password',
             isShowExPassword: false,
@@ -92,8 +92,12 @@ export default {
                 <p class="error">{{ error }}</p>
                 <button @click="check">Войти</button>
                 <div class="haveacc">
-                    <p>Забыли</p><a href="/RecoveryPassPage">пароль</a><p>?</p>
-                    <p>Нет</p><a href="/SignUp">Аккаунта</a><p>?</p>
+                    <div class="forgot">
+                        <p>Забыли</p><a href="/RecoveryPassPage">пароль</a><p>?</p>
+                    </div>
+                    <div class="noacc">
+                        <p>Нет</p><a href="/SignUp">Аккаунта</a><p>?</p>
+                    </div>
 
                 </div>
             </div>
@@ -143,6 +147,8 @@ export default {
         border-radius: 12px !important;
 
         border: 1px solid #121212 !important;
+
+        margin-right: 30px;
     }
 
     .regist button {
@@ -193,6 +199,18 @@ export default {
         color: #114189;
     }
 
+    .forgot {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .noacc {
+        display: flex;
+        align-items: center;
+        gap: 10px
+    }
+
     .haveacc {
         display: flex;
         align-items: center;
@@ -208,6 +226,78 @@ export default {
 
     .haveacc p:last-child {
         margin-left: -7px;
+    }
+
+    @media (max-width: 1330px) {
+        .content {
+            margin-left: 50px;
+        }
+    }
+
+    @media (max-width: 1140px) {
+        .content p {
+            font-size: 38px;
+        }
+
+        .inp {
+            width: 550px;
+        }
+
+        .haveacc p {
+            font-size: 22px;
+        }
+
+        .haveacc a {
+            font-size: 22px;
+        }
+    }
+
+    @media (max-width: 830px) {
+        .background {
+            background: none;
+            width: 0%;
+        }
+
+        .tototocontainer {
+            justify-content: center;
+        }
+
+        .content {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .inp {
+            width: 550px;
+        }
+    }
+
+    @media(max-width: 600px) {
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .inp {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .regist button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 440px) {
+        .haveacc {
+            flex-direction: column
+        }
+
+        .inp {
+            width: 350px;
+        }
     }
     
 </style>
