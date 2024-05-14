@@ -110,11 +110,11 @@ export default {
 </template>
 <style scoped>
 .btn-login{
-background: rgb(255, 255, 255);
-border: none;
-height: 45px;
-width: 100px;
-border-radius: 10px;
+  background: rgb(255, 255, 255);
+  border: none;
+  height: 45px;
+  width: 100px;
+  border-radius: 10px;
 }
 .head{
   margin-left: 30px;
@@ -200,8 +200,6 @@ header {
 
 .collapse {
   margin-top: 0px;
-
-
 }
 
 .collapse h4 {
@@ -241,6 +239,10 @@ li {
 
 }
 
+.btn-login{
+  transition: all, 0.4s;
+}
+
 .navbar-toggler-icon {
   border-radius: 10px;
   width: 50px;
@@ -249,7 +251,6 @@ li {
 .btn-login:hover{
 background-color: #000000;
 color: white;
-transition: all, 0.7s;
 }
 @media (max-width: 1200px) {
 
