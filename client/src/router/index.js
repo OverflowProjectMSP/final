@@ -15,6 +15,14 @@ export default createRouter({
       component: () => import("../components/States/States.vue"),
     },
     {
+      path: "/NewState",
+      component: () => import("../components/States/NewState.vue"),
+    },
+    {
+      path: "/StateItem",
+      component: () => import("../components/States/StateItem.vue"),
+    },
+    {
       path: "/Quetions",
       component: () => import("../components/Main/MainComp.vue"),
     },
@@ -43,12 +51,12 @@ export default createRouter({
       component: () => import("../components/FAQ/FAQ.vue"),
     },
     {
-      path: "/NewState",
-      component: () => import("../components/States/NewState.vue"),
-    },
-    {
       path: "/TestLanding",
       component: () => import("../components/Landing/LandingPage.vue"),
+    },
+    {
+      path: "/Quetions",
+      component: () => import("../components/Quetions/Quetions.vue"),
     },
     
   ],

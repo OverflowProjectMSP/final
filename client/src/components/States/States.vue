@@ -2,7 +2,7 @@
 import axios from 'axios';
 // import VidComp from './components/MainComponents/VidComp.vue'
 // import ModelWind from './components/СomponetsForPages/ModelWind.vue';
-import VidjetComp from '../ReuseComponets/VidjetComp.vue';
+import VidjetComp from '../ReuseComponets/StateVid.vue';
 export default {
     components: {
     // VidComp,
@@ -13,12 +13,12 @@ export default {
         return {
             states: [
                 {
-                    title: `Как создать переменную?`,
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
                     subscribers: 50,
                     hours: 43,
                     views: 43,
                     answers: 423,
-                    language: 'Python',
                     complexity: 'Средне',
                     id: 0,
                     question: false,            
@@ -96,7 +96,7 @@ export default {
       <div class="contain" @click="OpenModal" >
         <img src="../../assets/States/add.png" class="add" alt="">
       </div>
-      <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Отфильровать</button>
+      <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Отфильровать</button>
 
       </div>
   </div>
@@ -107,9 +107,9 @@ export default {
 <!-- Див с виджетами -->
 <div class="conr container">
 <div class="con mt-3" v-for="item in states">
-<a :href="`#/CommentsPost?id=` + item.id + `&question=` + item.question">
+<a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
     <!-- <vid-comp :item="item" role="button" /> -->
-    <vidjet-comp/>
+    <vidjet-comp :item="item"  />
 </a>
 </div>
 </div>
@@ -120,12 +120,15 @@ export default {
 </template>
 
 <style scoped>
+.find-btn{
+    color: black;
+}
 .conr{
     overflow: scroll;
     height: 555px;
     width: auto;
-    /* margin-left: auto;
-    margin-right: auto; */
+    margin-left: auto;
+    margin-right: auto;
 }
 a {
     text-decoration: none;
@@ -149,7 +152,7 @@ h4{
 .btn{
     font-size: 16px;
     font-weight: bold;
-    color:blueviolet ;
+    color:rgb(0, 0, 0) ;
 }
 .content {
     margin: 10px;
@@ -191,7 +194,10 @@ h4{
 .dropdown-center{
     margin-right:10px;
 }
-
+.find-btn:hover{
+    color: white;
+    transition: all 0.5s;
+}
 @media (max-width: 900px){
 
 .content input{

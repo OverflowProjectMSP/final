@@ -39,16 +39,16 @@ export default {
     },
     async loadLogin() {
       let res = await axios.get(`/check-r`);
-      this.ShowLogin = res.data;
+      this.ShowLogin = res.data.all;
       if (this.ShowLogin == "true") {
-        this.ShowLogin = true;
-      } else if (this.ShowLogin == "false") {
         this.ShowLogin = false;
+      } else if (this.ShowLogin == "false") {
+        this.ShowLogin = true;
       }
     }
   },
   mounted() {
-    // this.loadLogin();
+    this.loadLogin();
     this.loadAvatar()
   }
 }
@@ -75,7 +75,7 @@ export default {
           </h4>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 mb-2">
             <li class="nav-item mt-1" style="cursor: pointer;">
-              <a class="nav-link text-white" href="#/Quetions">Вопросы</a>
+              <a class="nav-link text-white" href="/Quetions">Вопросы</a>
             </li>
             <li class="nav-item dropdown mt-1">
               <a class="nav-link  text-white" href="/States">
@@ -84,7 +84,7 @@ export default {
 
             </li>
             <li class="nav-item mt-1" style="cursor: pointer;">
-              <a class="nav-link text-white" aria-disabled="true" href="#/Forum">Форум</a>
+              <a class="nav-link text-white" aria-disabled="true" href="/Forum">Форум</a>
             </li>
           </ul>
           <div class="container-form">
@@ -94,7 +94,7 @@ export default {
             <input class="form-control  inp " type="search" placeholder="Найти статью" aria-label="Search">
 
           </form> -->
-          <div class="them-container" v-if="true">
+          <div class="them-container" v-if="this.ShowLogin">
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container">

@@ -102,7 +102,7 @@ export default {
 
     .content {
         margin-top: 219px;
-        margin-left: 128px;
+        margin-left: 200px;
     }
 
     .regist form {
@@ -182,6 +182,78 @@ export default {
         color: #ff1f1f;
         margin-bottom: -30px !important;
         margin-top: -30px !important;
+    }
+
+    @media (max-width: 1330px) {
+        .content {
+            margin-left: 50px;
+        }
+    }
+
+    @media (max-width: 1140px) {
+        .content p {
+            font-size: 38px;
+        }
+
+        .inp {
+            width: 550px;
+        }
+
+        .haveacc p {
+            font-size: 22px;
+        }
+
+        .haveacc a {
+            font-size: 22px;
+        }
+    }
+
+    @media (max-width: 830px) {
+        .background {
+            background: none;
+            width: 0%;
+        }
+
+        .tototocontainer {
+            justify-content: center;
+        }
+
+        .content {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .inp {
+            width: 550px;
+        }
+    }
+
+    @media(max-width: 600px) {
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .inp {
+            width: 350px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .regist button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 440px) {
+        .haveacc {
+            flex-direction: column
+        }
+
+        .content p {
+            text-align: center;
+        }
     }
     
 </style>

@@ -11,21 +11,21 @@ export default {
             answerCount: 1,
             isCheck: false,
             isCheck_class: "ch check-false",
-            item: {
-                title: `Как создать переменную?`,
-                subscribers: 50,
-                hours: 43,
-                views: 43,
-                answers: 423,
-                language: 'JavaScript',
-                complexity: 'Средне',
-                id: 0
-            }
+            // item: {
+            //     title: `Как создать переменную?`,
+            //     subscribers: 50,
+            //     hours: 43,
+            //     views: 43,
+            //     answers: 423,
+            //     language: 'JavaScript',
+            //     complexity: 'Средне',
+            //     id: 0
+            // }
 
         }
     },
     props: {
-        // item: Object,
+        item: Object,
         Show: Boolean,
     }
 }
@@ -37,11 +37,10 @@ export default {
             <div class="cont">
                 <div class="account">
                     <!-- <img :src="'src/assets/' + avatar" alt=""> -->
-                    <a href="#!"><p>{{ item.language }}</p></a>
-                    <a href="#!">+2 ЕЩЁ</a>
+                    <a href="#!"><p>{{ item.tag }}</p></a>
                 </div>
                 <div class="text">
-                    <h5>{{ text }}</h5>
+                    <h5>{{ item.discriptions }}</h5>
                 </div>
                 <div class="info">
                     <p>{{ subs }} подписчиков</p>
