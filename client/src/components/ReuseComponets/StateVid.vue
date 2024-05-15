@@ -97,9 +97,7 @@ export default {
         font-family: "Baloo Chettan 2", sans-serif;
     }
 
-    .account p:hover {
-        color: #663ebc;
-    }
+    
 
     .account p:active {
         color: #51309a;
@@ -173,9 +171,7 @@ export default {
         margin-top: 20px;
     }
 
-    .ans_check button:hover {
-        background-color: #2e6ac9;
-    }
+    
 
     .ans_check button:active {
         background-color: #1d52a6;
@@ -204,6 +200,17 @@ export default {
     }
 
     /* АДАПТИВКА */
+
+
+    @media (hover: hover) {
+        .account p:hover {
+            color: #663ebc;
+        }
+
+        .ans_check button:hover {
+            background-color: #2e6ac9;
+        }
+    }
 
     @media (max-width: 750px) {
         .main-container {
