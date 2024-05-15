@@ -1,5 +1,6 @@
 <script>
 import Form from './Form.vue';
+import axios from 'axios';
 export default {
     components: { Form },
     data() {
@@ -78,6 +79,9 @@ export default {
         this.Show = false;
       }
     }
+    },
+    mounted() {
+        this.loadLogin()
     }
 }
 </script>
