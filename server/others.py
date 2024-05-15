@@ -59,7 +59,8 @@ def show_avatar(id):
         
         link = cursor.fetchall()[0]
 
-        if link == None:
+        
+        if link == [None]:
             return_data = 'No'
         else: return_data = link
     except (Exception, Error) as error:
@@ -179,6 +180,7 @@ def ava():
 
     response_object['link'] = show_avatar(session.get('id'))
 
+    print(response_object)
     return jsonify(response_object)
 
 @app.route('/avatr/<path:filename>')
@@ -217,6 +219,11 @@ def ava_():
 def user_():
     response_object = {'status': 'success'} #БаZа
 
-    response_object['name'] = show_name(id = request.args.get('id'))
+    response_object['name'] = show_name(request.args.get('id'))
 
     return jsonify(response_object)
+
+@app.route('/check-r', methods=['GET'])
+def session__():
+    if 'id' in session: return jsonify({'status': 'success', 'all': 'true'})
+    else: return jsonify({'status': 'success', 'all': 'false'})
