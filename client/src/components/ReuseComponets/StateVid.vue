@@ -49,12 +49,12 @@ export default {
                 </div>
             </div>
             <div class="ans_check">
-                <a href="#!"><button>Ответить</button></a>
-                <div class="check">
+                <div class="d-flex flex-column check">
                     <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
                     <p :class="isCheck_class">{{ answerCount }}</p>
+                    <p :class="isCheck_class">Ответ</p>
                 </div>
-                <p :class="isCheck_class">Ответ</p>
+                <a href="#!"><button>Ответить</button></a>
             </div>
         </div>
     </div>
@@ -169,6 +169,8 @@ export default {
 
         margin-bottom: 15px;
         transition: all 100ms;
+
+        margin-top: 20px;
     }
 
     .ans_check button:hover {
@@ -198,6 +200,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 20px;
     }
 
     /* АДАПТИВКА */
@@ -211,7 +214,7 @@ export default {
 
         .ans_check button {
             width: 250px;
-            margin-right: 70px;
+            margin-left: 160px;
             margin-bottom: 0;
         }
 
@@ -220,6 +223,10 @@ export default {
             align-items: center;
             gap: 10px;
             margin-top: -40px;
+        }
+
+        .check {
+            margin-top: 0;
         }
     }
 
@@ -323,5 +330,42 @@ export default {
             margin-right: -20;
 
         } */
+    }
+
+    @media (max-width: 540px) {
+        .check {
+            position: absolute;
+            top: 82px;
+            right: 10px;
+        }
+
+        .ans_check button {
+            position: absolute;
+            bottom: 20px;
+            right: -20px;
+
+            width: 80px;
+            font-size: 16px;
+
+        }
+
+        .main-container {
+            position: relative;
+
+        }
+    }
+
+    @media (max-width: 500px) {
+        /* .ans_check button {
+            right: 50px;
+        }
+
+        .check {
+            right: 85px;
+        } */
+
+        .main-container {
+            width: 400px;
+        }
     }
 </style>
