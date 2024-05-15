@@ -45,8 +45,8 @@ export default {
         },
         async loadStates() {
             let res = await axios.get('/show-states');
-            this.states = res.data;
-            console.log(res.data)
+            this.states = res.data.all;
+            // console.log(res.data)
         },
         async filtre() {
             if (this.filters.type == 'false') {

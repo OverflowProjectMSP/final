@@ -58,7 +58,7 @@ export default {
             if(res.data.res == 'Error') {
                 this.error = '*Ошибка отправки*';
             } else if(res.data.res == 'True') {
-                this.$router.push('/EnterPage');
+                this.$router.push('/');
             } else {
                 this.error = 'Хуйню делаешь брат';
             }

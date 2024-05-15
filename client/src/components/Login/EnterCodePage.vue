@@ -73,7 +73,7 @@ export default {
             <p class="toemail">На почту  {{ email }} вам был отправлен ключ доступа </p>
             <div class="regist">
                 <form @submit.prevent="check">
-                    <input class="numinp form-control" type="number" v-model="CIFRY">
+                    <input class="numinp form-control" type="text" v-model="CIFRY">
                     <p v-if=this.error class="error">{{ error }}</p>
                     <button @click="check">Подтвердить</button>
                 </form>
