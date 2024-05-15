@@ -1,0 +1,18 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="User">
+<path id="Vector" d="M18 34C26.8366 34 34 26.8366 34 18C34 9.16344 26.8366 2 18 2C9.16344 2 2 9.16344 2 18C2 26.8366 9.16344 34 18 34Z" stroke="black" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M17.9995 20.0541C21.8016 20.0541 24.8837 16.972 24.8837 13.1699C24.8837 9.36783 21.8016 6.28564 17.9995 6.28564C14.1974 6.28564 11.1152 9.36783 11.1152 13.1699C11.1152 16.972 14.1974 20.0541 17.9995 20.0541Z" stroke="black" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Group">
+<g id="Clip path group">
+<mask id="mask0_329_401" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="2" y="2" width="32" height="32">
+<g id="SVGID_2_">
+<path id="Vector_3" d="M18 34C26.8366 34 34 26.8366 34 18C34 9.16344 26.8366 2 18 2C9.16344 2 2 9.16344 2 18C2 26.8366 9.16344 34 18 34Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_329_401)">
+<path id="Vector_4" d="M18 56.0804C26.8366 56.0804 34 48.9169 34 40.0804C34 31.2438 26.8366 24.0804 18 24.0804C9.16344 24.0804 2 31.2438 2 40.0804C2 48.9169 9.16344 56.0804 18 56.0804Z" stroke="black" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

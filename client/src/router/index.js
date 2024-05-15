@@ -58,6 +58,10 @@ export default createRouter({
       path: "/Quetions",
       component: () => import("../components/Quetions/Quetions.vue"),
     },
+    {
+      path: "/Profile",
+      component: () => import("../components/Profile/Profile.vue"),
+    },
     
   ],
 });
