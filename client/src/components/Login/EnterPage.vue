@@ -70,9 +70,9 @@ export default {
                 email: this.email,
                 password: this.password
             });
-
+            console.log(res.data.all)
             if(res.data.res == 'ok') {
-                this.$router.push('/Profile');
+                this.$router.push('/');
             } else if(res.data.res == 'wrong!') {
                 this.error = 'Пароль и почта не совпадают!';
             } else {
