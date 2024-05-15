@@ -1,9 +1,22 @@
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
-
+            isL: true
         }
+    },
+    methods:{
+        async isLogin(){
+            let res = await axios.get('/check-r')
+
+            if (res.data.all=='true') {this.isL = false; return}
+            this.isL = true;
+        }
+    },
+    mounted(){
+        this.isLogin()
     }
 }
 </script>
@@ -13,7 +26,7 @@ export default {
         <div class="greetings">
             <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
             <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
-            <a href="/SignUp"><button class="btn-join user-select-none">Присоединиться</button></a>
+            <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
         </div>
     </div>
 </template>

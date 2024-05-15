@@ -30,12 +30,6 @@ export default {
             },
         }
     },
-    mounted() {
-        this.loadStates()
-        setInterval(() => {
-            this.loadStates()
-        }, 30000);
-    },
     methods: {
         OpenModal() {
             this.Show = !this.Show
@@ -67,7 +61,13 @@ export default {
             this.quetions = res.data;
             console.log(this.quetions)
         }
-    }
+    },
+    mounted() {
+        this.loadStates()
+        setInterval(() => {
+            this.loadStates()
+        }, 30000);
+    },
 }
 </script>
 

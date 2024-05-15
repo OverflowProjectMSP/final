@@ -45,36 +45,37 @@ export default {
                 // },
             ],
             user: {},
+            
         }
     }, 
-    // methods: {
-    //     async allByHe(){
-    //         let res = await axios.get('/show-all-by-user', {
-    //             params: {
-    //                 id: this.$router.query.id
-    //             }
-    //         });
-    //         this.quetionsUsers = res.data.all;
-    //     },
-    //     async loadUser() {
-    //         let res = await axios.get(`/user-info?id=${this.$router.query.id}`);
-    //         this.user = res.data.all;
-    //     }
-    // },
-    // mounted() {
-    //     this.allByHe();
-    //     this.loadUser();
-    //     setInterval(() => {
-    //         this.allByHe();
-    //         this.loadUser();
-    //     }, 100900);
-    // },
+    methods: {
+        async allByHe(){
+            let res = await axios.get('/show-all-by-user', {
+                params: {
+                    id: this.$router.query.id
+                }
+            });
+            this.quetionsUsers = res.data.all;
+        },
+        async loadUser() {
+            let res = await axios.get(`/user-info?id=${this.$router.query.id}`);
+            this.user = res.data.all;
+        }
+    },
+    mounted() {
+        this.allByHe();
+        this.loadUser();
+        setInterval(() => {
+            this.allByHe();
+            this.loadUser();
+        }, 100900);
+    },
 }
 
 </script>
 
 <template>
-    <div class="profile" v-if="user">
+    <div class="profile">
         <a href="#/ProfileSettings"><img src="../../assets/Profile/sh.svg" alt="Настройки" class="il"></a>
         <div class="head">
 
@@ -128,9 +129,9 @@ export default {
     </div>
     <div class="container d-flex align-items-center flex-column">
         <HeadComp class="mb-3"/>
-        <div class="scroll">
-        <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`" v-for="quetion in quetionsUsers">
-        <VidUserComp  :quetion="quetion"/>
+        <div class="scroll" v-for="quetion in quetionsUsers">
+        <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`" >
+            <VidUserComp  :quetion="quetion"/>
         </a>
         </div>
     </div>

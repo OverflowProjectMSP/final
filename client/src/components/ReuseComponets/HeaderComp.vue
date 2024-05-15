@@ -17,7 +17,7 @@ export default {
       }],
       ShowLogin: true,
       avatar: 'src/assets/Header/AvatarDef.svg',
-
+      id: ''
     }
 
   },
@@ -42,9 +42,14 @@ export default {
       this.ShowLogin = res.data.all;
       if (this.ShowLogin == "true") {
         this.ShowLogin = false;
+        this.getId()
       } else if (this.ShowLogin == "false") {
         this.ShowLogin = true;
       }
+    },
+    async getId(){
+      let res = await axios.get(`/session`);
+      this.id = res.data.id
     }
   },
   mounted() {
@@ -98,7 +103,7 @@ export default {
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container">
-            <a href="/Profile"> <img
+            <a :href="`/Profile?id=${this.id}`"> <img
                 :src="avatar"
                 alt="" class="ava"></a>
           </div>

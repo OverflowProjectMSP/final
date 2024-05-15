@@ -33,12 +33,13 @@ export default {
                 this.error = '*Вы не повторили пароль*'
             } else if (this.password.length < 8) {
                 this.error = '*Пароль должен включать 8 символов*'
-            } else if (!this.password.includes('~')) {
+            } else if (!this.password.includes('~') && !this.password.includes('@')) {
                 this.error = '*Пароль должен включать спец символ*'
             } else if (this.password !== this.exPassword) {
                 this.error = '*Пароли не совпадают'
             }
             else {
+                this.register()
                 this.error = ''
             }
 
@@ -73,12 +74,13 @@ export default {
         },
         
         async register() {
-            this.check();
+
             await axios.post('/registration', {
                 name: this.nickname,
                 email: this.email,
                 password: this.password
             });
+            this.$router.push('/Login');
         },
     }
 }

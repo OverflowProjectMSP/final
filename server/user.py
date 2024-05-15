@@ -114,7 +114,7 @@ def add_user_todb(name, email, pas):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         send_user = []
-        cursor.execute(f"SELECT COUNT(*) FROM users WHERE nickname=$${name}$$")  
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE username=$${name}$$")  
         send_user.append(cursor.fetchone())
 
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
@@ -123,7 +123,7 @@ def add_user_todb(name, email, pas):
         if send_user[0][0] == 0 and send_user[1][0] == 0:
             user_to_write = (uuid.uuid4().hex, name, email, pas, False)
             
-            cursor.execute(f"INSERT INTO users(id, nickname, email, password, admin) VALUES {user_to_write}")      
+            cursor.execute(f"INSERT INTO users(id, username, email, password, admin) VALUES {user_to_write}")      
             
             pg.commit()
             
