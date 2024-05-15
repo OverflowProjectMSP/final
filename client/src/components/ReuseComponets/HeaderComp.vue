@@ -39,16 +39,16 @@ export default {
     },
     async loadLogin() {
       let res = await axios.get(`/check-r`);
-      this.ShowLogin = res.data;
+      this.ShowLogin = res.data.all;
       if (this.ShowLogin == "true") {
-        this.ShowLogin = true;
-      } else if (this.ShowLogin == "false") {
         this.ShowLogin = false;
+      } else if (this.ShowLogin == "false") {
+        this.ShowLogin = true;
       }
     }
   },
   mounted() {
-    // this.loadLogin();
+    this.loadLogin();
     this.loadAvatar()
   }
 }
@@ -94,7 +94,7 @@ export default {
             <input class="form-control  inp " type="search" placeholder="Найти статью" aria-label="Search">
 
           </form> -->
-          <div class="them-container" v-if="true">
+          <div class="them-container" v-if="this.ShowLogin">
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container">
