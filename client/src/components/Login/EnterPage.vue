@@ -76,7 +76,7 @@ export default {
             } else if(res.data.res == 'wrong!') {
                 this.error = 'Пароль и почта не совпадают!';
             } else {
-                this.error = 'Неизветсная ошибка.';
+                this.error = 'Неизвестная ошибка.';
             }
 
         },
