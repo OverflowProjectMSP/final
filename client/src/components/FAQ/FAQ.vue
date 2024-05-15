@@ -58,6 +58,7 @@ export default {
             isHide: true,
 
             imgClose: 'src/assets/FAQ/close.svg',
+            Show: "",
         }
     },
     methods: {
@@ -67,7 +68,16 @@ export default {
             faq.isHide = !faq.isHide;
 
             // this.isHide = !this.isHide;
-        }
+        },
+        async loadLogin() {
+        let res = await axios.get(`/check-r`);
+        this.Show = res.data.all;
+      if (this.Show == "true") {
+        this.Show = true;
+      } else if (this.ShowLogin == "false") {
+        this.Show = false;
+      }
+    }
     }
 }
 </script>
@@ -87,7 +97,7 @@ export default {
             </p>
         </div>
     </div>
-    <Form />
+    <Form  v-if="this.Show" />
 </template>
 
 <style scoped>
