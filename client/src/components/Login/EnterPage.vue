@@ -17,6 +17,7 @@ export default {
             showPassword: 'password',
             isShowExPassword: false,
             showExPassword: 'password',
+            a: "",
         }
     },
     methods: {
@@ -66,14 +67,13 @@ export default {
         },
         
         async login() {
-            await axios.post('/login', {
+            let res = await axios.post('/login', {
                 email: this.email,
                 password: this.password
             });
-            console.log(res.data.all)
-            if(res.data.res == 'ok') {
+            if(res.data.message == 'ok') {
                 this.$router.push('/');
-            } else if(res.data.res == 'wrong!') {
+            } else if(res.data.message == 'wrong!') {
                 this.error = 'Пароль и почта не совпадают!';
             } else {
                 this.error = 'Неизвестная ошибка.';

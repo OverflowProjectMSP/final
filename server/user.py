@@ -380,15 +380,13 @@ def login():
 
     post_data = request.get_json()
     a = login_user(post_data.get('email'), post_data.get('password'))
-
-    if a[0] == 'ok': #Вызов и debug функции проверки пароля пользователя (вход в аккаунт)
+    if a[0] == "ok": #Вызов и debug функции проверки пароля пользователя (вход в аккаунт)
         session['id'] = a[1]
         session.permanent = True
         session.modified = True
         response_object['message'] = 'ok'
 
     else: response_object['message'] = 'wrong!'
-
     return response_object
 
 #Обновление пароля
