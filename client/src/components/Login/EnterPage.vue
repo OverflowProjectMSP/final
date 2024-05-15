@@ -7,13 +7,12 @@ export default {
             email: '',
             password: '',
             exPassword: '',
-            nickname: ``,
             
             error: '',
             eyeOpen1: true,
             eyeOpen2: true,
             eyeImg1: '/src/assets/eye.svg',
-            eyeImg2: '/src/assets/eye.svg', 
+            eyeImg2: '/src/assets/eye.svg',
             isShowPassword: false,
             showPassword: 'password',
             isShowExPassword: false,
@@ -30,8 +29,6 @@ export default {
                 this.error = '*Вы не повторили пароль*'
             } else if (this.password !== this.exPassword) {
                 this.error = '*Пароли не совпадают'
-            } else if (this.password !== this.exPassword) {
-                this.error = '*Пароли не совпадают'
             }
             else {
                 this.error = '';
@@ -39,7 +36,9 @@ export default {
             }
 
 
-
+            if (this.password !== this.exPassword) {
+                this.error = '*Пароли не совпадают'
+            }
         },
         toggleVisibility1() {
             this.isShowPassword = !this.isShowPassword;
@@ -66,12 +65,20 @@ export default {
             }
         },
         
-        async register() {
+        async login() {
             await axios.post('/login', {
-                name: this.nickname,
                 email: this.email,
                 password: this.password
             });
+
+            if(res.data.res == 'ok') {
+                this.$router.push('/Profile');
+            } else if(res.data.res == 'wrong!') {
+                this.error = 'Пароль и почта не совпадают!';
+            } else {
+                this.error = 'Неизветсная ошибка.';
+            }
+
         },
     }
 }
