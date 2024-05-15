@@ -59,6 +59,10 @@ export default createRouter({
       component: () => import("../components/Quetions/Quetions.vue"),
     },
     {
+      path: "/NewQuetion",
+      component: () => import("../components/Quetions/NewQuetion.vue"),
+    },
+    {
       path: "/Profile",
       component: () => import("../components/Profile/Profile.vue"),
     },
