@@ -86,7 +86,7 @@ def helper(phone, email, msg, id_u):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f'''INSERT INTO helper VALUES({uuid.uuid4().hex}, {msg}, {phone}, {email}, {id_u})''')
+        cursor.execute(f"INSERT INTO helper VALUES('{uuid.uuid4().hex}', '{msg}', '{phone}', '{email}', '{id_u}')")
         
         pg.commit()
 
