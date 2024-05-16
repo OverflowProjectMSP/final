@@ -6,39 +6,33 @@ export default {
         return {
             devolepers: [
                 {
-                    name: `kosty_py`,
-                    role: `Тимлид/Старший Бекенд разработчик`,
-                    imageProfileDS: `kosty-py.png`,
+                    name: `Суров Константин`,
+                    role: `Тимлид/Старший Бэкенд разработчик`,
+                    imageProfileDS: `kostya.jpg`,
                     dsProfile: `kosty_py`
                 },
                 {
-                    name: `kinestrik`,
-                    role: `Заместитель тимлида/Старший фронтенд разработчик`,
-                    imageProfileDS: `Kinestrick.png`,
+                    name: `Шадловский Евгений`,
+                    role: `Заместитель тимлида/Старший Фронтенд разработчик`,
+                    imageProfileDS: `jena.png`,
                     dsProfile: `kinestrik`
                 },
                 {
-                    name: `therisingdream`,
-                    role: `Заместитетель ведущего Фронтенд разработчика`,
-                    imageProfileDS: `therisingdream.png`,
-                    dsProfile: `therisingdream`
-                },
-                {
-                    name: `febolo`,
-                    role: `Ведущий Бэкенд разработчик`,
-                    imageProfileDS: `febolo.png`,
+                    name: `Корецкий Александр`,
+                    role: `Заместитель ведущего Бэкенд разработчика`,
+                    imageProfileDS: `sanya.png`,
                     dsProfile: `febolo`
                 },
                 {
-                    name: `garleenn`,
-                    role: `Лучший фронтенд разработчик`,
+                    name: `Горбенко Иван`,
+                    role: `Заместитетель ведущего Фронтенд разработчика`,
                     imageProfileDS: `garleen.png`,
                     dsProfile: `garleenn`,
                     tgProfile: `Garleen`,
                     vkProfile: `ivangorbenko52`,
                 },
                 {
-                    name: `HaBBeR`,
+                    name: `Сары Максим`,
                     role: `Фронтенд разработчик`,
                     imageProfileDS: `hebber.png`,
                     dsProfile: `habbock`,
@@ -46,16 +40,22 @@ export default {
                     vkProfile: `b13hbbr`,
                 },
                 {
-                    name: `kenmaxd`,
+                    name: `Лазутин Егор`,
+                    role: `Фронтенд разработчик`,
+                    imageProfileDS: `therisingdream.png`,
+                    dsProfile: `therisingdream`
+                },
+                {
+                    name: `Маврин Никита`,
+                    role: `Дизайнер`,
+                    imageProfileDS: `nekit.jpg`,
+                    dsProfile: `nikit0_17`
+                },
+                {
+                    name: `Беднин Арсений`,
                     role: `Дизайнер`,
                     imageProfileDS: `kenma.gif`,
                     dsProfile: `kenmaxd`
-                },
-                {
-                    name: `nikit0_17`,
-                    role: `Дизайнер`,
-                    imageProfileDS: `disainerImg.png`,
-                    dsProfile: `nikit0_17`
                 },
             ],
 
@@ -124,11 +124,11 @@ export default {
         }
     }
 }
-</script>
+</script> 
 
 <template>
     <hr>
-    <div class="develop d-flex gap-3 justify-content-center align-items-center gap-2 mx-5 flex-column my-4">
+    <div class="develop mb-5 d-flex gap-3 justify-content-center align-items-center gap-2 mx-5 flex-column my-4">
         <h1>Команда разработчиков</h1>
         <div class="dev-container d-flex flex-row">
             <div @click="prevDev" role="button"
@@ -138,25 +138,25 @@ export default {
                         <div class="dev-card d-flex flex-column gap-0 align-items-center" @click="showDev(this.index)">
                             <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index]"
                                 :alt="names[index]">
-                            <h4 class="mt-2">{{ names[index] }}</h4>
+                            <h4 class="mt-2 text-center">{{ names[index] }}</h4>
                             <span class="text-center">{{ roles[index] }}</span>
                         </div>
                         <div class="dev-card dev-card-2 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index1)">
                             <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index1]"
                                 :alt="names[index1]">
-                            <h4 class="mt-2">{{ names[index1] }}</h4>
+                            <h4 class="mt-2 text-center">{{ names[index1] }}</h4>
                             <span class="text-center">{{ roles[index1] }}</span>
                         </div>
                         <div class="dev-card dev-card-3 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index2)">
                             <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index2]"
                                 :alt="names[index2]">
-                            <h4 class="mt-2">{{ names[index2] }}</h4>
+                            <h4 class="mt-2 text-center">{{ names[index2] }}</h4>
                             <span class="text-center">{{ roles[index2] }}</span>
                         </div>
                         <div class="dev-card dev-card-4 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index3)">
                             <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index3]"
                                 :alt="names[index3]">
-                            <h4 class="mt-2">{{ names[index3] }}</h4>
+                            <h4 class="mt-2 text-center">{{ names[index3] }}</h4>
                             <span class="text-center">{{ roles[index3] }}</span>
                         </div>
                     </div>
@@ -184,6 +184,8 @@ export default {
 
 .dev-card img {
     max-width: 250px;
+    max-height: 250px;
+    width: fit-content;
 }
 
 @media (max-width: 1624px) {
