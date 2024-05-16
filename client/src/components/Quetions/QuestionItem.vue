@@ -1,55 +1,53 @@
 <script>
-import axios, { all } from 'axios';
+import axios from 'axios';
 
 export default {
     data() {
         return {
-            question: { //структура получения всех данных с сервера(УСТАРЕВШАЯ!!!);
-                id: 123,
-                accountInfo: {
-                    accountIcon: 'person.svg',
-                    accountName: 'Nick Endgy',
-                },
-                questionInfo: {
-                    title: 'Как сделать регистрацию с использованием только JavaScript?',
-                    description: `Подскажите, пожалуйста, как сделать регистрацию пользователя на сайте? Сайт у меня на node.js. Я первый раз такую форму делаю и не знаю какой путь выбрать. Какой вариант лучше? Просто к кнопке "зарегистрироваться" подвязать эвент и в нем делать функцию? Или как-то использовать method="post" у формы? 
-                                <br>UPD:А как fetch() использовать? Я написал такой код, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
-                    level: `Лёгкий`,
-                    imageInQuetion: 'test',
-                    answer: 28,
-                    views: 473,
-                    data: `05.01.2024 12:31`,
-                    Decided: true,
-                },
-                answers: [
-                    {
-                        answerUserInfo: {
-                            accountIcon: 'ava.png',
-                            accountName: 'JavaScriptPRO',
-                            rang: `Решала`,
-                        },
-                        answerInfo: {
-                            text: `123123123, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
-                            comment: 52,
-                            likes: 52,
-                            dislike: 36,
-                        },
-                    },
-                ],
-            },
+            // question: { //структура получения всех данных с сервера
+            //     id: 123,
+            //     accountInfo: {
+            //         accountIcon: 'person.svg',
+            //         accountName: 'Nick Endgy',
+            //     },
+            //     questionInfo: {
+            //         title: 'Как сделать регистрацию с использованием только JavaScript?',
+            //         description: `Подскажите, пожалуйста, как сделать регистрацию пользователя на сайте? Сайт у меня на node.js. Я первый раз такую форму делаю и не знаю какой путь выбрать. Какой вариант лучше? Просто к кнопке "зарегистрироваться" подвязать эвент и в нем делать функцию? Или как-то использовать method="post" у формы? 
+            //                     <br>UPD:А как fetch() использовать? Я написал такой код, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
+            //         level: `Лёгкий`,
+            //         imageInQuetion: 'test',
+            //         answer: 28,
+            //         views: 473,
+            //         data: `05.01.2024 12:31`,
+            //         Decided: true,
+            //     },
+            //     answers: [
+            //         {
+            //             answerUserInfo: {
+            //                 accountIcon: 'ava.png',
+            //                 accountName: 'JavaScriptPRO',
+            //                 rang: `Решала`,
+            //             },
+            //             answerInfo: {
+            //                 text: `123123123, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
+            //                 comment: 52,
+            //                 likes: 52,
+            //                 dislike: 36,
+            //             },
+            //         },
+            //     ],
+            // },
+
+            questionInfo: {}, //главная возня
+            answers: [],
+            answerUser: [],
+            userCreater: {},
+            userNow: {},
+            text: ``,
 
             user: {},
 
-            states: {}, //главная возня
-            answers: [],
-            commentUser: [],
-            answerUser: [],
-            userCreater: {},
-
-            text: ``,
-            
-            id_: null,
-
+            text: '',
             symbols: 0,
             symbCount: false,
             isBold: false,
@@ -59,41 +57,38 @@ export default {
             countmin: 0,
 
             isCheck: null,
-            ava: ``,
 
-            name: ``,
-
-
-            avaComment: ``,
         }
-    },
-
-    mounted() {
-        this.loadState();
-        this.loadAnswerUser();
-        this.checkUser();
-        this.loadUserInfo();
     },
     
     methods: {
-        async loadState() {
+        async loadQuestion() {
             let responce = await axios.get(`/show-one`, {
                 params: {
                     id: this.$route.query.id,
-                    q: false,
+                    q: true,
                 }
             });
-            this.states = responce.data.all.states;
+            this.questionInfo = responce.data.all.question;
             this.answers = responce.data.all.answers;
         },
 
-        async loadUserInfo() {
-            let res = await axios.get('/user', {
+        loadAnswerUser() {
+            this.userCreater = this.loadUsers(this.states.id_u);
+
+            this.answers.forEach((item) => {
+                let user = this.loadUsers(item);
+                this.answerUser.push(user)
+            });
+        },
+
+        async loadUsers(item) {
+            let res = await axios.get('/user-not-all', {
                 params: {
-                    id: this.states.id_u,
+                    id: item.id_user,
                 }
             });
-            this.user = res.data.all;
+            return res.data.all;
         },
 
         counterPlus(index) {
@@ -133,64 +128,42 @@ export default {
             }
         },
 
-        loadAnswerUser() {
-            this.userCreater = this.loadUsers(this.states.id_u);
-
-            this.answers.forEach((item) => {
-                let user = this.loadUsers(item);
-                this.answerUser.push(user)
-            });
-        },
-
-        async loadUsers(item) {
-            let res = await axios.get('/user-not-all', {
-                params: {
-                    id: item.id_user,
-                }
-            });
-            return res.data.all;
-        },
-
         async addComment() {
             await axios.post(`/answers`, {
                     id: this.$route.query.id,
-                    q: false,
+                    q: true,
                     text: this.text,
                 },
             );
             this.text = ``;
-            this.loadState();
+            this.loadQuestion();
         },
-        async deleteState() {
+        async deleteQuestion() {
             await axios.delete('/delete', {
                 params:{
                     id: this.$route.query.id,
-                    q: 'false',
+                    q: true,
                 }
             });
         },
-
-        // async loadAvatar() {
-        //     let res = await axios.get('/avatarka', {
-        //         params: {
-        //             id: this.$route.query.id,
-        //         }
-        //     });
-        //     this.ava = res.data.link;
-        // },
-
         async checkUser() {
             let res = await axios.get('/check', {
                 params: {
-                    id: this.states.id_u,
+                    id: this.questionInfo.id_u
                 }
             });
             this.isCheck = Boolean(res.data.isEdit);
         },
-
-        // async loadAvatars() {
-        //     let trertrestrestrestrestrestrestrestrestrestres = await axios.hui('beckend-vojna-ta-eche');
-        // }
+        async getNowUser() {
+            let res = await axios.get('/session');
+            this.userNow = res.data.id;
+        },
+    },
+    mounted() {
+        this.loadQuestion();
+        this.checkUser();
+        this.loadAnswerUser();
+        this.getNowUser();
     },
 }
 
@@ -201,63 +174,50 @@ export default {
         <div class="content-1">
             <div class="account justify-content-between">
                 <div class="creator-info d-flex flex-row align-items-center gap-3">
-                    <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
+                    <img class="accountIcon" :src="userCreater.avatar" width="70px"
+                        alt="">
                     <div class="name-ring">
                         <div>
                             <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
                         </div>
                     </div>
                 </div>
-                <div class="action-select" v-if="isCheck">
+                <div class="action-select" v-if="isCheck == 'true'">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border">Дейсвие</button>
                         <ul class="dropdown-menu 52-da-sdravstvuet-sankt-piterburg-i-etot-gorod-nash-ya-kazhdiy">
                             <li><a class="dropdown-item" href="#/Quetion">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
+                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="title">
-                <h3>{{ states.discriptions }}</h3>
+                <h3>{{ questionInfo.description }}</h3>
             </div>
             <div class="description">
-                <p v-html="breakLines(states.details)"></p>
-                <!-- <img class="user-select-none" :src="states.imageInQuetion" 
-                    v-if="states.image"> -->
+                <p v-html="breakLines(questionInfo.details)"></p>
+                <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'"
+                    alt="">
             </div>
             <div class="about">
-                <p>{{ states.data }}</p>
+                <p>{{ questionInfo.data }}</p>
+                <p>{{ questionInfo.views }} просмотра</p>
             </div>
         </div>
-        
-        <div class="content-3">
-            <div class="account" v-for="user in answerUser">
-                <img class="accountIcon" :src="user.avatar" width="70px" alt="">
+        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+
+        <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
+            <div class="account" v-for="ansUser in answerUser">
+                <img class="accountIcon" :src="'src/assets/' + ansUser.avatar" width="70px" :alt="ansUser.username">
                 <div class="name-ring">
-                    <div>
-                        <a href="#!"><span class="name">{{ user.username }}</span></a>
-                    </div>
+                    <a :href="`Profile?id=${ansUser.id}`">
+                        <p><span class="name" role="button">{{ ansUser.username }}</span></p>
+                    </a>
                 </div>
             </div>
-            <div class="content-3-without mb-3">
-                <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                placeholder="Оставь свой комментарий:"></textarea>
-                <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
-            </div>
-            <div class="send-ans d-flex justify-content-end">
-                <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
-            </div>
-        </div>
-        
-        <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
-    
-        <div class="content-2 mt-2" v-for="answer in answers" v-if="this.answers.length != 0">
-            <div class="account" v-for="commUser in answerUser">
-                <img class="accountIcon" :src="'src/assets/' + commUser.avatar" width="70px" alt="">
-                <div class="name-ring">
-                    <p><span class="name" role="button">{{ commUser.username }}</span></p>
-                </div>
+            <div class="title">
+                <h3>{{ questionInfo.description }}</h3>
             </div>
             <div class="description mt-3">
                 <p v-html="breakLines(answer.text)"></p>
@@ -275,10 +235,35 @@ export default {
                     </div> -->
                 </div>
                 <div class="right">
-                    <a href="/"><button class="toMain btgr">На главную</button></a>
+                    <a href="#/Main"><button class="toMain btgr">На главную</button></a>
                 </div>
             </div>
         </div>
+        <div class="content p-2" v-else>
+            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
+            </h2>
+        </div>
+
+
+        <div class="content-3">
+            <div class="account">
+                <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+                <div class="name-ring">
+                    <div>
+                        <a href="#!"><span class="name">{{ userNow.username }}</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-3-without mb-3">
+                <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input"
+                    placeholder="Оставь свой ответ:" :class="{ 'fw-bold': isBold, 'fst-italic': isItalic }"></textarea>
+                <p :class="{ 'red-text': this.symbCount }">{{ question.symbols }} / 2000</p>
+            </div>
+            <div class="send-ans d-flex justify-content-end">
+                <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -525,13 +510,15 @@ img {
 
 .content-3 {
     margin-top: 50px;
+    margin-bottom: 50px;
+
 }
 
 .content-3-without {
     margin-top: 13px;
 
     width: 100%;
-    /* height: 100px !important; */
+    height: 250px;
 
     padding: 19px;
 
@@ -556,7 +543,7 @@ img {
 
 .comm-input {
     width: 100%;
-    height: 100px !important;
+    height: 190px;
 
     border: none;
     resize: none;
@@ -589,6 +576,10 @@ img {
     .comm-input {
         height: 250px;
     }
+
+    .content-3-without {
+        height: 310px;
+    }
 }
 
 @media (max-width: 770px) {
@@ -605,6 +596,12 @@ img {
     .comm-input {
         height: 350px;
     }
+
+    .content-3-without {
+        height: 410px;
+    }
+
+
 }
 
 

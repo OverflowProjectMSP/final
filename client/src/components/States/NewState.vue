@@ -40,25 +40,12 @@ export default {
     <div class="name">
         <h4>Название статьи</h4>
         <p class="transparent mb-0">Сформулируйте название так, чтобы сразу было понятно, о чём речь.</p>
-        <form>
-            <input type="email" class="form-control" id="inputlg" v-model="form.discriptions">
-        </form>
+        <input type="email" class="form-control" id="inputlg" v-model="form.discriptions">
     </div>
     <div class="text">
         <h4>Текст статьи</h4>
         <p class="transparent">Делайте что хотите, в ваших руках все инструменты!</p>
         <div class="string">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary"><b>B</b></button>
-                <button type="button" class="btn btn-secondary"><i>i</i></button>
-                <button type="button" class="btn btn-secondary">&#9939;</button>
-                <button type="button" class="btn btn-secondary"><i>
-                        <>
-                    </i></button>
-                <button type="button" class="btn btn-secondary"><i>...</i></button>
-                <button type="button" class="btn btn-secondary">&#11015; <b>Добавить файл</b></button>
-                <button type="button" class="btn btn-secondary">&#11014; <b>Добавить фото</b></button>
-            </div>
             <div class="forms"> 
                 <div class="form1">
                     <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">

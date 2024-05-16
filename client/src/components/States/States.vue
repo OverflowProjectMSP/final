@@ -105,7 +105,7 @@ export default {
 
 
 <!-- Див с виджетами -->
-<div class="conr container">
+<div class="conr">
 <div class="con mt-3" v-for="item in states">
 <a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
     <!-- <vid-comp :item="item" role="button" /> -->

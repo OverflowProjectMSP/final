@@ -16,12 +16,14 @@ export default {
             //     //     language: 'Python',
             //     //     complexity: 'Средне',
             //     //     id: 0
-            // }
+            // },
+
+            isCheck_class: `ch check-false`,
         }
 
     },
     props: {
-        item: Object,
+        quetion: Object,
         Show: Boolean,
     }
 
@@ -29,307 +31,356 @@ export default {
 </script>
 
 <template>
-    <div class="vid" role="button">
-        <div class="left">
-            <div class="top-1">
-                <div class="name">
-                    <p><img src="" alt="" class="t">{{ item.language }}</p>
+    <a :href="`/QuestionItem?id=${quetion.id}&q=true`">
+        <div class="window">
+            <div class="main-container">
+                <div class="cont">
+                    <div class="account">
+                        <!-- <img :src="'src/assets/' + avatar" alt=""> -->
+                        <a href="#!"><p>{{ quetion.tag }}</p></a>
+                    </div>
+                    <div class="text">
+                        <h5>{{ quetion.discriptions }}</h5>
+                    </div>
+                    <div class="info">
+                        <p>{{ quetion.subscribers }} подписчиков</p>
+                        <p>{{ quetion.date }}</p>
+                        <p>{{ quetion.views }} просмотров</p>
+                    </div>
                 </div>
-                <div class="id middle">
-                    <p><img src="" alt="" class="t">{{ item.complexity }}</p>
+                <div class="ans_check">
+                    <div class="d-flex flex-column check">
+                        <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
+                        <p :class="isCheck_class">{{ quetion.answers }}</p>
+                        <p :class="isCheck_class">Комментарий (-ев)</p>
+                    </div>
+                    <a href="#!"><button>Ответить</button></a>
                 </div>
-            </div>
-            <div class="mid-1">
-                <p class="name-limit">{{ item.title }}</p>
-            </div>
-            <div class="bottom-1">
-                <div class="el">{{ item.subscribers }} подписчика(ов)</div>
-                <div class="el">{{ item.hours }} час(ов) назад</div>
-                <div class="el -d">{{ item.views }} просмотр(ов)</div>
             </div>
         </div>
-        <div class="right">
-            <div class="right-in">
-                <p class="t-alig-c">{{ item.answers }}</p>
-                <p>Ответ(ов)</p>
-            </div>
-        </div>
-    </div>
+    </a>
 </template>
 
 <style>
-:root {
-    --size-20: 20px;
-    --size-26: 26px;
-    --size-22: 22px;
-    --size-18: 18px;
-}
-
-.t-alig-c {
-    text-align: center;
-}
-
-/* виджет с вопросами */
-.left {
-    display: flex;
-    flex-direction: column;
-}
-
-.vid {
-    background-color: #EEF1F4;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    margin: 0 20% 15px 20%;
-}
-
-.vid:last-child {
-    margin-bottom: 0;
-}
-
-/* общее расположение элементов */
-
-.right {
-    display: flex;
-    align-items: center;
-}
-
-.right-in {
-    display: flexbox;
-}
-
-.right p {
-    margin: 0;
-    margin: 0;
-    color: #AEB8BC;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-
-/* расцветовка */
-.light {
-    color: #488D57
-}
-
-.middle {
-    color: #D8A326;
-}
-
-.hard {
-    color: #D9382E;
-}
-
-/* левая чать виджета */
-
-/* Верх */
-.top-1 {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 10px;
-}
-
-.top-1 p {
-    margin: 0;
-}
-
-.t {
-    vertical-align: middle;
-    width: 10px;
-    height: 10px;
-}
-
-/* серидина */
-.mid-1 {
-    display: flex;
-    flex-wrap: wrap;
-
-    font-size: 28px;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-}
-
-.mid-1 p {
-    margin: 0;
-    text-wrap: wrap;
-}
-
-.name-limit {
-    width: 44ch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-/* низ */
-.bottom-1 {
-    display: flex;
-    font-size: 15px;
-    color: #AEB8BC;
-}
-
-.el {
-    border-right: 1px solid #AEB8BC;
-    padding: 7px;
-}
-
-.el-d {
-    border-right: none;
-    padding: 7px;
-}
-
-.-d {
-    border-right: none;
-}
-
-.el p {
-    margin: 0;
-}
-
-
-/* анимация */
-div.vid {
-    transition: all 0.5s;
-}
-
-div.vid:hover {
-    transform: translateY(-10px);
-    box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
-}
-
-/* Адаптивка */
-
-@media(max-width: 1505px) {
-    .mid-1 p {
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        display: inline-block;
-        text-overflow: ellipsis;
+.window {
+        display: flex;
+        justify-content: center;
     }
 
-    .mid-1 {
-        width: 85%;
+    .main-container {
+        margin: 20px;
+
+        width: auto;
+        height: auto;
+        border: 1px solid #121212;
+        border-radius: 15px;
+
+        padding: 10px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
     }
 
-    .left {
-        width: 75%;
-    }
-}
-
-@media(max-width: 1200px) {
-    .q {
-        font-size: var(--size-20);
-    }
-}
-
-@media(max-width: 992px) {
-    .q {
-        font-size: var(--size-18);
+    @media (min-width: 1900px) {
+        .main-container {
+            width: 60% !important;
+        }
     }
 
-    .quest {
-        margin: 0 15%;
+    .account {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        
     }
 
-    .mid-1 p {
-        font-size: 24px;
-    }
-
-}
-
-@media(max-width: 910px) {
-    .name-limit {
-        width: 17ch;
-    }
-
-}
-
-@media(max-width: 576px) {
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: var(--size-20);
-    }
-
-    .bottom-1 {
-        font-size: 13px;
-    }
-
-    .right p {
-        font-size: var(--size-18);
-    }
-
-    .imp-1 {
-        padding-top: 13px;
-    }
-}
-
-@media(max-width: 768px) {
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: var(--size-20);
-    }
-
-    .bottom-1 {
-        font-size: 13px;
-    }
-
-    .right p {
-        font-size: var(--size-18);
-    }
-
-    .imp-1 {
-        padding-top: 13px;
-    }
-}
-
-@media(max-width: 540px) {
-    .vid {
-        flex-direction: column;
-    }
-}
-
-@media(max-width: 500px) {
-    .vid {
+    .account p {
         margin: 0;
-        margin-bottom: 5px;
-    }
-}
+        font-size: 18px;
+        font-weight: 700;
+        color: #8355E3;
 
-@media(max-width: 400px) {
-    .bottom-1 {
+        font-family: "Baloo Chettan 2", sans-serif;
+    }
+
+    
+
+    .account p:active {
+        color: #51309a;
+    }
+
+    .account a {
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    .account img {
+        width: 40px;
+        border-radius: 50px;
+        border: 1px solid #121212; 
+    }
+
+    .cont {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        /* margin-top: -45px; */
+    }
+
+    .text h5 {
+        font-size: 20px;
+
+        width: 38ch;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .info {
+        margin-top: -5px;
+        display: flex;
+    }
+    
+    .info p {
+        font-size: 15px;
+        color: #3B82F6;
+        border-right: 1.5px solid #3B82F6;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .info p:last-child {
+        border-right: none;
+    }
+
+    .info p:first-child {
+        padding-left: 0px;
+    }
+
+    .ans_check {
+        display: flex;
         flex-direction: column;
     }
 
-    .el {
-        width: 100px;
-        border-right: none;
-        border-bottom: 1px solid #AEB8BC;
+    .ans_check button {
+        width: 130px;
+        height: auto;
+        font-size: 18px;
+        background-color: #3B82F6;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+
+        margin-bottom: 15px;
+        transition: all 100ms;
+
+        margin-top: 20px;
     }
 
-    .el:last-child {
-        margin-bottom: 10px;
+    
+
+    .ans_check button:active {
+        background-color: #1d52a6;
     }
-}
+
+    .ch {
+        margin: 0;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .check-false {
+        color: #AEB8BC;
+    }
+
+    .check-true {
+        color: #65C178;
+    }
+
+    .check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    /* АДАПТИВКА */
+
+
+    @media (hover: hover) {
+        .account p:hover {
+            color: #663ebc;
+        }
+
+        .ans_check button:hover {
+            background-color: #2e6ac9;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .main-container {
+            flex-direction: column;
+            align-items: start;
+            
+        }
+
+        .ans_check button {
+            width: 250px;
+            margin-left: 160px;
+            margin-bottom: 0;
+        }
+
+        .ans_check {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            margin-top: -40px;
+        }
+
+        .check {
+            margin-top: 0;
+        }
+    }
+
+    @media (max-width: 540px) {
+        .account img {
+            width: 60px;
+        }
+
+        .account p {
+            font-size: 20px;
+        }
+
+        .account a {
+            font-size: 18px;
+        }
+
+        .info {
+            flex-direction: column;
+        }
+
+        .info p {
+            border-right: none;
+            padding: 0;
+            border-bottom: 2px solid #3B82F6;
+            width: 150px;
+            padding-bottom: 10px;
+        }
+
+        .text h5 {
+            font-size: 18px;
+        }
+
+        .ans_check {
+            gap: 0;
+        }
+
+        .ans_check button {
+            margin-right: 30px;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .ans_check {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ans_check button {
+            width: 250px;
+        }
+
+        .text h5 {
+            width: 30ch;
+        }
+    }
+
+    @media (max-width: 430px) {
+        .account img {
+            width: 40px;
+        }
+
+        .account p {
+            font-size: 16px;
+        }
+
+        .account a {
+            font-size: 12px;
+        }
+
+        .text h5 {
+            width: 20ch;
+        }
+
+        .main-container {
+            flex-direction: row;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        .info p {
+            width: 120px;
+        }
+
+        .ans_check button {
+            width: 100px;
+            margin-top: 100px;
+            margin-left: -30px;
+        }
+
+        .ans_check {
+            align-items: flex-start;
+        }
+
+        .check {
+            margin-left: 35px;
+        }
+
+        /* .ans_check button {
+            width: 100px;
+            font-size: 16px;
+            margin-right: -20;
+
+        } */
+    }
+
+    @media (max-width: 540px) {
+        .check {
+            position: absolute;
+            top: 82px;
+            right: 10px;
+        }
+
+        .ans_check button {
+            position: absolute;
+            bottom: 20px;
+            right: -20px;
+
+            width: 80px;
+            font-size: 16px;
+
+        }
+
+        .main-container {
+            position: relative;
+
+        }
+    }
+
+    @media (max-width: 500px) {
+        /* .ans_check button {
+            right: 50px;
+        }
+
+        .check {
+            right: 85px;
+        } */
+
+        .main-container {
+            width: 400px;
+        }
+    }
 </style>

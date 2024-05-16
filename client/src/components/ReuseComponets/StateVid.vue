@@ -32,32 +32,34 @@ export default {
 </script>
 
 <template>
-    <div class="window">
-        <div class="main-container">
-            <div class="cont">
-                <div class="account">
-                    <!-- <img :src="'src/assets/' + avatar" alt=""> -->
-                    <a href="#!"><p>{{ item.tag }}</p></a>
+    <a :href="`/StateItem?id=${item.id}&q=false`">
+        <div class="window">
+            <div class="main-container">
+                <div class="cont">
+                    <div class="account">
+                        <!-- <img :src="'src/assets/' + avatar" alt=""> -->
+                        <a href="#!"><p>{{ item.tag }}</p></a>
+                    </div>
+                    <div class="text">
+                        <h5>{{ item.discriptions }}</h5>
+                    </div>
+                    <div class="info">
+                        <p>{{ subs }} подписчиков</p>
+                        <p>{{ date }}</p>
+                        <p>{{ view }} просмотров</p>
+                    </div>
                 </div>
-                <div class="text">
-                    <h5>{{ item.discriptions }}</h5>
+                <div class="ans_check">
+                    <div class="d-flex flex-column check">
+                        <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
+                        <p :class="isCheck_class">{{ answerCount }}</p>
+                        <p :class="isCheck_class">Комментарий (-ев)</p>
+                    </div>
+                    <a href="#!"><button>Ответить</button></a>
                 </div>
-                <div class="info">
-                    <p>{{ subs }} подписчиков</p>
-                    <p>{{ date }}</p>
-                    <p>{{ view }} просмотров</p>
-                </div>
-            </div>
-            <div class="ans_check">
-                <div class="d-flex flex-column check">
-                    <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
-                    <p :class="isCheck_class">{{ answerCount }}</p>
-                    <p :class="isCheck_class">Ответ</p>
-                </div>
-                <a href="#!"><button>Ответить</button></a>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 
 <style>
@@ -78,7 +80,14 @@ export default {
 
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 50px;
+    }
+
+    @media (min-width: 1900px) {
+        .main-container {
+            width: 60% !important;
+        }
     }
 
     .account {

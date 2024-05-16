@@ -1,8 +1,7 @@
 <script>
 import axios from 'axios';
-import VidQuetions from './components/MainComponents/VidQuetions.vue';
-import ModelWind from './components/СomponetsForPages/ModelWind.vue';
-
+import VidQuetions from '../ReuseComponets/VidComp.vue';
+import ModelWind from '../ReuseComponets/StateVid.vue';
 
 export default {
     components: {
@@ -13,37 +12,28 @@ export default {
     data() {
         return {
             quetions: [
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 50,
-                //     data: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Python',
-                //     complexity: 'Средне',
-                //     id: 0
-
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'C++',
-                //     complexity: 'Средне',
-                //     id: 1
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 45,
-                //     hours: 0,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Асембелер',
-                //     complexity: 'Средне',
-                //     id: 2
-                // },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Js',
+                    subscribers: 50,
+                    date: `52.52.52`,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: true,            
+                },
+                {
+                    discriptions: `Python IS PARASHА!!`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    date: `52.52.52`,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Тяжело',
+                    id: 1,
+                    question: true,            
+                },
             ],
 
             filters: {
@@ -54,11 +44,13 @@ export default {
             Show: false,
         }
     },
+    mounted() {
+        this.loadQuestions();
+    },
     methods: {
         async loadQuestions() {
             let res = await axios.get('/show-questions');
             this.quetions = res.data.all;
-            console.log(this.quetions)
         },
 
         async filtre() {
@@ -79,18 +71,11 @@ export default {
                 }
             });
             this.quetions = res.data;
-            console.log(this.quetions)
         },
 
         OpenModal() {
             this.Show = !this.Show
         },
-    },
-    mounted() {
-        this.loadQuestions();
-        setInterval(() => {
-            this.loadQuestions();
-        }, 10000);
     },
 }
 </script>
@@ -134,8 +119,8 @@ export default {
     </div>
 
 
-    <!-- <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
-    <model-wind v-if="Show" @CloseModal="CloseModal" /> -->
+    <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
+    <model-wind v-if="Show" @CloseModal="CloseModal" />
 
 </template>
 
@@ -150,6 +135,7 @@ a {
 
 .quest-menu {
     margin: 0 20% 15px 20%;
+    /* min-height: 57.5vh; Изменить на 52 */
 }
 
 @media(max-width: 500px) {
