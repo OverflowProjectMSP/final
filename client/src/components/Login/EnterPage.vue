@@ -11,8 +11,8 @@ export default {
             error: '',
             eyeOpen1: true,
             eyeOpen2: true,
-            eyeImg1: '/src/assets/eye.svg',
-            eyeImg2: '/src/assets/eye.svg',
+            eyeImg1: '/src/assets/Login/eye-open.svg',
+            eyeImg2: '/src/assets/Login/eye-open.svg',
             isShowPassword: false,
             showPassword: 'password',
             isShowExPassword: false,
@@ -47,10 +47,10 @@ export default {
 
             if (this.isShowPassword) {
                 this.showPassword = 'text'
-                this.eyeImg1 = '/src/assets/svg-editor-image2.svg'
+                this.eyeImg1 = '/src/assets/Login/eye-close.svg'
             } else {
                 this.showPassword = 'password'
-                this.eyeImg1 = '/src/assets/eye.svg'
+                this.eyeImg1 = '/src/assets/Login/eye-open.svg'
             }
         },
         toggleVisibility2() {
@@ -59,10 +59,10 @@ export default {
 
             if (this.isShowExPassword) {
                 this.showExPassword = 'text'
-                this.eyeImg2 = '/src/assets/svg-editor-image2.svg'
+                this.eyeImg2 = '/src/assets/Login/eye-close.svg'
             } else {
                 this.showExPassword = 'password'
-                this.eyeImg2 = '/src/assets/eye.svg'
+                this.eyeImg2 = '/src/assets/Login/eye-open.svg'
             }
         },
         
@@ -93,8 +93,14 @@ export default {
             <div class="regist">
                 <form @submit.prevent="check">
                     <input v-model="email" class="inp inp-email" type="email" placeholder="Почта">
-                    <input v-model="password" class="inp inp-password" type="password" placeholder="Пароль">
-                    <input v-model="exPassword" class="inp inp-rep-password" type="password" placeholder="Повторите пароль">
+                    <div class="password-container">
+                        <input v-model="password" class="inp inp-password" :type="showPassword" placeholder="Пароль">
+                        <img width="35" :src="eyeImg1" @click="toggleVisibility1" class="eye-icon" alt="">
+                    </div>
+                    <div class="password-container">
+                        <input v-model="exPassword" class="inp inp-rep-password" :type="showExPassword" placeholder="Повторите пароль">
+                        <img width="35" :src="eyeImg2" @click="toggleVisibility2" class="eye-icon" alt="">
+                    </div>
                 </form>
                 <p class="error">{{ error }}</p>
                 <button @click="check">Войти</button>
@@ -157,6 +163,19 @@ export default {
 
         margin-right: 30px;
     }
+
+    .password-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .eye-icon {
+        position: absolute;
+        right: 60px;
+        cursor: pointer;
+    }
+
 
     .regist button {
         margin-top: 40px;
@@ -305,6 +324,10 @@ export default {
         .regist button {
             width: 100%;
         }
+
+        .eye-icon {
+            right: 40px;
+        }
     }
 
     @media (max-width: 440px) {
@@ -314,6 +337,11 @@ export default {
 
         .inp {
             width: 350px;
+        }
+
+
+        .eye-icon {
+            right: 35px;
         }
     }
     
