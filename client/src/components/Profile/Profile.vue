@@ -11,18 +11,18 @@ export default {
     data() {
         return {
             quetionsUsers: [
-                {
-                    discriptions : `Как создать переменную?`,
-                    subscribers: "NaN",
-                    hours: "NaN",
-                    views: "NaN",
-                    answers: "NaN",
-                    tag: 'Python',
-                    complexity: 'Средне',
-                    details: "Как создать атомный реактор?",
-                    id: "",
+                // {
+                //     discriptions : `Как создать переменную?`,
+                //     subscribers: "NaN",
+                //     hours: "NaN",
+                //     views: "NaN",
+                //     answers: "NaN",
+                //     tag: 'Python',
+                //     complexity: 'Средне',
+                //     details: "Как создать атомный реактор?",
+                //     id: "",
 
-                },
+                // },
                 // {
                 //     title: `Как созопоодать переменную?`,
                 //     subscribers: 50,
@@ -50,15 +50,20 @@ export default {
     }, 
     methods: {
         async allByHe(){
+            console.log(this.$route.query.id)
             let res = await axios.get('/show-all-by-user', {
                 params: {
-                    id: this.$router.query.id
+                    id: this.$route.query.id
                 }
             });
             this.quetionsUsers = res.data.all;
         },
         async loadUser() {
-            let res = await axios.get(`/user-info?id=${this.$router.query.id}`);
+            let res = await axios.get(`/user-info`, {
+                params: {
+                    id: this.$route.query.id
+                }
+            });
             this.user = res.data.all;
         }
     },
@@ -98,8 +103,8 @@ export default {
                     <p class="info">Ответов</p>
                 </div>
             </div>
-                <div class="about rounded-5">
-                    <p v-if="this.user.name"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
+                <div class="about rounded-5">       
+                    <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
                     <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }}</p>
                     <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p>
                     <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
@@ -127,14 +132,14 @@ export default {
         
         
     </div>
-    <div class="container d-flex align-items-center flex-column">
+    <!-- <div class="container d-flex align-items-center flex-column">
         <HeadComp class="mb-3"/>
         <div class="scroll" v-for="quetion in quetionsUsers">
         <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`" >
             <VidUserComp  :quetion="quetion"/>
         </a>
         </div>
-    </div>
+    </div> -->
 </template>
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/rubik');
@@ -203,6 +208,12 @@ body {
     width: 150px;
     border-radius: 100%;
     border: 1px solid #000;
+}
+
+.circle img{
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
 }
 
 .nikname {
