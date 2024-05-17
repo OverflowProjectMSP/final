@@ -291,6 +291,7 @@ def check_password(password, true_password):
     session.pop('sent-password', None)
     return return_data
 
+# показ всего о юзере
 def show_user_info(id):
     try: 
         pg = psycopg2.connect(f"""
@@ -340,7 +341,37 @@ def show_user_info(id):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
  
+# показ id avtar name
+def show_not_all(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
 
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''SELECT id, name, avatar FROM users
+                      WHERE id = $${id}$$''')
+        
+        info = dict(cursor.fetchall()[0])
+        return_data = {}
+        for key in info:
+            return_data[key] = info[key]
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'No'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -426,3 +457,12 @@ def new_password_with_email():
  
 
  # может ли юзер удалять/менять или нет
+
+# показ id avtar name
+@app.route('/user-not-all', methods=['GET'])
+def user__():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object['all'] = show_not_all(request.args.get('id'))
+
+    return jsonify(response_object)
