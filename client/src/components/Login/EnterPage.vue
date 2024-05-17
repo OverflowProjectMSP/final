@@ -26,12 +26,7 @@ export default {
                 this.error = '*Вы не ввели Email*'
             } else if (this.password === '') {
                 this.error = '*Вы не ввели пароль*'
-            } else if (this.exPassword === '') {
-                this.error = '*Вы не повторили пароль*'
-            } else if (this.password !== this.exPassword) {
-                this.error = '*Пароли не совпадают'
-            }
-            else {
+            } else {
                 this.error = '';
                 this.login();
             }
@@ -96,10 +91,6 @@ export default {
                     <div class="password-container">
                         <input v-model="password" class="inp inp-password" :type="showPassword" placeholder="Пароль">
                         <img width="35" :src="eyeImg1" @click="toggleVisibility1" class="eye-icon" alt="">
-                    </div>
-                    <div class="password-container">
-                        <input v-model="exPassword" class="inp inp-rep-password" :type="showExPassword" placeholder="Повторите пароль">
-                        <img width="35" :src="eyeImg2" @click="toggleVisibility2" class="eye-icon" alt="">
                     </div>
                 </form>
                 <p class="error">{{ error }}</p>

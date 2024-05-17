@@ -21,12 +21,14 @@ export default {
                     name: `Корецкий Александр`,
                     role: `Заместитель ведущего Бэкенд разработчика`,
                     imageProfileDS: `sanya.png`,
-                    dsProfile: `febolo`
+                    dsProfile: `febolo`,
+                    tgProfile: `febolo`,
+                    vkProfile: `febolo`,
                 },
                 {
                     name: `Горбенко Иван`,
                     role: `Заместитетель ведущего Фронтенд разработчика`,
-                    imageProfileDS: `garleen.png`,
+                    imageProfileDS: `vanya.jpg`,
                     dsProfile: `garleenn`,
                     tgProfile: `Garleen`,
                     vkProfile: `ivangorbenko52`,
