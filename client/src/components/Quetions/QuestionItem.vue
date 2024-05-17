@@ -208,18 +208,15 @@ export default {
         </div>
         <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
 
-        <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
-            <!-- <div class="account">
+        <div class="content-2" v-for="answer in answers && ansUser in answerUser" v-if="this.answers.length != 0">
+            <div class="account">
                 <img class="accountIcon" :src="ansUser.avatar" width="70px" :alt="ansUser.username">
                 <div class="name-ring">
                     <a :href="`Profile?id=${ansUser.id}`">
                         <p><span class="name" role="button">{{ ansUser.username }}</span></p>
                     </a>
                 </div>
-            </div> -->
-            <!-- <div class="title">
-                <h3>{{ questionInfo.descriptions }}</h3>
-            </div> -->
+            </div>
             <div class="description mt-3">
                 <p>{{ answer.text }}</p>
             </div>
