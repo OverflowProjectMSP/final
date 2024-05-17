@@ -14,7 +14,7 @@ export default {
                 // {
                 //     name: `Шадловский Евгений`,
                 //     role: `Заместитель тимлида/Старший Фронтенд разработчик`,
-                //     imageProfileDS: `image.png`,
+                //     imageProfileDS: `jena.png`,
                 //     dsProfile: `kinestrik`
                 // },
                 {
