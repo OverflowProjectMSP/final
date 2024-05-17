@@ -356,7 +356,7 @@ def show_not_all(id):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f'''SELECT id, name, avatar FROM users
+        cursor.execute(f'''SELECT id, username, avatar FROM users
                       WHERE id = $${id}$$''')
         
         info = dict(cursor.fetchall()[0])

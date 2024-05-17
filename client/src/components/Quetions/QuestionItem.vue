@@ -71,7 +71,8 @@ export default {
             });
             this.questionInfo = responce.data.all.question;
             this.answers = responce.data.all.answers;
-            this.loadAnswerUser()
+            this.loadAnswerUser();
+            console.log(this.questionInfo)
         },
 
         loadAnswerUser() {
@@ -80,6 +81,7 @@ export default {
                 let user = this.loadUsers(item);
                 this.answerUser.push(user)
             });
+            console.log(this.answers.length)
         },
 
         async loadUsers(item) {
@@ -192,34 +194,34 @@ export default {
                 </div>
             </div>
             <div class="title">
-                <h3>{{ questionInfo.description }}</h3>
+                <h3>{{ questionInfo.descriptions }}</h3>
             </div>
             <div class="description">
-                <p v-html="breakLines(questionInfo.details)"></p>
+                <p>{{ questionInfo.details }}</p>
                 <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'"
                     alt=""> -->
             </div>
             <div class="about">
                 <p>{{ questionInfo.data }}</p>
-                <p>{{ questionInfo.views }} просмотра</p>
+                <!-- <p>{{ questionInfo.views }} просмотра</p> -->
             </div>
         </div>
         <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
 
-        <div class="content-2" v-for="(answer, ansUser) in (answers, answerUser)" v-if="this.answers.length != 0">
-            <div class="account">
+        <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
+            <!-- <div class="account">
                 <img class="accountIcon" :src="ansUser.avatar" width="70px" :alt="ansUser.username">
                 <div class="name-ring">
                     <a :href="`Profile?id=${ansUser.id}`">
                         <p><span class="name" role="button">{{ ansUser.username }}</span></p>
                     </a>
                 </div>
-            </div>
-            <div class="title">
-                <h3>{{ questionInfo.description }}</h3>
-            </div>
+            </div> -->
+            <!-- <div class="title">
+                <h3>{{ questionInfo.descriptions }}</h3>
+            </div> -->
             <div class="description mt-3">
-                <p v-html="breakLines(answer.text)"></p>
+                <p>{{ answer.text }}</p>
             </div>
             <div class="btn-group">
                 <div class="left">
@@ -233,9 +235,9 @@ export default {
                         <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
                     </div> -->
                 </div>
-                <div class="right">
+                <!-- <div class="right">
                     <a href="#/Main"><button class="toMain btgr">На главную</button></a>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="content p-2" v-else>
@@ -372,7 +374,7 @@ img {
     transition: all 300ms;
 }
 
-.description img {
+.description {
     width: 100%;
 }
 
