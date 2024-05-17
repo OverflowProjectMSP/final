@@ -136,10 +136,10 @@ def show_all_by_user(id):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         logging.info(id)
-        cursor.execute(f'SELECT * FROM questions WHERE user_=$${id}$$')
+        cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$')
         questions = cursor.fetchall()
         cursor.execute(f'''SELEСT * FROM states
-                                WHERE user_=$${id}$$''')
+                                WHERE id_u=$${id}$$''')
         
         states = cursor.fetchall()
         logging.info('Информация отпраленна')
