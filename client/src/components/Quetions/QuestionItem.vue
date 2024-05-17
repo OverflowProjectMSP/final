@@ -206,8 +206,8 @@ export default {
         </div>
         <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
 
-        <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
-            <div class="account" v-for="ansUser in answerUser">
+        <div class="content-2" v-for="(answer, ansUser) in (answers, answerUser)" v-if="this.answers.length != 0">
+            <div class="account">
                 <img class="accountIcon" :src="ansUser.avatar" width="70px" :alt="ansUser.username">
                 <div class="name-ring">
                     <a :href="`Profile?id=${ansUser.id}`">
