@@ -5,29 +5,17 @@ export default {
     data() {
         return {
             devolepers: [
-                // {
-                //     name: `Суров Константин`,
-                //     role: `Тимлид/Старший Бэкенд разработчик`,
-                //     imageProfileDS: `kostya.jpg`,
-                //     dsProfile: `kosty_py`
-                // },
-                // {
-                //     name: `Шадловский Евгений`,
-                //     role: `Заместитель тимлида/Старший Фронтенд разработчик`,
-                //     imageProfileDS: `image.png`,
-                //     dsProfile: `kinestrik`
-                // },
-                {
-                    name: `Евгений`,
-                    role: `CEO UpFollow, Верховный главнокомандующий`,
-                    imageProfileDS: `image.png`,
-                    dsProfile: `kinestrik`
-                },
                 {
                     name: `Суров Константин`,
-                    role: `нн какой-та`,
+                    role: `Тимлид/Старший Бэкенд разработчик`,
                     imageProfileDS: `kostya.jpg`,
                     dsProfile: `kosty_py`
+                },
+                {
+                    name: `Шадловский Евгений`,
+                    role: `Заместитель тимлида/Старший Фронтенд разработчик`,
+                    imageProfileDS: `jena.png`,
+                    dsProfile: `kinestrik`
                 },
                 {
                     name: `Корецкий Александр`,
