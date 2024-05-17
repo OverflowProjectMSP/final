@@ -194,10 +194,14 @@ h4{
 .dropdown-center{
     margin-right:10px;
 }
-.find-btn:hover{
-    color: white;
-    transition: all 0.5s;
+
+@media (hover: hover) {
+    .find-btn:hover{
+        color: white;
+        transition: all 0.5s;
+    }
 }
+
 @media (max-width: 900px){
 
 .content input{
