@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios';
-import VidQuetions from '../ReuseComponets/VidComp.vue';
-import ModelWind from '../ReuseComponets/StateVid.vue';
+import VidQuetions from '../ReuseComponets/QuetionVid.vue';
+import ModelWind from '../ReuseComponets/ModelWind.vue';
 
 export default {
     components: {
@@ -24,7 +24,7 @@ export default {
                     question: true,            
                 },
                 {
-                    discriptions: `Python IS PARASHА!!`,
+                    discriptions: `VUE IS PARASHА!!`,
                     tag: 'Python',
                     subscribers: 50,
                     date: `52.52.52`,
@@ -52,6 +52,9 @@ export default {
             let res = await axios.get('/show-questions');
             this.quetions = res.data.all;
         },
+        CloseModal(Show) {
+            this.Show = false
+        },
 
         async filtre() {
             if (this.filters.type == 'false' && this.filters.dificulty == 'false') {
@@ -76,6 +79,9 @@ export default {
         OpenModal() {
             this.Show = !this.Show
         },
+        Close(Show) {
+            this.Show = !this.Show
+        }
     },
 }
 </script>
@@ -87,7 +93,7 @@ export default {
             <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
             <div class="d-flex flex-row">
                 <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
-                    <img class="border-end pe-2 ps-2" src="./assets/image.png" alt="level">
+                    <img class="border-end pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select border-0" v-model="filters.dificulty">
                         <option value="Легкие" selected>Лёгкие</option>
                         <option value="Средние">Средние</option>
@@ -109,7 +115,7 @@ export default {
                         </select>
                         <!-- плюсик -->
                         <div class="contain" @click="OpenModal">
-                            <img src="./assets/add.png" class="add">
+                            <img src="../../assets/States/add.png" class="add">
                         </div>
                         <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Найти</button>
                     </div>
@@ -117,15 +123,20 @@ export default {
             </div>
         </div>
     </div>
-
-
+    <div class="cont">
     <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
     <model-wind v-if="Show" @CloseModal="CloseModal" />
-
+    </div>
 </template>
 
 <style scoped>
-
+.cont{
+    overflow: scroll;
+    height: 555px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
 a {
     text-decoration: none;
     color: #000;

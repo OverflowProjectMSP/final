@@ -54,7 +54,7 @@ export default {
                         <p :class="isCheck_class">{{ quetion.answers }}</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
-                    <a href="#!"><button>Ответить</button></a>
+                    <a :href="`/StateItem?id=` + quetion.id + `&question=` + quetion.question" class="answ"><button >Ответить</button></a>
                 </div>
             </div>
         </div>
@@ -62,6 +62,9 @@ export default {
 </template>
 
 <style>
+.answ{
+    text-align: center;
+}
 .window {
         display: flex;
         justify-content: center;

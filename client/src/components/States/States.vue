@@ -1,12 +1,12 @@
 <script>
 import axios from 'axios';
 // import VidComp from './components/MainComponents/VidComp.vue'
-// import ModelWind from './components/СomponetsForPages/ModelWind.vue';
+import ModelWind from '../ReuseComponets/ModelWind.vue';
 import VidjetComp from '../ReuseComponets/StateVid.vue';
 export default {
     components: {
     // VidComp,
-        // ModelWind,
+        ModelWind,
     VidjetComp  
     },
     data() {

@@ -55,7 +55,7 @@ export default {
                         <p :class="isCheck_class">{{ answerCount }}</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
-                    <a href="#!"><button>Ответить</button></a>
+                    <a :href="`/StateItem?id=` + item.id + `&question=` + item.question" class="answ"><button>Ответить</button></a>
                 </div>
             </div>
         </div>
@@ -63,6 +63,9 @@ export default {
 </template>
 
 <style>
+.answ{
+text-align: center;
+}
     .window {
         display: flex;
         justify-content: center;
