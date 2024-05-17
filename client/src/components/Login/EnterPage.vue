@@ -174,13 +174,12 @@ export default {
         transition: all 100ms;
     }
 
-    .regist button:hover {
-        background-color: #2D72D9;
-        color: #fff;
-    }
+    
+   
 
     .regist button:active {
-        background-color: #1b54a9;
+        background-color: #2D72D9;
+        color: #fff;
     }
 
     .regist .error {
@@ -217,24 +216,35 @@ export default {
         align-items: center;
         gap: 10px
     }
-
+    
     .haveacc {
         display: flex;
         align-items: center;
         gap: 10px;
     }
-
+    
     .error {
         color: #ff1f1f;
         margin-bottom: -30px !important;
         margin-top: -30px !important;
         font-size: 10px;
     }
-
+    
     .haveacc p:last-child {
         margin-left: -7px;
     }
+    
+    @media (hover: hover) {     
+        .regist button:hover {
+            background-color: #2D72D9;
+            color: #fff;
+        }
 
+        .regist button:active {
+            background-color: #1b54a9;
+        }
+    }
+    
     @media (max-width: 1330px) {
         .content {
             margin-left: 50px;

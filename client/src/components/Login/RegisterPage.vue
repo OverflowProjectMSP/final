@@ -168,13 +168,11 @@ export default {
         transition: all 100ms;
     }
 
-    .regist button:hover {
-        background-color: #2D72D9;
-        color: #fff;
-    }
+    
 
     .regist button:active {
-        background-color: #1b54a9;
+        background-color: #2D72D9;
+        color: #fff
     }
 
     .regist p {
@@ -209,6 +207,17 @@ export default {
         color: #ff1f1f;
         margin-bottom: -30px !important;
         margin-top: -30px !important;
+    }
+
+    @media (hover: hover) {
+        .regist button:hover {
+            background-color: #2D72D9;
+            color: #fff;
+        }
+
+        .regist button:active {
+            background-color: #1b54a9;
+        }
     }
 
     @media (max-width: 1330px) {

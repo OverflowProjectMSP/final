@@ -73,6 +73,9 @@ export default {
 
 
 <style scoped>
+
+
+
 .form-container {
     margin: 1rem 180px !important;
 }
@@ -98,8 +101,12 @@ a {
     transition: color 400ms;
 }
 
-a:hover {
-    color: #11c51a;
+
+@media (hover: hover) {
+    
+    a:hover {
+        color: #11c51a;
+    }
 }
 
 @media (max-width: 950px) {
