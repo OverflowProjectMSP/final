@@ -18,13 +18,13 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 30px;
+    gap: 70px;
 
     user-select: none;
 }
 
 h1 {
-    font-size: 150px;
+    font-size: 130px;
     font-weight: 500;
     color: #161616;
 }
@@ -44,12 +44,27 @@ button {
     transition: all 100ms;
 }
 
-button:hover {
-    background-color: #2d00aa;
-    border-radius: 25px 5px;
-}
 
 button:active {
-    background-color: #240088;
+    background-color: #4200FF;
+    color: #fff;
 }
+
+@media (hover: hover) {
+    button:hover {
+        background-color: #2d00aa;
+        border-radius: 25px 5px;
+    }
+    
+    button:active {
+        background-color: #240088;
+    }
+}
+
+@media(max-width: 600px) {
+    h1 {
+        font-size: 90px;
+    }
+}
+
 </style>
