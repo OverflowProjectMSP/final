@@ -170,11 +170,7 @@ header {
   color: black;
 }
 
-.button-search:hover {
-  background-color: rgb(255, 255, 255);
-  color: white;
-  transition: all 1s;
-}
+
 
 header {
   width: auto !important;
@@ -239,10 +235,7 @@ li {
   color: white;
 }
 
-.nav-link:hover {
-  color: rgb(255, 255, 255);
 
-}
 
 .btn-login{
   transition: all, 0.4s;
@@ -253,10 +246,25 @@ li {
   width: 50px;
   height: 50px;
 }
-.btn-login:hover{
-background-color: #000000;
-color: white;
+
+
+@media (hover: hover) {
+  .btn-login:hover{
+    background-color: #000000;
+    color: white;
+  }
+
+  .nav-link:hover {
+    color: rgb(255, 255, 255);
+  }
+
+  .button-search:hover {
+    background-color: rgb(255, 255, 255);
+    color: white;
+    transition: all 1s;
+  }
 }
+
 @media (max-width: 1200px) {
 
   .navbar-nav {

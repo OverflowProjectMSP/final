@@ -11,8 +11,8 @@ export default {
             error: '',
             eyeOpen1: true,
             eyeOpen2: true,
-            eyeImg1: '/src/assets/eye.svg',
-            eyeImg2: '/src/assets/eye.svg',
+            eyeImg1: '/src/assets/Login/eye-open.svg',
+            eyeImg2: '/src/assets/Login/eye-open.svg',
             isShowPassword: false,
             showPassword: 'password',
             isShowExPassword: false,
@@ -26,12 +26,7 @@ export default {
                 this.error = '*Вы не ввели Email*'
             } else if (this.password === '') {
                 this.error = '*Вы не ввели пароль*'
-            } else if (this.exPassword === '') {
-                this.error = '*Вы не повторили пароль*'
-            } else if (this.password !== this.exPassword) {
-                this.error = '*Пароли не совпадают'
-            }
-            else {
+            } else {
                 this.error = '';
                 this.login();
             }
@@ -47,10 +42,10 @@ export default {
 
             if (this.isShowPassword) {
                 this.showPassword = 'text'
-                this.eyeImg1 = '/src/assets/svg-editor-image2.svg'
+                this.eyeImg1 = '/src/assets/Login/eye-close.svg'
             } else {
                 this.showPassword = 'password'
-                this.eyeImg1 = '/src/assets/eye.svg'
+                this.eyeImg1 = '/src/assets/Login/eye-open.svg'
             }
         },
         toggleVisibility2() {
@@ -59,10 +54,10 @@ export default {
 
             if (this.isShowExPassword) {
                 this.showExPassword = 'text'
-                this.eyeImg2 = '/src/assets/svg-editor-image2.svg'
+                this.eyeImg2 = '/src/assets/Login/eye-close.svg'
             } else {
                 this.showExPassword = 'password'
-                this.eyeImg2 = '/src/assets/eye.svg'
+                this.eyeImg2 = '/src/assets/Login/eye-open.svg'
             }
         },
         
@@ -93,8 +88,10 @@ export default {
             <div class="regist">
                 <form @submit.prevent="check">
                     <input v-model="email" class="inp inp-email" type="email" placeholder="Почта">
-                    <input v-model="password" class="inp inp-password" type="password" placeholder="Пароль">
-                    <input v-model="exPassword" class="inp inp-rep-password" type="password" placeholder="Повторите пароль">
+                    <div class="password-container">
+                        <input v-model="password" class="inp inp-password" :type="showPassword" placeholder="Пароль">
+                        <img width="35" :src="eyeImg1" @click="toggleVisibility1" class="eye-icon" alt="">
+                    </div>
                 </form>
                 <p class="error">{{ error }}</p>
                 <button @click="check">Войти</button>
@@ -158,6 +155,19 @@ export default {
         margin-right: 30px;
     }
 
+    .password-container {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .eye-icon {
+        position: absolute;
+        right: 60px;
+        cursor: pointer;
+    }
+
+
     .regist button {
         margin-top: 40px;
         margin-bottom: 15px;
@@ -174,13 +184,12 @@ export default {
         transition: all 100ms;
     }
 
-    .regist button:hover {
-        background-color: #2D72D9;
-        color: #fff;
-    }
+    
+   
 
     .regist button:active {
-        background-color: #1b54a9;
+        background-color: #2D72D9;
+        color: #fff;
     }
 
     .regist .error {
@@ -217,24 +226,35 @@ export default {
         align-items: center;
         gap: 10px
     }
-
+    
     .haveacc {
         display: flex;
         align-items: center;
         gap: 10px;
     }
-
+    
     .error {
         color: #ff1f1f;
         margin-bottom: -30px !important;
         margin-top: -30px !important;
         font-size: 10px;
     }
-
+    
     .haveacc p:last-child {
         margin-left: -7px;
     }
+    
+    @media (hover: hover) {     
+        .regist button:hover {
+            background-color: #2D72D9;
+            color: #fff;
+        }
 
+        .regist button:active {
+            background-color: #1b54a9;
+        }
+    }
+    
     @media (max-width: 1330px) {
         .content {
             margin-left: 50px;
@@ -295,6 +315,10 @@ export default {
         .regist button {
             width: 100%;
         }
+
+        .eye-icon {
+            right: 40px;
+        }
     }
 
     @media (max-width: 440px) {
@@ -304,6 +328,11 @@ export default {
 
         .inp {
             width: 350px;
+        }
+
+
+        .eye-icon {
+            right: 35px;
         }
     }
     

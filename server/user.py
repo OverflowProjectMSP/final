@@ -319,15 +319,17 @@ def show_user_info(id):
         return_data['scnt'] = cursor.fetchone()[0]
 
         # счетчик вопросов
-        cursor.execute(f"SELECT * from questions WHERE id_u=$${id}$$")
+        cursor.execute(f"SELECT COUNT(*) from questions WHERE id_u=$${id}$$")
         return_data['qcnt'] = cursor.fetchone()[0]
 
         # счетчик ответов и комментариев
-        cursor.execute(f"SELECT * from answers WHERE id_u=$${id}$$")
+        cursor.execute(f"SELECT COUNT(*) from answers WHERE id_u=$${id}$$")
         cnt_a = cursor.fetchone()[0]
-        cursor.execute(f"SELECT * from comments WHERE id_u=$${id}$$")
+        print("cnt_a: ", cnt_a)
+        cursor.execute(f"SELECT COUNT(*) from comments WHERE id_u=$${id}$$")
         cnt_c = cursor.fetchone()[0]
-        return_data['acnt'] =cnt_a + cnt_c
+        print("cnt_c: ", cnt_c)
+        return_data['acnt'] = cnt_a + cnt_c
 
 
     except (Exception, Error) as error:
@@ -401,7 +403,7 @@ def user_info():
     
     print(request.args.get('id'))
     response_object['all'] = show_user_info(request.args.get('id'))
-
+    print(response_object)
     return jsonify(response_object)
 
 #Вход

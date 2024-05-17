@@ -1,8 +1,7 @@
 <script>
 import axios from 'axios';
-import VidQuetions from './components/MainComponents/VidQuetions.vue';
-import ModelWind from './components/СomponetsForPages/ModelWind.vue';
-
+import VidQuetions from '../ReuseComponets/QuetionVid.vue';
+import ModelWind from '../ReuseComponets/ModelWind.vue';
 
 export default {
     components: {
@@ -13,37 +12,28 @@ export default {
     data() {
         return {
             quetions: [
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 50,
-                //     data: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Python',
-                //     complexity: 'Средне',
-                //     id: 0
-
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'C++',
-                //     complexity: 'Средне',
-                //     id: 1
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 45,
-                //     hours: 0,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Асембелер',
-                //     complexity: 'Средне',
-                //     id: 2
-                // },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Js',
+                    subscribers: 50,
+                    date: `52.52.52`,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: true,            
+                },
+                {
+                    discriptions: `VUE IS PARASHА!!`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    date: `52.52.52`,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Тяжело',
+                    id: 1,
+                    question: true,            
+                },
             ],
 
             filters: {
@@ -54,11 +44,16 @@ export default {
             Show: false,
         }
     },
+    mounted() {
+        this.loadQuestions();
+    },
     methods: {
         async loadQuestions() {
             let res = await axios.get('/show-questions');
             this.quetions = res.data.all;
-            console.log(this.quetions)
+        },
+        CloseModal(Show) {
+            this.Show = false
         },
 
         async filtre() {
@@ -79,18 +74,14 @@ export default {
                 }
             });
             this.quetions = res.data;
-            console.log(this.quetions)
         },
 
         OpenModal() {
             this.Show = !this.Show
         },
-    },
-    mounted() {
-        this.loadQuestions();
-        setInterval(() => {
-            this.loadQuestions();
-        }, 10000);
+        Close(Show) {
+            this.Show = !this.Show
+        }
     },
 }
 </script>
@@ -102,7 +93,7 @@ export default {
             <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
             <div class="d-flex flex-row">
                 <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
-                    <img class="border-end pe-2 ps-2" src="./assets/image.png" alt="level">
+                    <img class="border-end pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select border-0" v-model="filters.dificulty">
                         <option value="Легкие" selected>Лёгкие</option>
                         <option value="Средние">Средние</option>
@@ -124,7 +115,7 @@ export default {
                         </select>
                         <!-- плюсик -->
                         <div class="contain" @click="OpenModal">
-                            <img src="./assets/add.png" class="add">
+                            <img src="../../assets/States/add.png" class="add">
                         </div>
                         <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Найти</button>
                     </div>
@@ -132,16 +123,19 @@ export default {
             </div>
         </div>
     </div>
-
-
-    <!-- <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
-    <model-wind v-if="Show" @CloseModal="CloseModal" /> -->
-
+    <div class="cont">
+    <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
+    <model-wind v-if="Show" @CloseModal="CloseModal" />
+    </div>
 </template>
 
 <style scoped>
-.find-btn:hover {
-    color: #fff !important;
+.cont{
+    overflow: scroll;
+    height: 555px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 a {
     text-decoration: none;
@@ -150,6 +144,7 @@ a {
 
 .quest-menu {
     margin: 0 20% 15px 20%;
+    /* min-height: 57.5vh; Изменить на 52 */
 }
 
 @media(max-width: 500px) {
@@ -240,5 +235,11 @@ h4 {
 
 .dropdown-center {
     margin-right: 10px;
+}
+
+@media (hover: hover) {
+    .find-btn:hover {
+        color: #fff !important;
+    }
 }
 </style>

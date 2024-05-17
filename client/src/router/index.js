@@ -23,10 +23,6 @@ export default createRouter({
       component: () => import("../components/States/StateItem.vue"),
     },
     {
-      path: "/Quetions",
-      component: () => import("../components/Main/MainComp.vue"),
-    },
-    {
       path: "/Login",
       component: () => import("../components/Login/EnterPage.vue"),
     },
@@ -66,6 +62,13 @@ export default createRouter({
       path: "/Profile",
       component: () => import("../components/Profile/Profile.vue"),
     },
-    
+    {
+      path: "/QuestionItem",
+      component: () => import("../components/Quetions/QuestionItem.vue"),
+    },
+    // {
+    //   path: "/Forum",
+    //   component: () => import("../components/Forum/Forum.vue"),
+    // },
   ],
 });

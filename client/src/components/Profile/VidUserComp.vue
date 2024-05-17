@@ -171,12 +171,11 @@ export default {
         transition: all 100ms;
     }
 
-    .ans_check button:hover {
-        background-color: #2e6ac9;
-    }
+    
 
     .ans_check button:active {
-        background-color: #1d52a6;
+        background-color: #3B82F6;
+        color: #fff
     }
 
     .ch {
@@ -201,6 +200,16 @@ export default {
     }
 
     /* АДАПТИВКА */
+
+    @media (hover: hover) {
+        .ans_check button:hover {
+            background-color: #2e6ac9;
+        }
+
+        .ans_check button:active {
+            background-color: #1d52a6;
+        }
+    }
 
     @media (max-width: 750px) {
         .main-container {

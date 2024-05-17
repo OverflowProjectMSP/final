@@ -4,7 +4,7 @@
 
 <template>
 
-<div class="footer">
+<div class="footer mt-3">
     <div class="d-flex flex-column align-items-center"> 
             <div class="d-flex flex-row">
                 <a href="#" style="--i:7"><img class="link user-select-none" src="../../assets/Footer/Telegram.png" alt="telegram"></a>

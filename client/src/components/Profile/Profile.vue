@@ -11,18 +11,18 @@ export default {
     data() {
         return {
             quetionsUsers: [
-                {
-                    discriptions : `Как создать переменную?`,
-                    subscribers: "NaN",
-                    hours: "NaN",
-                    views: "NaN",
-                    answers: "NaN",
-                    tag: 'Python',
-                    complexity: 'Средне',
-                    details: "Как создать атомный реактор?",
-                    id: "",
+                // {
+                //     discriptions : `Как создать переменную?`,
+                //     subscribers: "NaN",
+                //     hours: "NaN",
+                //     views: "NaN",
+                //     answers: "NaN",
+                //     tag: 'Python',
+                //     complexity: 'Средне',
+                //     details: "Как создать атомный реактор?",
+                //     id: "",
 
-                },
+                // },
                 // {
                 //     title: `Как созопоодать переменную?`,
                 //     subscribers: 50,
@@ -45,30 +45,40 @@ export default {
                 // },
             ],
             user: {},
-            
-        }
-    }, 
-    methods: {
-        async allByHe(){
-            let res = await axios.get('/show-all-by-user', {
-                params: {
-                    id: this.$router.query.id
-                }
-            });
-            this.quetionsUsers = res.data.all;
-        },
-        async loadUser() {
-            let res = await axios.get(`/user-info?id=${this.$router.query.id}`);
-            this.user = res.data.all;
+            uuuuserNAMANSKLFDJNBALKS: ``,
         }
     },
     mounted() {
+        this.decodeUtf8();
         this.allByHe();
         this.loadUser();
         setInterval(() => {
             this.allByHe();
             this.loadUser();
         }, 100900);
+    },
+    methods: {
+        async allByHe() {
+            console.log(this.$route.query.id)
+            let res = await axios.get('/show-all-by-user', {
+                params: {
+                    id: this.$route.query.id
+                }
+            });
+            this.quetionsUsers = res.data.all;
+        },
+        async loadUser() {
+            let res = await axios.get(`/user-info`, {
+                params: {
+                    id: this.$route.query.id
+                }
+            });
+            this.user = res.data.all;
+        },
+
+        decodeUtf8() {
+            this.uuuuserNAMANSKLFDJNBALKS = decodeURIComponent(escape(this.user.name));
+        },
     },
 }
 
@@ -80,7 +90,7 @@ export default {
         <div class="head">
 
             <div class="circle">
-                <img :src="user.avatar"> <!-- :alt="`Аватар пользователя ` + user.username" -->
+                <img :src="user.avatar" :alt="`Аватар пользователя ` + user.username">
             </div>
 
             <p class="nikname t-alig-c">@{{ user.username }}</p>
@@ -98,24 +108,26 @@ export default {
                     <p class="info">Ответов</p>
                 </div>
             </div>
-                <div class="about rounded-5">
-                    <p v-if="this.user.name"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
-                    <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }}</p>
-                    <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p>
-                    <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
-                    <ul class="fs-5">
-                        <li v-if="user.email">Моя почта: {{ user.email }}</li>
-                        <li v-if="user.telegram">Мой telegram: {{ user.telegram }}</li>
-                        <li v-if="user.skype">Мой skype: {{ user.skype }}</li>
-                        <li v-if="user.discord">Мой discord: {{ user.discord }}</li>
-                        <li v-if="user.facebook">Мой facebook: {{ user.facebook }}</li>
-                    </ul>
-                    <p class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
-                    <p><span class="fw-bold">Мои интересы: </span></p>
-                    <ul class="fs-5 interes">
-                        <li class="interes" v-if="user.interestings">{{ user.interestings }}</li>
-                    </ul>
-                </div>
+            <div class="about rounded-5">
+                <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}
+                </p>
+                <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.uuuuserNAMANSKLFDJNBALKS }}</p>
+                <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang
+                    }}</p>
+                <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
+                <ul class="fs-5">
+                    <li v-if="user.email">Моя почта: {{ user.email }}</li>
+                    <li v-if="user.telegram">Мой telegram: {{ user.telegram }}</li>
+                    <li v-if="user.skype">Мой skype: {{ user.skype }}</li>
+                    <li v-if="user.discord">Мой discord: {{ user.discord }}</li>
+                    <li v-if="user.facebook">Мой facebook: {{ user.facebook }}</li>
+                </ul>
+                <p class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
+                <p><span class="fw-bold">Мои интересы: </span></p>
+                <ul class="fs-5 interes">
+                    <li class="interes" v-if="user.interestings">{{ user.interestings }}</li>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -124,15 +136,15 @@ export default {
         <div class="item ">
             <img src="" alt="">
         </div>
-        
-        
+
+
     </div>
     <div class="container d-flex align-items-center flex-column">
-        <HeadComp class="mb-3"/>
+        <HeadComp class="mb-3" />
         <div class="scroll" v-for="quetion in quetionsUsers">
-        <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`" >
-            <VidUserComp  :quetion="quetion"/>
-        </a>
+            <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`">
+                <VidUserComp :quetion="quetion" />
+            </a>
         </div>
     </div>
 </template>
@@ -164,13 +176,15 @@ body {
 .t-alig-c {
     text-align: center;
 }
-.scroll{
+
+.scroll {
     overflow: scroll;
     height: 555px;
     width: auto;
     margin-left: auto;
     margin-right: auto;
 }
+
 .interes {
     word-break: break-word !important;
 }
@@ -203,6 +217,12 @@ body {
     width: 150px;
     border-radius: 100%;
     border: 1px solid #000;
+}
+
+.circle img {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
 }
 
 .nikname {

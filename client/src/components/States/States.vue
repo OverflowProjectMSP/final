@@ -1,12 +1,12 @@
 <script>
 import axios from 'axios';
 // import VidComp from './components/MainComponents/VidComp.vue'
-// import ModelWind from './components/СomponetsForPages/ModelWind.vue';
+import ModelWind from '../ReuseComponets/ModelWind.vue';
 import VidjetComp from '../ReuseComponets/StateVid.vue';
 export default {
     components: {
     // VidComp,
-        // ModelWind,
+        ModelWind,
     VidjetComp  
     },
     data() {
@@ -105,7 +105,7 @@ export default {
 
 
 <!-- Див с виджетами -->
-<div class="conr container">
+<div class="conr">
 <div class="con mt-3" v-for="item in states">
 <a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
     <!-- <vid-comp :item="item" role="button" /> -->
@@ -194,10 +194,14 @@ h4{
 .dropdown-center{
     margin-right:10px;
 }
-.find-btn:hover{
-    color: white;
-    transition: all 0.5s;
+
+@media (hover: hover) {
+    .find-btn:hover{
+        color: white;
+        transition: all 0.5s;
+    }
 }
+
 @media (max-width: 900px){
 
 .content input{

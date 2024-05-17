@@ -155,10 +155,7 @@ hr {
     cursor: pointer;
 }
 
-.lang-item:hover {
-    transition: all 300ms;
-    transform: scale(1.4);
-}
+
 
 .ts {
     background-color: #017ACC;
@@ -166,9 +163,7 @@ hr {
     font-weight: 600;
 }
 
-.ts:hover {
-    background-color: #005e9d;
-}
+
 
 .ts:active {
     background-color: #004877;
@@ -180,9 +175,7 @@ hr {
     font-weight: 600;
 }
 
-.php:hover {
-    background-color: #5c5f91;
-}
+
 
 .php:active {
     background-color: #42446b;
@@ -194,9 +187,7 @@ hr {
     font-weight: 600;
 }
 
-.py:hover {
-    background-color: #2a587e;
-}
+
 
 .py:active {
     background-color: #214562;
@@ -208,9 +199,7 @@ hr {
     font-weight: 600;
 }
 
-.js:hover {
-    background-color: #c4b000;
-}
+
 
 .js:active {
     background-color: #a19100;
@@ -222,9 +211,6 @@ hr {
     font-weight: 600;
 }
 
-.cs:hover {
-    background-color: #5a42aa;
-}
 
 .cs:active {
     background-color: #433081;
@@ -237,9 +223,6 @@ hr {
     -webkit-text-stroke: 0.5px black;
 }
 
-.ruby:hover {
-    background-color: #800f00;
-}
 
 .ruby:active {
     background-color: #670c00;
@@ -251,9 +234,6 @@ hr {
     font-weight: 600;
 }
 
-.go:hover {
-    background-color: #1fbebe;
-}
 
 .go:active {
     background-color: #1bafaf;
@@ -265,9 +245,7 @@ hr {
     font-weight: 600;
 }
 
-.cpp:hover {
-    background-color: #2954b3;
-}
+
 
 .cpp:active {
     background-color: #1e49a7;
@@ -279,9 +257,7 @@ hr {
     font-weight: 600;
 }
 
-.ja:hover {
-    background-color: #990b0b;
-}
+
 
 .ja:active {
     background-color: #7e0b0b;
@@ -293,9 +269,7 @@ hr {
     font-weight: 600;
 }
 
-.ko:hover {
-    background-color: #741dbb;
-}
+
 
 .ko:active {
     background-color: #5e1997;
@@ -315,9 +289,7 @@ hr {
     user-select: none
 }
 
-.btn-arrow:hover {
-    color: #363636;
-}
+
 
 .btn-arrow:active {
     color: #171717;
@@ -350,11 +322,7 @@ hr {
     cursor: pointer;
 }
 
-.wehave-item:hover {
-    background-color: #ededed;
-    border-radius: 30px;
-    box-shadow: 0px 0px 20px #c2c2c2;
-}
+
 
 .wehave-item-desc {
     text-align: center;
@@ -416,6 +384,64 @@ hr {
     .lang-item-col-5,
     .lang-item-col-6 {
         display: none;
+    }
+
+}
+
+@media (hover: hover) {
+    .lang-item:hover {
+        transition: all 300ms;
+        transform: scale(1.4);
+    }
+
+    .ts:hover {
+        background-color: #005e9d;
+    }
+
+    .php:hover {
+        background-color: #5c5f91;
+    }
+
+    .py:hover {
+        background-color: #2a587e;
+    }
+
+    .js:hover {
+        background-color: #c4b000;
+    }
+
+    .cs:hover {
+        background-color: #5a42aa;
+    }
+
+    .ruby:hover {
+        background-color: #800f00;
+    }
+
+    .go:hover {
+        background-color: #1fbebe;
+    }
+
+    .cpp:hover {
+        background-color: #2954b3;
+    }
+
+    .ja:hover {
+        background-color: #990b0b;
+    }
+
+    .ko:hover {
+        background-color: #741dbb;
+    }
+
+    .btn-arrow:hover {
+        color: #363636;
+    }
+
+    .wehave-item:hover {
+        background-color: #ededed;
+        border-radius: 30px;
+        box-shadow: 0px 0px 20px #c2c2c2;
     }
 
 }

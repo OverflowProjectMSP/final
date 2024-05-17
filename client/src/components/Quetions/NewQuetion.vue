@@ -1,8 +1,6 @@
 <script>
 import axios from 'axios';
 export default {
-    components: {  },
-
     data() {
         return {
             Vid: false,
@@ -158,15 +156,7 @@ export default {
     transition: all 300ms;
 }
 
-#preview:hover {
-    background-color: #90EE90 !important;
-    color: #2c2c2c;
-}
 
-#save:hover {
-    background-color: #90EE90 !important;
-    color: #000;
-}
 
 .block {
     margin-bottom: 50px;
@@ -305,12 +295,27 @@ div.vid {
     transition: all 0.5s;
 }
 
-div.vid:hover {
-    transform: translateY(-10px);
-    box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
-}
+
 
 /* Адаптивка */
+
+@media (hover: hover) {
+    div.vid:hover {
+        transform: translateY(-10px);
+        box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
+    }
+
+    #preview:hover {
+        background-color: #90EE90 !important;
+        color: #2c2c2c;
+    }
+
+    #save:hover {
+        background-color: #90EE90 !important;
+        color: #000;
+    }
+}
+
 @media(max-width: 1200px) {
     .q {
         font-size: var(--size-20);

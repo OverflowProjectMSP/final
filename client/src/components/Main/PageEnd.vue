@@ -84,10 +84,12 @@ a {
     transition: all 200ms;
 }
 
-.join-us-item button:hover {
-    transform: scale(1.1);
-    box-shadow: 0px 0px 20px #aac3e1;
-    background-color: #aac3e1
+@media (hover: hover) {
+    .join-us-item button:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 0px 20px #aac3e1;
+        background-color: #aac3e1
+    }
 }
 
 @media (max-width: 790px) {

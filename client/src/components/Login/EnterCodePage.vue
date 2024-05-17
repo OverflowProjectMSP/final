@@ -73,9 +73,11 @@ export default {
             <p class="toemail">На почту  {{ email }} вам был отправлен ключ доступа </p>
             <div class="regist">
                 <form @submit.prevent="check">
-                    <input class="numinp form-control" type="text" v-model="CIFRY">
+                    <div class="kostya_zahotel_po_gorizontali">
+                        <input class="numinp form-control" type="text" v-model="CIFRY">
+                        <button @click="check">Подтвердить</button>
+                    </div>
                     <p v-if=this.error class="error">{{ error }}</p>
-                    <button @click="check">Подтвердить</button>
                 </form>
             </div>
         </div>
@@ -134,10 +136,10 @@ export default {
     }
 
     .regist button {
-        margin-top: 40px;
-        margin-bottom: 15px;
+        /* margin-top: 40px; */
+        /* margin-bottom: 15px; */
 
-        width: 320px;
+        width: 220px;
         height: 50px;
         font-size: 24px;
         background: none;
@@ -149,14 +151,11 @@ export default {
         transition: all 100ms;
     }
 
-    .regist button:hover {
-        background-color: #2D72D9;
-        color: #fff;
+     .regist button:active {
+            background-color: #2D72D9;
+            color: #fff;
     }
-
-    .regist button:active {
-        background-color: #1b54a9;
-    }
+    
 
     .regist p {
         font-size: 26px;
@@ -176,12 +175,32 @@ export default {
     .regist a:active {
         color: #114189;
     }
-
+    
     .error {
         font-size: 18px !important;
         color: #ff1f1f;
         margin-bottom: -30px !important;
         margin-top: -30px !important;
+    }
+
+
+    .kostya_zahotel_po_gorizontali {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+
+    }
+    
+    @media (hover: hover) {
+        .regist button:hover {
+            background-color: #2D72D9;
+            color: #fff;
+        }
+    
+        .regist button:active {
+            background-color: #1b54a9;
+        }
+    
     }
 
     @media (max-width: 1330px) {
@@ -190,6 +209,7 @@ export default {
         }
     }
 
+    
     @media (max-width: 1140px) {
         .content p {
             font-size: 38px;
@@ -198,13 +218,26 @@ export default {
         .inp {
             width: 550px;
         }
-
+        
         .haveacc p {
             font-size: 22px;
         }
-
+        
         .haveacc a {
             font-size: 22px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .kostya_zahotel_po_gorizontali {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 960px) {
+        .kostya_zahotel_po_gorizontali {
+            flex-direction: column;
+            align-items: flex-start;
         }
     }
 

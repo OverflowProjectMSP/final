@@ -40,7 +40,7 @@ def home():
     logging.warning('1')
     logging.info(session.get('id')) #debug
     logging.warning(response_object)
-
+    session.pop('id', None)
     return jsonify(response_object)
 
 

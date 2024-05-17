@@ -38,14 +38,14 @@ export default {
                 ],
             },
 
-            user: {
-                accountIcon: `ava.png`,
-                accountName: `JavaScriptPRO`,
-                rang: `Решала`,
-            },
+            user: {},
 
             states: {}, //главная возня
             answers: [],
+            commentUser: [],
+            answerUser: [],
+            userCreater: {},
+
             text: ``,
             
             id_: null,
@@ -64,8 +64,15 @@ export default {
             name: ``,
 
 
-            avaComment: ````````````````````````````````````````````````,
+            avaComment: ``,
         }
+    },
+
+    mounted() {
+        this.loadState();
+        this.loadAnswerUser();
+        this.checkUser();
+        this.loadUserInfo();
     },
     
     methods: {
@@ -79,6 +86,16 @@ export default {
             this.states = responce.data.all.states;
             this.answers = responce.data.all.answers;
         },
+
+        async loadUserInfo() {
+            let res = await axios.get('/user', {
+                params: {
+                    id: this.states.id_u,
+                }
+            });
+            this.user = res.data.all;
+        },
+
         counterPlus(index) {
             if (this.count == 0 && this.countmin == 0) {
                 this.question.answers[index].answerInfo.likes++;
@@ -116,6 +133,24 @@ export default {
             }
         },
 
+        loadAnswerUser() {
+            this.userCreater = this.loadUsers(this.states.id_u);
+
+            this.answers.forEach((item) => {
+                let user = this.loadUsers(item);
+                this.answerUser.push(user)
+            });
+        },
+
+        async loadUsers(item) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: item.id_user,
+                }
+            });
+            return res.data.all;
+        },
+
         async addComment() {
             await axios.post(`/answers`, {
                     id: this.$route.query.id,
@@ -135,14 +170,15 @@ export default {
             });
         },
 
-        async loadAvatar() {
-            let res = await axios.get('/avatarka', {
-                params: {
-                    id: this.$route.query.id,
-                }
-            });
-            this.ava = res.data.link;
-        },
+        // async loadAvatar() {
+        //     let res = await axios.get('/avatarka', {
+        //         params: {
+        //             id: this.$route.query.id,
+        //         }
+        //     });
+        //     this.ava = res.data.link;
+        // },
+
         async checkUser() {
             let res = await axios.get('/check', {
                 params: {
@@ -151,25 +187,10 @@ export default {
             });
             this.isCheck = Boolean(res.data.isEdit);
         },
-        async loadUser() {
-            let res = await axios.get('/user', {
-                params: {
-                    id: this.states.id_u,
-                }
-            });
-            this.name = res.data.all;
-        },
 
-        async loadAvatars() {
-            let trertrestrestrestrestrestrestrestrestrestres = await axios.hui('beckend-vojna-ta-eche');
-        }
-    },
-    mounted() {
-        this.loadState();
-        this.checkUser();
-        setInterval(() => {
-            this.loadState();
-        }, 20000);
+        // async loadAvatars() {
+        //     let trertrestrestrestrestrestrestrestrestrestres = await axios.hui('beckend-vojna-ta-eche');
+        // }
     },
 }
 
@@ -180,12 +201,11 @@ export default {
         <div class="content-1">
             <div class="account justify-content-between">
                 <div class="creator-info d-flex flex-row align-items-center gap-3">
-                    <img class="accountIcon" :src="ava" :alt="questionInfo.author" width="70px">
+                    <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
                     <div class="name-ring">
                         <div>
-                            <a href="#!"><span class="name">{{ name }}</span></a>
+                            <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
                         </div>
-                        <!-- <p>Уровень: <span class="difficult">{{ questionInfo.level }}</span></p> -->
                     </div>
                 </div>
                 <div class="action-select" v-if="isCheck">
@@ -199,27 +219,25 @@ export default {
                 </div>
             </div>
             <div class="title">
-                <h3>{{ questionInfo.title }}</h3>
+                <h3>{{ states.discriptions }}</h3>
             </div>
             <div class="description">
-                <p v-html="breakLines(questionInfo.description)"></p>
-                <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" 
-                    v-if="states.image">
+                <p v-html="breakLines(states.details)"></p>
+                <!-- <img class="user-select-none" :src="states.imageInQuetion" 
+                    v-if="states.image"> -->
             </div>
             <div class="about">
-                <p>{{ questionInfo.data }}</p>
-                <p>{{ questionInfo.views }} просмотра</p>
+                <p>{{ states.data }}</p>
             </div>
         </div>
         
         <div class="content-3">
-            <div class="account">
-                <img class="accountIcon" :src="avaComment" width="70px" alt="">
+            <div class="account" v-for="user in answerUser">
+                <img class="accountIcon" :src="user.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a href="#!"><span class="name">{{ user.accountName }}</span></a>
+                        <a href="#!"><span class="name">{{ user.username }}</span></a>
                     </div>
-                    <!-- <p>Звание: <span class="difficult-ans">{{ user.rang }}</span></p> -->
                 </div>
             </div>
             <div class="content-3-without mb-3">
@@ -234,12 +252,11 @@ export default {
         
         <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
     
-        <div class="content-2 mt-2" v-for="answer in question.answers" v-if="this.question.answers.length != 0">
-            <div class="account">
-                <img class="accountIcon" :src="'src/assets/' + answer.accountIcon" width="70px" alt="">
+        <div class="content-2 mt-2" v-for="answer in answers" v-if="this.answers.length != 0">
+            <div class="account" v-for="commUser in answerUser">
+                <img class="accountIcon" :src="'src/assets/' + commUser.avatar" width="70px" alt="">
                 <div class="name-ring">
-                    <p><span class="name" role="button">{{ answer.accountName }}</span></p>
-                    <p>Звание: <span class="difficult-ans">{{ answer.rang }}</span></p>
+                    <p><span class="name" role="button">{{ commUser.username }}</span></p>
                 </div>
             </div>
             <div class="description mt-3">
@@ -248,14 +265,14 @@ export default {
             <div class="btn-group">
                 <div class="left">
                     <button class="comm-add btgr">Добавить комментарий</button>
-                    <div class="like-bc bc">
+                    <!-- <div class="like-bc bc">
                         <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'" alt=""></button>
                         <p class="like-count user-select-none">{{ answer.likes }}</p>
                     </div>
                     <div class="dislike-bc bc">
                         <button @click="counterMinus(index)" class="dislike btgr"><img :src="'src/assets/Dislike.svg'" alt=""></button>
                         <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="right">
                     <a href="/"><button class="toMain btgr">На главную</button></a>
@@ -330,9 +347,7 @@ img {
     margin-right: 10px;
 }
 
-.name:hover {
-    color: #6140a7;
-}
+
 
 .name-ring {
     display: flex;
@@ -352,9 +367,7 @@ img {
     color: #3B82F6;
 }
 
-.more:hover {
-    color: #20498b;
-}
+
 
 .difficult {
     margin-left: 5px;
@@ -396,9 +409,6 @@ img {
     transition: all 200ms;
 }
 
-.answer-btn:hover {
-    background-color: #20498b
-}
 
 .about {
     margin-top: 20px;
@@ -479,9 +489,7 @@ img {
     transition: all 200ms;
 }
 
-.btgr:hover {
-    background-color: #20498b
-}
+
 
 .left {
     display: flex;
@@ -548,6 +556,23 @@ img {
 
 /* АДАПТИВКА */
 
+@media (hover: hover) {
+    .btgr:hover {
+        background-color: #20498b
+    }
+
+    .answer-btn:hover {
+        background-color: #20498b
+    }
+
+    .more:hover {
+        color: #20498b;
+    }
+
+    .name:hover {
+        color: #6140a7;
+    }
+}
 
 @media (min-width: 1000px) {
     .description img {
