@@ -81,7 +81,7 @@ export default {
                 let user = this.loadUsers(item);
                 this.answerUser.push(user)
             });
-            console.log(this.answers.length)
+            this.v_For1();
         },
 
         async loadUsers(item) {
@@ -160,6 +160,13 @@ export default {
             let res = await axios.get('/session');
             this.userNow = res.data.id;
         },
+
+        v_For1() {
+            for(let i = 0; i < this.answerUser.length; i++) {
+                this.answers[i].user = this.answerUser[i];
+            }
+        },
+
     },
     mounted() {
         this.loadQuestion();
@@ -208,12 +215,12 @@ export default {
         </div>
         <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
 
-        <div class="content-2" v-for="answer in answers && ansUser in answerUser" v-if="this.answers.length != 0">
+        <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
             <div class="account">
-                <img class="accountIcon" :src="ansUser.avatar" width="70px" :alt="ansUser.username">
+                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                 <div class="name-ring">
-                    <a :href="`Profile?id=${ansUser.id}`">
-                        <p><span class="name" role="button">{{ ansUser.username }}</span></p>
+                    <a :href="`Profile?id=${answer.user.id}`">
+                        <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                     </a>
                 </div>
             </div>
