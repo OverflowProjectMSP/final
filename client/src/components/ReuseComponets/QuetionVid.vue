@@ -40,7 +40,7 @@ export default {
                         <a href="#!"><p>{{ quetion.tag }}</p></a>
                     </div>
                     <div class="text">
-                        <h5>{{ quetion.discriptions }}</h5>
+                        <h5>{{ quetion.descriptions }}</h5>
                     </div>
                     <div class="info">
                         <p>{{ quetion.subscribers }} подписчиков</p>
@@ -54,7 +54,7 @@ export default {
                         <p :class="isCheck_class">{{ quetion.answers }}</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
-                    <a :href="`/StateItem?id=` + quetion.id + `&question=` + quetion.question" class="answ"><button >Ответить</button></a>
+                    <a :href="`/QuestionItem?id=` + quetion.id + `&question=` + true" class="answ"><button >Ответить</button></a>
                 </div>
             </div>
         </div>

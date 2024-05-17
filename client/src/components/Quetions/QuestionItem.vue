@@ -71,11 +71,11 @@ export default {
             });
             this.questionInfo = responce.data.all.question;
             this.answers = responce.data.all.answers;
+            this.loadAnswerUser()
         },
 
         loadAnswerUser() {
-            this.userCreater = this.loadUsers(this.states.id_u);
-
+            this.userCreater = this.loadUsers(this.questionInfo);                                
             this.answers.forEach((item) => {
                 let user = this.loadUsers(item);
                 this.answerUser.push(user)
@@ -85,7 +85,7 @@ export default {
         async loadUsers(item) {
             let res = await axios.get('/user-not-all', {
                 params: {
-                    id: item.id_user,
+                    id: item.id_u,
                 }
             });
             return res.data.all;
@@ -116,7 +116,7 @@ export default {
         },
 
         breakLines(text) {
-            return text.replace(/\n/g, "<br>");
+            // return text.replace(/\n/g, "<br>");
         },
 
         symbolsCount() {
@@ -162,7 +162,6 @@ export default {
     mounted() {
         this.loadQuestion();
         this.checkUser();
-        this.loadAnswerUser();
         this.getNowUser();
     },
 }
@@ -197,8 +196,8 @@ export default {
             </div>
             <div class="description">
                 <p v-html="breakLines(questionInfo.details)"></p>
-                <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'"
-                    alt="">
+                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'"
+                    alt=""> -->
             </div>
             <div class="about">
                 <p>{{ questionInfo.data }}</p>
@@ -209,7 +208,7 @@ export default {
 
         <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
             <div class="account" v-for="ansUser in answerUser">
-                <img class="accountIcon" :src="'src/assets/' + ansUser.avatar" width="70px" :alt="ansUser.username">
+                <img class="accountIcon" :src="ansUser.avatar" width="70px" :alt="ansUser.username">
                 <div class="name-ring">
                     <a :href="`Profile?id=${ansUser.id}`">
                         <p><span class="name" role="button">{{ ansUser.username }}</span></p>
@@ -257,7 +256,7 @@ export default {
             <div class="content-3-without mb-3">
                 <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input"
                     placeholder="Оставь свой ответ:" :class="{ 'fw-bold': isBold, 'fst-italic': isItalic }"></textarea>
-                <p :class="{ 'red-text': this.symbCount }">{{ question.symbols }} / 2000</p>
+                <!-- <p :class="{ 'red-text': this.symbCount }">{{ question.symbols }} / 2000</p> -->
             </div>
             <div class="send-ans d-flex justify-content-end">
                 <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>

@@ -49,7 +49,6 @@ export default {
         }
     },
     mounted() {
-        this.decodeUtf8();
         this.allByHe();
         this.loadUser();
         setInterval(() => {
@@ -74,10 +73,6 @@ export default {
                 }
             });
             this.user = res.data.all;
-        },
-
-        decodeUtf8() {
-            this.uuuuserNAMANSKLFDJNBALKS = decodeURIComponent(escape(this.user.name));
         },
     },
 }
@@ -111,7 +106,7 @@ export default {
             <div class="about rounded-5">
                 <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}
                 </p>
-                <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.uuuuserNAMANSKLFDJNBALKS }}</p>
+                <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
                 <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang
                     }}</p>
                 <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>

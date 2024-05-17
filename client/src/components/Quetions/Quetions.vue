@@ -12,28 +12,28 @@ export default {
     data() {
         return {
             quetions: [
-                {
-                    discriptions: `VUE JS IS PARASHА??`,
-                    tag: 'Js',
-                    subscribers: 50,
-                    date: `52.52.52`,
-                    views: 43,
-                    answers: 423,
-                    complexity: 'Средне',
-                    id: 0,
-                    question: true,            
-                },
-                {
-                    discriptions: `VUE IS PARASHА!!`,
-                    tag: 'Python',
-                    subscribers: 50,
-                    date: `52.52.52`,
-                    views: 43,
-                    answers: 423,
-                    complexity: 'Тяжело',
-                    id: 1,
-                    question: true,            
-                },
+                // {
+                //     discriptions: `VUE JS IS PARASHА??`,
+                //     tag: 'Js',
+                //     subscribers: 50,
+                //     date: `52.52.52`,
+                //     views: 43,
+                //     answers: 423,
+                //     complexity: 'Средне',
+                //     id: 0,
+                //     question: true,            
+                // },
+                // {
+                //     discriptions: `VUE IS PARASHА!!`,
+                //     tag: 'Python',
+                //     subscribers: 50,
+                //     date: `52.52.52`,
+                //     views: 43,
+                //     answers: 423,
+                //     complexity: 'Тяжело',
+                //     id: 1,
+                //     question: true,            
+                // },
             ],
 
             filters: {

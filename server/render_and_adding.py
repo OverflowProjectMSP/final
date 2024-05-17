@@ -356,15 +356,15 @@ def show_one(id, isQ):
 
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-            cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
-            
-            all_states = cursor.fetchall()[0]
+            cursor.execute(f"SELECT * from questions WHERE id = $${id}$$")
+            # print(cursor.fetchall())
+            all_q = dict(cursor.fetchall()[0])
             
             all_asw = show_answers(True, id)
 
 
             return_data = {
-                'question:': all_states,
+                'question': all_q,
                 'answers': all_asw     
                            }
 
@@ -391,7 +391,7 @@ def show_one(id, isQ):
 
         cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
         
-        all_states = cursor.fetchall()[0]
+        all_states = dict(cursor.fetchall()[0])
 
         all_asw = all_asw = show_answers(True, id)
 
@@ -560,9 +560,12 @@ def show_answers(isQ, idO):
             
             cursor.execute(f'''SELECT * FROM answers 
                        WHERE id_q = $${idO}$$
-                       ORDER BY date''')
+                       ORDER BY data''')
             
-            return_data = cursor.fetchall()
+            data_ = cursor.fetchall()
+            return_data = []
+            for row in data_:
+                return_data.append(dict(row))
 
             logging.info('Все ответы добавлены')
 
@@ -591,7 +594,10 @@ def show_answers(isQ, idO):
                        WHERE id_s = $${idO}$$
                        ORDER BY date''')
         
-        return_data = cursor.fetchall()
+        data = cursor.fetchall()
+        return_data = []
+        for row in data:
+            return_data.append(dict(row))
 
         logging.info('Все комментарии добавлены')
 
