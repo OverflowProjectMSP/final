@@ -138,9 +138,8 @@ def show_all_by_user(id):
         logging.info(id)
         cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$')
         questions = cursor.fetchall()
-        cursor.execute(f'''SELEСT * FROM states
-                                WHERE id_u=$${id}$$''')
-        
+
+        cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$')
         states = cursor.fetchall()
         logging.info('Информация отпраленна')
 

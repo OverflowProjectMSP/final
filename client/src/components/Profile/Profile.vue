@@ -141,9 +141,9 @@ export default {
     </div>
     <div class="container d-flex align-items-center flex-column">
         <HeadComp class="mb-3" />
-        <div class="scroll" v-for="quetion in quetionsUsers">
-            <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`">
-                <VidUserComp :quetion="quetion" />
+        <div class="scroll">
+            <a :href="`/QuestionItem?id=${quetion.id}&question=true`" v-for="quetion in quetionsUsers">
+                <VidUserComp :item="quetion" />
             </a>
         </div>
     </div>
