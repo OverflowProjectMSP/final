@@ -332,9 +332,6 @@ img {
     margin-right: 10px;
 }
 
-.name:hover {
-    color: #6140a7;
-}
 
 .name-ring {
     display: flex;
@@ -354,9 +351,7 @@ img {
     color: #3B82F6;
 }
 
-.more:hover {
-    color: #20498b;
-}
+
 
 .difficult {
     margin-left: 5px;
@@ -398,9 +393,7 @@ img {
     transition: all 200ms;
 }
 
-.answer-btn:hover {
-    background-color: #20498b
-}
+
 
 .about {
     margin-top: 20px;
@@ -481,9 +474,7 @@ img {
     transition: all 200ms;
 }
 
-.btgr:hover {
-    background-color: #20498b
-}
+
 
 .left {
     display: flex;
@@ -552,6 +543,24 @@ img {
 
 /* АДАПТИВКА */
 
+@media (hover: hover) {
+    .btgr:hover {
+        background-color: #20498b
+    }
+
+    .answer-btn:hover {
+        background-color: #20498b
+    }
+
+    .more:hover {
+        color: #20498b;
+    }
+
+    .name:hover {
+        color: #6140a7;
+    }
+
+}
 
 @media (min-width: 1000px) {
     .description img {

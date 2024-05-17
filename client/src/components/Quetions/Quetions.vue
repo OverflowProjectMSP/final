@@ -125,9 +125,7 @@ export default {
 </template>
 
 <style scoped>
-.find-btn:hover {
-    color: #fff !important;
-}
+
 a {
     text-decoration: none;
     color: #000;
@@ -226,5 +224,11 @@ h4 {
 
 .dropdown-center {
     margin-right: 10px;
+}
+
+@media (hover: hover) {
+    .find-btn:hover {
+        color: #fff !important;
+    }
 }
 </style>
