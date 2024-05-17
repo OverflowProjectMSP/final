@@ -85,10 +85,14 @@ body {
     cursor: pointer;
 }
 
-.btn-join:hover {
-    background-color: #145482;
-    box-shadow: 0px 0px 40px #145482;
-    transform: scale(1.2);
+
+
+@media (hover: hover) {
+    .btn-join:hover {
+        background-color: #145482;
+        box-shadow: 0px 0px 40px #145482;
+        transform: scale(1.2);
+    }
 }
 
 @media (min-width: 100px) and (max-width: 600px) {

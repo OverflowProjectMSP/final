@@ -178,8 +178,10 @@ export default {
     cursor: pointer;
 }
 
-.dev-card:hover {
-    transform: translateY(-10px)
+@media (hover: hover) {
+    .dev-card:hover {
+        transform: translateY(-10px)
+    }
 }
 
 .dev-card img {

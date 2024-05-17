@@ -51,9 +51,7 @@ a {
     transition: 300ms;
 }
 
-.close:hover {
-    opacity: 1 !important;
-}
+
 
 .parent {
     z-index: 52;
@@ -86,6 +84,12 @@ img {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+@media (hover: hover) {
+    .close:hover {
+        opacity: 1 !important;
+    }
 }
 
 @media (max-width: 800px) {
