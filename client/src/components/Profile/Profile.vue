@@ -45,11 +45,20 @@ export default {
                 // },
             ],
             user: {},
-            
+
         }
-    }, 
+    },
+    mounted() {
+        this.decodeUtf8();
+        this.allByHe();
+        this.loadUser();
+        setInterval(() => {
+            this.allByHe();
+            this.loadUser();
+        }, 100900);
+    },
     methods: {
-        async allByHe(){
+        async allByHe() {
             console.log(this.$route.query.id)
             let res = await axios.get('/show-all-by-user', {
                 params: {
@@ -65,15 +74,11 @@ export default {
                 }
             });
             this.user = res.data.all;
-        }
-    },
-    mounted() {
-        this.allByHe();
-        this.loadUser();
-        setInterval(() => {
-            this.allByHe();
-            this.loadUser();
-        }, 100900);
+        },
+
+        decodeUtf8() {
+            return decodeURIComponent(escape(this.user.name));
+        },
     },
 }
 
@@ -103,24 +108,26 @@ export default {
                     <p class="info">Ответов</p>
                 </div>
             </div>
-                <div class="about rounded-5">       
-                    <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
-                    <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }}</p>
-                    <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p>
-                    <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
-                    <ul class="fs-5">
-                        <li v-if="user.email">Моя почта: {{ user.email }}</li>
-                        <li v-if="user.telegram">Мой telegram: {{ user.telegram }}</li>
-                        <li v-if="user.skype">Мой skype: {{ user.skype }}</li>
-                        <li v-if="user.discord">Мой discord: {{ user.discord }}</li>
-                        <li v-if="user.facebook">Мой facebook: {{ user.facebook }}</li>
-                    </ul>
-                    <p class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
-                    <p><span class="fw-bold">Мои интересы: </span></p>
-                    <ul class="fs-5 interes">
-                        <li class="interes" v-if="user.interestings">{{ user.interestings }}</li>
-                    </ul>
-                </div>
+            <div class="about rounded-5">
+                <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}
+                </p>
+                <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }}</p>
+                <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang
+                    }}</p>
+                <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
+                <ul class="fs-5">
+                    <li v-if="user.email">Моя почта: {{ user.email }}</li>
+                    <li v-if="user.telegram">Мой telegram: {{ user.telegram }}</li>
+                    <li v-if="user.skype">Мой skype: {{ user.skype }}</li>
+                    <li v-if="user.discord">Мой discord: {{ user.discord }}</li>
+                    <li v-if="user.facebook">Мой facebook: {{ user.facebook }}</li>
+                </ul>
+                <p class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
+                <p><span class="fw-bold">Мои интересы: </span></p>
+                <ul class="fs-5 interes">
+                    <li class="interes" v-if="user.interestings">{{ user.interestings }}</li>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -129,17 +136,17 @@ export default {
         <div class="item ">
             <img src="" alt="">
         </div>
-        
-        
+
+
     </div>
-    <!-- <div class="container d-flex align-items-center flex-column">
-        <HeadComp class="mb-3"/>
+    <div class="container d-flex align-items-center flex-column">
+        <HeadComp class="mb-3" />
         <div class="scroll" v-for="quetion in quetionsUsers">
-        <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`" >
-            <VidUserComp  :quetion="quetion"/>
-        </a>
+            <a :href="`/QuestionItem?id=${this.quetion.id}&question=true`">
+                <VidUserComp :quetion="quetion" />
+            </a>
         </div>
-    </div> -->
+    </div>
 </template>
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/rubik');
@@ -169,13 +176,15 @@ body {
 .t-alig-c {
     text-align: center;
 }
-.scroll{
+
+.scroll {
     overflow: scroll;
     height: 555px;
     width: auto;
     margin-left: auto;
     margin-right: auto;
 }
+
 .interes {
     word-break: break-word !important;
 }
@@ -210,7 +219,7 @@ body {
     border: 1px solid #000;
 }
 
-.circle img{
+.circle img {
     height: 150px;
     width: 150px;
     border-radius: 100%;
