@@ -101,7 +101,9 @@ def helper(phone, email, msg, id_u):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-def show_name(id):
+
+# показ id avtar name
+def show_not_all(id):
     try:
         pg = psycopg2.connect(f"""
             host=localhost
@@ -113,11 +115,14 @@ def show_name(id):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f'''SELECT username FROM users
+        cursor.execute(f'''SELECT id, name, avatr FROM users
                       WHERE id = $${id}$$''')
         
-        link = cursor.fetchall()[0]
-        return_data = link
+        info = dict(cursor.fetchall()[0])
+        return_data = {}
+        for key in info:
+            return_data[key] = info[key]
+
     except (Exception, Error) as error:
         logging.info(f"Ошибка получения данных: {error}")
         return_data = 'No'
@@ -215,15 +220,8 @@ def ava_():
 
     return jsonify(response_object)
 
-@app.route('/user', methods=['GET'])
-def user_():
-    response_object = {'status': 'success'} #БаZа
-
-    response_object['name'] = show_name(request.args.get('id'))
-
-    return jsonify(response_object)
-
 @app.route('/check-r', methods=['GET'])
 def session__():
     if 'id' in session: return jsonify({'status': 'success', 'all': 'true'})
     else: return jsonify({'status': 'success', 'all': 'false'})
+

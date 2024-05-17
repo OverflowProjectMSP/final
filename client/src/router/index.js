@@ -66,5 +66,9 @@ export default createRouter({
       path: "/QuestionItem",
       component: () => import("../components/Quetions/QuestionItem.vue"),
     },
+    // {
+    //   path: "/Forum",
+    //   component: () => import("../components/Forum/Forum.vue"),
+    // },
   ],
 });
