@@ -234,7 +234,7 @@ export default {
                     <div class="btn-group">
                         <div class="left">
                             <button class="comm-add btgr">Добавить комментарий</button>
-                            <div class="like-bc bc">
+                            <!-- <div class="like-bc bc">
                                 <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'"
                                         alt=""></button>
                                 <p class="like-count user-select-none">{{ answer.likes }}</p>
@@ -243,11 +243,11 @@ export default {
                                 <button @click="counterMinus(index)" class="dislike btgr"><img
                                         :src="'src/assets/Dislike.svg'" alt=""></button>
                                 <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="right">
+                        <!-- <div class="right">
                             <a href="#/Main"><button class="toMain btgr">На главную</button></a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

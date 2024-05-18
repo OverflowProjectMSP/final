@@ -258,31 +258,38 @@ export default {
         
         <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
     
-        <div class="content-2 mt-2" v-for="answer in answers" v-if="this.answers.length != 0">
-            <div class="account">
-                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                <div class="name-ring">
-                    <a :href="`#/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
-                </div>
-            </div>
-            <div class="description mt-3">
-                <p v-html="breakLines(answer.text)"></p>
-            </div>
-            <div class="btn-group">
-                <div class="left">
-                    <button class="comm-add btgr">Добавить комментарий</button>
-                    <!-- <div class="like-bc bc">
-                        <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'" alt=""></button>
-                        <p class="like-count user-select-none">{{ answer.likes }}</p>
+        <div class="content-2 mt-2" v-for="answer in answers" v-if="this.loading">
+            <div v-if="this.answers.length != 0">
+                <div class="account">
+                    <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                    <div class="name-ring">
+                        <a :href="`#/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
                     </div>
-                    <div class="dislike-bc bc">
-                        <button @click="counterMinus(index)" class="dislike btgr"><img :src="'src/assets/Dislike.svg'" alt=""></button>
-                        <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
+                </div>
+                <div class="description mt-3">
+                    <p v-html="breakLines(answer.text)"></p>
+                </div>
+                <div class="btn-group">
+                    <div class="left">
+                        <button class="comm-add btgr">Добавить комментарий</button>
+                        <!-- <div class="like-bc bc">
+                            <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'" alt=""></button>
+                            <p class="like-count user-select-none">{{ answer.likes }}</p>
+                        </div>
+                        <div class="dislike-bc bc">
+                            <button @click="counterMinus(index)" class="dislike btgr"><img :src="'src/assets/Dislike.svg'" alt=""></button>
+                            <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
+                        </div> -->
+                    </div>
+                    <!-- <div class="right">
+                        <a href="/"><button class="toMain btgr">На главную</button></a>
                     </div> -->
                 </div>
-                <!-- <div class="right">
-                    <a href="/"><button class="toMain btgr">На главную</button></a>
-                </div> -->
+            </div>
+            <div class="d-flex justify-content-center" v-else>
+                <div class="spinner-border text-primary" role="status" >
+                    <span class="visually-hidden text-center">Loading...</span>
+                </div>
             </div>
         </div>
     </div>
