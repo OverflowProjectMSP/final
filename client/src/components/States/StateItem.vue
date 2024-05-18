@@ -87,13 +87,22 @@ export default {
             this.answers = responce.data.all.answers;
         },
 
-        async loadUserInfo() {
-            let res = await axios.get('/user', {
+        async loadAnswerUser() {
+            this.userCreater = await this.loadUsers(this.questionInfo);
+            for(let i = 0; i<this.answers.length; i++) {
+                let user = await this.loadUsers(this.answers[i]);
+                this.answerUser.push(user)
+            };
+            this.v_For1();
+        },
+
+        async loadUsers(item) {
+            let res = await axios.get('/user-not-all', {
                 params: {
-                    id: this.states.id_u,
+                    id: item.id_u,
                 }
             });
-            this.user = res.data.all;
+            return res.data.all;
         },
 
         counterPlus(index) {
