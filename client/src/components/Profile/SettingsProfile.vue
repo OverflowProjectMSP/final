@@ -82,7 +82,7 @@ export default {
                         <img :src="defaultAvatar" class="mb-2" alt="Фото профиля"
                             style="height: 100px;">
                         <p style="color: gray;">Ваша фотография.</p>
-                        <p style="color: gray;">Размер загружаемой фотографии <br> не должен быть более 2 МБ.</p>
+                        <p style="color: gray;">Размер загружаемой фотографии <br> не должен быть более 10 МБ.</p>
                         <!-- <button class="btn btn-outline-primary" style="margin-right: 10px;"
                             type="file">Загрузить</button> -->
                         <button class="btn btn-outline-secondary">Удалить</button>
