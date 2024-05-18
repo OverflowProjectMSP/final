@@ -217,7 +217,7 @@ export default {
             </div>
         </div>
         <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-        <div v-if="this.loading">
+        <div v-if="!this.loading">
             <div class="answers-all" v-if="this.answers.length != 0">
                 <div class="content-2" v-for="answer in answers">
                     <div class="account">
@@ -251,15 +251,15 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="content p-2" v-else>
-                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
-                </h2>
+            <div class="spinner-border text-primary" role="status" v-else >
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
-        <div class="spinner-border text-primary" role="status" v-else">
-            <span class="visually-hidden">Loading...</span>
-        </div>
 
+        <div class="content p-2" v-else>
+            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
+            </h2>
+        </div>
         <div class="content-3">
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">

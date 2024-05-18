@@ -1,19 +1,19 @@
 
 <script>
-// import FooterComp from './components/ReuseComponets/FooterComp.vue';
-// import HeaderComp from './components/ReuseComponets/HeaderComp.vue';
-// export default {
-//   components: {
-//     HeaderComp,
-//     FooterComp,
-//   }
-// }
+import FooterComp from './components/ReuseComponets/FooterComp.vue';
+import HeaderComp from './components/ReuseComponets/HeaderComp.vue';
+export default {
+  components: {
+    HeaderComp,
+    FooterComp,
+  }
+}
 </script>
 
 <template>
-  <!-- <header-comp/> -->
+  <header-comp/>
   <RouterView />
-  <!-- <footer-comp/> -->
+  <footer-comp/>
 </template>
 
 <style>
