@@ -61,6 +61,7 @@ def show_avatar(id):
         
         link = cursor.fetchall()[0]
 
+        logging.info(f'Аватар юзере {id} отображен')
         
         if link == [None]:
             return_data = 'No'
@@ -92,6 +93,8 @@ def helper(phone, email, msg, id_u):
         
         pg.commit()
 
+        logging.info(f"Добавлен в helper '{msg}', '{phone}', '{email}', '{id_u}' ")
+
         return 'Ваня'
     except (Exception, Error) as error:
         logging.info(f"Ошибка получения данных: {error}")
@@ -104,37 +107,6 @@ def helper(phone, email, msg, id_u):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# показ id avtar name
-def show_not_all(id):
-    try:
-        pg = psycopg2.connect(f"""
-            host=localhost
-            dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
-        """)
-
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        cursor.execute(f'''SELECT id, name, avatr FROM users
-                      WHERE id = $${id}$$''')
-        
-        info = dict(cursor.fetchall()[0])
-        return_data = {}
-        for key in info:
-            return_data[key] = info[key]
-
-    except (Exception, Error) as error:
-        logging.info(f"Ошибка получения данных: {error}")
-        return_data = 'No'
-
-    finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
