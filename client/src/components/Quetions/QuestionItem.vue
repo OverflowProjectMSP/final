@@ -164,11 +164,11 @@ export default {
         v_For1() {
             for (let i = 0; i < this.answerUser.length; i++) {
                 this.answers[i].user = this.answerUser[i];
-                if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
-                    this.loading = true;
-                } else {
-                    this.loading = false;
-                }
+            }
+            if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
+                this.loading = true;
+            } else {
+                this.loading = false;
             }
         },
 
