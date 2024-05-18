@@ -4,39 +4,7 @@ import axios, { all } from 'axios';
 export default {
     data() {
         return {
-            question: { //структура получения всех данных с сервера(УСТАРЕВШАЯ!!!);
-                id: 123,
-                accountInfo: {
-                    accountIcon: 'person.svg',
-                    accountName: 'Nick Endgy',
-                },
-                questionInfo: {
-                    title: 'Как сделать регистрацию с использованием только JavaScript?',
-                    description: `Подскажите, пожалуйста, как сделать регистрацию пользователя на сайте? Сайт у меня на node.js. Я первый раз такую форму делаю и не знаю какой путь выбрать. Какой вариант лучше? Просто к кнопке "зарегистрироваться" подвязать эвент и в нем делать функцию? Или как-то использовать method="post" у формы? 
-                                <br>UPD:А как fetch() использовать? Я написал такой код, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
-                    level: `Лёгкий`,
-                    imageInQuetion: 'test',
-                    answer: 28,
-                    views: 473,
-                    data: `05.01.2024 12:31`,
-                    Decided: true,
-                },
-                answers: [
-                    {
-                        answerUserInfo: {
-                            accountIcon: 'ava.png',
-                            accountName: 'JavaScriptPRO',
-                            rang: `Решала`,
-                        },
-                        answerInfo: {
-                            text: `123123123, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
-                            comment: 52,
-                            likes: 52,
-                            dislike: 36,
-                        },
-                    },
-                ],
-            },
+        
 
             user: {},
 
@@ -71,9 +39,7 @@ export default {
 
     mounted() {
         this.loadState();
-        this.loadAnswerUser();
         this.checkUser();
-        this.loadUserInfo();
     },
     
     methods: {
@@ -84,8 +50,14 @@ export default {
                     q: false,
                 }
             });
+
             this.states = responce.data.all.states;
             this.answers = responce.data.all.answers;
+            this.print(this.answers)
+            this.loadAnswerUser();
+        },
+        print(s){
+            console.log(s)
         },
 
         async loadAnswerUser() {
@@ -130,10 +102,6 @@ export default {
             }
         },
 
-        breakLines(text) {
-            return text.replace(/\n/g, "<br>");
-        },
-
         symbolsCount() {
             this.question.symbols = this.question.text.length;
             if (this.question.symbols >= 2000) {
@@ -143,19 +111,21 @@ export default {
             }
         },
 
-        loadAnswerUser() {
-            this.userCreater = this.loadUsers(this.states.id_u);
+        async loadAnswerUser() {
+            this.userCreater = await this.loadUsers(this.states);
 
-            this.answers.forEach((item) => {
-                let user = this.loadUsers(item);
+            for (let i = 0; i<this.answers.length; i++) {
+                let user = await this.loadUsers(this.answers[i]);
                 this.commentUser.push(user)
-            });
+            };
         },
 
+
         async loadUsers(item) {
+            console.log(item)
             let res = await axios.get('/user-not-all', {
                 params: {
-                    id: item.id_user,
+                    id: item.id_u,
                 }
             });
             return res.data.all;
@@ -230,7 +200,7 @@ export default {
                 <h3>{{ states.discriptions }}</h3>
             </div>
             <div class="description">
-                <p v-html="breakLines(states.details)"></p>
+                <p>{{ states.details }}</p>
             </div>
             <div class="about">
                 <p>{{ states.data }}</p>
@@ -238,11 +208,11 @@ export default {
         </div>
         
         <div class="content-3">
-            <div class="account" v-for="user in answerUser">
+            <div class="account" v-for="user in commentUser">
                 <img class="accountIcon" :src="user.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a href="#!"><span class="name">{{ user.username }}</span></a>
+                        <a :href="`#/Profile?id=${user.id}`"><span class="name">{{ user.username }}</span></a>
                     </div>
                 </div>
             </div>
@@ -258,31 +228,38 @@ export default {
         
         <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
     
-        <div class="content-2 mt-2" v-for="answer in answers" v-if="this.answers.length != 0">
-            <div class="account">
-                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                <div class="name-ring">
-                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
-                </div>
-            </div>
-            <div class="description mt-3">
-                <p v-html="breakLines(answer.text)"></p>
-            </div>
-            <div class="btn-group">
-                <div class="left">
-                    <button class="comm-add btgr">Добавить комментарий</button>
-                    <!-- <div class="like-bc bc">
-                        <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'" alt=""></button>
-                        <p class="like-count user-select-none">{{ answer.likes }}</p>
+        <div class="content-2 mt-2" v-for="answer in answers" v-if="this.loading">
+            <div v-if="this.answers.length != 0">
+                <div class="account">
+                    <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                    <div class="name-ring">
+                        <a :href="`#/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
                     </div>
-                    <div class="dislike-bc bc">
-                        <button @click="counterMinus(index)" class="dislike btgr"><img :src="'src/assets/Dislike.svg'" alt=""></button>
-                        <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
+                </div>
+                <div class="description mt-3">
+                    <p >{{answer.text}}</p>
+                </div>
+                <div class="btn-group">
+                    <div class="left">
+                        <button class="comm-add btgr">Добавить комментарий</button>
+                        <!-- <div class="like-bc bc">
+                            <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'" alt=""></button>
+                            <p class="like-count user-select-none">{{ answer.likes }}</p>
+                        </div>
+                        <div class="dislike-bc bc">
+                            <button @click="counterMinus(index)" class="dislike btgr"><img :src="'src/assets/Dislike.svg'" alt=""></button>
+                            <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
+                        </div> -->
+                    </div>
+                    <!-- <div class="right">
+                        <a href="/"><button class="toMain btgr">На главную</button></a>
                     </div> -->
                 </div>
-                <!-- <div class="right">
-                    <a href="/"><button class="toMain btgr">На главную</button></a>
-                </div> -->
+            </div>
+            <div class="d-flex justify-content-center" v-else>
+                <div class="spinner-border text-primary" role="status" >
+                    <span class="visually-hidden text-center">Loading...</span>
+                </div>
             </div>
         </div>
     </div>

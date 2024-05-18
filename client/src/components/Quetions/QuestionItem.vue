@@ -83,6 +83,7 @@ export default {
             };
             this.v_For1();
         },
+        
 
         async loadUsers(item) {
             let res = await axios.get('/user-not-all', {
@@ -223,7 +224,7 @@ export default {
                     <div class="account">
                         <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                         <div class="name-ring">
-                            <a :href="`Profile?id=${answer.user.id_u}`">
+                            <a :href="`/Profile?id=${answer.user.id_u}`">
                                 <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                             </a>
                         </div>
@@ -234,7 +235,7 @@ export default {
                     <div class="btn-group">
                         <div class="left">
                             <button class="comm-add btgr">Добавить комментарий</button>
-                            <div class="like-bc bc">
+                            <!-- <div class="like-bc bc">
                                 <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'"
                                         alt=""></button>
                                 <p class="like-count user-select-none">{{ answer.likes }}</p>
@@ -243,11 +244,11 @@ export default {
                                 <button @click="counterMinus(index)" class="dislike btgr"><img
                                         :src="'src/assets/Dislike.svg'" alt=""></button>
                                 <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="right">
+                        <!-- <div class="right">
                             <a href="#/Main"><button class="toMain btgr">На главную</button></a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -267,7 +268,7 @@ export default {
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a href="#!"><span class="name">{{ userNow.username }}</span></a>
+                        <a :href="`#/Profile?id=${userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
                     </div>
                 </div>
             </div>
