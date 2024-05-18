@@ -71,6 +71,10 @@ export default createRouter({
       component: () => import("../components/Forum/Forum.vue"),
     },
     {
+      path: "/ForumPage",
+      component: () => import("../components/Forum/ForumPage.vue"),
+    },
+    {
       path: "/ProfileSettings",
       component: () => import("../components/Profile/SettingsProfile.vue"),
     },
