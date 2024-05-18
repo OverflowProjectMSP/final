@@ -234,7 +234,7 @@ export default {
                     <div class="account">
                         <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                         <div class="name-ring">
-                            <a :href="`#/Profile?id=${answer.user.id_u}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
+                            <a :href="`/Profile?id=${answer.user.id_u}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
                         </div>
                     </div>
                     <div class="description mt-3">
