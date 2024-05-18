@@ -107,8 +107,7 @@ export default {
                 <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}
                 </p>
                 <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
-                <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang
-                    }}</p>
+                <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p>
                 <p><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
                 <ul class="fs-5">
                     <li v-if="user.email">Моя почта: {{ user.email }}</li>
@@ -118,9 +117,9 @@ export default {
                     <li v-if="user.facebook">Мой facebook: {{ user.facebook }}</li>
                 </ul>
                 <p class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
-                <p><span class="fw-bold">Мои интересы: </span></p>
-                <ul class="fs-5 interes">
-                    <li class="interes" v-if="user.interestings">{{ user.interestings }}</li>
+                <p v-if="this.user.about"><span class="fw-bold">Мои интересы: </span></p>
+                <ul class="fs-5 interes"  v-if="this.user.interestings">
+                    <li class="interes">{{ user.interestings }}</li>
                 </ul>
             </div>
         </div>

@@ -20,7 +20,7 @@ export default {
                 github: ``,
                 avatar: ``,
             },
-            defaultAvatar: `src/assets/Profile/profileDefaultImg.png`,
+            defaultAvatar: `src/assets/Header/AvatarDef.svg`,
             id: ''
         }
     },
@@ -85,8 +85,8 @@ export default {
             <div class="image-block">
                 <div class="d-flex flex-column justify-content-center">
                     <div style="text-align: center;">
-                        <img :src="defaultAvatar" class="mb-2" alt="Фото профиля"
-                            style="height: 100px;">
+                        <img v-if="this.form.avatar == ``" :src="defaultAvatar" class="mb-2" alt="Фото профиля" style="height: 100px;">
+                        <img v-else :src="form.avatar" class="mb-2" alt="Фото профиля" style="height: 100px;">
                         <p style="color: gray;">Ваша фотография.</p>
                         <p style="color: gray;">Размер загружаемой фотографии <br> не должен быть более 10 МБ.</p>
                         <!-- <button class="btn btn-outline-primary" style="margin-right: 10px;"
