@@ -75,7 +75,7 @@ export default {
         },
 
         loadAnswerUser() {
-            this.userCreater = this.loadUsers(this.questionInfo);                               
+            this.userCreater = this.loadUsers(this.questionInfo);
             this.answers.forEach((item) => {
                 let user = this.loadUsers(item);
                 this.answerUser.push(user)
