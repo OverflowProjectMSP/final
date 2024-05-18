@@ -19,7 +19,6 @@ export default {
                 phonenumber: ``,
                 github: ``,
                 avatar: ``,
-                avatarFile: ``,
             },
             defaultAvatar: `src/assets/Profile/profileDefaultImg.png`
         }

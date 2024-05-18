@@ -36,6 +36,7 @@ def refresh_data(info, id):
         
         src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
         data+= f', avatar=$${src}$$'
+        print(data)
         cursor.execute(f"""UPDATE users 
                     SET {data}
                     WHERE id=$${id}$$;""")
