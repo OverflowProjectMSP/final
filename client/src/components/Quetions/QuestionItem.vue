@@ -83,6 +83,7 @@ export default {
             };
             this.v_For1();
         },
+        
 
         async loadUsers(item) {
             let res = await axios.get('/user-not-all', {
@@ -223,7 +224,7 @@ export default {
                     <div class="account">
                         <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                         <div class="name-ring">
-                            <a :href="`Profile?id=${answer.user.id}`">
+                            <a :href="`/Profile?id=${answer.user.id_u}`">
                                 <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                             </a>
                         </div>

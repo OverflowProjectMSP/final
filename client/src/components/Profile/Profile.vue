@@ -81,7 +81,7 @@ export default {
 
 <template>
     <div class="profile">
-        <a href="#/ProfileSettings"><img src="../../assets/Profile/sh.svg" alt="Настройки" class="il"></a>
+        <a href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" alt="Настройки" class="il"></a>
         <div class="head">
 
             <div class="circle">
@@ -186,7 +186,7 @@ body {
 
 /* профиль с картинкой */
 .profile {
-    background-image: url(../../assets/background.png);
+    background-image: url(../../assets/Profile/background.png);
     background-repeat: no-repeat;
     background-size: 1920px;
     border-radius: 8px;
