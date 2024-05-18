@@ -59,7 +59,10 @@ export default {
         <div class="form-floating">
             <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;" v-model="form.details"></textarea>
         </div>
-
+        <div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+</div>
     </div>
 
     <div class="row pt-5 block">
