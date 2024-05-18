@@ -256,7 +256,7 @@ export default {
                 </h2>
             </div>
         </div>
-        <div class="spinner-border text-primary" role="status" v-else :class="{'d-none': loading}">
+        <div class="spinner-border text-primary" role="status" v-else">
             <span class="visually-hidden">Loading...</span>
         </div>
 
