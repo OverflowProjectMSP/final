@@ -217,10 +217,10 @@ export default {
 
         <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
             <div class="account">
-                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                <img class="accountIcon" :src="answer.user.then((avatar) => {return avatar})" width="70px" :alt="answer.user.then((username) => {return username})">
                 <div class="name-ring">
-                    <a :href="`Profile?id=${answer.user.id}`">
-                        <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                    <a :href="`Profile?id=${answer.user.then((id_u) => {return id_u})}`">
+                        <p><span class="name" role="button">{{ answer.user.then((username) => {return username}) }}</span></p>
                     </a>
                 </div>
             </div>
