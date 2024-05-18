@@ -124,8 +124,8 @@ export default {
     color: black;
 }
 .conr{
-    overflow: scroll;
-    height: 555px;
+    /* overflow: scroll; */
+    /* height: 555px; */
     width: auto;
     margin-left: auto;
     margin-right: auto;

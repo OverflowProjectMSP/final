@@ -25,7 +25,7 @@ export default {
         }
     },
     props: {
-        quetion: Object,
+        item: Object,
         Show: Boolean,
     }
 }
@@ -40,7 +40,7 @@ export default {
                     <a href="#!"><p>{{ item.tag }}</p></a>
                 </div>
                 <div class="text">
-                    <h5>{{ item.discriptions }}</h5>
+                    <h5>{{ item.discription }}</h5>
                 </div>
                 <div class="info">
                     <p>{{ subs }} подписчиков</p>

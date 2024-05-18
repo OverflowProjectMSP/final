@@ -63,8 +63,9 @@ export default {
 
             name: ``,
 
-
             avaComment: ``,
+
+            loading: false
         }
     },
 
@@ -87,13 +88,22 @@ export default {
             this.answers = responce.data.all.answers;
         },
 
-        async loadUserInfo() {
-            let res = await axios.get('/user', {
+        async loadAnswerUser() {
+            this.userCreater = await this.loadUsers(this.states);
+            for(let i = 0; i<this.answers.length; i++) {
+                let user = await this.loadUsers(this.answers[i]);
+                this.commentUser.push(user)
+            };
+            this.v_For1();
+        },
+
+        async loadUsers(item) {
+            let res = await axios.get('/user-not-all', {
                 params: {
-                    id: this.states.id_u,
+                    id: item.id_u,
                 }
             });
-            this.user = res.data.all;
+            return res.data.all;
         },
 
         counterPlus(index) {
@@ -138,7 +148,7 @@ export default {
 
             this.answers.forEach((item) => {
                 let user = this.loadUsers(item);
-                this.answerUser.push(user)
+                this.commentUser.push(user)
             });
         },
 
@@ -170,15 +180,6 @@ export default {
             });
         },
 
-        // async loadAvatar() {
-        //     let res = await axios.get('/avatarka', {
-        //         params: {
-        //             id: this.$route.query.id,
-        //         }
-        //     });
-        //     this.ava = res.data.link;
-        // },
-
         async checkUser() {
             let res = await axios.get('/check', {
                 params: {
@@ -188,9 +189,16 @@ export default {
             this.isCheck = Boolean(res.data.isEdit);
         },
 
-        // async loadAvatars() {
-        //     let trertrestrestrestrestrestrestrestrestrestres = await axios.hui('beckend-vojna-ta-eche');
-        // }
+        v_For1() {
+            for (let i = 0; i < this.commentUser.length; i++) {
+                this.answers[i].user = this.commentUser[i];
+            }
+            if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
+                this.loading = true;
+            } else {
+                this.loading = false;
+            }
+        },
     },
 }
 
@@ -223,8 +231,6 @@ export default {
             </div>
             <div class="description">
                 <p v-html="breakLines(states.details)"></p>
-                <!-- <img class="user-select-none" :src="states.imageInQuetion" 
-                    v-if="states.image"> -->
             </div>
             <div class="about">
                 <p>{{ states.data }}</p>
@@ -253,10 +259,10 @@ export default {
         <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
     
         <div class="content-2 mt-2" v-for="answer in answers" v-if="this.answers.length != 0">
-            <div class="account" v-for="commUser in answerUser">
-                <img class="accountIcon" :src="'src/assets/' + commUser.avatar" width="70px" alt="">
+            <div class="account">
+                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                 <div class="name-ring">
-                    <p><span class="name" role="button">{{ commUser.username }}</span></p>
+                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                 </div>
             </div>
             <div class="description mt-3">
@@ -274,9 +280,9 @@ export default {
                         <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
                     </div> -->
                 </div>
-                <div class="right">
+                <!-- <div class="right">
                     <a href="/"><button class="toMain btgr">На главную</button></a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

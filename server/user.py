@@ -1,5 +1,5 @@
 from app import *
-
+from render_and_adding import add_img
 
 load_dotenv()
 
@@ -9,13 +9,12 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
  
-print("OK")
+logging.info("user.py have connected")
 
 # Обновление доп данных о 
 def refresh_data(info, id):
     data = ''
     for i in info:
-        logging.info(i)
         if info[i] != 'false':
             if i == 'avatar' or i == 'filename':
                 continue
@@ -35,18 +34,19 @@ def refresh_data(info, id):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         
-        # src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
-        # UPDATE user-info
+        src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
+        data+= f', avatar=$${src}$$'
         cursor.execute(f"""UPDATE users 
                     SET {data}
-                    WHERE id='f527d19af56b4614bab663800ed79825';""")
+                    WHERE id=$${id}$$;""")
         pg.commit()
 
-        return_data = "Данные изменены"
+        return_data = "Ok"
+        logging.info('Данные о пользотвател обновлены')
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Ошибка обращения к базе данных: {error}" 
+        return_data = f"Error" 
 
     finally:
         if pg:
@@ -91,7 +91,7 @@ def login_user(email, pas):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Ошибка обращения к базе данных: {error}" 
+        return_data = f"Error" 
 
     finally:
         if pg:
@@ -127,7 +127,8 @@ def add_user_todb(name, email, pas):
             
             pg.commit()
             
-            return_data = "Пользователь зарегестрирован!"
+            logging.info("Пользователь зарегестрирован!")
+            return_data = 'Ok'
 
         else:
             return_data = "Пользователь с таким именем или почтой уже существует!"
@@ -135,7 +136,7 @@ def add_user_todb(name, email, pas):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Ошибка добавления в базу данных: {error}" 
+        return_data = f"Error" 
 
     finally:
         if pg:
@@ -163,7 +164,7 @@ def change_password(password, old_password, id):
                             ''')
             pg.commit()
 
-            logging.info('Пароль изменен')
+            logging.info(f'Пароль изменен на {id}')
 
             return_data = "True"
 
@@ -201,7 +202,7 @@ def check_old_password(id, password):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Ошибка обращения к базе данных: {error}" 
+        return_data = f"Error" 
 
     finally:
         if pg:
@@ -232,7 +233,8 @@ def change_password_send(password, email):
                         ''')
         pg.commit()
         return_data = "True"
-        logging.info("Пароль изменен")
+        logging.info(f'Пароль изменен на {email}')
+
 
 
     except (Exception, Error) as error:
@@ -254,7 +256,7 @@ def send_code(email):
     code_pas = ""
 
 # ------------------------Улучшить бы----------------------------------------------------
-    for i in range(4):
+    for _ in range(4):
         a = random.randint(0, 9) # А че тут улучшать? (Без негатива, от febolo)
         code_pas += str(a)
 #-----------------------------------------------------------------------------------------
@@ -275,7 +277,7 @@ def send_code(email):
     session['email'] = str(email)
     session.modified = True
 
-    logging.info('Пароль отправлен на почту')
+    logging.info(f'Пароль {code_pas} отправлен на почту {email}')
 
     return 0
 
@@ -291,6 +293,7 @@ def check_password(password, true_password):
     session.pop('sent-password', None)
     return return_data
 
+# показ всего о юзере
 def show_user_info(id):
     try: 
         pg = psycopg2.connect(f"""
@@ -324,16 +327,16 @@ def show_user_info(id):
         # счетчик ответов и комментариев
         cursor.execute(f"SELECT COUNT(*) from answers WHERE id_u=$${id}$$")
         cnt_a = cursor.fetchone()[0]
-        print("cnt_a: ", cnt_a)
+
         cursor.execute(f"SELECT COUNT(*) from comments WHERE id_u=$${id}$$")
         cnt_c = cursor.fetchone()[0]
-        print("cnt_c: ", cnt_c)
+
         return_data['acnt'] = cnt_a + cnt_c
 
-
+        logging.info(f'Инофрмация профиля {id} отображена')
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Ошибка обращения к базе данных: {error}" 
+        return_data = f"Error" 
 
     finally:
         if pg:
@@ -342,7 +345,40 @@ def show_user_info(id):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
  
+# показ id avtar name
+def show_not_all(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
 
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''SELECT id, username, avatar FROM users
+                      WHERE id = $${id}$$''')
+        
+        info = dict(cursor.fetchall()[0])
+        return_data = {}
+        for key in info:
+            return_data[key] = info[key]
+
+        logging.info(f'Неполная инофрмация профиля {id} отображена')
+
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'No'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -428,3 +464,12 @@ def new_password_with_email():
  
 
  # может ли юзер удалять/менять или нет
+
+# показ id avtar name
+@app.route('/user-not-all', methods=['GET'])
+def user__():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object['all'] = show_not_all(request.args.get('id'))
+
+    return jsonify(response_object)
