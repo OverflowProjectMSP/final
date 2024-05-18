@@ -122,9 +122,9 @@ def add_user_todb(name, email, pas):
         send_user.append(cursor.fetchone())
         # Проверка существует ли такой пользователь
         if send_user[0][0] == 0 and send_user[1][0] == 0:
-            user_to_write = (uuid.uuid4().hex, name, email, pas, False)
+            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', 'src/assets/Header/AvatarDef.svg', False)
             
-            cursor.execute(f"INSERT INTO users(id, username, email, password, admin) VALUES {user_to_write}")      
+            cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin) VALUES {user_to_write}""")      
             
             pg.commit()
             
