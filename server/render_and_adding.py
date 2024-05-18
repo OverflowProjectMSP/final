@@ -365,6 +365,7 @@ def show_one(id, isQ):
 
             cursor.execute(f"SELECT * from questions WHERE id = $${id}$$")
             # print(cursor.fetchall())
+            
             all_q = dict(cursor.fetchall()[0])
             
             all_asw = show_answers(True, id)
@@ -401,15 +402,15 @@ def show_one(id, isQ):
         
         all_states = dict(cursor.fetchall()[0])
 
-        all_asw = all_asw = show_answers(True, id)
+        all_asw = show_answers(False, id)
 
 
         return_data = {
-                'states': all_states,
+                'states': all_states,                        
                 'answers': all_asw     
-                           }
+                           }                           
         logging.info(f'Сатья {id} была отправлен')
-
+                                                        
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
         return_data = f"Error" 
@@ -604,9 +605,12 @@ def show_answers(isQ, idO):
 
         cursor.execute(f'''SELECT * FROM comments 
                        WHERE id_s = $${idO}$$
-                       ORDER BY date''')
+                       ORDER BY data''')
         
         data = cursor.fetchall()
+        print(f'''SELECT * FROM comments 
+                       WHERE id_s = $${idO}$$
+                       ORDER BY data''')
         return_data = []
         for row in data:
             return_data.append(dict(row))
@@ -701,10 +705,11 @@ def one_something():
     # post_data = request.get_json()
     id = request.args.get('id')
     is_Q = request.args.get('q')
-
-    if is_Q:
+    print(is_Q)
+    if is_Q == 'true':
         responce_object['all'] = show_one(id, True)
     else:
+        print(1)
         responce_object['all'] = show_one(id, False)
 
 
