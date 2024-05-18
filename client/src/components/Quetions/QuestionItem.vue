@@ -72,11 +72,10 @@ export default {
             this.questionInfo = responce.data.all.question;
             this.answers = responce.data.all.answers;
             this.loadAnswerUser();
-            console.log(this.questionInfo)
         },
 
         loadAnswerUser() {
-            this.userCreater = this.loadUsers(this.questionInfo);                                
+            this.userCreater = this.loadUsers(this.questionInfo);                               
             this.answers.forEach((item) => {
                 let user = this.loadUsers(item);
                 this.answerUser.push(user)
@@ -220,7 +219,7 @@ export default {
                 <img class="accountIcon" :src="answer.user.then((avatar) => {return avatar})" width="70px" :alt="answer.user.then((username) => {return username})">
                 <div class="name-ring">
                     <a :href="`Profile?id=${answer.user.then((id_u) => {return id_u})}`">
-                        <p><span class="name" role="button">{{ answer.user.then((username) => {return username}) }}</span></p>
+                        <p><span class="name" role="button">{{ answer.user.then((username) => { return username}) }}</span></p>
                     </a>
                 </div>
             </div>
