@@ -58,9 +58,10 @@ export default {
 
             isCheck: null,
 
+            loading: false,
         }
     },
-    
+
     methods: {
         async loadQuestion() {
             let responce = await axios.get(`/show-one`, {
@@ -76,7 +77,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.questionInfo);
-            for(let i = 0; i<this.answers.length; i++) {
+            for (let i = 0; i < this.answers.length; i++) {
                 let user = await this.loadUsers(this.answers[i]);
                 this.answerUser.push(user)
             };
@@ -101,7 +102,7 @@ export default {
             } else if (this.count == 1) {
                 this.question.answers[index].answerInfo.likes--;
                 this.count--;
-            }  
+            }
         },
 
         counterMinus(index) {
@@ -131,17 +132,17 @@ export default {
 
         async addComment() {
             await axios.post(`/answers`, {
-                    id: this.$route.query.id,
-                    q: true,
-                    text: this.text,
-                },
+                id: this.$route.query.id,
+                q: true,
+                text: this.text,
+            },
             );
             this.text = ``;
             this.loadQuestion();
         },
         async deleteQuestion() {
             await axios.delete('/delete', {
-                params:{
+                params: {
                     id: this.$route.query.id,
                     q: true,
                 }
@@ -161,8 +162,13 @@ export default {
         },
 
         v_For1() {
-            for(let i = 0; i < this.answerUser.length; i++) {
+            for (let i = 0; i < this.answerUser.length; i++) {
                 this.answers[i].user = this.answerUser[i];
+                if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
+                    this.loading = true;
+                } else {
+                    this.loading = false;
+                }
             }
         },
 
@@ -178,11 +184,10 @@ export default {
 
 <template>
     <div class="container mb-4">
-        <!--<div class="content-1">
+        <div class="content-1">
             <div class="account justify-content-between">
                 <div class="creator-info d-flex flex-row align-items-center gap-3">
-                    <img class="accountIcon" :src="userCreater.avatar" width="70px"
-                        alt="">
+                    <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
                             <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
@@ -198,57 +203,62 @@ export default {
                         </ul>
                     </div>
                 </div>
-            </div> -->
-            <!-- <div class="title">
+            </div>
+            <div class="title">
                 <h3>{{ questionInfo.descriptions }}</h3>
             </div>
             <div class="description">
-                <p>{{ questionInfo.details }}</p> -->
-                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'"
-                    alt=""> -->
-            <!-- </div>
+                <p>{{ questionInfo.details }}</p>
+                <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt="">
+            </div>
             <div class="about">
                 <p>{{ questionInfo.data }}</p>
                 <p>{{ questionInfo.views }} просмотра</p>
             </div>
         </div>
-        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button> -->
-        <div v-if="this.answers.length != 0">
-        <div class="content-2" v-for="answer in answers" >
-            <div class="account">
-                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                <div class="name-ring">
-                    <a :href="`Profile?id=${answer.user.id_u}`">
-                        <p><span class="name" role="button">{{ answer.user.username }}</span></p>
-                    </a>
-                </div>
-            </div>
-            <div class="description mt-3">
-                <p>{{ answer.text }}</p>
-            </div>
-            <div class="btn-group">
-                <div class="left">
-                    <button class="comm-add btgr">Добавить комментарий</button>
-                    <!-- <div class="like-bc bc">
-                        <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'" alt=""></button>
-                        <p class="like-count user-select-none">{{ answer.likes }}</p>
+        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+        <div v-if="this.loading">
+            <div class="answers-all" v-if="this.answers.length != 0">
+                <div class="content-2" v-for="answer in answers">
+                    <div class="account">
+                        <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                        <div class="name-ring">
+                            <a :href="`Profile?id=${answer.user.id_u}`">
+                                <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                            </a>
+                        </div>
                     </div>
-                    <div class="dislike-bc bc">
-                        <button @click="counterMinus(index)" class="dislike btgr"><img :src="'src/assets/Dislike.svg'" alt=""></button>
-                        <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
-                    </div> -->
+                    <div class="description mt-3">
+                        <p>{{ answer.text }}</p>
+                    </div>
+                    <div class="btn-group">
+                        <div class="left">
+                            <button class="comm-add btgr">Добавить комментарий</button>
+                            <div class="like-bc bc">
+                                <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'"
+                                        alt=""></button>
+                                <p class="like-count user-select-none">{{ answer.likes }}</p>
+                            </div>
+                            <div class="dislike-bc bc">
+                                <button @click="counterMinus(index)" class="dislike btgr"><img
+                                        :src="'src/assets/Dislike.svg'" alt=""></button>
+                                <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <a href="#/Main"><button class="toMain btgr">На главную</button></a>
+                        </div>
+                    </div>
                 </div>
-                <!-- <div class="right">
-                    <a href="#/Main"><button class="toMain btgr">На главную</button></a>
-                </div> -->
+            </div>
+            <div class="content p-2" v-else>
+                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
+                </h2>
             </div>
         </div>
+        <div class="spinner-border text-primary" role="status" v-else :class="{'d-none': loading}">
+            <span class="visually-hidden">Loading...</span>
         </div>
-        <div class="content p-2" v-else>
-            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
-            </h2>
-        </div>
-
 
         <div class="content-3">
             <div class="account">
