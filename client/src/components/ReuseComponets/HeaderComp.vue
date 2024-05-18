@@ -89,7 +89,7 @@ export default {
 
             </li>
             <li class="nav-item mt-1" style="cursor: pointer;">
-              <a class="nav-link text-white" aria-disabled="true" href="/Forum">Форум</a>
+              <a class="nav-link text-white" aria-disabled="true" href="/ForumPage">Форум</a>
             </li>
           </ul>
           <div class="container-form">
