@@ -43,8 +43,9 @@ a {
     justify-content: center;      
     align-content: center;  
     flex-wrap: wrap;
-    padding-top: 60px;
-    border-radius: 10px 10px 0px 0px;
+    margin-top: 0 !important;
+    /* padding-top: 60px; */
+    /* border-radius: 10px 10px 0px 0px; */
 }
 .link {
     width: 42px;
