@@ -124,16 +124,8 @@ export default {
                 </ul>
             </div>
         </div>
-
     </div>
 
-    <div class="container d-flex">
-        <div class="item ">
-            <img src="" alt="">
-        </div>
-
-
-    </div>
     <div class="container d-flex align-items-center flex-column">
         <HeadComp class="mb-3" />
         <div class="scroll">

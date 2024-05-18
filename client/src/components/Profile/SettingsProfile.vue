@@ -25,23 +25,37 @@ export default {
         }
     },
 
+    mounted() {
+        this.getUser();
+    }
+
     methods: {
         async putInfo() {
             await axios.put('/user-info', {
                 form: this.form,
             });
         },
-    convertFileAvatar(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      const filename = event.target.files[0].name;
-      this.form.filename = filename;
-      reader.onload = () => {
-        this.form.avatar = reader.result;
-        console.log(reader.result);
-      };
-      reader.readAsDataURL(file);
-    },
+        convertFileAvatar(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        const filename = event.target.files[0].name;
+        this.form.filename = filename;
+        reader.onload = () => {
+            this.form.avatar = reader.result;
+            console.log(reader.result);
+        };
+        reader.readAsDataURL(file);
+        },
+        async getUser() {
+            let res = await axios.get('/session');
+            this.getUserInfo(res.data.id);
+        },
+        async getUserInfo(id) {
+            let res = await axios.get('/user-info', {
+                id: id,
+            });
+            this.form = res.data.all;
+        },
     }
 }
 </script>
