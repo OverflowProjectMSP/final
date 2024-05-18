@@ -9,6 +9,8 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
  
+logging.info("render_and_adding.py have connected")
+
 # Новый вопрос
 def add_question(discriptions='', details='', dificulty='', tag='', id=''):
     try: 

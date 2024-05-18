@@ -9,6 +9,8 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
+logging.info("others.py have connected")
+
 # Добавление сообщения в бд (чат форума)
 def chat(id, time, msg):
     try: 
