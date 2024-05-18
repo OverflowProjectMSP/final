@@ -74,12 +74,12 @@ export default {
             this.loadAnswerUser();
         },
 
-        loadAnswerUser() {
-            this.userCreater = this.loadUsers(this.questionInfo);
-            this.answers.forEach((item) => {
-                let user = this.loadUsers(item);
+        async loadAnswerUser() {
+            this.userCreater = await this.loadUsers(this.questionInfo);
+            for(let i = 0; i<this.answers.length; i++) {
+                let user = await this.loadUsers(this.answers[i]);
                 this.answerUser.push(user)
-            });
+            };
             this.v_For1();
         },
 
@@ -178,7 +178,7 @@ export default {
 
 <template>
     <div class="container mb-4">
-        <div class="content-1">
+        <!--<div class="content-1">
             <div class="account justify-content-between">
                 <div class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userCreater.avatar" width="70px"
@@ -198,28 +198,28 @@ export default {
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="title">
+            </div> -->
+            <!-- <div class="title">
                 <h3>{{ questionInfo.descriptions }}</h3>
             </div>
             <div class="description">
-                <p>{{ questionInfo.details }}</p>
+                <p>{{ questionInfo.details }}</p> -->
                 <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'"
                     alt=""> -->
-            </div>
+            <!-- </div>
             <div class="about">
                 <p>{{ questionInfo.data }}</p>
-                <!-- <p>{{ questionInfo.views }} просмотра</p> -->
+                <p>{{ questionInfo.views }} просмотра</p>
             </div>
         </div>
-        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-
-        <div class="content-2" v-for="answer in answers" v-if="this.answers.length != 0">
+        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button> -->
+        <div v-if="this.answers.length != 0">
+        <div class="content-2" v-for="answer in answers" >
             <div class="account">
-                <img class="accountIcon" :src="answer.user.then((avatar) => {return avatar})" width="70px" :alt="answer.user.then((username) => {return username})">
+                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                 <div class="name-ring">
-                    <a :href="`Profile?id=${answer.user.then((id_u) => {return id_u})}`">
-                        <p><span class="name" role="button">{{ answer.user.then((username) => { return username}) }}</span></p>
+                    <a :href="`Profile?id=${answer.user.id_u}`">
+                        <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                     </a>
                 </div>
             </div>
@@ -242,6 +242,7 @@ export default {
                     <a href="#/Main"><button class="toMain btgr">На главную</button></a>
                 </div> -->
             </div>
+        </div>
         </div>
         <div class="content p-2" v-else>
             <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
