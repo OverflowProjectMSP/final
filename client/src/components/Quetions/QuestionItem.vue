@@ -251,8 +251,10 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="spinner-border text-primary" role="status" v-else >
-                <span class="visually-hidden">Loading...</span>
+            <div class="d-flex justify-content-center" v-else >
+                <div class="spinner-border text-primary" role="status" >
+                    <span class="visually-hidden text-center">Loading...</span>
+                </div>
             </div>
         </div>
 
