@@ -503,18 +503,18 @@ def add_img( base, name, isAvatar, isQ,id):
     dote = name[name.find('.'):]
     if isAvatar:
         name = 'a_'+id+dote
-        with open(os.path.join('/avatat/', name), "wb") as file:
+        with open(os.path.join('avatar/', name), "wb") as file:
             file.write(decoded_bytes)
         return 'http://127.0.0.1:5000/avatar/'+name
     
     if isQ:
         name = 'q_'+id+dote
-        with open(os.path.join('/media/', name), "wb") as file:
+        with open(os.path.join('media/', name), "wb") as file:
                 file.write(decoded_bytes)
         return 'http://127.0.0.1:5000/media/'+name
     
     name = 's_'+id+dote
-    with open(os.path.join('/media/', name), "wb") as file:
+    with open(os.path.join('media/', name), "wb") as file:
             file.write(decoded_bytes)
     return 'http://127.0.0.1:5000/media/'+name
 

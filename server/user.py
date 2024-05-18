@@ -33,9 +33,10 @@ def refresh_data(info, id):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        
-        src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
-        data+= f', avatar=$${src}$$'
+        if 'filename' in info:
+            src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
+            data+= f', avatar=$${src}$$'
+        print(data)
         cursor.execute(f"""UPDATE users 
                     SET {data}
                     WHERE id=$${id}$$;""")
@@ -294,7 +295,7 @@ def check_password(password, true_password):
     return return_data
 
 # показ всего о юзере
-def show_user_info(id):
+def show_user_info(id, isAll):
     try: 
         pg = psycopg2.connect(f"""
             host=localhost
@@ -315,23 +316,23 @@ def show_user_info(id):
         for key in all_states:
             if key != "password":
                 return_data[key] = all_states[key]
+        if not isAll:
+            # счетчик статей
+            cursor.execute(f"SELECT COUNT(*) from states WHERE id_u=$${id}$$")
+            return_data['scnt'] = cursor.fetchone()[0]
 
-        # счетчик статей
-        cursor.execute(f"SELECT COUNT(*) from states WHERE id_u=$${id}$$")
-        return_data['scnt'] = cursor.fetchone()[0]
+            # счетчик вопросов
+            cursor.execute(f"SELECT COUNT(*) from questions WHERE id_u=$${id}$$")
+            return_data['qcnt'] = cursor.fetchone()[0]
 
-        # счетчик вопросов
-        cursor.execute(f"SELECT COUNT(*) from questions WHERE id_u=$${id}$$")
-        return_data['qcnt'] = cursor.fetchone()[0]
+            # счетчик ответов и комментариев
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_u=$${id}$$")
+            cnt_a = cursor.fetchone()[0]
 
-        # счетчик ответов и комментариев
-        cursor.execute(f"SELECT COUNT(*) from answers WHERE id_u=$${id}$$")
-        cnt_a = cursor.fetchone()[0]
+            cursor.execute(f"SELECT COUNT(*) from comments WHERE id_u=$${id}$$")
+            cnt_c = cursor.fetchone()[0]
 
-        cursor.execute(f"SELECT COUNT(*) from comments WHERE id_u=$${id}$$")
-        cnt_c = cursor.fetchone()[0]
-
-        return_data['acnt'] = cnt_a + cnt_c
+            return_data['acnt'] = cnt_a + cnt_c
 
         logging.info(f'Инофрмация профиля {id} отображена')
     except (Exception, Error) as error:
@@ -407,10 +408,22 @@ def user_info():
         return jsonify(response_object)
     
     print(request.args.get('id'))
-    response_object['all'] = show_user_info(request.args.get('id'))
+    response_object['all'] = show_user_info(request.args.get('id'), False)
     print(response_object)
     return jsonify(response_object)
 
+#Изменение информации пользователя
+@app.route('/user-info-r', methods=['GET'])
+def user_info__():
+    response_object = {'status': 'success'} #БаZа    
+
+    print(request.args.get('id'))
+
+    response_object['all'] = show_user_info(request.args.get('id'), True)
+
+    print(response_object)
+
+    return jsonify(response_object)
 #Вход
 @app.route('/login', methods=['GET', 'POST'])
 def login():

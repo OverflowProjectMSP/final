@@ -19,22 +19,24 @@ export default {
                 phonenumber: ``,
                 github: ``,
                 avatar: ``,
-                avatarFile: ``,
             },
-            defaultAvatar: `src/assets/Profile/profileDefaultImg.png`
+            defaultAvatar: `src/assets/Profile/profileDefaultImg.png`,
+            id: ''
         }
     },
 
     mounted() {
         this.getUser();
-    }
+    },
 
     methods: {
         async putInfo() {
             await axios.put('/user-info', {
                 form: this.form,
             });
+            this.$router.push(`/Profile?id=${this.id}`)
         },
+
         convertFileAvatar(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -48,11 +50,15 @@ export default {
         },
         async getUser() {
             let res = await axios.get('/session');
-            this.getUserInfo(res.data.id);
+            this.id = res.data.id
+
+            this.getUserInfo(this.id);
         },
         async getUserInfo(id) {
-            let res = await axios.get('/user-info', {
-                id: id,
+            let res = await axios.get('/user-info-r', {
+                params: {
+                    id: id,
+                }
             });
             this.form = res.data.all;
         },

@@ -148,15 +148,15 @@ def ava():
 
     return jsonify(response_object)
 
-@app.route('/avatr/<path:filename>')
+@app.route('/avatar/<path:filename>')
 def serve_file(filename):
     path = filename
-    print('/avatar/'+path)
-    if not os.path.exists('{}/{}'.format('/avatar/', '/'+filename)):
-        logging.info({'error': 'File not found'}, 404)
-        return jsonify({'error': 'File not found'}), 404
+    print('avatar/'+path)
+    # if not os.path.exists('{}/{}'.format('avatar/', filename)):
+    #     logging.info({'error': 'File not found'}, 404)
+    #     return jsonify({'error': 'File not found'}), 404
 
-    return send_from_directory(directory='/avatar/', path=path)
+    return send_from_directory(directory='avatar/', path=path)
 
 @app.route('/session', methods=['GET'])
 def session_():
