@@ -242,7 +242,7 @@ export default {
                 <img class="accountIcon" :src="user.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a href="#!"><span class="name">{{ user.username }}</span></a>
+                        <a :href="`#/Profile?id=${user.id}`"><span class="name">{{ user.username }}</span></a>
                     </div>
                 </div>
             </div>
@@ -262,7 +262,7 @@ export default {
             <div class="account">
                 <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                 <div class="name-ring">
-                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                    <a :href="`#/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
                 </div>
             </div>
             <div class="description mt-3">
