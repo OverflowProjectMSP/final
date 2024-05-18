@@ -66,9 +66,17 @@ export default createRouter({
       path: "/QuestionItem",
       component: () => import("../components/Quetions/QuestionItem.vue"),
     },
-    // {
-    //   path: "/Forum",
-    //   component: () => import("../components/Forum/Forum.vue"),
-    // },
+    {
+      path: "/Forum",
+      component: () => import("../components/Forum/Forum.vue"),
+    },
+    {
+      path: "/ProfileSettings",
+      component: () => import("../components/Profile/SettingsProfile.vue"),
+    },
+    {
+      path: "/ChangePassword",
+      component: () => import("../components/Profile/ChangePassword.vue"),
+    },
   ],
 });

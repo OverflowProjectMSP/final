@@ -40,7 +40,7 @@ export default {
                         <a href="#!"><p>{{ quetion.tag }}</p></a>
                     </div>
                     <div class="text">
-                        <h5>{{ quetion.descriptions }}</h5>
+                        <h5>{{( quetion.descriptions) }}</h5>
                     </div>
                     <div class="info">
                         <p>{{ quetion.subscribers }} подписчиков</p>
