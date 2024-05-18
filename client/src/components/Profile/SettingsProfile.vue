@@ -35,7 +35,7 @@ export default {
       const file = event.target.files[0];
       const reader = new FileReader();
       const filename = event.target.files[0].name;
-      this.form.avatarFile = filename;
+      this.form.filename = filename;
       reader.onload = () => {
         this.form.avatar = reader.result;
         console.log(reader.result);
