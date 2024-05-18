@@ -107,12 +107,13 @@ export default {
                 <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }} </p>
                 <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
                 <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p>
-                <p v-if="this.user.telegram != '' && this.user.skype != '' && this.user.discord != '' && this.user.facebook != ''"><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
+                <p v-if="this.user.telegram != '' || this.user.skype != '' || this.user.discord != '' || this.user.facebook != ''"><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
                 <ul class="fs-5">
-                    <li v-if="user.telegram">Мой telegram: {{ user.telegram }}</li>
-                    <li v-if="user.skype">Мой skype: {{ user.skype }}</li>
-                    <li v-if="user.discord">Мой discord: {{ user.discord }}</li>
-                    <li v-if="user.facebook">Мой facebook: {{ user.facebook }}</li>
+                    <li v-if="user.telegram">Мой Telegram: {{ user.telegram }}</li>
+                    <li v-if="user.skype">Мой Skype: {{ user.skype }}</li>
+                    <li v-if="user.discord">Мой Discord: {{ user.discord }}</li>
+                    <li v-if="user.facebook">Мой Facebook: {{ user.facebook }}</li>
+                    <li v-if="user.github">Мой GitHub: {{ user.github }}</li>
                 </ul>
                 <p v-if="this.user.about != ''" class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
                 <p v-if="this.user.interesting != ''"><span  v-if="this.user.interestings != ''" class="fw-bold">Мои интересы: </span></p>

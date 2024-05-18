@@ -768,19 +768,16 @@ def show_all_by_user_route():
     logging.info('Отправлено')
     return jsonify(response_object)
  
-@app.route('/answers', methods=['POST', 'GET'])
+@app.route('/answers', methods=['POST'])
 def add_a():
-    if request.method == "POST":
 
-        response_object = {'status': 'success'} #БаZа
+    response_object = {'status': 'success'} #БаZа
 
-        post_data = request.get_json()
-        text = post_data.get('text')
+    post_data = request.get_json()
+    text = post_data.get('text')
 
-        if post_data.get('q'):
-            response_object['all'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
-            return jsonify(response_object)
-        response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
+    if post_data.get('q'):
+        response_object['all'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
         return jsonify(response_object)
-
-    # response_object['res'] = 
+    response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
+    return jsonify(response_object)
