@@ -33,7 +33,37 @@ export default {
                 this.error = '*Вы не повторили пароль*'
             } else if (this.password.length < 8) {
                 this.error = '*Пароль должен включать 8 символов*'
-            } else if (!this.password.includes('~') && !this.password.includes('@')) {
+            } else if (!this.password.includes('~') && 
+                        !this.password.includes('`') && 
+                        !this.password.includes('!') && 
+                        !this.password.includes('@') && 
+                        !this.password.includes('#') && 
+                        !this.password.includes('$') && 
+                        !this.password.includes('%') && 
+                        !this.password.includes('^') && 
+                        !this.password.includes('&') && 
+                        !this.password.includes('*') && 
+                        !this.password.includes('(') && 
+                        !this.password.includes(')') && 
+                        !this.password.includes('-') && 
+                        !this.password.includes('_') && 
+                        !this.password.includes('=') && 
+                        !this.password.includes('+') && 
+                        !this.password.includes('[') && 
+                        !this.password.includes(']') && 
+                        !this.password.includes('{') && 
+                        !this.password.includes('}') && 
+                        !this.password.includes('\\') && 
+                        !this.password.includes('|') && 
+                        !this.password.includes(';') && 
+                        !this.password.includes(':') && 
+                        !this.password.includes('"') && 
+                        !this.password.includes(',') && 
+                        !this.password.includes('<') && 
+                        !this.password.includes('.') && 
+                        !this.password.includes('>') && 
+                        !this.password.includes('/') && 
+                        !this.password.includes('?')) {
                 this.error = '*Пароль должен включать спец символ*'
             } else if (this.password !== this.exPassword) {
                 this.error = '*Пароли не совпадают'
