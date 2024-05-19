@@ -111,9 +111,9 @@ export default {
                 <img class="forum-image" :src="`src/assets/${this.imageLang}.jpg`" alt="">
                 <p>{{ titleLang }}</p>
             </div>
-            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" :src="plusImg"><a href="#/Quetion">
+            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" :src="plusImg"><a href="/Quetion">
                 Создать вопрос</a></button>
-            <button class="create-post" v-else><img class="plus-icon" :src="plusImg"><a href="#/NewState">
+            <button class="create-post" v-else><img class="plus-icon" :src="plusImg"><a href="/NewState">
                 Создать статью</a></button>
         </div>
     </div>
@@ -151,7 +151,7 @@ export default {
                 </div>
             </div>
             <div class="answer">
-                <a :href="`#/QuestionItem?id=` + post.id + `&question=${ post.question }`"><button><img
+                <a :href="`/QuestionItem?id=` + post.id + `&question=${ post.question }`"><button><img
                 :src="'src/assets/comments.svg'" alt=""><span>{{ post.answers }}</span>Ответов</button></a>
             </div>
         </div>

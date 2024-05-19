@@ -66,40 +66,12 @@ export default {
             return res.data.all;
         },
 
-        counterPlus(index) {
-            if (this.count == 0 && this.countmin == 0) {
-                this.question.answers[index].answerInfo.likes++;
-                this.count++;
-            } else if (this.count == 0 && this.countmin == 1) {
-                return;
-            } else if (this.count == 1) {
-                this.question.answers[index].answerInfo.likes--;
-                this.count--;
-            }
-        },
-
-        counterMinus(index) {
-            if (this.countmin == 0 && this.countmin == 0) {
-                this.question.answers[index].answerInfo.dislike++;
-                this.countmin++;
-            } else if (this.count == 1 && this.countmin == 0) {
-                return;
-            } else if (this.countmin == 1) {
-                this.question.answers[index].answerInfo.dislike--;
-                this.countmin--;
-            }
-        },
-
-        breakLines(text) {
-            // return text.replace(/\n/g, "<br>");
-        },
-
         symbolsCount() {
-            this.question.symbols = this.question.text.length;
-            if (this.question.symbols >= 2000) {
-                this.question.symbCount = true;
+            this.symbols = this.text.length;
+            if (this.symbols >= 2000) {
+                this.symbCount = true;
             } else {
-                this.question.symbCount = false;
+                this.symbCount = false;
             }
         },
 
@@ -144,11 +116,6 @@ export default {
                 this.loading = false;
             }
         },
-
-        updQM() {
-            this.updQ = !this.updQ;
-        }
-
     },
     mounted() {
         this.loadQuestion();
@@ -160,7 +127,6 @@ export default {
 </script>
 
 <template>
-    <UpdateQuestion v-if="updQ" :id="this.questionInfo.id" @updQM="updQM"/>
     <div class="container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
@@ -176,7 +142,7 @@ export default {
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" @click="updQM">Редактировать</a></li>
+                            <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
                     </div>
@@ -249,10 +215,12 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="content-3-without mb-3">
-                <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input"
-                    placeholder="Оставь свой ответ:" :class="{ 'fw-bold': isBold, 'fst-italic': isItalic }"></textarea>
-                <!-- <p :class="{ 'red-text': this.symbCount }">{{ question.symbols }} / 2000</p> -->
+            <div class="mb-3">
+                <div class="content-3-without mb-3">
+                    <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
+                        placeholder="Оставь свой комментарий:"></textarea>
+                    <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
+                </div>
             </div>
             <div class="send-ans d-flex justify-content-end">
                 <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>

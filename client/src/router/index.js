@@ -82,5 +82,9 @@ export default createRouter({
       path: "/ChangePassword",
       component: () => import("../components/Profile/ChangePassword.vue"),
     },
+    {
+      path: "/UpdateQuestion",
+      component: () => import("../components/Quetions/UpdateQuestion.vue"),
+    },
   ],
 });

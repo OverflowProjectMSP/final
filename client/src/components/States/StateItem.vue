@@ -13,23 +13,14 @@ export default {
             commentUser: [],
             answerUser: [],
             userCreater: {},
+            userNow: {},
 
             text: ``,
-            
-            id_: null,
 
             symbols: 0,
             symbCount: false,
-            isBold: false,
-            isItalic: false,
 
-            count: 0,
-            countmin: 0,
-
-            isCheck: null,
-            ava: ``,
-
-            name: ``,
+            isCheck: false,
 
             avaComment: ``,
 
@@ -40,6 +31,8 @@ export default {
     mounted() {
         this.loadState();
         this.checkUser();
+        thid.getNowUser();
+        this.loadAnswerUser();
     },
     
     methods: {
@@ -78,28 +71,9 @@ export default {
             return res.data.all;
         },
 
-        counterPlus(index) {
-            if (this.count == 0 && this.countmin == 0) {
-                this.question.answers[index].answerInfo.likes++;
-                this.count++;
-            } else if (this.count == 0 && this.countmin == 1) {
-                return;
-            } else if (this.count == 1) {
-                this.question.answers[index].answerInfo.likes--;
-                this.count--;
-            }  
-        },
-
-        counterMinus(index) {
-            if (this.countmin == 0 && this.countmin == 0) {
-                this.question.answers[index].answerInfo.dislike++;
-                this.countmin++;
-            } else if (this.count == 1 && this.countmin == 0) {
-                return;
-            } else if (this.countmin == 1) {
-                this.question.answers[index].answerInfo.dislike--;
-                this.countmin--;
-            }
+        async getNowUser() {
+            let res = await axios.get('/session');
+            this.userNow = res.data.id;
         },
 
         symbolsCount() {
@@ -110,9 +84,6 @@ export default {
                 this.question.symbCount = false;
             }
         },
-
-
-
 
         async loadUsers(item) {
 
@@ -182,14 +153,14 @@ export default {
                 </div>
                 <div class="action-select" v-if="isCheck">
                     <div class="dropdown">
-                        <button class="btn dropdown-toggle border">Дейсвие</button>
-                        <ul class="dropdown-menu 52-da-sdravstvuet-sankt-piterburg-i-etot-gorod-nash-ya-kazhdiy">
-                            <li><a class="dropdown-item" href="#/Quetion">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
+                        <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" :href="`/UpdateState?id=${this.$route.query.id}&q=false`">Редактировать</a></li>
+                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="title">
                 <h3>{{ states.discriptions }}</h3>
             </div>
@@ -200,8 +171,16 @@ export default {
                 <p>{{ states.data }}</p>
             </div>
         </div>
-        
+
         <div class="content-3">
+            <div class="account">
+                <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+                <div class="name-ring">
+                    <div>
+                        <a :href="`#/Profile?id=${userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                    </div>
+                </div>
+            </div>
             <div class="content-3-without mb-3">
                 <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
                 placeholder="Оставь свой комментарий:"></textarea>
@@ -211,14 +190,14 @@ export default {
                 <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
             </div>
         </div>
-        <div class="d-flex justify-content-center" v-if="this.loading">
+        <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
+        <div class="d-flex justify-content-center" v-if="!this.loading">
             <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden text-center">Loading...</span>
+                <span class="visually-hidden text-center z-10">Loading...</span>
             </div>
         </div>
-        <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
-    
-        <div v-if="!this.loading">
+
+        <div v-if="this.loading">
             <div class="content-2 mt-2" v-for="answer in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
@@ -230,11 +209,10 @@ export default {
                     <div class="description mt-3">
                         <p >{{ answer.text }}</p>
                     </div>
-
                 </div>
             </div>
         </div>
-        
+
     </div>
 </template>
 
