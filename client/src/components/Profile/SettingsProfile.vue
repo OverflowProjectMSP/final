@@ -21,7 +21,7 @@ export default {
                 avatar: ``,
             },
             defaultAvatar: `src/assets/Header/AvatarDef.svg`,
-            id: ''
+            id: '',
         }
     },
 
@@ -34,7 +34,7 @@ export default {
             await axios.put('/user-info', {
                 form: this.form,
             });
-            this.$router.push(`/Profile?id=${this.id}`)
+            this.$router.push(`/Profile?id=${this.id}`);
         },
 
         convertFileAvatar(event) {
@@ -62,6 +62,9 @@ export default {
             });
             this.form = res.data.all;
         },
+        deleteAvatar() {
+            this.form.avatar = `src/assets/Header/AvatarDef.svg`;
+        }
     }
 }
 </script>
@@ -90,7 +93,7 @@ export default {
                         <p style="color: gray;">Размер загружаемой фотографии <br> не должен быть более 10 МБ.</p>
                         <!-- <button class="btn btn-outline-primary" style="margin-right: 10px;"
                             type="file">Загрузить</button> -->
-                        <button class="btn btn-outline-secondary">Удалить</button>
+                        <button class="btn btn-outline-secondary" @click="deleteAvatar">Удалить</button>
                     </div>
                 </div>
             </div>

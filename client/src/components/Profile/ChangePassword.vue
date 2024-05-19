@@ -60,17 +60,8 @@ export default {
                 <input type="text" class="form-control" v-model="exPassword">
             </div>
         </div>
-        <hr>
-        <h2 class="text-center mt-4">Смена почты</h2>
-        <div class="email-container">
-            <h5 class="mt-4">Новый адрес почты</h5>
-            <div class="input-group mb-5">
-                <input type="text" class="form-control" v-model="n">
-            </div>
-        </div>
         <div class="d-flex justify-content-start mt-5 ms-0">
-            <button class="btn btn-outline-success w-fit ms-0" type="submit"><b>Сохранить
-                    изменения</b></button>
+            <button class="btn btn-outline-success w-fit ms-0" type="submit"><b>Сохранить изменения</b></button>
         </div>
     </form>
 </template>

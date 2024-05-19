@@ -102,7 +102,7 @@ export default {
           <div class="them-container" v-if="this.ShowLogin">
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
-          <div class="ava-container">
+          <div class="ava-container" v-if="this.id != ``">
             <a :href="`/Profile?id=${this.id}`"> <img
                 :src="avatar"
                 alt="" class="ava"></a>
