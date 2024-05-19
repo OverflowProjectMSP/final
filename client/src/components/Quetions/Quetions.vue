@@ -15,8 +15,8 @@ export default {
 
             tag: `false`,
             dificulty: `false`,
-            title: false,
-            author: false,
+            title: ``,
+            author: ``,
 
             Show: false,
         }
