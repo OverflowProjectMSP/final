@@ -32,9 +32,9 @@ export default {
             }
 
 
-            if (this.password !== this.exPassword) {
-                this.error = '*Пароли не совпадают'
-            }
+            // if (this.password !== this.exPassword) {
+            //     this.error = '*Пароли не совпадают'
+            // }
         },
         toggleVisibility1() {
             this.isShowPassword = !this.isShowPassword;
@@ -80,7 +80,7 @@ export default {
 
 </script>
 
-<template>
+<template> 
     <div class="tototocontainer">
         <div class="background"></div>
         <div class="content">
