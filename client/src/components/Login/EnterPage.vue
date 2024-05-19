@@ -80,7 +80,7 @@ export default {
 
 </script>
 
-<template>
+<template> 
     <div class="tototocontainer">
         <div class="background"></div>
         <div class="content">
