@@ -13,10 +13,10 @@ export default {
         return {
             quetions: [],
 
-            filters: {
-                type: "false",
-                dificulty: "false",
-            },
+            tag: `false`,
+            dificulty: `false`,
+            title: false,
+            author: false,
 
             Show: false,
         }
@@ -34,23 +34,15 @@ export default {
         },
 
         async filtre() {
-            if (this.filters.type == 'false' && this.filters.dificulty == 'false') {
-                this.filtrs = {
-                    filtr: false
-                }
-            } else {
-                this.filtrs = {
-                    filtr: true,
-                    tag: this.filters.type,
-                    dificulty: this.filters.dificulty,
-                };
-            }
-            let res = await axios.post('/filtre-questions', {
-                body: {
-                    filters: this.filtrs
+            let res = await axios.get('/filtre-states', {
+                params: {
+                    title: this.title,
+                    author: this.author,
+                    tag: this.tag,
+                    dificulty: this.dificulty,
                 }
             });
-            this.quetions = res.data;
+            this.quetions = res.data.all;
         },
 
         OpenModal() {
@@ -69,9 +61,11 @@ export default {
             <h2>Активные вопросы</h2>
             <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
             <div class="d-flex flex-row">
+                <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос" aria-label="First name">
+                <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса" aria-label="Last name">
                 <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
                     <img class="border-end pe-2 ps-2" src="../../assets/States/image.png" alt="level">
-                    <select class="form-select border-0" v-model="filters.dificulty">
+                    <select class="form-select border-0" v-model="dificulty">
                         <option value="Легкие" selected>Лёгкие</option>
                         <option value="Средние">Средние</option>
                         <option value="Сложные">Сложные</option>
@@ -80,7 +74,7 @@ export default {
                 </div>
                 <div class="down-menu d-flex align-items-center">
                     <div class="d-flex align-items-center">
-                        <select class="form-select me-2" v-model="filters.type">
+                        <select class="form-select me-2" v-model="tag">
                             <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
                             <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
                             <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
