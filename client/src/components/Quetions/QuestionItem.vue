@@ -145,7 +145,7 @@ export default {
             }
         },
 
-        updQ() {
+        updQM() {
             this.updQ = !this.updQ;
         }
 
@@ -160,7 +160,7 @@ export default {
 </script>
 
 <template>
-    <UpdateQuestion v-if="updQ" :id="this.questionInfo.id" @updQ="updQ"/>
+    <UpdateQuestion v-if="updQ" :id="this.questionInfo.id" @updQM="updQM"/>
     <div class="container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
@@ -176,7 +176,7 @@ export default {
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" @click="updQ">Редактировать</a></li>
+                            <li><a class="dropdown-item" @click="updQM">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
                     </div>

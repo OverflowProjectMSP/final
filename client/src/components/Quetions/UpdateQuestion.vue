@@ -33,7 +33,7 @@ export default {
                 all: this.form,
                 q: 'true'
             });
-            this.$emit('updQ')
+            this.$emit('updQM')
         },
 
         async loadQuestion() {
