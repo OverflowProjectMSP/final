@@ -11,30 +11,7 @@ export default {
 
     data() {
         return {
-            quetions: [
-                // {
-                //     discriptions: `VUE JS IS PARASHА??`,
-                //     tag: 'Js',
-                //     subscribers: 50,
-                //     date: `52.52.52`,
-                //     views: 43,
-                //     answers: 423,
-                //     complexity: 'Средне',
-                //     id: 0,
-                //     question: true,            
-                // },
-                // {
-                //     discriptions: `VUE IS PARASHА!!`,
-                //     tag: 'Python',
-                //     subscribers: 50,
-                //     date: `52.52.52`,
-                //     views: 43,
-                //     answers: 423,
-                //     complexity: 'Тяжело',
-                //     id: 1,
-                //     question: true,            
-                // },
-            ],
+            quetions: [],
 
             filters: {
                 type: "false",
@@ -104,13 +81,13 @@ export default {
                 <div class="down-menu d-flex align-items-center">
                     <div class="d-flex align-items-center">
                         <select class="form-select me-2" v-model="filters.type">
-                            <option value="JavaScript"><img src="./assets/js.jpg" class="image">JavaScript</option>
-                            <option value="TS"><img :src="'src/assets/js.jpg'" class="image">TS</option>
-                            <option value="Python"><img src="./assets/js.jpg" class="image">Python</option>
-                            <option value="PHP"><img src="./assets/js.jpg" class="image">PHP</option>
-                            <option value="C++"><img src="./assets/js.jpg" class="image">C++</option>
-                            <option value="Java"><img src="./assets/js.jpg" class="image">Java</option>
-                            <option value="C#"><img src="./assets/js.jpg" class="image">C#</option>
+                            <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
+                            <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
+                            <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
+                            <option value="php"><img src="./assets/js.jpg" class="image">PHP</option>
+                            <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
+                            <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
+                            <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
                             <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
                         </select>
                         <!-- плюсик -->

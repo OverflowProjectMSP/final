@@ -1,43 +1,13 @@
 <script>
+
+import UpdateQuestion from './UpdateQuestion.vue';
+import UpdateQuestion from './UpdateQuestion.vue';
 import axios from 'axios';
 
 export default {
+    components: { UpdateQuestion },
     data() {
         return {
-            // question: { //структура получения всех данных с сервера
-            //     id: 123,
-            //     accountInfo: {
-            //         accountIcon: 'person.svg',
-            //         accountName: 'Nick Endgy',
-            //     },
-            //     questionInfo: {
-            //         title: 'Как сделать регистрацию с использованием только JavaScript?',
-            //         description: `Подскажите, пожалуйста, как сделать регистрацию пользователя на сайте? Сайт у меня на node.js. Я первый раз такую форму делаю и не знаю какой путь выбрать. Какой вариант лучше? Просто к кнопке "зарегистрироваться" подвязать эвент и в нем делать функцию? Или как-то использовать method="post" у формы? 
-            //                     <br>UPD:А как fetch() использовать? Я написал такой код, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
-            //         level: `Лёгкий`,
-            //         imageInQuetion: 'test',
-            //         answer: 28,
-            //         views: 473,
-            //         data: `05.01.2024 12:31`,
-            //         Decided: true,
-            //     },
-            //     answers: [
-            //         {
-            //             answerUserInfo: {
-            //                 accountIcon: 'ava.png',
-            //                 accountName: 'JavaScriptPRO',
-            //                 rang: `Решала`,
-            //             },
-            //             answerInfo: {
-            //                 text: `123123123, а что дальше с ним сделать - не знаю. Как я понял, на сервер запрос отправлен, а именно на сервер были отправлены данные формы. А что дальше с ними сделать? Обрабатывать форму в этом же коде? Моя цель - отправить запрос в базу данных sql, в которую внесется новый пользователь`,
-            //                 comment: 52,
-            //                 likes: 52,
-            //                 dislike: 36,
-            //             },
-            //         },
-            //     ],
-            // },
-
             questionInfo: {}, //главная возня
             answers: [],
             answerUser: [],
@@ -59,6 +29,8 @@ export default {
             isCheck: null,
 
             loading: false,
+
+            updQ: false,
         }
     },
 
@@ -184,6 +156,7 @@ export default {
 </script>
 
 <template>
+    <UpdateQuestion v-if="updQ" :id="this.questionInfo.id"/>
     <div class="container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
@@ -199,7 +172,7 @@ export default {
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border">Дейсвие</button>
                         <ul class="dropdown-menu 52-da-sdravstvuet-sankt-piterburg-i-etot-gorod-nash-ya-kazhdiy">
-                            <li><a class="dropdown-item" href="#/Quetion">Редактировать</a></li>
+                            <li><a class="dropdown-item" @click="updQ = true">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
                     </div>

@@ -24,7 +24,7 @@ export default {
                 <form action="/NewState">
                     <button class="btn" href="#/Main">Создать статью</button>
                 </form>
-                <form action="/Quetion">
+                <form action="/NewQuetion">
                     <button class="btn">Создать вопрос</button>
                 </form>
             </div>

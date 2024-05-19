@@ -36,7 +36,7 @@ export default {
                 {
                     name: `Сары Максим`,
                     role: `Фронтенд разработчик`,
-                    imageProfileDS: `hebber.png`,
+                    imageProfileDS: `maksym.jpg`,
                     dsProfile: `habbock`,
                     tgProfile: `HaBBeRL`,
                 },

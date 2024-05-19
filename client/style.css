@@ -33,3 +33,6 @@ input, textarea {
     box-shadow: none !important;
 }
 
+select, select:hover {
+    box-shadow: none !important;
+}
