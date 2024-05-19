@@ -55,43 +55,43 @@ export default {
 
         lang() {
             switch(this.$route.query.lang) {
-                case 'go':
+                case 'Go':
                     this.titleLang = 'Golang';
                     this.imageLang = 'golang';
                 break;
-                case 'javascript':
+                case 'Javascript':
                     this.titleLang = 'JavaScript';
                     this.imageLang = 'js';
                 break;
-                case 'java':
+                case 'Java':
                     this.titleLang = 'Java';
                     this.imageLang = 'java';
                 break;
-                case 'cs':
+                case 'Cs':
                     this.titleLang = 'C#';
                     this.imageLang = 'cs';
                 break;
-                case 'python':
+                case 'Python':
                     this.titleLang = 'Python';
                     this.imageLang = 'python';
                 break;
-                case 'php':
+                case 'Php':
                     this.titleLang = 'PHP';
                     this.imageLang = 'php';
                 break;
-                case 'cpp':
+                case 'Cpp':
                     this.titleLang = 'C++';
                     this.imageLang = 'cpp';
                 break;
-                case 'ruby':
+                case 'Ruby':
                     this.titleLang = 'Ruby';
                     this.imageLang = 'ruby';
                 break;
-                case 'kotlin':
+                case 'Kotlin':
                     this.titleLang = 'Kotlin';
                     this.imageLang = 'kotlin';
                 break;
-                case 'typescript':
+                case 'Typescript':
                     this.titleLang = 'TypeScript';
                     this.imageLang = 'ts';
                 break;
