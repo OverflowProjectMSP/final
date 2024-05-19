@@ -72,7 +72,7 @@ text-align: center;
     }
 
     .main-container {
-        margin: 20px;
+        margin: 8px;
 
         width: auto;
         height: auto;

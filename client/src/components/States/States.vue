@@ -23,6 +23,63 @@ export default {
                     id: 0,
                     question: false,            
                 },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
+
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
+
             ],
             Show: false,
             filters: {
@@ -106,10 +163,10 @@ export default {
 
 <!-- Див с виджетами -->
 <div class="conr">
-<div class="con mt-3" v-for="item in states">
+<div class="con mt-0" v-for="item in states">
 <a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
     <!-- <vid-comp :item="item" role="button" /> -->
-    <vidjet-comp :item="item"  />
+    <vidjet-comp :item="item"    />
 </a>
 </div>
 </div>
@@ -124,8 +181,8 @@ export default {
     color: black;
 }
 .conr{
-    /* overflow: scroll; */
-    /* height: 555px; */
+    overflow: scroll; 
+    height: 555px;
     width: auto;
     margin-left: auto;
     margin-right: auto;
