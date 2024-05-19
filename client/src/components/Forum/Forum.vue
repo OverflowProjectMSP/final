@@ -467,7 +467,7 @@ a {
 
     .container-one {
         flex-direction: column;
-        align-items: start;
+        align-items: center;
         gap: 30px;
         margin-bottom: 80px;
     }
@@ -482,14 +482,16 @@ a {
 
     .sort-inside {
         flex-direction: column !important;
+        align-items: center;
+        justify-content: center;
     }
 
     .sort-inside select {
-        width: 90%;
+        width: 100%;
     }
 
     .sort-inside input {
-        width: 90%;
+        width: 100%;
     }
 }
 
