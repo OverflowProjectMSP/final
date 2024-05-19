@@ -39,7 +39,6 @@ export default {
                     imageProfileDS: `hebber.png`,
                     dsProfile: `habbock`,
                     tgProfile: `HaBBeRL`,
-                    vkProfile: `b13hbbr`,
                 },
                 {
                     name: `Лазутин Егор`,
