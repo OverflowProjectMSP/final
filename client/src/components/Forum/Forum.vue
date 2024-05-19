@@ -46,7 +46,7 @@ export default {
             this.lang();
             let res = await axios.get('/show-forum', {
                 params: {
-                    lang: this.$route.query.lang,
+                    tag: this.$route.query.lang,
                 }
             });
             this.question = res.data.question;

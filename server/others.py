@@ -129,8 +129,6 @@ def check():
     response_object = {'status': 'success'} #БаZа
     id = request.args.get('id')
 
-
-
     if id == session.get('id'):
         response_object['isEdit'] = 'true'
         logging.info(f'Пользователь {id} может внести изменения')

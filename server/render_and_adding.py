@@ -690,8 +690,8 @@ def filtre_questions():
 def show_f():
     responce_object = {'status' : 'success'} #БаZа
 
-    post_data = request.args.get('language')
-
+    post_data = request.args.get('tag')
+    print(post_data)
 
     responce_object['all'] = show_forum(post_data)
 
