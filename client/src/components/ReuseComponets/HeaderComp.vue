@@ -99,10 +99,10 @@ export default {
             <input class="form-control  inp " type="search" placeholder="Найти статью" aria-label="Search">
 
           </form> -->
-          <div class="them-container" v-if="this.ShowLogin">
+          <div class="them-container" v-if="this.id == ``">
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
-          <div class="ava-container" v-if="this.id != ``">
+          <div class="ava-container" v-else>
             <a :href="`/Profile?id=${this.id}`"> <img
                 :src="avatar"
                 alt="" class="ava"></a>

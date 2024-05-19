@@ -1,53 +1,22 @@
 <script>
-import HeadComp from './HeadComp.vue';
 import VidUserComp from './VidUserComp.vue';
 import axios from 'axios';
 
 export default {
     components: {
-        HeadComp,
         VidUserComp
     },
     data() {
         return {
-            quetionsUsers: [
-                // {
-                //     discriptions : `Как создать переменную?`,
-                //     subscribers: "NaN",
-                //     hours: "NaN",
-                //     views: "NaN",
-                //     answers: "NaN",
-                //     tag: 'Python',
-                //     complexity: 'Средне',
-                //     details: "Как создать атомный реактор?",
-                //     id: "",
+            questions: [],
+            states: [],
 
-                // },
-                // {
-                //     title: `Как созопоодать переменную?`,
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'C++',
-                //     complexity: 'Средне',
-                //     id: 53
-                // },
-                // {
-                //     title: `Как создать переменную?`,
-                //     subscribers: 45,
-                //     hours: 0,
-                //     views: 43,
-                //     answers: 423,
-                //     language: 'Асембелер',
-                //     complexity: 'Ебать тяжело',
-                //     id: 54
-                // },
-            ],
             user: {},
             uuuuserNAMANSKLFDJNBALKS: ``,
 
-            isCreator: false
+            isCreator: false,
+
+            isQ: true
         }
     },
     mounted() {
@@ -57,13 +26,19 @@ export default {
     },
     methods: {
         async allByHe() {
-            console.log(this.$route.query.id)
             let res = await axios.get('/show-all-by-user', {
                 params: {
                     id: this.$route.query.id
                 }
             });
-            this.quetionsUsers = res.data.all;
+            
+            if(isQ) {
+                this.questions = res.data.all.questions;
+                isQ = true;
+            } else if(!isQ) {
+                this.states = res.data.all.questions;
+                isQ = false;
+            }
         },
         async loadUser() {
             let res = await axios.get(`/user-info`, {
@@ -132,9 +107,15 @@ export default {
     </div>
 
     <div class="container d-flex align-items-center flex-column">
-        <HeadComp class="mb-3" />
+        <div class="head-1 mb-3 mt-1 user-select-none">
+            <div class="d-flex flex-row align-items-center gap-4">
+                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe; this.isQ = true">Вопросы</p>/
+                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe; this.isQ = false">статьи</p>
+            </div>
+            <p class="vse" @click="Olezha">пользователя</p>
+        </div>
         <div class="scroll">
-            <a :href="`/QuestionItem?id=${quetion.id}&question=true`" v-for="quetion in quetionsUsers">
+            <a :href="`/QuestionItem?id=${quetion.id}&question=true`" v-for="quetion in questions">
                 <VidUserComp :item="quetion" />
             </a>
         </div>
@@ -142,6 +123,11 @@ export default {
 </template>
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/rubik');
+
+.active-shose {
+    text-decoration: underline;
+    font-weight: 600;
+}
 
 /* общее */
 :root {
@@ -290,7 +276,7 @@ p .u {
     padding-bottom: 10px;
     height: 30px;
     display: flex;
-    justify-content: space-between;
+    gap: 10px;
     margin: -15px;
     padding: 0 20px;
 }
