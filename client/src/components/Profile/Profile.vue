@@ -85,7 +85,7 @@ export default {
         <div class="head">
 
             <div class="circle">
-                <img :src="user.avatar" :alt="`Аватар пользователя ` + user.username">
+                <img :src="user.avatar">
             </div>
 
             <p class="nikname t-alig-c">@{{ user.username }}</p>

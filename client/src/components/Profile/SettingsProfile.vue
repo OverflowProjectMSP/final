@@ -76,8 +76,7 @@ export default {
         <div class="ancet d-flex" style="display: flex; gap: 40px;">
             <h5 role="button" class="mb-0 border-bottom border-2 border-dark"><a href="/ProfileSettings">Анкета</a>
             </h5>
-            <h5 role="button" class="mb-0" style="color: gray; font-weight: 400;"><a
-                    href="/ChangePassword">Аккаунт</a></h5>
+            <h5 role="button" class="mb-0" style="color: gray; font-weight: 400;"><a href="/ChangePassword">Аккаунт</a></h5>
         </div>
         <hr>
         <div class="main-block d-flex flex-row gap-4 mt-2">
