@@ -120,7 +120,7 @@ export default {
 
     .background {
         width: 40%;
-        height: 91vh;
+        height: 92vh;
         background: url(../../assets/Login/backgroundUp.png) center;
         background-repeat: no-repeat; 
     }
