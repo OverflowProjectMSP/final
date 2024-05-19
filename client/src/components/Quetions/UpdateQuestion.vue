@@ -33,7 +33,7 @@ export default {
                 all: this.form,
                 q: 'true'
             });
-            this.$router.push(`/QuestionItem?id=${this.$route.query.id}&q=true`)
+            this.$emit('updQ')
         },
 
         async loadQuestion() {
