@@ -27,6 +27,7 @@ export default {
                     question: true
                 },
             ],
+
             plusImg: 'src/assets/plus.svg',
 
             titleLang: ``,
@@ -36,21 +37,35 @@ export default {
 
             question: [],
             states: [],
+
+            title: ``,
         }
     },
     mounted() {
         this.loadForum();
     },
     methods: {
-        async loadForum() {
+        async loadForum(isQuestion) {
             this.lang();
             let res = await axios.get('/show-forum', {
                 params: {
                     tag: this.$route.query.lang,
                 }
             });
-            this.question = res.data.question;
-            this.states = res.data.states;
+            if(isQuestion) {
+                this.posts = res.data.all.question;
+            } else {
+                this.posts = res.data.all.states;
+            }
+        },
+
+        async filtre() {
+            let res = await axios.get('/filtre-states', {
+                params: {
+                    title: this.title,
+                }
+            });
+            this.quetions = res.data.all;
         },
 
         lang() {
@@ -108,7 +123,7 @@ export default {
     <div class="contant-head mt-3">
         <div class="container-one">
             <div class="name-and-image">
-                <img class="forum-image" :src="`src/assets/${this.imageLang}.jpg`" alt="">
+                <img class="forum-image" :src="`src/assets/Forum/${this.imageLang}.jpg`" alt="">
                 <p>{{ titleLang }}</p>
             </div>
             <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" :src="plusImg"><a href="/Quetion">
@@ -118,22 +133,25 @@ export default {
         </div>
     </div>
     <div class="contant-post">
-        <div class="sort-and-search">
-            <div class="cont-search">
-                <img width="30" :src="'src/assets/search.svg'" alt=""><input class="search" type="search">
+        <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
+            <div class="sort-inside d-flex flex-row gap-3 align-items-center">
+                <div class="cont-search">
+                    <img width="30" :src="'src/assets/search.svg'" alt=""><input class="search" type="search" v-model="title">
+                </div>
+                <select class="sort-select form-select" name="sort" id="sort">
+                    <option selected>Сортировать</option>
+                    <option value="1">Новые</option>
+                    <option value="-1">Старые</option>
+                </select>
             </div>
-            <select class="sort-select form-select" name="sort" id="sort">
-                <option selected>Сортировать</option>
-                <option value="1">Новые</option>
-                <option value="-1">Старые</option>
-            </select>
+            <button class="btn btn-outline-primary px-4" @click="filtre">Найти</button>
         </div>
         <!-- <div class="hr"></div> -->
         <div class="ancet d-flex mb-3" style="display: flex; gap: 40px;">
             <h5 role="button" class="mb-0" :class="{'border-bottom border-2 border-dark fw-semibold': isQuestion}" 
-            @click="this.states = []; this.isQuestion = !this.isQuestion">Вопросы</h5>
+            @click="loadForum(); this.isQuestion = !this.isQuestion">Вопросы</h5>
             <h5 role="button" class="mb-0" :class="{'border-bottom border-2 border-dark fw-semibold': !isQuestion}" 
-            @click="this.question = []; this.isQuestion = !this.isQuestion">Статьи</h5>
+            @click="loadForum(); this.isQuestion = !this.isQuestion">Статьи</h5>
         </div>
 
         <div class="post" v-for="(post, index) in posts">
@@ -455,11 +473,23 @@ a {
     }
 
     .sort-and-search {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
+        flex-direction: column !important;
+        justify-content: center;
+        gap: 10px;
 
         margin-bottom: 70px;
+    }
+
+    .sort-inside {
+        flex-direction: column !important;
+    }
+
+    .sort-inside select {
+        width: 90%;
+    }
+
+    .sort-inside input {
+        width: 90%;
     }
 }
 
