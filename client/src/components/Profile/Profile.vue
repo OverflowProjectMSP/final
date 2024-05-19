@@ -46,15 +46,14 @@ export default {
             ],
             user: {},
             uuuuserNAMANSKLFDJNBALKS: ``,
+
+            isCreator: false
         }
     },
     mounted() {
         this.allByHe();
         this.loadUser();
-        setInterval(() => {
-            this.allByHe();
-            this.loadUser();
-        }, 100900);
+        this.check();
     },
     methods: {
         async allByHe() {
@@ -74,6 +73,14 @@ export default {
             });
             this.user = res.data.all;
         },
+        async check() {
+            let res = await axios.get('/check', {
+                params: {
+                    id: this.$route.query.id
+                }
+            });
+            this.isCreator = res.data.isEdit;
+        }
     },
 }
 
@@ -81,9 +88,9 @@ export default {
 
 <template>
     <div class="profile">
-        <a href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" alt="Настройки" class="il"></a>
+        <a v-if="isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
+            alt="Настройки" class="il"></a>
         <div class="head">
-
             <div class="circle">
                 <img :src="user.avatar">
             </div>
