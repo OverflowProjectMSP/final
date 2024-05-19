@@ -60,21 +60,24 @@ export default {
         <div class="active-container d-flex flex-column p-2">
             <h2>Активные вопросы</h2>
             <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
-            <div class="d-flex flex-row">
-                <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос" aria-label="First name">
-                <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса" aria-label="Last name">
-                <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
-                    <img class="border-end pe-2 ps-2" src="../../assets/States/image.png" alt="level">
-                    <select class="form-select border-0" v-model="dificulty">
-                        <option value="Легкие" selected>Лёгкие</option>
-                        <option value="Средние">Средние</option>
-                        <option value="Сложные">Сложные</option>
-                        <option value="false">Без фильтров</option>
-                    </select>
+            <div class="all-inputs">
+                <div class="inputs">
+                    <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос" aria-label="First name">
+                    <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса" aria-label="Last name">
                 </div>
-                <div class="down-menu d-flex align-items-center">
-                    <div class="d-flex align-items-center">
-                        <select class="form-select me-2" v-model="tag">
+                <div class="button-select">
+                    <div class="selects">
+                        <div class="img-select">
+                            <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
+                            <select class="form-select form-1 " v-model="dificulty">
+                                <option value="Легкие" selected>Лёгкие</option>
+                                <option value="Средние">Средние</option>
+                                <option value="Сложные">Сложные</option>
+                                <option value="false">Без фильтров</option>
+                            </select>
+                        </div>
+    
+                        <select class="form-select form-2 me-2" v-model="tag">
                             <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
                             <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
                             <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
@@ -84,11 +87,17 @@ export default {
                             <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
                             <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
                         </select>
-                        <!-- плюсик -->
-                        <div class="contain" @click="OpenModal">
-                            <img src="../../assets/States/add.png" class="add">
+                    </div>
+                    <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
+                    </div>
+                    <div class="down-menu d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <!-- плюсик -->
+                            <div class="contain" @click="OpenModal">
+                                <img src="../../assets/States/add.png" class="add">
+                            </div>
+                            <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Найти</button>
                         </div>
-                        <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Найти</button>
                     </div>
                 </div>
             </div>
@@ -113,21 +122,78 @@ a {
     color: #000;
 }
 
+.selects {
+    display: flex;
+    gap: 10px;
+}
+
+.img-select {
+    display: flex;
+    
+}
+
+.form-select {
+    width: 280px !important;
+}
+
+
+.selects img {
+    border-radius: 10px 0 0 10px;
+}
+
+.form-1 {
+
+    border-radius: 0 10px 10px 0;
+}
+
+.button-select {
+    display: flex;
+}
+
+.form-2 {
+
+    border-radius: 10px;
+}
+
+.all-inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    width: 800px !important;
+}
+
 .quest-menu {
     margin: 0 20% 15px 20%;
     /* min-height: 57.5vh; Изменить на 52 */
 }
 
 @media(max-width: 500px) {
-    .quest-menu {
+    /* .quest-menu {
         margin: 0;
         margin-bottom: 5px;
+    } */
+
+    .selects {
+        flex-direction: column;
+    }
+
+    .img-select {
+        display: flex;
+        margin-right: 0;
+    }
+
+    .selects img {
+        width: 50px;
     }
 }
 
 .select-block {
     width: fit-content;
 }
+
+
 
 .select-block img {
     background-color: #e7e7e7;
@@ -157,6 +223,7 @@ h4 {
 }
 
 .btn {
+    width: 133px;
     font-size: 16px;
     font-weight: bold;
     color: blueviolet;
@@ -211,6 +278,85 @@ h4 {
 @media (hover: hover) {
     .find-btn:hover {
         color: #fff !important;
+    }
+}
+
+@media(max-width: 1200px) {
+    .all-inputs {
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .form-control {
+        width: 500px !important;
+    }
+
+    .button-select {
+        flex-direction: column;
+    }
+
+    .selects {
+        display: flex;
+        gap: 20px;
+    }
+
+    .selects {
+        flex-direction: column;
+        align-items: start;
+        gap: 5px;
+    }
+
+    .form-select {
+        width: 455px !important;
+    }
+
+    .btn {
+        margin-top: 2px;
+        width: 450px;
+    }
+
+    .form-2 {
+        width: 503px !important;
+    }
+
+    .selects img {
+        /* margin-right: -20px; */
+    }
+}
+
+@media(max-width: 600px) {
+    .selects {
+        gap: 10px;
+        align-items: center;
+    }
+
+    .form-select {
+        width: 300px !important;
+    }
+    
+    .form-2 {
+        margin-left: 5px;
+        width: 350px !important;
+    }
+
+    .button-select {
+        align-items: center;
+    }
+
+    .btn {
+        width: 310px;
+    }
+
+    .selects img {
+        margin-right: -10px;
+    }
+
+    .img-select {
+        gap: 10px;
+    }
+
+    .form-control {
+        width: 350px !important;
     }
 }
 </style>
