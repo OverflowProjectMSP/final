@@ -29,8 +29,11 @@ export default {
     methods: {
         async addQuestion() {
             await axios.put('/change', {
-                form: this.form,
+                id: this.id,
+                all: this.form,
+                q: 'true'
             });
+            this.$router.push(`/QuestionItem?id=${this.$route.query.id}&q=true`)
         },
 
         async loadQuestion() {
@@ -40,7 +43,7 @@ export default {
                     id: this.id
                 }
             });
-            this.form = res.data.all;
+            this.form = res.data.all.question;
         },
     }
 }

@@ -11,6 +11,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 import base64
 import logging
+import asyncio
 
 load_dotenv()
 

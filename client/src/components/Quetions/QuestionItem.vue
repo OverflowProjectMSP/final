@@ -1,7 +1,7 @@
 <script>
 
 import UpdateQuestion from './UpdateQuestion.vue';
-import UpdateQuestion from './UpdateQuestion.vue';
+
 import axios from 'axios';
 
 export default {
@@ -168,10 +168,10 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="action-select" v-if="isCheck == 'true'">
+                <div class="action-select" v-if="isCheck">
                     <div class="dropdown">
-                        <button class="btn dropdown-toggle border">Дейсвие</button>
-                        <ul class="dropdown-menu 52-da-sdravstvuet-sankt-piterburg-i-etot-gorod-nash-ya-kazhdiy">
+                        <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
+                        <ul class="dropdown-menu">
                             <li><a class="dropdown-item" @click="updQ = true">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>

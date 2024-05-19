@@ -220,7 +220,16 @@ def delete(id, isQ):
 
 # обновить что-то
 def change(id, info, isQ):
-    infor = info # без for
+    infor = ''
+    for i in info:
+        print(i)
+        if info[i] != 'false':
+            if i == 'data':
+                infor += f' {i}=$${datetime.now().isoformat()}$$'
+            elif infor == '':
+                infor += f' {i}=$${info[i]}$$'
+            else:
+                infor += f', {i}=$${info[i]}$$'
     if isQ:
         try: 
             pg = psycopg2.connect(f"""
@@ -230,12 +239,12 @@ def change(id, info, isQ):
                 password={os.getenv('PASSWORD_PG')}
                 port={os.getenv('PORT_PG')}
             """)
-        
+
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-            cursor.excute(f'''UPDATE questions
-                        SET {info}
-                        WHEREE id=$${id}$$''')
+            cursor.execute(f'''UPDATE questions
+                        SET {infor}
+                        WHERE id=$${id}$$''')
 
             pg.commit()
             return_data = 'ok'
@@ -262,9 +271,9 @@ def change(id, info, isQ):
         """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.excute(f'''UPDATE states
+        cursor.execute(f'''UPDATE states
                     SET {info}
-                    WHEREE id=$${id}$$''')
+                    WHERE id=$${id}$$''')
         pg.commit()
         return_data = 'ok'
         logging.info(f'Стаья {id} изменена')
@@ -738,7 +747,7 @@ def change_():
 
     post_data = request.get_json()
 
-    if post_data.get('question'):
+    if post_data.get('q') == "true":
         responce_object['all'] = change(post_data.get('id'), post_data.get('all'), True) # а что - решим потом (название поменять надо)
     else: 
         responce_object['all'] = change(post_data.get('id'), post_data.get('all'), False) # а что - решим потом (название поменять надо)
