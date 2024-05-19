@@ -107,8 +107,8 @@ export default {
     </div>
 
     <div class="container d-flex align-items-center flex-column">
-        <div class="head-1 mb-3 mt-1 user-select-none">
-            <div class="d-flex flex-row align-items-center gap-4">
+        <div class="q-user head-1 mb-3 mt-1 user-select-none">
+            <div class=" d-flex flex-row align-items-center gap-4">
                 <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe; this.isQ = true">Вопросы</p>/
                 <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe; this.isQ = false">статьи</p>
             </div>
@@ -269,6 +269,12 @@ p .u {
     border-radius: 8px;
     padding: 10px;
     margin: 0 20%;
+}
+
+.q-user {
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 /* До линии */
@@ -471,6 +477,11 @@ p .u {
         font-size: var(--size-26);
     }
 
+    .q-user {
+        flex-wrap: wrap;
+        padding-bottom: 65px;
+    }
+
     .num {
         font-size: var(--size-22);
     }
@@ -482,6 +493,7 @@ p .u {
     .about {
         padding: 10px 20px !important;
     }
+
 
     .interes {
         font-size: 16px;
