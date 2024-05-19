@@ -21,7 +21,7 @@ export default {
                 } else if (res.data.res == 'True') {
                     this.$router.push('/Profile');
                 } else {
-                    this.error = 'Хуйню делаешь брат';
+                    this.error = 'Неизветсная ошибка';
                 }
             } else {
                 this.error = 'Пароли не совпадают';
