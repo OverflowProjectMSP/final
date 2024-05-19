@@ -154,14 +154,14 @@ export default {
             @click="loadForum(); this.isQuestion = !this.isQuestion">Статьи</h5>
         </div>
 
-        <div class="post" v-for="(post, index) in posts">
+        <div class="post" v-for="post in posts">
             <div class="account">
-                <a href="#!"><img class="account-img" :src="'src/assets/' + post.accountIcon" alt="">{{ post.accountName }}</a>
+                <a href="#!"><img class="account-img" :src="post.avatar" alt="">{{ post.username }}</a>
             </div>
             <div class="main-post-and-check">
                 <div class="main-post">
                     <h2 class="title">{{ post.title }}</h2>
-                    <p class="description">{{ post.description }}</p>
+                    <p class="description">{{ post.descriptions }}</p>
                 </div>
                 <div class="decided" v-if="post.Decided">
                     <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'" alt=""><span

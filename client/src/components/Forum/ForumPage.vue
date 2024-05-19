@@ -19,6 +19,9 @@ import axios from 'axios';
 </template>
 
 <style scoped>
+.container {
+    min-height: 60.7vh;
+}
 .a{
     margin-bottom: 30px;
 }
