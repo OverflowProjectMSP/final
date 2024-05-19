@@ -78,10 +78,9 @@ export default {
         async addComment() {
             await axios.post(`/answers`, {
                 id: this.$route.query.id,
-                q: true,
+                q: 'true',
                 text: this.text,
-            },
-            );
+            });
             this.text = ``;
             this.loadQuestion();
         },

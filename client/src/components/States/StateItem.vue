@@ -70,6 +70,15 @@ export default {
             });
             return res.data.all;
         },
+        
+        async loadUsers(item) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: item.id_u,
+                }
+            });
+            return res.data.all;
+        },
 
         async getNowUser() {
             let res = await axios.get('/session');
@@ -85,23 +94,13 @@ export default {
             }
         },
 
-        async loadUsers(item) {
-
-            let res = await axios.get('/user-not-all', {
-                params: {
-                    id: item.id_u,
-                }
-            });
-            return res.data.all;
-        },
 
         async addComment() {
             await axios.post(`/answers`, {
                     id: this.$route.query.id,
-                    q: false,
+                    q: 'false',
                     text: this.text,
-                },
-            );
+                });
             this.text = ``;
             this.loadState();
         },
