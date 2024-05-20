@@ -116,7 +116,7 @@ export default {
                 this.answers[i].user = this.commentUser[i];
             }
 
-            if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
