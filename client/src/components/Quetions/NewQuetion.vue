@@ -24,8 +24,9 @@ export default {
         async addQuestion() {
             await axios.post('/new-question', {
                 form: this.form,
-            })
-        }
+            });
+            this.$router.push('/Quetions')
+        },
     }
 }
 

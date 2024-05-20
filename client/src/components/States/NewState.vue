@@ -27,6 +27,13 @@ export default {
             } else {
                 this.error = `Введите больше информации`;
             };
+        },
+
+        async addQuestion() {
+            await axios.post('/new-state', {
+                form: this.form,
+            });
+            this.$router.push('/States')
         }
     }
 }
