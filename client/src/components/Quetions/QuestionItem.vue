@@ -109,7 +109,7 @@ export default {
             for (let i = 0; i < this.answerUser.length; i++) {
                 this.answers[i].user = this.answerUser[i];
             }
-            if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
