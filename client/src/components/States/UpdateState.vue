@@ -41,7 +41,7 @@ export default {
                     id: this.$route.query.id
                 }
             });
-            this.form = res.data.all.question;
+            this.form = res.data.all.state;
         },
 
         async checkUser() {

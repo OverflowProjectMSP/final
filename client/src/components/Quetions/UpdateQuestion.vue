@@ -33,7 +33,6 @@ export default {
                 all: this.form,
                 q: 'true'
             });
-            this.$emit('updQM')
         },
 
         async loadQuestion() {
@@ -60,7 +59,6 @@ export default {
 </script>
 <template>
     <main v-if="isCheck">
-
         <form class="container" @submit.prevent="addQuestion">
             <div class="row pt-4">
                 <div class="col-12">
@@ -75,8 +73,8 @@ export default {
             </div>
             <div class="row" style="display: flex; gap: 40px;">
                 <div class="col-12">
-                    <h5 style="color: gray; font-weight: 400;">Сформулируйте вопрос так, чтобы сразу было понятно, о чём
-                        речь.</h5>
+                    <h5 style="color: gray; font-weight: 400;">Сформулируйте вопрос так, чтобы сразу было понятно, 
+                        о чём речь.</h5>
                 </div>
             </div>
             <div class="row">
@@ -132,12 +130,11 @@ export default {
                     </div>
                     <div class="col-6">
                         <select class="form-select" v-model="form.tag">
-                            <option value="Python">Python</option>
-                            <option value="HTML5">HTML5</option>
-                            <option value="Java">Java</option>
-                            <option value="PHP">PHP</option>
-                            <option value="JavaScript">JavaScript</option>
-                            <option value="C++">C++</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="php">PHP</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="cpp">C++</option>
                         </select>
 
                     </div>
@@ -146,16 +143,10 @@ export default {
                     <div class="col-6">
                         <button id="save" type="submit"><b>Изменить</b></button>
                     </div>
-
                 </div>
-                
                 <p class="error" :class="color">{{ error }}</p>
                 <!-- виджет -->
-                
             </div>
-               
-          
-                
         </form>
 
 

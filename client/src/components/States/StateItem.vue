@@ -32,7 +32,6 @@ export default {
         this.loadState();
         this.checkUser();
         thid.getNowUser();
-        this.loadAnswerUser();
     },
     
     methods: {
@@ -55,22 +54,13 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.states);
-            for(let i = 0; i<this.answers.length; i++) {
+            for(let i = 0; i < this.answers.length; i++) {
                 let user = await this.loadUsers(this.answers[i]);
                 this.commentUser.push(user)
             };
             this.v_For1();
         },
 
-        async loadUsers(item) {
-            let res = await axios.get('/user-not-all', {
-                params: {
-                    id: item.id_u,
-                }
-            });
-            return res.data.all;
-        },
-        
         async loadUsers(item) {
             let res = await axios.get('/user-not-all', {
                 params: {
@@ -94,13 +84,12 @@ export default {
             }
         },
 
-
         async addComment() {
             await axios.post(`/answers`, {
-                    id: this.$route.query.id,
-                    q: 'false',
-                    text: this.text,
-                });
+                id: this.$route.query.id,
+                q: 'false',
+                text: this.text,
+            });
             this.text = ``;
             this.loadState();
         },
@@ -126,12 +115,12 @@ export default {
             for (let i = 0; i < this.commentUser.length; i++) {
                 this.answers[i].user = this.commentUser[i];
             }
+
             if (this.answers[this.answers.length].user.avatar != `` && this.answers.length != 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
             }
-            console.log(this.answers)
         },
     },
 }
@@ -155,7 +144,7 @@ export default {
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" :href="`/UpdateState?id=${this.$route.query.id}&q=false`">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
+                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
                         </ul>
                     </div>
                 </div>
