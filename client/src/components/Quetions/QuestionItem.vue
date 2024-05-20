@@ -110,11 +110,11 @@ export default {
             for (let i = 0; i < this.answerUser.length; i++) {
                 this.answers[i].user = this.answerUser[i];
             }
-            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` && this.answers.length == 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
-            }
+            } 
         },
     },
     mounted() {
@@ -157,7 +157,7 @@ export default {
             </div>
             <div class="about">
                 <p>{{ questionInfo.data }}</p>
-                <p>{{ questionInfo.views }} просмотра</p>
+                <!-- <p>{{ questionInfo.views }} просмотра</p> -->
             </div>
         </div>
         <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
