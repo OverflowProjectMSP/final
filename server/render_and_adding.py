@@ -313,10 +313,17 @@ def show_forum(filtre):
         states = cursor.fetchall()
         cursor.execute(f'''SELECT * FROM questions WHERE tag=$${filtre}$$''')
         questions = cursor.fetchall()
-        
+
+        q = []
+        for row in questions:
+            q.append(dict(row))
+
+        s = []
+        for row in states:
+            s.append(dict(row))
         return_data = {
-            "states": states,
-            "questions": questions
+            "states": s,
+            "questions": q
         }
 
         logging.info(f'Вся информация о форуме {filtre} была отправлена')
