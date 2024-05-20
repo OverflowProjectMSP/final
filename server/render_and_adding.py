@@ -406,7 +406,7 @@ def show_one(id, isQ):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
+        print(id)
         cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
         
         all_states = dict(cursor.fetchall()[0])
