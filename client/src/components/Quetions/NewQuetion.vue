@@ -105,12 +105,11 @@ export default {
                     </div>
                     <div class="col-6">
                         <select class="form-select" v-model="form.tag">
-                            <option value="Python">Python</option>
-                            <option value="HTML5">HTML5</option>
-                            <option value="Java">Java</option>
-                            <option value="PHP">PHP</option>
-                            <option value="JavaScript">JavaScript</option>
-                            <option value="C++">C++</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="php">PHP</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="cpp">C++</option>
                         </select>
 
                     </div>
