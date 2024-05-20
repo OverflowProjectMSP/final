@@ -45,14 +45,14 @@ export default {
         this.loadForum();
     },
     methods: {
-        async loadForum(isQuestion) {
+        async loadForum() {
             this.lang();
             let res = await axios.get('/show-forum', {
                 params: {
                     tag: this.$route.query.lang,
                 }
             });
-            if(isQuestion) {
+            if(this.isQuestion) {
                 this.posts = res.data.all.question;
             } else {
                 this.posts = res.data.all.states;
