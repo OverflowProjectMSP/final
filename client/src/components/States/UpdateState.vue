@@ -15,7 +15,6 @@ export default {
             form: {
                 descriptions: ``,
                 details: ``,
-                dificulty: ``,
                 tag: ``,
             },
 
@@ -31,9 +30,8 @@ export default {
             await axios.put('/change', {
                 id: this.$route.query.id,
                 all: this.form,
-                q: 'true'
+                q: 'false'
             });
-            this.$emit('updQM')
         },
 
         async loadQuestion() {
@@ -123,23 +121,13 @@ export default {
 
                 <div class="row pt-1">
                     <div class="col-6">
-                        <select class="form-select" v-model="form.dificulty">
-                            <option value="Простой">Простой</option>
-                            <option value="Средний">Средний</option>
-                            <option value="Сложный">Сложный</option>
-                        </select>
-
-                    </div>
-                    <div class="col-6">
                         <select class="form-select" v-model="form.tag">
-                            <option value="Python">Python</option>
-                            <option value="HTML5">HTML5</option>
-                            <option value="Java">Java</option>
-                            <option value="PHP">PHP</option>
-                            <option value="JavaScript">JavaScript</option>
-                            <option value="C++">C++</option>
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="php">PHP</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="cpp">C++</option>
                         </select>
-
                     </div>
                 </div>
                 <div class="row pt-5 block">

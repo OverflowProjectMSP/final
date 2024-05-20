@@ -37,9 +37,10 @@ export default {
 
             ],
             Show: false,
-            filters: {
-                type: "false",
-            },
+            tag: ``,
+
+            title: ``,
+            author: ``,
         }
     },
     methods: {
@@ -54,31 +55,30 @@ export default {
             this.states = res.data.all;
             // console.log(res.data)
         },
-        async filtre() {
-            if (this.filters.type == 'false') {
-                this.filtrs = {
-                    filtr: false
-                }
-            } else {
-                this.filtrs = {
-                    filtr: true,
-                    tag: this.filtr.tag,
-                };
-            }
-            let res = await axios.post('/filtre-states', {
-                body: {
-                    filters: this.filtrs
+
+        async searchStates() {
+            let res = await axios.get('/search', {
+                params: {
+                    title: this.title,
+                    author: this.author,
                 }
             });
-            this.quetions = res.data;
-            console.log(this.quetions)
-        }
+            this.states = res.data.all;
+        },
+
+        async filtre() {
+            let res = await axios.get('/filtre-states', {
+                params: {
+                    title: this.title,
+                    author: this.author,
+                    tag: this.tag,
+                }
+            });
+            this.states = res.data.all;
+        },
     },
     mounted() {
         this.loadStates()
-        setInterval(() => {
-            this.loadStates()
-        }, 30000);
     },
 }
 </script>
@@ -88,19 +88,19 @@ export default {
 <h4 class="text">Поиск статьи</h4>
 
 <div class="content d-flex align-items-center">
-    <input type="text" class="form-control" placeholder="Название статьи" aria-label="First name">
-    <input type="text" class="form-control" placeholder="Автор" aria-label="Last name">
+    <input v-model="title" type="search" class="form-control" placeholder="Название статьи" aria-label="First name">
+    <input v-model="author" type="search" class="form-control" placeholder="Автор" aria-label="Last name">
    <!-- селект -->
   <div class="down-menu d-flex align-items-center">
       <div class="dropdown-center">
-      <select class="form-select me-2" v-model="filters.type">
-        <option value="JavaScript"><img src="./assets/js.jpg" class="image">JavaScript</option>
-        <option value="TS"><img :src="'src/assets/js.jpg'" class="image">TS</option>
-        <option value="Python"><img src="./assets/js.jpg" class="image">Python</option>
-        <option value="PHP"><img src="./assets/js.jpg" class="image">PHP</option>
-        <option value="C++"><img src="./assets/js.jpg" class="image">C++</option>
-        <option value="Java"><img src="./assets/js.jpg" class="image">Java</option>
-        <option value="C#"><img src="./assets/js.jpg" class="image">C#</option>
+      <select class="form-select me-2" v-model="tag">
+        <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
+        <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
+        <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
+        <option value="php"><img src="./assets/js.jpg" class="image">PHP</option>
+        <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
+        <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
+        <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
         <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
       </select>
       </div>
