@@ -121,7 +121,7 @@ export default {
         </div>
         <div class="scroll" v-else>
             <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
-                <VidUserComp :item="state" />
+                <VidUserComp :item="state"/>
             </a>
         </div>
     </div>

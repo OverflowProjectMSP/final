@@ -23,11 +23,10 @@ export default {
                     <a href="#!"><p>{{ item.tag }}</p></a>
                 </div>
                 <div class="text">
-                    <h5>{{ item.discription }}</h5>
+                    <h5>{{ item.descriptions }}</h5>
                 </div>
                 <div class="info">
                     <p>{{ item.date }}</p>
-                    <p>{{ item.view }} просмотров</p>
                 </div>
             </div>
             <div class="ans_check">
