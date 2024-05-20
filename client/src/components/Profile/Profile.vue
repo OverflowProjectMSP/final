@@ -32,12 +32,12 @@ export default {
                 }
             });
             
-            if(isQ) {
+            if(this.isQ) {
                 this.questions = res.data.all.questions;
-                isQ = true;
-            } else if(!isQ) {
+                this.isQ = true;
+            } else if(!this.isQ) {
                 this.states = res.data.all.questions;
-                isQ = false;
+                this.isQ = false;
             }
         },
         async loadUser() {
@@ -114,9 +114,14 @@ export default {
             </div>
             <p class="vse" @click="Olezha">пользователя</p>
         </div>
-        <div class="scroll">
-            <a :href="`/QuestionItem?id=${quetion.id}&question=true`" v-for="quetion in questions">
+        <div class="scroll" v-if='this.isQ'>
+            <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
                 <VidUserComp :item="quetion" />
+            </a>
+        </div>
+        <div class="scroll" v-else>
+            <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
+                <VidUserComp :item="state" />
             </a>
         </div>
     </div>
