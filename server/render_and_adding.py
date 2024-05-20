@@ -140,15 +140,22 @@ def show_all_by_user(id):
         logging.info(id)
         cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$')
         questions = cursor.fetchall()
+        q = []
+        for row in questions:
+            q.append(dict(row))
 
         cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$')
         states = cursor.fetchall()
+
+        s = []
+        for row in states:
+            s.append(dict(row))
         logging.info('Информация отпраленна')
 
 
         return_data = {
-            'questions': questions,
-            'states': states
+            'questions': q,
+            'states': s
         }
 
     except (Exception, Error) as error:
