@@ -25,14 +25,14 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
 
         send_question = []
 
-        cursor.execute(f"SELECT COUNT(*) FROM question WHERE discriptions=$${discriptions}$$")  
+        cursor.execute(f"SELECT COUNT(*) FROM questions WHERE descriptions=$${discriptions}$$")  
         
         send_question.append(cursor.fetchone())
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
             question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id)
-            cursor.execute(f"INSERT INTO questions(id, discriptions, details, dificulty, tag, user_id) VALUES {question_to_write}")      
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u) VALUES {question_to_write}")      
             pg.commit()
             
             
@@ -101,14 +101,14 @@ def add_states(discriptions='', details='', id='', tag=''):
 
         send_state = []
 
-        cursor.execute(f"SELECT COUNT(*) FROM states WHERE discriptions=$${discriptions}$$")  
+        cursor.execute(f"SELECT COUNT(*) FROM states WHERE descriptions=$${discriptions}$$")  
         send_state.append(cursor.fetchone())
 
         # Существует ли таккая же
         if send_state[0][0]==0:
             logging.info(details, 1)
             state_to_write = (uuid.uuid4().hex, discriptions, details,tag ,id)
-            cursor.execute(f"INSERT INTO states(id, discriptions, details, tag, user_id) VALUES {state_to_write}")      
+            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u) VALUES {state_to_write}")      
             pg.commit()
             
         logging.info('Статья добавлена')
@@ -313,10 +313,17 @@ def show_forum(filtre):
         states = cursor.fetchall()
         cursor.execute(f'''SELECT * FROM questions WHERE tag=$${filtre}$$''')
         questions = cursor.fetchall()
-        
+
+        q = []
+        for row in questions:
+            q.append(dict(row))
+
+        s = []
+        for row in states:
+            s.append(dict(row))
         return_data = {
-            "states": states,
-            "questions": questions
+            "states": s,
+            "questions": q
         }
 
         logging.info(f'Вся информация о форуме {filtre} была отправлена')
@@ -656,7 +663,7 @@ def new_question():
 
     post_data = request.get_json()
     post_data = post_data.get('form')
-    logging.info(add_question(post_data.get('discriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id'))) #Вызов и debug функции добавления вопроса в бд
+    logging.info(add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id'))) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(response_object)
 
@@ -667,7 +674,7 @@ def create_state():
 
     post_data = request.get_json().get('form')
     logging.info(1)
-    logging.info(add_states(post_data.get('discriptions'), post_data.get('details'), session.get('id'), post_data.get('tag'))) #Вызов и debug функции добавления вопроса в бд
+    logging.info(add_states(post_data.get('descriptions'), post_data.get('details'), session.get('id'), post_data.get('tag'))) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(responce_object)
 
