@@ -8,7 +8,7 @@ export default {
     data() {
         return {
             form: {
-                discriptions: ``,
+                descriptions: ``,
                 details: ``,
                 tag: ``,   
             },
@@ -19,22 +19,16 @@ export default {
 
     methods: {
         async addState() {
-            if (this.form.details.length >= 40 && this.form.discriptions > 3 && this.form.tag) {
+            // if (this.form.details.length >= 20 && this.form.descriptions > 3 && this.form.tag != '') {
                 await axios.post('/new-state', {
                     form: this.form
                 });
                 this.error = ``;
-            } else {
-                this.error = `Введите больше информации`;
-            };
+                this.$router.push('/States')
+            // } else {
+            //     this.error = `Введите больше информации`;
+            // };
         },
-
-        async addQuestion() {
-            await axios.post('/new-state', {
-                form: this.form,
-            });
-            this.$router.push('/States')
-        }
     }
 }
 </script>
@@ -47,7 +41,7 @@ export default {
     <div class="name">
         <h4>Название статьи</h4>
         <p class="transparent mb-0">Сформулируйте название так, чтобы сразу было понятно, о чём речь.</p>
-        <input type="email" class="form-control" id="inputlg" v-model="form.discriptions">
+        <input type="text" class="form-control" id="inputlg" v-model="form.descriptions">
     </div>
     <div class="text">
         <h4>Текст статьи</h4>
@@ -56,9 +50,11 @@ export default {
             <div class="forms"> 
                 <div class="form1">
                     <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                        <option selected class="python"><b>Python</b></option>
-                        <option value="1" class="js"><b>JS</b></option>
-                        <option value="2" class="php"><b>PHP</b></option>
+                        <option value="python">Python</option>
+                        <option value="java">Java</option>
+                        <option value="php">PHP</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="cpp">C++</option>
                     </select>
                 </div>
             </div>
@@ -67,8 +63,6 @@ export default {
             <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;" v-model="form.details"></textarea>
         </div>
         <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Email address</label>
-  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
 </div>
     </div>
 

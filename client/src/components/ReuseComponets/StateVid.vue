@@ -41,7 +41,7 @@ export default {
                         <a href="#!"><p>{{ item.tag }}</p></a>
                     </div>
                     <div class="text">
-                        <h5>{{ item.discriptions }}</h5>
+                        <h5>{{ item.descriptions }}</h5>
                     </div>
                     <div class="info">
                         <p>{{ subs }} подписчиков</p>
