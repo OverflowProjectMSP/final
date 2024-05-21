@@ -47,6 +47,7 @@ export default {
     methods: {
         async loadForum() {
             this.lang();
+            this.isQuestion = !this.isQuestion
             let res = await axios.get('/show-forum', {
                 params: {
                     tag: this.$route.query.lang,
@@ -149,9 +150,9 @@ export default {
         <!-- <div class="hr"></div> -->
         <div class="ancet d-flex mb-3" style="display: flex; gap: 40px;">
             <h5 role="button" class="mb-0" :class="{'border-bottom border-2 border-dark fw-semibold': isQuestion}" 
-            @click="loadForum(); this.isQuestion = !this.isQuestion">Вопросы</h5>
+            @click="loadForum">Вопросы</h5>
             <h5 role="button" class="mb-0" :class="{'border-bottom border-2 border-dark fw-semibold': !isQuestion}" 
-            @click="loadForum(); this.isQuestion = !this.isQuestion">Статьи</h5>
+            @click="loadForum">Статьи</h5>
         </div>
 
         <div class="post" v-for="post in posts">

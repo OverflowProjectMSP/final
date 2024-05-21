@@ -63,7 +63,7 @@ export default {
             this.form = res.data.all;
         },
         deleteAvatar() {
-            this.form.avatar = `src/assets/Header/AvatarDef.svg`;
+            this.form.avatar = this.defaultAvatar;
         }
     }
 }
