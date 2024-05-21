@@ -96,7 +96,7 @@ export default {
                     <li v-if="user.skype">Мой Skype: {{ user.skype }}</li>
                     <li v-if="user.discord">Мой Discord: {{ user.discord }}</li>
                     <li v-if="user.facebook">Мой Facebook: {{ user.facebook }}</li>
-                    <li v-if="user.github">Мой GitHub: {{ user.github }}</li>
+                    <li v-if="user.github">Мой GitHub: <a :href='user.github' target="_blank">{{ user.github }}</a></li>
                 </ul>
                 <p v-if="this.user.about != ''" class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
                 <p v-if="this.user.interesting != ''"><span  v-if="this.user.interestings != ''" class="fw-bold">Мои интересы: </span></p>

@@ -26,7 +26,6 @@ export default {
     },
     mounted() {
         this.loadForum();
-        this.loadAnswerUser();
     },
     methods: {
         async loadForum() {
@@ -42,6 +41,7 @@ export default {
             } else {
                 this.posts = res.data.all.states;
             }
+            this.loadAnswerUser()
         },
 
         async filtre() {
@@ -172,7 +172,7 @@ export default {
 
         <div class="post" v-for="post in posts">
             <div class="account">
-                <a :href="`/Profile$id=${post.id_u}`">
+                <a :href="`/Profile?id=${post.id_u}`">
                     <img class="account-img" :src="post.user.avatar" alt="">{{ post.user.username }}
                 </a>
             </div>
