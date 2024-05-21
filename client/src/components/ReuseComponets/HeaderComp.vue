@@ -38,10 +38,13 @@ export default {
       }
     },
     async loadLogin() {
+      setTimeout(()=>{console.log(1)}, 3000 )
       let res = await axios.get(`/check-r`);
       this.ShowLogin = res.data.all;
+      console.log(this.ShowLogin)
       if (this.ShowLogin == "true") {
         this.ShowLogin = false;
+        
         this.getId()
       } else if (this.ShowLogin == "false") {
         this.ShowLogin = true;
@@ -50,11 +53,12 @@ export default {
     async getId(){
       let res = await axios.get(`/session`);
       this.id = res.data.id
+      console.log(this.id)
     }
   },
   mounted() {
-    this.loadLogin();
-    this.loadAvatar()
+    setTimeout(()=>{this.loadLogin();}, 3000 )
+    setTimeout(()=>{this.loadAvatar()}, 3000 )
   }
 }
 
@@ -99,7 +103,7 @@ export default {
             <input class="form-control  inp " type="search" placeholder="Найти статью" aria-label="Search">
 
           </form> -->
-          <div class="them-container" v-if="this.id == ``">
+          <div class="them-container" v-if="this.ShowLogin">
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container" v-else>

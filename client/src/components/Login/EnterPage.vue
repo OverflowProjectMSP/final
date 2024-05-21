@@ -86,7 +86,7 @@ export default {
         <div class="content">
             <p>Войти</p>
             <div class="regist">
-                <form @submit.prevent="check">
+                <form @submit="check">
                     <input v-model="email" class="inp inp-email" type="email" placeholder="Почта">
                     <div class="password-container">
                         <input v-model="password" class="inp inp-password" :type="showPassword" placeholder="Пароль">

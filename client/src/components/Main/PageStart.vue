@@ -30,7 +30,7 @@ export default {
             <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
             <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
             <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
-            <a href="/Forum" v-else><button class="btn-join user-select-none">На форум</button></a>
+            <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
         </div>
     </div>
 </template>

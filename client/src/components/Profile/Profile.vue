@@ -26,6 +26,7 @@ export default {
     },
     methods: {
         async allByHe() {
+            this.isQ = !this.isQ
             let res = await axios.get('/show-all-by-user', {
                 params: {
                     id: this.$route.query.id
@@ -34,10 +35,10 @@ export default {
             
             if(this.isQ) {
                 this.questions = res.data.all.questions;
-                this.isQ = true;
+                // this.isQ = true;
             } else if(!this.isQ) {
-                this.states = res.data.all.questions;
-                this.isQ = false;
+                this.states = res.data.all.states;
+                // this.isQ = false;
             }
         },
         async loadUser() {
@@ -88,7 +89,7 @@ export default {
             <div class="about rounded-5">
                 <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }} </p>
                 <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
-                <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p>
+                <!-- <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p> -->
                 <p v-if="this.user.telegram != '' || this.user.skype != '' || this.user.discord != '' || this.user.facebook != ''"><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
                 <ul class="fs-5">
                     <li v-if="user.telegram">Мой Telegram: {{ user.telegram }}</li>
@@ -109,8 +110,8 @@ export default {
     <div class="container d-flex align-items-center flex-column">
         <div class="q-user head-1 mb-3 mt-1 user-select-none">
             <div class=" d-flex flex-row align-items-center gap-4">
-                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe; this.isQ = true">Вопросы</p>/
-                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe; this.isQ = false">статьи</p>
+                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe">Вопросы</p>/
+                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe">статьи</p>
             </div>
             <p class="vse" @click="Olezha">пользователя</p>
         </div>
