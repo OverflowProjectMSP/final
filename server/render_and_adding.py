@@ -546,9 +546,9 @@ def add_ans(text, isQ, idO, id_u):
     date = datetime.now().isoformat()
     to_write = (uuid.uuid4().hex, id_u, idO, text, date)   
     if isQ:
-        obj = "answers(id, id_user, id_q, text, data)"
+        obj = "answers(id, id_u, id_q, text, data)"
     else:
-        obj = "comments(id, id_user, id_s, text, data)"
+        obj = "comments(id, id_u, id_s, text, data)"
 
     try:
         pg = psycopg2.connect(f"""
