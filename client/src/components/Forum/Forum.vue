@@ -33,7 +33,7 @@ export default {
             titleLang: ``,
             imageLang: ``,
             
-            isQuestion: true,
+            isQuestion: false,
 
             question: [],
             states: [],
