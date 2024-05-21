@@ -14,7 +14,7 @@ export default {
             titleLang: ``,
             imageLang: ``,
             
-            isQuestion: true,
+            isQuestion: false,
 
             question: [],
             states: [],
@@ -38,7 +38,7 @@ export default {
                 }
             });
             if(this.isQuestion) {
-                this.posts = res.data.all.question;
+                this.posts = res.data.all.questions;
             } else {
                 this.posts = res.data.all.states;
             }
