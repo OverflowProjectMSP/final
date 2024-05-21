@@ -6,26 +6,7 @@ export default {
     data() {
         return {
             posts: [
-                {
-                    accountIcon: 'person.svg',
-                    accountName: 'Nick Endgy',
-                    title: 'Как сделать регистрацию с использованием только JavaScript?',
-                    description: 'Подскажите, пожалуйста, как сделать регистрацию пользователя на сайте? Сайт у меня на node.js. Я первый раз такую форму делаю и не знаю какой путь выбрать. Какой вариант лучше? Просто к кнопке "зарегистрироваться" подвязать эвент и в нем делать функцию? Или как-то использовать method="post" у формы?',
-                    answers: 28,
-                    Decided: true,
-                    id: 123,
-                    question: true
-                },
-                {
-                    accountIcon: 'person1.svg',
-                    accountName: 'Dave Hogger',
-                    title: 'Помогите добавить правильно асинхронную подгрузку тегов при сколе',
-                    description: 'Пытаюсь добавить асинхронную подгрузку, но на данный момент она работает не правильно, при первом открытии списка отображается 15 тегов при прокрутке происходит скачек и подгружается еще 10, после закрытия списка и повторного открытия догружаются остальные теги, в чем может быть проблема? (сейчас с бека не приходит длина всех тегов, пока это захардкодил, зная длину 38)',
-                    answers: 34,
-                    Decided: false,
-                    id: 124,
-                    question: true
-                },
+
             ],
 
             plusImg: 'src/assets/plus.svg',
@@ -38,11 +19,14 @@ export default {
             question: [],
             states: [],
 
+            postUsers: [],
+
             title: ``,
         }
     },
     mounted() {
         this.loadForum();
+        this.loadAnswerUser();
     },
     methods: {
         async loadForum() {
@@ -61,12 +45,43 @@ export default {
         },
 
         async filtre() {
-            let res = await axios.get('/filtre-states', {
+            let res = await axios.get('/filtre-forum', {
                 params: {
                     title: this.title,
                 }
             });
-            this.quetions = res.data.all;
+            this.posts = res.data.all.quetions;
+        },
+
+
+        async loadAnswerUser() {
+            for(let i = 0; i < this.posts.length; i++) {
+                let user = await this.loadUsers(this.posts[i]);
+                this.postUsers.push(user)
+            };
+            this.v_For1();
+        },
+
+        async loadUsers(item) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: item.id_u,
+                }
+            });
+            return res.data.all;
+        },
+
+
+        v_For1() {
+            for (let i = 0; i < this.postUsers.length; i++) {
+                this.posts[i].user = this.postUsers[i];
+            }
+
+            // if (this.posts[this.answers.length - 1].user.avatar != `` || this.posts.length == 0) {
+            //     this.loading = true;
+            // } else {
+            //     this.loading = false;
+            // }
         },
 
         lang() {
@@ -157,7 +172,9 @@ export default {
 
         <div class="post" v-for="post in posts">
             <div class="account">
-                <a href="#!"><img class="account-img" :src="post.avatar" alt="">{{ post.username }}</a>
+                <a :href="`/Profile$id=${post.id_u}`">
+                    <img class="account-img" :src="post.user.avatar" alt="">{{ post.user.username }}
+                </a>
             </div>
             <div class="main-post-and-check">
                 <div class="main-post">
@@ -165,7 +182,7 @@ export default {
                     <p class="description">{{ post.descriptions }}</p>
                 </div>
                 <div class="decided" v-if="post.Decided">
-                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'" alt=""><span
+                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'" alt="Решён"><span
                         class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>
