@@ -116,8 +116,14 @@ export default {
                 this.loading = false;
             } 
         },
+
+        async creator() {
+            let res = await axios.get('/session');
+            this.userNow = res.data.id;
+        }
     },
     mounted() {
+        this.creator();
         this.loadQuestion();
         this.checkUser();
         this.getNowUser();
@@ -195,14 +201,16 @@ export default {
                     </div>
                 </div>
             </div>
-            <div class="content p-2" v-else>
+            <div class="content p-2" v-if="this.answers.length == 0">
                 <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
                 </h2>
             </div>
         </div>
-        <div class="d-flex justify-content-center" v-else >
-            <div class="spinner-border text-primary" role="status" >
-                <span class="visually-hidden text-center">Loading...</span>
+        <div v-else>
+            <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
+                <div class="spinner-border text-primary" role="status" >
+                    <span class="visually-hidden text-center">Loading...</span>
+                </div>
             </div>
         </div>
 
