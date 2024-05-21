@@ -651,6 +651,98 @@ def show_answers(isQ, idO):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
+# Отображение всех статей на frontend
+def filtre_states(fil):
+    filtrs = ''
+    for i in fil:
+        if filtrs!='':
+            if i!='name' and i!='descriptions':
+                filtrs+=f' and {i}=$${fil[i]}$$'
+        else:
+            if i!='name' and i!='descriptions':
+                filtrs+=f'{i}=$${fil[i]}$$'
+    try: 
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+        ids = cursor.fetchall()
+        ors = ''
+        for i in ids:
+            if ors !='': ors+=f' or id_u=$${i[0]}$$'
+            else: ors+=f'id_u=$${i[0]}$$'
+        cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
+        print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
+        q = cursor.fetchall()
+        return_data = []
+        for row in q:
+            return_data.append(dict(row))
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+
+        return_data = f"Error" 
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+# Отображение всех вапросов на frontend
+def filtre_question(fil):
+    filtrs = ''
+    for i in fil:
+        if filtrs!='':
+            if i!='name' and i!='descriptions':
+                filtrs+=f' and {i}=$${fil[i]}$$'
+        else:
+            if i!='name' and i!='descriptions':
+                filtrs+=f'{i}=$${fil[i]}$$'
+    try: 
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+        ids = cursor.fetchall()
+        ors = ''
+        for i in ids:
+            if ors !='': ors+=f' or id_u=$${i[0]}$$'
+            else: ors+=f'id_u=$${i[0]}$$'
+        cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
+        print(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
+        q = cursor.fetchall()
+        return_data = []
+        for row in q:
+            return_data.append(dict(row))
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+
+        return_data = f"Error" 
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+        
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -693,7 +785,7 @@ def filtre_states():
 
     post_data = request.get_json().get('body')
     logging.info(post_data)
-    responce_object['all'] = filtre(post_data.get('filters'), False)
+    responce_object['all'] = filtre_states(post_data.get('filters'))
 
     return jsonify(responce_object)
 
@@ -704,7 +796,7 @@ def filtre_questions():
 
     post_data = request.get_json().get('body')
     logging.info(post_data)
-    responce_object['all'] = filtre(post_data.get('filters'), True)
+    responce_object['all'] = filtre_question(post_data.get('filters'))
 
     return jsonify(responce_object)
 
