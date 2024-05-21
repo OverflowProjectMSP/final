@@ -32,6 +32,7 @@ export default {
         this.loadState();
         this.checkUser();
         thid.getNowUser();
+        this.creator();
     },
     
     methods: {
@@ -72,7 +73,7 @@ export default {
 
         async getNowUser() {
             let res = await axios.get('/session');
-            this.userNow = res.data.id;
+            this.loadNowUser(res.data.id);
         },
 
         symbolsCount() {
@@ -121,6 +122,15 @@ export default {
             } else {
                 this.loading = false;
             }
+        },
+
+        async loadNowUser(id) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: id,
+                }
+            });
+            this.userNow = res.data.all;
         },
     },
 }
