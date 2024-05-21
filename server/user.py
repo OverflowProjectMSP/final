@@ -364,6 +364,7 @@ def show_not_all(id):
         
         info = dict(cursor.fetchall()[0])
         return_data = {}
+
         for key in info:
             return_data[key] = info[key]
 
@@ -371,7 +372,7 @@ def show_not_all(id):
 
 
     except (Exception, Error) as error:
-        logging.info(f"Ошибка получения данных: {error}")
+        logging.error(f"Ошибка получения данных: {error}")
         return_data = 'No'
 
     finally:

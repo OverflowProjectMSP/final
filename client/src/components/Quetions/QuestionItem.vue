@@ -103,7 +103,7 @@ export default {
         },
         async getNowUser() {
             let res = await axios.get('/session');
-            this.loadNowUser(res.data.all);
+            this.loadNowUser(res.data.id);
         },
 
         v_For1() {
