@@ -159,7 +159,7 @@ hr {
 
 .ts {
     background-color: #017ACC;
-    color: hsl(0, 0%, 100%);
+    color: #fff;
     font-weight: 600;
 }
 
@@ -183,7 +183,7 @@ hr {
 
 .py {
     background-color: #3773A5;
-    color: #000;
+    color: #fff;
     font-weight: 600;
 }
 
@@ -218,9 +218,9 @@ hr {
 
 .ruby {
     background-color: #A51501;
-    color: #F08E74;
+    color: #fff;
     font-weight: 600;
-    -webkit-text-stroke: 0.5px black;
+    /* -webkit-text-stroke: 0.5px black; */
 }
 
 
