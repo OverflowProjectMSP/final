@@ -103,7 +103,7 @@ export default {
         },
         async getNowUser() {
             let res = await axios.get('/session');
-            this.userNow = res.data.id;
+            this.loadNowUser(res.data.all);
         },
 
         v_For1() {
@@ -117,13 +117,16 @@ export default {
             } 
         },
 
-        async creator() {
-            let res = await axios.get('/session');
-            this.userNow = res.data.id;
-        }
+        async loadNowUser(id) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: id,
+                }
+            });
+            this.userNow = res.data.all;
+        },
     },
     mounted() {
-        this.creator();
         this.loadQuestion();
         this.checkUser();
         this.getNowUser();
