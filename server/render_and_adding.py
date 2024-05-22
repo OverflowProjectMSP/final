@@ -31,12 +31,13 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
-            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id)
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u) VALUES {question_to_write}")      
+            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat())
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
+            # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
+            return_data = "Вопрос добавлен"
+        else : return_data = "Уже существует"
             
-            
-        return_data = "Вопрос добавлен"
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
         
@@ -46,6 +47,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         if pg:
             cursor.close
             pg.close
+            logging.info(return_data)
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
@@ -755,7 +757,7 @@ def new_question():
 
     post_data = request.get_json()
     post_data = post_data.get('form')
-    logging.info(add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id'))) #Вызов и debug функции добавления вопроса в бд
+    response_object['res'] = add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id')) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(response_object)
 
