@@ -31,7 +31,6 @@ export default {
                     imageProfileDS: `vanya.jpg`,
                     dsProfile: `garleenn`,
                     tgProfile: `Garleen`,
-                    vkProfile: `ivangorbenko52`,
                 },
                 {
                     name: `Сары Максим`,

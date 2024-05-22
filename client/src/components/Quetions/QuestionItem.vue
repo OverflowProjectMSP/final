@@ -103,7 +103,7 @@ export default {
         },
         async getNowUser() {
             let res = await axios.get('/session');
-            this.userNow = res.data.id;
+            this.loadNowUser(res.data.id);
         },
 
         v_For1() {
@@ -115,6 +115,22 @@ export default {
             } else {
                 this.loading = false;
             } 
+        }, 
+
+        async loadNowUser(id) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: id,
+                }
+            });
+            this.userNow = res.data.all;
+        },
+
+        async solveQuestion(is) {
+            await axios.put(`/is-solved`, {
+                id: this.$route.query.id,
+                is_solved: is,
+            });
         },
     },
     mounted() {
@@ -128,7 +144,7 @@ export default {
 
 <template>
     <div class="container mb-4">
-        <div class="content-1">
+        <div class="content-1">+
             <div class="account justify-content-between">
                 <div class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
@@ -142,6 +158,8 @@ export default {
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
+                            <li v-if="!this.questionInfo.is_solved"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос решён!</a></li>
+                            <li v-else><a class="dropdown-item" @click="solveQuestion(false)">Вопрос ещё не решён!</a></li>
                             <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
@@ -178,31 +196,20 @@ export default {
                     <div class="btn-group">
                         <div class="left">
                             <button class="comm-add btgr">Добавить комментарий</button>
-                            <!-- <div class="like-bc bc">
-                                <button @click="counterPlus(index)" class="like btgr"><img :src="'src/assets/Like.svg'"
-                                        alt=""></button>
-                                <p class="like-count user-select-none">{{ answer.likes }}</p>
-                            </div>
-                            <div class="dislike-bc bc">
-                                <button @click="counterMinus(index)" class="dislike btgr"><img
-                                        :src="'src/assets/Dislike.svg'" alt=""></button>
-                                <p class="dislike-count user-select-none">{{ answer.dislike }}</p>
-                            </div> -->
                         </div>
-                        <!-- <div class="right">
-                            <a href="#/Main"><button class="toMain btgr">На главную</button></a>
-                        </div> -->
                     </div>
                 </div>
             </div>
-            <div class="content p-2" v-else>
+            <div class="content p-2" v-if="this.answers.length == 0">
                 <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
                 </h2>
             </div>
         </div>
-        <div class="d-flex justify-content-center" v-else >
-            <div class="spinner-border text-primary" role="status" >
-                <span class="visually-hidden text-center">Loading...</span>
+        <div v-else>
+            <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
+                <div class="spinner-border text-primary" role="status" >
+                    <span class="visually-hidden text-center">Loading...</span>
+                </div>
             </div>
         </div>
 

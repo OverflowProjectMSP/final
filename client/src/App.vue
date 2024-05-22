@@ -12,7 +12,7 @@ export default {
 
 <template>
   <header-comp/>
-  <RouterView />
+  <RouterView class="RouterView"/>
   <footer-comp/>
 </template>
 
@@ -32,5 +32,9 @@ main {
 template {
     font-family: Rubik !important;
       margin: 0;
+}
+
+.RouterView {
+  min-height: 60.7vh !important;
 }
 </style>

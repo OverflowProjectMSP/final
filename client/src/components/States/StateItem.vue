@@ -31,7 +31,8 @@ export default {
     mounted() {
         this.loadState();
         this.checkUser();
-        thid.getNowUser();
+        // thid.getNowUser();
+        
     },
     
     methods: {
@@ -47,9 +48,6 @@ export default {
             this.answers = responce.data.all.answers;
 
             this.loadAnswerUser();
-        },
-        print(s){
-            console.log(s)
         },
 
         async loadAnswerUser() {
@@ -72,7 +70,7 @@ export default {
 
         async getNowUser() {
             let res = await axios.get('/session');
-            this.userNow = res.data.id;
+            this.loadNowUser(res.data.id);
         },
 
         symbolsCount() {
@@ -100,6 +98,7 @@ export default {
                     q: 'false',
                 }
             });
+            this.$router.push('/States');
         },
 
         async checkUser() {
@@ -116,11 +115,20 @@ export default {
                 this.answers[i].user = this.commentUser[i];
             }
 
-            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` && this.answers.length == 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
             }
+        },
+
+        async loadNowUser(id) {
+            let res = await axios.get('/user-not-all', {
+                params: {
+                    id: id,
+                }
+            });
+            this.userNow = res.data.all;
         },
     },
 }
@@ -198,6 +206,10 @@ export default {
                         <p >{{ answer.text }}</p>
                     </div>
                 </div>
+                <div class="content p-2" v-else>
+                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
+                </h2>
+            </div>
             </div>
         </div>
 

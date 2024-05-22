@@ -37,12 +37,13 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
-            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id)
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u) VALUES {question_to_write}")      
+            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), True)
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")   
+            # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
+            return_data = "Вопрос добавлен"
+        else : return_data = "Уже существует"
             
-            
-        return_data = "Вопрос добавлен"
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
         
@@ -52,6 +53,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         if pg:
             cursor.close
             pg.close
+            logging.info(return_data)
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
@@ -116,10 +118,8 @@ def add_states(discriptions='', details='', id='', tag=''):
             state_to_write = (uuid.uuid4().hex, discriptions, details,tag ,id)
             cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u) VALUES {state_to_write}")      
             pg.commit()
-            
-        logging.info('Статья добавлена')
-
-        return_data = "Статья добавлена"
+            return_data = "Статья добавлена"
+        else: return_data = 'Такая статья уже есть'
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
         return_data = f"Error" 
@@ -128,6 +128,7 @@ def add_states(discriptions='', details='', id='', tag=''):
         if pg:
             cursor.close
             pg.close
+            logging.info(return_data)
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
@@ -552,9 +553,9 @@ def add_ans(text, isQ, idO, id_u):
     date = datetime.now().isoformat()
     to_write = (uuid.uuid4().hex, id_u, idO, text, date)   
     if isQ:
-        obj = "answers(id, id_user, id_q, text, data)"
+        obj = "answers(id, id_u, id_q, text, data)"
     else:
-        obj = "comments(id, id_user, id_s, text, data)"
+        obj = "comments(id, id_u, id_s, text, data)"
 
     try:
         pg = psycopg2.connect(f"""
@@ -761,7 +762,7 @@ def new_question():
 
     post_data = request.get_json()
     post_data = post_data.get('form')
-    logging.info(add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id'))) #Вызов и debug функции добавления вопроса в бд
+    response_object['res'] = add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id')) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(response_object)
 
@@ -772,7 +773,7 @@ def create_state():
 
     post_data = request.get_json().get('form')
     logging.info(1)
-    logging.info(add_states(post_data.get('descriptions'), post_data.get('details'), session.get('id'), post_data.get('tag'))) #Вызов и debug функции добавления вопроса в бд
+    responce_object['res'] = add_states(post_data.get('descriptions'), post_data.get('details'), session.get('id'), post_data.get('tag')) #Вызов и debug функции добавления вопроса в бд
     
     return jsonify(responce_object)
 
@@ -785,24 +786,32 @@ def show_questions():
     return jsonify(response_object)
  
 # Фильтр статей
-@app.route("/filtre-states", methods=['POST'])
-def filtre_states():
+@app.route("/filtre-states", methods=['GET'])
+def filtre_states_():
     responce_object = {'status' : 'success'} #БаZа
 
-    post_data = request.get_json().get('body')
-    logging.info(post_data)
-    responce_object['all'] = filtre_states(post_data.get('filters'))
+    
+    filtrs = {
+        'descriptions': request.args.get('title'),
+        'name': request.args.get('author'),
+        'tag': request.args.get('tag'),
+    }
+    responce_object['all'] = filtre_states(filtrs)
 
     return jsonify(responce_object)
 
 # Фильтр вопросов
-@app.route("/filtre-questions", methods=['POST'])
-def filtre_questions():
+@app.route("/filtre-questions", methods=['GET'])
+def filtre_questions_():
     responce_object = {'status' : 'success'} #БаZа
 
-    post_data = request.get_json().get('body')
-    logging.info(post_data)
-    responce_object['all'] = filtre_question(post_data.get('filters'))
+    filtrs = {
+        'descriptions': request.args.get('title'),
+        'name': request.args.get('author'),
+        'tag': request.args.get('tag'),
+        'dificulty': request.args.get('dificulty'),
+    }
+    responce_object['all'] = filtre_question(filtrs)
 
     return jsonify(responce_object)
 
@@ -897,7 +906,7 @@ def add_a():
     post_data = request.get_json()
     text = post_data.get('text')
 
-    if post_data.get('q'):
+    if post_data.get('q') == 'true':
         response_object['all'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
         return jsonify(response_object)
     response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
