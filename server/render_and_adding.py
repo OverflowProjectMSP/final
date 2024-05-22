@@ -11,10 +11,6 @@ logging.basicConfig(
  
 logging.info("render_and_adding.py have connected")
 
-PASSWORD_PG = {os.getenv('PASSWORD_PG')}
-PORT_PG = {os.getenv('PORT_PG')}
-USER_PG = {os.getenv('USER_PG')}
-HOST_PG = {os.getenv('HOST_PG')}
 
 
 # Новый вопрос

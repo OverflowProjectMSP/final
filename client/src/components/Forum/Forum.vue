@@ -45,20 +45,20 @@ export default {
 
         async filtre() {
             if (this.isQuestion) {
-                let res = await axios.get(`/filter-questions`, {
+                let res = await axios.get(`/filtre-questions`, {
                     params: {
                         title: this.title,
-                        tag: this.posts.tag,
+                        tag: this.$route.query.lang,
                         dificulty: this.dificulty,
                         author: ``,
                     }
                 });
                 this.posts = res.data.all;
             } else {
-                let res = await axios.get(`/filter-states`, {
+                let res = await axios.get(`/filtre-states`, {
                     params: {
                         title: this.title,
-                        tag: this.posts.tag,
+                        tag: this.$route.query.lang,
                         author: ``,
                     }
                 });
