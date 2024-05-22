@@ -25,11 +25,11 @@ def refresh_data(info, id):
 
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -60,11 +60,11 @@ def refresh_data(info, id):
 def login_user(email, pas):
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -105,11 +105,11 @@ def login_user(email, pas):
 def add_user_todb(name, email, pas):
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -186,11 +186,11 @@ def change_password(password, old_password, id):
 def check_old_password(id, password):
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -298,11 +298,11 @@ def check_password(password, true_password):
 def show_user_info(id, isAll):
     try: 
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -350,11 +350,11 @@ def show_user_info(id, isAll):
 def show_not_all(id):
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
