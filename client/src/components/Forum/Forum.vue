@@ -5,9 +5,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:5000';
 export default {
     data() {
         return {
-            posts: [
-
-            ],
+            posts: [],
 
             plusImg: 'src/assets/Forum/plus.svg',
 
@@ -45,14 +43,24 @@ export default {
         },
 
         async filtre() {
-            let res = await axios.get('/filtre-forum', {
-                params: {
-                    title: this.title,
-                }
-            });
-            this.posts = res.data.all.quetions;
+            if (this.isQuestion) {
+                let res = await axios.get(`/filter-questions`, {
+                    params: {
+                        title: this.title,
+                        tag: this.posts.tag
+                    }
+                });
+                this.posts = res.data.all;
+            } else {
+                let res = await axios.get(`/filter-states`, {
+                    params: {
+                        title: this.title,
+                        tag: this.posts.tag
+                    }
+                });
+                this.posts = res.data.all;
+            }
         },
-
 
         async loadAnswerUser() {
             for(let i = 0; i < this.posts.length; i++) {
@@ -77,11 +85,11 @@ export default {
                 this.posts[i].user = this.postUsers[i];
             }
 
-            // if (this.posts[this.answers.length - 1].user.avatar != `` || this.posts.length == 0) {
-            //     this.loading = true;
-            // } else {
-            //     this.loading = false;
-            // }
+            if (this.posts[this.answers.length - 1].user.avatar != `` || this.posts.length == 0) {
+                this.loading = true;
+            } else {
+                this.loading = false;
+            }
         },
 
         lang() {
@@ -154,11 +162,6 @@ export default {
                 <div class="cont-search">
                     <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search" v-model="title">
                 </div>
-                <select class="sort-select form-select" name="sort" id="sort">
-                    <option selected>Сортировать</option>
-                    <option value="1">Новые</option>
-                    <option value="-1">Старые</option>
-                </select>
             </div>
             <button class="btn btn-outline-primary px-4" @click="filtre">Найти</button>
         </div>
@@ -181,13 +184,13 @@ export default {
                     <h2 class="title">{{ post.title }}</h2>
                     <p class="description">{{ post.descriptions }}</p>
                 </div>
-                <div class="decided" v-if="post.Decided">
+                <div class="decided" v-if="post.is_solved">
                     <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'" alt="Решён"><span
                         class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>
             <div class="answer">
-                <a :href="`/QuestionItem?id=` + post.id + `&question=${ post.question }`"><button><img
+                <a :href="`/QuestionItem?id=` + post.id + `&question=${post.question}`"><button><img
                 :src="'src/assets/comments.svg'" alt=""><span>{{ post.answers }}</span>Ответов</button></a>
             </div>
         </div>
@@ -283,7 +286,6 @@ a {
     height: 60px;
 
     display: flex;
-    justify-content: space-between;
 
     margin-bottom: 30px;
 

@@ -44,15 +44,13 @@ export default {
                         <h5>{{ item.descriptions }}</h5>
                     </div>
                     <div class="info">
-                        <p>{{ subs }} подписчиков</p>
-                        <p>{{ date }}</p>
-                        <p>{{ view }} просмотров</p>
+                        <p>{{ item.date }}</p>
                     </div>
                 </div>
                 <div class="ans_check">
                     <div class="d-flex flex-column check">
                         <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
-                        <p :class="isCheck_class">{{ answerCount }}</p>
+                        <p :class="isCheck_class">{{ item.answerCount }}</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
                     <a :href="`/StateItem?id=` + item.id + `&question=` + item.question" class="answ"><button>Ответить</button></a>

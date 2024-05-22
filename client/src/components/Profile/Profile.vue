@@ -98,11 +98,9 @@ export default {
                     <li v-if="user.facebook">Мой Facebook: {{ user.facebook }}</li>
                     <li v-if="user.github">Мой GitHub: <a :href='user.github' target="_blank">{{ user.github }}</a></li>
                 </ul>
-                <p v-if="this.user.about != ''" class="fs-5"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
+                <p v-if="this.user.about != ''" class="fs-5 abobus"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
                 <p v-if="this.user.interesting != ''"><span  v-if="this.user.interestings != ''" class="fw-bold">Мои интересы: </span></p>
-                <ul class="fs-5 interes"  v-if="this.user.interestings != ''">
-                    <li class="interes">{{ user.interestings }}</li>
-                </ul>
+                <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
             </div>
         </div>
     </div>
@@ -255,6 +253,7 @@ body {
 .about p {
     font-size: 26px;
     margin: 5px 0px;
+    word-break: break-all !important;
 }
 
 .about img {
