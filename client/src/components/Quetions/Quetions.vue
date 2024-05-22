@@ -34,7 +34,7 @@ export default {
         },
 
         async filtre() {
-            let res = await axios.get('/filtre-states', {
+            let res = await axios.get('/filtre-questions', {
                 params: {
                     title: this.title,
                     author: this.author,
@@ -70,9 +70,9 @@ export default {
                         <div class="img-select">
                             <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                             <select class="form-select form-1 " v-model="dificulty">
-                                <option value="Легкие" selected>Лёгкие</option>
-                                <option value="Средние">Средние</option>
-                                <option value="Сложные">Сложные</option>
+                                <option value="Простой" selected>Лёгкие</option>
+                                <option value="Средний">Средние</option>
+                                <option value="Сложный">Сложные</option>
                                 <option value="false">Без фильтров</option>
                             </select>
                         </div>
