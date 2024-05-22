@@ -9,7 +9,7 @@ export default {
 
             ],
 
-            plusImg: 'src/assets/plus.svg',
+            plusImg: 'src/assets/Forum/plus.svg',
 
             titleLang: ``,
             imageLang: ``,
@@ -152,7 +152,7 @@ export default {
         <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
             <div class="sort-inside d-flex flex-row gap-3 align-items-center">
                 <div class="cont-search">
-                    <img width="30" :src="'src/assets/search.svg'" alt=""><input class="search" type="search" v-model="title">
+                    <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search" v-model="title">
                 </div>
                 <select class="sort-select form-select" name="sort" id="sort">
                     <option selected>Сортировать</option>
