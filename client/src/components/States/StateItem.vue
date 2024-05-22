@@ -173,7 +173,7 @@ export default {
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a :href="`#/Profile?id=${userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                        <a :href="`#/Profile?id=${userNow.id_u}`"><span class="name">{{ userNow.username }}</span></a>
                     </div>
                 </div>
             </div>
@@ -207,9 +207,8 @@ export default {
                     </div>
                 </div>
                 <div class="content p-2" v-else>
-                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
-                </h2>
-            </div>
+                    <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
+                </div>
             </div>
         </div>
 

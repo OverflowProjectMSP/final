@@ -11,7 +11,7 @@ export default {
 
             titleLang: ``,
             imageLang: ``,
-            
+
             isQuestion: false,
 
             question: [],
@@ -20,6 +20,7 @@ export default {
             postUsers: [],
 
             title: ``,
+            dificulty: 'false',
         }
     },
     mounted() {
@@ -34,7 +35,7 @@ export default {
                     tag: this.$route.query.lang,
                 }
             });
-            if(this.isQuestion) {
+            if (this.isQuestion) {
                 this.posts = res.data.all.questions;
             } else {
                 this.posts = res.data.all.states;
@@ -47,7 +48,9 @@ export default {
                 let res = await axios.get(`/filter-questions`, {
                     params: {
                         title: this.title,
-                        tag: this.posts.tag
+                        tag: this.posts.tag,
+                        dificulty: this.dificulty,
+                        author: ``,
                     }
                 });
                 this.posts = res.data.all;
@@ -55,7 +58,8 @@ export default {
                 let res = await axios.get(`/filter-states`, {
                     params: {
                         title: this.title,
-                        tag: this.posts.tag
+                        tag: this.posts.tag,
+                        author: ``,
                     }
                 });
                 this.posts = res.data.all;
@@ -63,7 +67,7 @@ export default {
         },
 
         async loadAnswerUser() {
-            for(let i = 0; i < this.posts.length; i++) {
+            for (let i = 0; i < this.posts.length; i++) {
                 let user = await this.loadUsers(this.posts[i]);
                 this.postUsers.push(user)
             };
@@ -93,50 +97,50 @@ export default {
         },
 
         lang() {
-            switch(this.$route.query.lang) {
+            switch (this.$route.query.lang) {
                 case 'go':
                     this.titleLang = 'Golang';
                     this.imageLang = 'golang';
-                break;
+                    break;
                 case 'javascript':
                     this.titleLang = 'JavaScript';
                     this.imageLang = 'js';
-                break;
+                    break;
                 case 'java':
                     this.titleLang = 'Java';
                     this.imageLang = 'java';
-                break;
+                    break;
                 case 'cs':
                     this.titleLang = 'C#';
                     this.imageLang = 'cs';
-                break;
+                    break;
                 case 'python':
                     this.titleLang = 'Python';
                     this.imageLang = 'python';
-                break;
+                    break;
                 case 'php':
                     this.titleLang = 'PHP';
                     this.imageLang = 'php';
-                break;
+                    break;
                 case 'cpp':
                     this.titleLang = 'C++';
                     this.imageLang = 'cpp';
-                break;
+                    break;
                 case 'ruby':
                     this.titleLang = 'Ruby';
                     this.imageLang = 'ruby';
-                break;
+                    break;
                 case 'kotlin':
                     this.titleLang = 'Kotlin';
                     this.imageLang = 'kotlin';
-                break;
+                    break;
                 case 'typescript':
                     this.titleLang = 'TypeScript';
                     this.imageLang = 'ts';
-                break;
-                default: 
+                    break;
+                default:
                     this.titleLang = this.$route.query.lang;
-                break;
+                    break;
             }
         }
     }
@@ -151,26 +155,36 @@ export default {
                 <p>{{ titleLang }}</p>
             </div>
             <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" :src="plusImg"><a href="/Quetion">
-                Создать вопрос</a></button>
+                    Создать вопрос</a></button>
             <button class="create-post" v-else><img class="plus-icon" :src="plusImg"><a href="/NewState">
-                Создать статью</a></button>
+                    Создать статью</a></button>
         </div>
     </div>
     <div class="contant-post">
         <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
             <div class="sort-inside d-flex flex-row gap-3 align-items-center">
                 <div class="cont-search">
-                    <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search" v-model="title">
+                    <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search"
+                        v-model="title">
+                </div>
+                <div class="d-flex">
+                    <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
+                    <select class="form-select form-1 " v-model="dificulty">
+                        <option value="Простой" selected>Лёгкие</option>
+                        <option value="Средний">Средние</option>
+                        <option value="Сложный">Сложные</option>
+                        <option value="false">Без фильтров</option>
+                    </select>
                 </div>
             </div>
             <button class="btn btn-outline-primary px-4" @click="filtre">Найти</button>
         </div>
         <!-- <div class="hr"></div> -->
         <div class="ancet d-flex mb-3" style="display: flex; gap: 40px;">
-            <h5 role="button" class="mb-0" :class="{'border-bottom border-2 border-dark fw-semibold': isQuestion}" 
-            @click="loadForum">Вопросы</h5>
-            <h5 role="button" class="mb-0" :class="{'border-bottom border-2 border-dark fw-semibold': !isQuestion}" 
-            @click="loadForum">Статьи</h5>
+            <h5 role="button" class="mb-0" :class="{ 'border-bottom border-2 border-dark fw-semibold': isQuestion }"
+                @click="loadForum">Вопросы</h5>
+            <h5 role="button" class="mb-0" :class="{ 'border-bottom border-2 border-dark fw-semibold': !isQuestion }"
+                @click="loadForum">Статьи</h5>
         </div>
 
         <div class="post" v-for="post in posts">
@@ -185,13 +199,13 @@ export default {
                     <p class="description">{{ post.descriptions }}</p>
                 </div>
                 <div class="decided" v-if="post.is_solved">
-                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'" alt="Решён"><span
-                        class="hover-hidden">Вопрос решён</span></div>
+                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'"
+                            alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>
             <div class="answer">
                 <a :href="`/QuestionItem?id=` + post.id + `&question=${post.question}`"><button><img
-                :src="'src/assets/comments.svg'" alt=""><span>{{ post.answers }}</span>Ответов</button></a>
+                            :src="'src/assets/comments.svg'" alt=""><span>{{ post.answers }}</span>Ответов</button></a>
             </div>
         </div>
 
