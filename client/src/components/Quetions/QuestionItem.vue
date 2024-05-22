@@ -144,7 +144,7 @@ export default {
 
 <template>
     <div class="container mb-4">
-        <div class="content-1">
+        <div class="content-1">+
             <div class="account justify-content-between">
                 <div class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
