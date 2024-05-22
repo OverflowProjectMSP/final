@@ -119,7 +119,7 @@ def is_solved(id, isS):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         
-        cursor.execute(f"UPDATE questions SET is_solved=$${isS}$$")
+        cursor.execute(f"UPDATE questions SET is_solved=$${isS}$$ WHERE id=$${id}$$")
         pg.commit()
 
         logging.info('Информаация о решенности вопроса обновлена')
@@ -222,6 +222,7 @@ def session__():
 @app.route('/is-solved', methods=['PUT'])
 def is_s():
     response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
 
-    is_solved(request.args.get('id'), request.args.get('is_solved'))
+    is_solved(post_data.get('id'), post_data.get('is_solved'))
     return  jsonify(response_object)

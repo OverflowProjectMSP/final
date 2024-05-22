@@ -900,7 +900,7 @@ def add_a():
     post_data = request.get_json()
     text = post_data.get('text')
 
-    if post_data.get('q'):
+    if post_data.get('q') == 'true':
         response_object['all'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
         return jsonify(response_object)
     response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
