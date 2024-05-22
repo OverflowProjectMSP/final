@@ -107,6 +107,36 @@ def helper(phone, email, msg, id_u):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
+def is_solved(id, isS):
+    try: 
+        pg = psycopg2.connect(f"""
+            host=localhost
+            dbname=postgres
+            user=postgres
+            password={os.getenv('PASSWORD_PG')}
+            port={os.getenv('PORT_PG')}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        
+        cursor.execute(f"UPDATE questions SET is_solved=$${isS}$$")
+        pg.commit()
+
+        logging.info('Информаация о решенности вопроса обновлена')
+        return_data = 'ok'
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+    
+
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -188,3 +218,10 @@ def session__():
         logging.info('Пользователь не зашел в аккаунт')
         return jsonify({'status': 'success', 'all': 'false'})
 
+
+@app.route('/is-solved', methods=['PUT'])
+def is_s():
+    response_object = {'status': 'success'} #БаZа
+
+    is_solved(request.args.get('id'), request.args.get('is_solved'))
+    return  jsonify(response_object)

@@ -31,8 +31,8 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
-            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat())
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
+            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), True)
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")   
             # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
             return_data = "Вопрос добавлен"
