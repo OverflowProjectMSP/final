@@ -129,7 +129,6 @@ export default {
         async solveQuestion(is) {
             await axios.put(`/is-solved`, {
                 id: this.$route.query.id,
-                q: true,
                 is_solved: is,
             });
         },
