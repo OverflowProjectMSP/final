@@ -15,11 +15,11 @@ logging.info("others.py have connected")
 def chat(id, time, msg):
     try: 
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -47,11 +47,11 @@ def chat(id, time, msg):
 def show_avatar(id):
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -80,11 +80,11 @@ def show_avatar(id):
 def helper(phone, email, msg, id_u):
     try:
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -225,4 +225,4 @@ def is_s():
     post_data = request.get_json()
 
     is_solved(post_data.get('id'), post_data.get('is_solved'))
-    return  jsonify(response_object)
+    return  jsonify(response_object) 
