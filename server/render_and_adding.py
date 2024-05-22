@@ -31,8 +31,8 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
-            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat())
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
+            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), True)
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")   
             # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
             return_data = "Вопрос добавлен"
@@ -900,7 +900,7 @@ def add_a():
     post_data = request.get_json()
     text = post_data.get('text')
 
-    if post_data.get('q'):
+    if post_data.get('q') == 'true':
         response_object['all'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
         return jsonify(response_object)
     response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
