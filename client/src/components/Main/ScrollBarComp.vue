@@ -8,7 +8,7 @@ export default {
                 {
                     name: `Суров Константин`,
                     role: `Тимлид/Старший Бэкенд разработчик`,
-                    imageProfileDS: `kosty-py.png`,
+                    imageProfileDS: `kostya.jpg`,
                     dsProfile: `kosty_py`
                 },
                 {
