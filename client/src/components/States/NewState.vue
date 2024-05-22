@@ -20,11 +20,19 @@ export default {
     methods: {
         async addState() {
             // if (this.form.details.length >= 20 && this.form.descriptions > 3 && this.form.tag != '') {
-                await axios.post('/new-state', {
-                    form: this.form
-                });
+            let res = await axios.post('/new-state', {
+                form: this.form
+            });
+            console.log(res.data.res);
+            if (res.data.res == 'Статья добавлена'){
+                console.log(this.error);
                 this.error = ``;
                 this.$router.push('/States')
+                return;
+            }
+            console.log(this.error);
+            this.error = res.data.res;
+            return;
             // } else {
             //     this.error = `Введите больше информации`;
             // };

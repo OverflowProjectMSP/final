@@ -8,7 +8,7 @@ export default {
             good: `Вопрос готов для предпросмотра.`,
             nogood: `Заполните все поля корректно`,
             greenlabel: true,
-            color: `green`,
+            color: `red`,
             language: ``,
             error: '',
 
@@ -22,10 +22,16 @@ export default {
     },
     methods: {
         async addQuestion() {
-            await axios.post('/new-question', {
+            let res = await axios.post('/new-question', {
                 form: this.form,
             });
-            this.$router.push('/Quetions')
+            if (res.data.res == 'Вопрос добавлен'){
+                this.error=''
+                this.$router.push('/Quetions')
+                return;
+            }
+            this.error = 'Такой вопрос уже существует'
+            return;
         },
     }
 }
