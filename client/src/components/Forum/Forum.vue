@@ -167,7 +167,7 @@ export default {
                     <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search"
                         v-model="title">
                 </div>
-                <div class="d-flex">
+                <div class="d-flex" v-if='this.isQuestion'>
                     <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select form-1 " v-model="dificulty">
                         <option value="Простой" selected>Лёгкие</option>
