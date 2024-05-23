@@ -114,7 +114,7 @@ export default {
                 this.answers[i].user = this.commentUser[i];
             }
 
-            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
@@ -185,14 +185,16 @@ export default {
                 <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
             </div>
         </div>
-        <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
-        <div class="d-flex justify-content-center" v-if="!this.loading">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden text-center z-10">Loading...</span>
+        <div v-if="!this.loading && this.answers.length != 0">
+            <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden text-center z-10">Loading...</span>
+                </div>
             </div>
         </div>
 
-        <div v-if="this.loading">
+        <div v-if="this.loading && this.answers.length != 0">
             <div class="content-2 mt-2" v-for="answer in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
