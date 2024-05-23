@@ -96,7 +96,7 @@ export default {
         async checkUser() {
             let res = await axios.get('/check', {
                 params: {
-                    id: this.questionInfo.id_u
+                    id: this.userCreater.id
                 }
             });
             this.isCheck = Boolean(res.data.isEdit);
@@ -146,14 +146,14 @@ export default {
     <div class="container mb-4">
         <div class="content-1">+
             <div class="account justify-content-between">
-                <div class="creator-info d-flex flex-row align-items-center gap-3">
+                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`#/Profile?id=${userCreater.id}`">
                     <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
                             <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
                         </div>
                     </div>
-                </div>
+                </a>
                 <div class="action-select" v-if="isCheck">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
