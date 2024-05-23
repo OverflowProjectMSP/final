@@ -11,5 +11,8 @@ import router from './router'
 const app = createApp(App)
 
 app.use(router)
-
 app.mount('#app')
+
+function print(s){
+    console.log(s)
+}

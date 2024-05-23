@@ -30,8 +30,9 @@ export default {
 
     mounted() {
         this.loadState();
-        this.checkUser();
         this.getNowUser();
+        this.checkUser();
+
     },
     
     methods: {
@@ -51,6 +52,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.states);
+            this.checkUser();
             if (this.answers.length!=0){
                 for(let i = 0; i < this.answers.length; i++) {
                     let user = await this.loadUsers(this.answers[i]);
@@ -66,6 +68,7 @@ export default {
                     id: item.id_u,
                 }
             });
+            console.log(item)
             return res.data.all;
         },
 
@@ -108,7 +111,7 @@ export default {
                     id: this.userCreater.id,
                 }
             });
-            this.isCheck = Boolean(res.data.isEdit);
+
         },
 
         v_For1() {
@@ -148,7 +151,7 @@ export default {
                         </div>
                     </div>
                 </a>
-                <div class="action-select" v-if="isCheck">
+                <div class="action-select" v-if="this.isCheck == 'true'">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">

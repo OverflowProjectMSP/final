@@ -49,6 +49,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.questionInfo);
+            this.checkUser();
             for (let i = 0; i < this.answers.length; i++) {
                 let user = await this.loadUsers(this.answers[i]);
                 this.answerUser.push(user)
@@ -99,7 +100,7 @@ export default {
                     id: this.userCreater.id
                 }
             });
-            this.isCheck = Boolean(res.data.isEdit);
+            this.isCheck = res.data.isEdit;
         },
         async getNowUser() {
             let res = await axios.get('/session');
@@ -154,7 +155,7 @@ export default {
                         </div>
                     </div>
                 </a>
-                <div class="action-select" v-if="isCheck">
+                <div class="action-select" v-if="this.isCheck == 'true'">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
@@ -193,11 +194,11 @@ export default {
                     <div class="description mt-3">
                         <p>{{ answer.text }}</p>
                     </div>
-                    <div class="btn-group">
+                    <!-- <div class="btn-group">
                         <div class="left">
                             <button class="comm-add btgr">Добавить комментарий</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="content p-2" v-if="this.answers.length == 0">
