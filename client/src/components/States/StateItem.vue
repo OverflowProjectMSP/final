@@ -269,7 +269,7 @@ img {
 }
 
 .accountIcon {
-    border-radius: 50px;
+    border-radius: 50px !important;
     border: 2px solid #1d1d1d;
 }
 
