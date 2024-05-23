@@ -12,28 +12,28 @@ export default {
     data() {
         return {
             states: [
-                // {
-                //     discriptions: `VUE JS IS PARASHА??`,
-                //     tag: 'Python',
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     complexity: 'Средне',
-                //     id: 0,
-                //     question: false,            
-                // },
-                // {
-                //     discriptions: `VUE JS IS PARASHА??`,
-                //     tag: 'Python',
-                //     subscribers: 50,
-                //     hours: 43,
-                //     views: 43,
-                //     answers: 423,
-                //     complexity: 'Средне',
-                //     id: 0,
-                //     question: false,            
-                // },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
+                {
+                    discriptions: `VUE JS IS PARASHА??`,
+                    tag: 'Python',
+                    subscribers: 50,
+                    hours: 43,
+                    views: 43,
+                    answers: 423,
+                    complexity: 'Средне',
+                    id: 0,
+                    question: false,            
+                },
             ],
             Show: false,
             tag: false,
@@ -189,9 +189,9 @@ h4{
     /* display: flex; */
 }
 
-.con a {
+/* .con a {
     width: 100px !important;
-}
+} */
 
 .contain{
     width: 5%;
@@ -222,6 +222,16 @@ h4{
         transition: all 0.5s;
     }
 }
+
+/* @media (min-width: 1900px) {
+    .con {
+        width: 1300px
+    }
+    
+    .con a {
+        width: 1000px !important;
+    }
+} */
 
 @media (max-width: 900px){
 

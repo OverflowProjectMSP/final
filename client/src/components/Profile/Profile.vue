@@ -104,7 +104,7 @@ export default {
                 <p v-if="this.user.interesting != ''"><span  v-if="this.user.interestings != ''" class="fw-bold">Мои интересы: </span></p>
                 <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
             </div>
-        </div>
+        </div> 
     </div>
 
     <div class="container d-flex align-items-center flex-column">
@@ -117,10 +117,10 @@ export default {
         </div>
         <div class="scroll" v-if='this.isQ'>
             <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
-                <VidUserComp :item="quetion" />
+                <VidUserComp :item="quetion" /> 
             </a>
         </div>
-        <div class="scroll" v-else>
+        <div class="scroll" v-else> 
             <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
                 <VidUserComp :item="state"/>
             </a>

@@ -31,7 +31,7 @@ export default {
     mounted() {
         this.loadState();
         this.checkUser();
-        thid.getNowUser();
+        this.getNowUser();
     },
     
     methods: {
@@ -51,11 +51,13 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.states);
-            for(let i = 0; i < this.answers.length; i++) {
-                let user = await this.loadUsers(this.answers[i]);
-                this.commentUser.push(user)
-            };
-            this.v_For1();
+            if (this.answers.length!=0){
+                for(let i = 0; i < this.answers.length; i++) {
+                    let user = await this.loadUsers(this.answers[i]);
+                    this.commentUser.push(user)
+                };
+                this.v_For1();
+            }
         },
 
         async loadUsers(item) {
@@ -271,7 +273,7 @@ img {
 }
 
 .accountIcon {
-    border-radius: 50px;
+    border-radius: 50px !important;
     border: 2px solid #1d1d1d;
 }
 
