@@ -44,15 +44,15 @@ export default {
                     </div>
                     <div class="info">
                         <!-- <p>{{ quetion.subscribers }} подписчиков</p> -->
-                        <p>{{ quetion.date }}</p>
+                        <p>{{ quetion.data }}</p>
                         <!-- <p>{{ quetion.views }} просмотров</p> -->
                     </div>
                 </div>
                 <div class="ans_check">
                     <div class="d-flex flex-column check">
                         <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
-                        <p :class="isCheck_class">{{ quetion.answers }}</p>
-                        <p :class="isCheck_class">Комментарий (-ев)</p>
+                        <p :class="isCheck_class">{{ quetion.acnt }}</p>
+                        <p :class="isCheck_class">Ответа (-ов)</p>
                     </div>
                     <a :href="`/QuestionItem?id=` + quetion.id + `&question=` + true" class="answ"><button >Ответить</button></a>
                 </div>
