@@ -224,6 +224,11 @@ a {
     margin-right: 30px;
 }
 
+
+.contant-post {
+    height: 338px;
+}
+
 .container-one {
     display: flex;
     justify-content: space-between;
@@ -527,7 +532,15 @@ a {
     .sort-inside input {
         width: 100%;
     }
+
+    .create-post {
+        font-size: 18px;
+        width: 200px;
+        height: 40px;
+    }
 }
+
+
 
 @media (max-width: 550px) {
     .description {
