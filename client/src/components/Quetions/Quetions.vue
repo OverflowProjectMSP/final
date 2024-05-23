@@ -319,10 +319,6 @@ h4 {
     .form-2 {
         width: 503px !important;
     }
-
-    .selects img {
-        /* margin-right: -20px; */
-    }
 }
 
 @media(max-width: 600px) {
