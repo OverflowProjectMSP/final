@@ -117,7 +117,7 @@ export default {
         </div>
         <div class="scroll" v-if='this.isQ'>
             <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
-                <VidUserComp :item="quetion" />
+                <VidUserComp :item="quetion" /> 
             </a>
         </div>
         <div class="scroll" v-else> 
