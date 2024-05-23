@@ -108,6 +108,7 @@ def helper(phone, email, msg, id_u):
             return return_data
 
 def is_solved(id, isS):
+    print(id, isS)
     try: 
         pg = psycopg2.connect(f"""
             host=localhost
