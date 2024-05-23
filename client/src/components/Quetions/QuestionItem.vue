@@ -244,9 +244,10 @@ img {
 }
 
 .accountIcon {
-    border-radius: 100% !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    border: 3px solid #1d1d1d;
 }
 
 /* CONTENT-1 */
