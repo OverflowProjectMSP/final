@@ -75,7 +75,10 @@ def render_questions():
         return_data = []
 
         for row in all_questions:
-            return_data.append(dict(row))
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${id}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            return_data.append(a)
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -361,7 +364,10 @@ def render_states():
         return_data = []
 
         for row in all_states:
-            return_data.append(dict(row))
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${id}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            return_data.append(a)
 
         logging.info('все статьи отображены')
     except (Exception, Error) as error:
@@ -395,7 +401,7 @@ def show_one(id, isQ):
             all_q = dict(cursor.fetchall()[0])
             
             all_asw = show_answers(True, id)
-
+            
 
             return_data = {
                 'question': all_q,
