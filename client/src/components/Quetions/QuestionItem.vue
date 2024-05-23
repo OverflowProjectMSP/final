@@ -243,6 +243,10 @@ img {
     user-select: none;
 }
 
+.accountIcon {
+    border-radius: 100% !important;
+}
+
 /* CONTENT-1 */
 
 @media (max-width: 768px) {

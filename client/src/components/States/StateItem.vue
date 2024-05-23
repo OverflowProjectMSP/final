@@ -223,6 +223,10 @@ export default {
 </template>
 
 <style scoped>
+.accountIcon {
+    border-radius: 100% !important;
+}
+
 img {
     user-select: none;
 }
