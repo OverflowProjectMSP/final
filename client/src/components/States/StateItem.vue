@@ -94,7 +94,6 @@ export default {
                 text: this.text,
             });
             this.text = ``;
-            this.loadState();
         },
         async deleteState() {
             await axios.delete('/delete', {

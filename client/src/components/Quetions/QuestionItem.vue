@@ -83,7 +83,6 @@ export default {
                 text: this.text,
             });
             this.text = ``;
-            this.loadQuestion();
         },
         async deleteQuestion() {
             await axios.delete('/delete', {
@@ -214,12 +213,13 @@ export default {
             </div>
         </div>
 
-        <div class="content-3">
+        <form class="content-3" @submit.prevent="addComment">
+        
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a :href="`#/Profile?id=${userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                        <a :href="`/Profile?id=${this.userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
                     </div>
                 </div>
             </div>
@@ -231,9 +231,9 @@ export default {
                 </div>
             </div>
             <div class="send-ans d-flex justify-content-end">
-                <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
+                <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
             </div>
-        </div>
+        </form>
 
     </div>
 </template>

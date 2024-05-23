@@ -226,7 +226,7 @@ a {
 
 
 .contant-post {
-    height: 338px;
+    min-height: 338px;
 }
 
 .container-one {
