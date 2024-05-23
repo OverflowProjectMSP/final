@@ -115,20 +115,24 @@ export default {
             </div>
             <p class="vse" @click="Olezha">пользователя</p>
         </div>
-        <div class="scroll" v-if='this.isQ'>
-            <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
-                <VidUserComp :item="quetion" /> 
-            </a>
+        <div v-if='this.isQ && this.questions.length != 0'>
+            <div class="scroll">
+                <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
+                    <VidUserComp :item="quetion" /> 
+                </a>
+            </div>
         </div>
-        <div class="scroll" v-else> 
-            <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
-                <VidUserComp :item="state"/>
-            </a>
+        <div v-else>
+            <div class="scroll"> 
+                <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
+                    <VidUserComp :item="state"/>
+                </a>
+            </div>
         </div>
-        <div class="content p-2" v-if="this.states.length == 0">
+        <div class="content p-2" v-if="this.states.length == 0 && !this.isQ">
             <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет статей</h2>
         </div>
-        <div class="content p-2" v-if="this.questions.length == 0">
+        <div class="content p-2" v-if="this.questions.length == 0 && this.isQ">
             <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет вопросов</h2>
         </div>
     </div>
@@ -169,7 +173,7 @@ body {
 
 .scroll {
     overflow: scroll;
-    height: 555px;
+    max-height: 555px;
     width: auto;
     margin-left: auto;
     margin-right: auto;
