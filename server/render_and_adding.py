@@ -76,7 +76,7 @@ def render_questions():
 
         for row in all_questions:
             a = dict(row)
-            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${id}$$")
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
             return_data.append(a)
 
@@ -365,7 +365,7 @@ def render_states():
 
         for row in all_states:
             a = dict(row)
-            cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${id}$$")
+            cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
             return_data.append(a)
 
