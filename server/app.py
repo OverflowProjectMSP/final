@@ -21,6 +21,10 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
+PASSWORD_PG = os.getenv('PASSWORD_PG')
+PORT_PG = os.getenv('PORT_PG')
+USER_PG = os.getenv('USER_PG')
+HOST_PG = os.getenv('HOST_PG')
 
 app = Flask(__name__)
 
