@@ -53,7 +53,7 @@ export default {
                     id: this.$route.query.id
                 }
             });
-            this.isCreator = Boolean(res.data.isEdit);
+            this.isCreator = res.data.isEdit;
         }
     },
 }
@@ -62,7 +62,7 @@ export default {
 
 <template>
     <div class="profile">
-        <a v-if="isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
+        <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
             alt="Настройки" class="il"></a>
         <div class="head">
             <div class="circle">
@@ -124,6 +124,12 @@ export default {
             <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
                 <VidUserComp :item="state"/>
             </a>
+        </div>
+        <div class="content p-2" v-if="this.states.length == 0">
+            <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет статей</h2>
+        </div>
+        <div class="content p-2" v-if="this.questions.length == 0">
+            <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет вопросов</h2>
         </div>
     </div>
 </template>

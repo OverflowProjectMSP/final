@@ -124,6 +124,9 @@ export default {
         </a>
     </div>
 </div>
+<div class="content p-2" v-if="this.states.length == 0">
+    <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
+</div>
 
 <model-wind v-if="Show" @CloseModal="CloseModal"/>
 

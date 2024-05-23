@@ -62,8 +62,10 @@ export default {
             <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
             <div class="all-inputs">
                 <div class="inputs">
-                    <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос" aria-label="First name">
-                    <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса" aria-label="Last name">
+                    <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос"
+                        aria-label="First name">
+                    <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса"
+                        aria-label="Last name">
                 </div>
                 <div class="button-select">
                     <div class="selects">
@@ -76,7 +78,7 @@ export default {
                                 <option value="false">Без фильтров</option>
                             </select>
                         </div>
-    
+
                         <select class="form-select form-2 me-2" v-model="tag">
                             <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
                             <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
@@ -97,7 +99,8 @@ export default {
                             <div class="contain" @click="OpenModal">
                                 <img src="../../assets/States/add.png" class="add">
                             </div>
-                            <button class="btn find-btn btn-outline-primary text-dark ms-4" @click="filtre">Найти</button>
+                            <button class="btn find-btn btn-outline-primary text-dark ms-4"
+                                @click="filtre">Найти</button>
                         </div>
                     </div>
                 </div>
@@ -105,19 +108,23 @@ export default {
         </div>
     </div>
     <div class="cont">
-    <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
-    <model-wind v-if="Show" @CloseModal="CloseModal" />
+        <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
+        <model-wind v-if="Show" @CloseModal="CloseModal" />
+    </div>
+    <div class="content p-2" v-if="this.quetions.length == 0">
+        <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
     </div>
 </template>
 
 <style scoped>
-.cont{
+.cont {
     overflow: scroll;
     height: 555px;
     width: auto;
     margin-left: auto;
     margin-right: auto;
 }
+
 a {
     text-decoration: none;
     color: #000;
@@ -130,7 +137,7 @@ a {
 
 .img-select {
     display: flex;
-    
+
 }
 
 .form-select {
@@ -330,7 +337,7 @@ h4 {
     .form-select {
         width: 300px !important;
     }
-    
+
     .form-2 {
         margin-left: 5px;
         width: 350px !important;

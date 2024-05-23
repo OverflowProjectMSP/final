@@ -159,7 +159,7 @@ export default {
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
-                            <li v-if="!this.questionInfo.is_solved"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос решён!</a></li>
+                            <li v-if="this.questionInfo.is_solved == 'false'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос решён!</a></li>
                             <li v-else><a class="dropdown-item" @click="solveQuestion(false)">Вопрос ещё не решён!</a></li>
                             <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
