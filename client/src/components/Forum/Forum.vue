@@ -45,20 +45,20 @@ export default {
 
         async filtre() {
             if (this.isQuestion) {
-                let res = await axios.get(`/filter-questions`, {
+                let res = await axios.get(`/filtre-questions`, {
                     params: {
                         title: this.title,
-                        tag: this.posts.tag,
+                        tag: this.$route.query.lang,
                         dificulty: this.dificulty,
                         author: ``,
                     }
                 });
                 this.posts = res.data.all;
             } else {
-                let res = await axios.get(`/filter-states`, {
+                let res = await axios.get(`/filtre-states`, {
                     params: {
                         title: this.title,
-                        tag: this.posts.tag,
+                        tag: this.$route.query.lang,
                         author: ``,
                     }
                 });
@@ -167,7 +167,7 @@ export default {
                     <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search"
                         v-model="title">
                 </div>
-                <div class="d-flex">
+                <div class="d-flex" v-if='this.isQuestion'>
                     <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select form-1 " v-model="dificulty">
                         <option value="Простой" selected>Лёгкие</option>
@@ -222,6 +222,11 @@ a {
 .contant-head {
     margin-left: 30px;
     margin-right: 30px;
+}
+
+
+.contant-post {
+    height: 338px;
 }
 
 .container-one {
@@ -527,7 +532,15 @@ a {
     .sort-inside input {
         width: 100%;
     }
+
+    .create-post {
+        font-size: 18px;
+        width: 200px;
+        height: 40px;
+    }
 }
+
+
 
 @media (max-width: 550px) {
     .description {
