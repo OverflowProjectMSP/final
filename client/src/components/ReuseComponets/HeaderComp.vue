@@ -57,8 +57,8 @@ export default {
     }
   },
   mounted() {
-    setTimeout(()=>{this.loadLogin();}, 3000 )
-    setTimeout(()=>{this.loadAvatar()}, 3000 )
+    this.loadLogin();
+    this.loadAvatar()
   }
 }
 
