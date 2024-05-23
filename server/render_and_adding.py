@@ -658,12 +658,14 @@ def show_answers(isQ, idO):
 def filtre_states(fil):
     filtrs = ''
     for i in fil:
-        if filtrs!='':
-            if i!='name' and i!='descriptions':
-                filtrs+=f' and {i}=$${fil[i]}$$'
-        else:
-            if i!='name' and i!='descriptions':
-                filtrs+=f'{i}=$${fil[i]}$$'
+        if fil[i] != '':
+            print(i)
+            if filtrs!='':
+                if i!='name' and i!='descriptions':
+                    filtrs+=f' and {i}=$${fil[i]}$$'
+            else:
+                if i!='name' and i!='descriptions':
+                    filtrs+=f'{i}=$${fil[i]}$$'
     try: 
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -675,14 +677,18 @@ def filtre_states(fil):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
-        ids = cursor.fetchall()
-        ors = ''
-        for i in ids:
-            if ors !='': ors+=f' or id_u=$${i[0]}$$'
-            else: ors+=f'id_u=$${i[0]}$$'
-        cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
-        print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
+        if fil['name'] == '': 
+            cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+            ids = cursor.fetchall()
+            ors = '('
+            for i in ids:
+                if ors !='(': ors+=f' or id_u=$${i[0]}$$'
+                else: ors+=f'id_u=$${i[0]}$$'
+            ors+=')'
+        else: ors = ''
+        if filtrs == '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors}''')
+        else: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+        print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
         q = cursor.fetchall()
         return_data = []
         for row in q:
@@ -704,12 +710,13 @@ def filtre_states(fil):
 def filtre_question(fil):
     filtrs = ''
     for i in fil:
-        if filtrs!='':
-            if i!='name' and i!='descriptions':
-                filtrs+=f' and {i}=$${fil[i]}$$'
-        else:
-            if i!='name' and i!='descriptions':
-                filtrs+=f'{i}=$${fil[i]}$$'
+        if fil[i] != '':
+            if filtrs!='':
+                if i!='name' and i!='descriptions':
+                    filtrs+=f' and {i}=$${fil[i]}$$'
+            else:
+                if i!='name' and i!='descriptions':
+                    filtrs+=f'{i}=$${fil[i]}$$'
     try: 
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -721,14 +728,18 @@ def filtre_question(fil):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
-        ids = cursor.fetchall()
-        ors = ''
-        for i in ids:
-            if ors !='': ors+=f' or id_u=$${i[0]}$$'
-            else: ors+=f'id_u=$${i[0]}$$'
-        cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
-        print(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and ({ors})''')
+        if fil['name'] == '': 
+            cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+            ids = cursor.fetchall()
+            ors = '('
+            for i in ids:
+                if ors !='(': ors+=f' or id_u=$${i[0]}$$'
+                else: ors+=f'id_u=$${i[0]}$$'
+            ors+=')'
+        else: ors = ''
+        if filtrs == '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors}''')
+        else: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+
         q = cursor.fetchall()
         return_data = []
         for row in q:

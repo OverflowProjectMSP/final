@@ -48,6 +48,7 @@ export default {
             this.answers = responce.data.all.answers;
 
             this.loadAnswerUser();
+            
         },
 
         async loadAnswerUser() {
@@ -143,11 +144,11 @@ export default {
     <div class="container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
-                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`#/Profile?id=${userCreater.id}`">
+                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile?id=${this.userCreater.id}`">
                     <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
                     <div class="name-ring">
                         <div>
-                            <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
+                            <a :href="`/Profile?id=${this.userCreater.id}`"><span class="name">{{ userCreater.username }}</span></a>
                         </div>
                     </div>
                 </a>
@@ -177,7 +178,7 @@ export default {
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a :href="`#/Profile?id=${userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                        <a :href="`/Profile?id=${this.userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
                     </div>
                 </div>
             </div>
@@ -205,7 +206,7 @@ export default {
                     <div class="account">
                         <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                         <div class="name-ring">
-                            <a :href="`/Profile?id=${answer.user.id_u}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
+                            <a :href="`/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
                         </div>
                     </div>
                     <div class="description mt-3">

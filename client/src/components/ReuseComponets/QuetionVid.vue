@@ -43,9 +43,9 @@ export default {
                         <h5>{{( quetion.descriptions) }}</h5>
                     </div>
                     <div class="info">
-                        <p>{{ quetion.subscribers }} подписчиков</p>
+                        <!-- <p>{{ quetion.subscribers }} подписчиков</p> -->
                         <p>{{ quetion.date }}</p>
-                        <p>{{ quetion.views }} просмотров</p>
+                        <!-- <p>{{ quetion.views }} просмотров</p> -->
                     </div>
                 </div>
                 <div class="ans_check">

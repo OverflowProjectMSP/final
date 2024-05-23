@@ -147,7 +147,7 @@ export default {
     <div class="container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
-                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`#/Profile?id=${userCreater.id}`">
+                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile?id=${this.userCreater.id}`">
                     <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
@@ -186,7 +186,7 @@ export default {
                     <div class="account">
                         <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                         <div class="name-ring">
-                            <a :href="`/Profile?id=${answer.user.id_u}`">
+                            <a :href="`/Profile?id=${answer.user.id}`">
                                 <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                             </a>
                         </div>
