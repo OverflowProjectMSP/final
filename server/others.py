@@ -225,4 +225,4 @@ def is_s():
     post_data = request.get_json()
 
     is_solved(post_data.get('id'), post_data.get('is_solved'))
-    return  jsonify(response_object)
+    return  jsonify(response_object) 

@@ -36,7 +36,7 @@ export default {
                 // },
             ],
             Show: false,
-            tag: ``,
+            tag: false,
 
             title: ``,
             author: ``,
@@ -117,12 +117,12 @@ export default {
 
 <!-- Див с виджетами -->
 <div class="conr">
-<div class="con mt-0" v-for="item in states">
-<a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
-    <!-- <vid-comp :item="item" role="button" /> -->
-    <vidjet-comp :item="item"    />
-</a>
-</div>
+    <div class="con" v-for="item in states">
+        <a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
+            <!-- <vid-comp :item="item" role="button" /> -->
+            <vidjet-comp :item="item"    />
+        </a>
+    </div>
 </div>
 
 <model-wind v-if="Show" @CloseModal="CloseModal"/>
@@ -135,11 +135,14 @@ export default {
     color: black;
 }
 .conr{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     overflow: scroll; 
     height: 555px;
-    width: auto;
+    /* width: auto;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; */
 }
 a {
     text-decoration: none;
@@ -181,8 +184,15 @@ h4{
     border-radius: 10px;
 }
 .con{
-    justify-content: start;
+    width: 750px;
+    /* justify-content: start; */
+    /* display: flex; */
 }
+
+.con a {
+    width: 100px !important;
+}
+
 .contain{
     width: 5%;
     height: 5%;

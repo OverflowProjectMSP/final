@@ -25,8 +25,8 @@ export default {
         this.check();
     },
     methods: {
-        async allByHe() {
-            this.isQ = !this.isQ
+        async allByHe(dick) {
+            this.isQ = dick;
             let res = await axios.get('/show-all-by-user', {
                 params: {
                     id: this.$route.query.id
@@ -35,10 +35,8 @@ export default {
             
             if(this.isQ) {
                 this.questions = res.data.all.questions;
-                // this.isQ = true;
-            } else if(!this.isQ) {
+            } else {
                 this.states = res.data.all.states;
-                // this.isQ = false;
             }
         },
         async loadUser() {
@@ -55,7 +53,7 @@ export default {
                     id: this.$route.query.id
                 }
             });
-            this.isCreator = res.data.isEdit;
+            this.isCreator = Boolean(res.data.isEdit);
         }
     },
 }
@@ -72,6 +70,10 @@ export default {
             </div>
 
             <p class="nikname t-alig-c">@{{ user.username }}</p>
+            <div class="loc-tel">
+                <p class="location">{{ user.city }}</p>
+                <p class="telephone">{{ user.phonenumber }}</p>
+            </div>
             <div class="table t-alig-c">
                 <div class="cell">
                     <p class="num">{{ user.qcnt }}</p>
@@ -108,8 +110,8 @@ export default {
     <div class="container d-flex align-items-center flex-column">
         <div class="q-user head-1 mb-3 mt-1 user-select-none">
             <div class=" d-flex flex-row align-items-center gap-4">
-                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe">Вопросы</p>/
-                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe">статьи</p>
+                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe(true)">Вопросы</p>/
+                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe(false)">статьи</p>
             </div>
             <p class="vse" @click="Olezha">пользователя</p>
         </div>
@@ -214,6 +216,21 @@ body {
     font-weight: 400;
 }
 
+
+.loc-tel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loc-tel p {
+    margin: 0;
+    font-size: 24px;
+}
+
+.telephone {
+    margin-bottom: 40px !important;
+}
 
 /* табличка */
 .table {

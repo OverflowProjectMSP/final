@@ -85,6 +85,7 @@ export default {
                             <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
                             <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
                             <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
+                            <option value="go"><img src="./assets/js.jpg" class="image">Golang</option>
                             <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
                         </select>
                     </div>

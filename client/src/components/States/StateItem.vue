@@ -31,8 +31,7 @@ export default {
     mounted() {
         this.loadState();
         this.checkUser();
-        // thid.getNowUser();
-        
+        thid.getNowUser();
     },
     
     methods: {
@@ -115,7 +114,7 @@ export default {
                 this.answers[i].user = this.commentUser[i];
             }
 
-            if (this.answers[this.answers.length - 1].user.avatar != `` && this.answers.length == 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
@@ -173,7 +172,7 @@ export default {
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
                     <div>
-                        <a :href="`#/Profile?id=${userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                        <a :href="`#/Profile?id=${userNow.id_u}`"><span class="name">{{ userNow.username }}</span></a>
                     </div>
                 </div>
             </div>
@@ -206,10 +205,9 @@ export default {
                         <p >{{ answer.text }}</p>
                     </div>
                 </div>
-                <div class="content p-2" v-else>
-                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
-                </h2>
-            </div>
+                <div class="content p-2" v-if="this.answers.length == 0">
+                    <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
+                </div>
             </div>
         </div>
 
