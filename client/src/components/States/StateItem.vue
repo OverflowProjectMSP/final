@@ -134,6 +134,10 @@ export default {
             });
             this.userNow = res.data.all;
         },
+
+        fixN(text) {
+            text.replaceAll("\n", '<br>')
+        },
     },
 }
 
@@ -162,13 +166,13 @@ export default {
                 </div>
             </div>
             <div class="title">
-                <h3>{{ states.discriptions }}</h3>
+                <h3 v-html="fixN(states.discriptions)"></h3>
             </div>
             <div class="description">
-                <p>{{ states.details }}</p>
+                <p v-html="fixN(states.details)"></p>
             </div>
             <div class="about">
-                <p>{{ states.data }}</p>
+                <p v-html="fixN(states.data)"></p>
             </div>
         </div>
 
@@ -209,7 +213,7 @@ export default {
                         </div>
                     </div>
                     <div class="description mt-3">
-                        <p >{{ answer.text }}</p>
+                        <p v-html="fixN(answer.text)"></p>
                     </div>
                 </div>
                 <div class="content p-2" v-if="this.answers.length == 0">

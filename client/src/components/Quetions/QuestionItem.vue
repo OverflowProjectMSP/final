@@ -132,6 +132,10 @@ export default {
                 is_solved: is,
             });
         },
+
+        fixN(text) {
+            text.replaceAll("\n", '<br>')
+        },
     },
     mounted() {
         this.loadQuestion();
@@ -167,11 +171,11 @@ export default {
                 </div>
             </div>
             <div class="title">
-                <h3>{{ questionInfo.descriptions }}</h3>
+                <h3 v-html="fixN(questionInfo.descriptions)"></h3>
             </div>
             <div class="description">
-                <p>{{ questionInfo.details }}</p>
-                <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt="">
+                <p v-html="fixN(questionInfo.details)"></p>
+                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
             </div>
             <div class="about">
                 <p>{{ questionInfo.data }}</p>
@@ -191,7 +195,7 @@ export default {
                         </div>
                     </div>
                     <div class="description mt-3">
-                        <p>{{ answer.text }}</p>
+                        <p v-html="fixN(answer.text)"></p>
                     </div>
                     <!-- <div class="btn-group">
                         <div class="left">
