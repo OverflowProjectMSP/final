@@ -213,6 +213,10 @@ export default {
 </template>
 
 <style scoped>
+.contant-post {
+    min-height: 43.5vh !important;
+}
+
 a {
     text-decoration: none !important;
     color: #fff;

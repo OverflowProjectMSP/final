@@ -10,7 +10,7 @@ export default {
             form: {
                 descriptions: ``,
                 details: ``,
-                tag: ``,   
+                tag: ``,
             },
 
             error: ``,
@@ -24,7 +24,7 @@ export default {
                 form: this.form
             });
             console.log(res.data.res);
-            if (res.data.res == 'Статья добавлена'){
+            if (res.data.res == 'Статья добавлена') {
                 console.log(this.error);
                 this.error = ``;
                 this.$router.push('/States')
@@ -55,23 +55,27 @@ export default {
         <h4>Текст статьи</h4>
         <p class="transparent">Делайте что хотите, в ваших руках все инструменты!</p>
         <div class="string">
-            <div class="forms"> 
+            <div class="forms">
                 <div class="form1">
                     <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                        <option value="python">Python</option>
-                        <option value="java">Java</option>
-                        <option value="php">PHP</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="cpp">C++</option>
+                        <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
+                        <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
+                        <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
+                        <option value="php"><img src="./assets/js.jpg" class="image">PHP</option>
+                        <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
+                        <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
+                        <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
+                        <option value="go"><img src="./assets/js.jpg" class="image">Golang</option>
                     </select>
                 </div>
             </div>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;" v-model="form.details"></textarea>
+            <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;"
+                v-model="form.details"></textarea>
         </div>
         <div class="mb-3">
-</div>
+        </div>
     </div>
 
     <div class="row pt-5 block">
@@ -80,7 +84,7 @@ export default {
             <span class="text-danger" v-if="this.error">{{ error }}</span>
         </div>
     </div>
-    
+
 </template>
 
 <style scoped>

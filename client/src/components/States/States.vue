@@ -36,7 +36,7 @@ export default {
                 // },
             ],
             Show: false,
-            tag: ``,
+            tag: false,
 
             title: ``,
             author: ``,

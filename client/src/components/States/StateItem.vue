@@ -31,8 +31,7 @@ export default {
     mounted() {
         this.loadState();
         this.checkUser();
-        // thid.getNowUser();
-        
+        thid.getNowUser();
     },
     
     methods: {

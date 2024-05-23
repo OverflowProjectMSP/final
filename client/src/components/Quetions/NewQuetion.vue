@@ -25,8 +25,8 @@ export default {
             let res = await axios.post('/new-question', {
                 form: this.form,
             });
-            if (res.data.res == 'Вопрос добавлен'){
-                this.error=''
+            if (res.data.res == 'Вопрос добавлен') {
+                this.error = ''
                 this.$router.push('/Quetions')
                 return;
             }
@@ -86,8 +86,8 @@ export default {
                     <div class="input-group mb-3">
                         <textarea class="text-area text-box multi-line yy" data-val="true"
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
-                            name="info" cols="200" rows="3"
-                            style="border-color: #D3D3D3; border-radius: 5px;" v-model="form.details"></textarea>
+                            name="info" cols="200" rows="3" style="border-color: #D3D3D3; border-radius: 5px;"
+                            v-model="form.details"></textarea>
 
                     </div>
                 </div>
@@ -112,11 +112,15 @@ export default {
                     </div>
                     <div class="col-6">
                         <select class="form-select" v-model="form.tag">
-                            <option value="python">Python</option>
-                            <option value="java">Java</option>
-                            <option value="php">PHP</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="cpp">C++</option>
+                            <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
+                            <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
+                            <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
+                            <option value="php"><img src="./assets/js.jpg" class="image">PHP</option>
+                            <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
+                            <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
+                            <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
+                            <option value="go"><img src="./assets/js.jpg" class="image">Golang</option>
+                            <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
                         </select>
 
                     </div>
@@ -127,14 +131,14 @@ export default {
                     </div>
 
                 </div>
-                
+
                 <p class="error" :class="color">{{ error }}</p>
                 <!-- виджет -->
-                
+
             </div>
-               
-          
-                
+
+
+
         </form>
 
 
