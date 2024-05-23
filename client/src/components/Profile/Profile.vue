@@ -71,10 +71,10 @@ export default {
                 <img :src="user.avatar">
             </div>
 
-            <p class="nikname t-alig-c">@fffffffffff{{ user.username }}</p>
+            <p class="nikname t-alig-c">@{{ user.username }}</p>
             <div class="loc-tel">
-                <p class="location">Moscow</p>
-                <p class="telephone">+7 925 012 56</p>
+                <p class="location">{{ user.city }}</p>
+                <p class="telephone">{{ user.phonenumber }}</p>
             </div>
             <div class="table t-alig-c">
                 <div class="cell">
