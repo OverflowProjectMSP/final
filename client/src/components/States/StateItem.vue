@@ -136,7 +136,9 @@ export default {
         },
 
         fixN(text) {
-            text.replaceAll("\n", '<br>')
+            // if (text.includes("\n")){
+                return text.replaceAll("\n", "<br>");
+            // }
         },
     },
 }
@@ -166,13 +168,13 @@ export default {
                 </div>
             </div>
             <div class="title">
-                <h3 v-html="fixN(states.discriptions)"></h3>
+                <h3 v-html="fixN(this.states.descriptions)"></h3>
             </div>
             <div class="description">
-                <p v-html="fixN(states.details)"></p>
+                <p v-html="fixN(this.states.details)"></p>
             </div>
             <div class="about">
-                <p v-html="fixN(states.data)"></p>
+                <p v-html="fixN(this.states.data)"></p>
             </div>
         </div>
 
