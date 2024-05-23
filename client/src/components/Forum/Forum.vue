@@ -203,9 +203,13 @@ export default {
                             alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>
-            <div class="answer">
-                <a :href="`/QuestionItem?id=` + post.id + `&question=${post.question}`"><button><img
-                            :src="'src/assets/comments.svg'" alt=""><span>{{ post.answers }}</span>Ответов</button></a>
+            <div class="answer" v-if="this.isQuestion">
+                <a :href="`/QuestionItem?id=` + post.id + `&q=true`"><button><img
+                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span>Ответов</button></a>
+            </div>
+            <div class="answer" v-else>
+                <a :href="`/StateItem?id=` + post.id + `&q=false`"><button><img
+                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span>Комментариев</button></a>
             </div>
         </div>
 
