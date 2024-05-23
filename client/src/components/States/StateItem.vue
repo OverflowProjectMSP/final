@@ -115,7 +115,7 @@ export default {
                 this.answers[i].user = this.commentUser[i];
             }
 
-            if (this.answers[this.answers.length - 1].user.avatar != `` && this.answers.length == 0) {
+            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length == 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
@@ -206,7 +206,7 @@ export default {
                         <p >{{ answer.text }}</p>
                     </div>
                 </div>
-                <div class="content p-2" v-else>
+                <div class="content p-2" v-if="this.answers.length == 0">
                     <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
                 </div>
             </div>
