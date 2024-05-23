@@ -245,6 +245,8 @@ img {
 
 .accountIcon {
     border-radius: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* CONTENT-1 */

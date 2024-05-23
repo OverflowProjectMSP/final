@@ -225,6 +225,8 @@ export default {
 <style scoped>
 .accountIcon {
     border-radius: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 img {
@@ -279,11 +281,11 @@ img {
     gap: 12px;
     align-items: center;
 }
-
+/* 
 .accountIcon {
     border-radius: 50px !important;
     border: 2px solid #1d1d1d;
-}
+} */
 
 .name {
     font-weight: 700;
