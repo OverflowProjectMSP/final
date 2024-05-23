@@ -71,7 +71,11 @@ export default {
                 <img :src="user.avatar">
             </div>
 
-            <p class="nikname t-alig-c">@{{ user.username }}</p>
+            <p class="nikname t-alig-c">@fffffffffff{{ user.username }}</p>
+            <div class="loc-tel">
+                <p class="location">Moscow</p>
+                <p class="telephone">+7 925 012 56</p>
+            </div>
             <div class="table t-alig-c">
                 <div class="cell">
                     <p class="num">{{ user.qcnt }}</p>
@@ -214,6 +218,21 @@ body {
     font-weight: 400;
 }
 
+
+.loc-tel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loc-tel p {
+    margin: 0;
+    font-size: 24px;
+}
+
+.telephone {
+    margin-bottom: 40px !important;
+}
 
 /* табличка */
 .table {
