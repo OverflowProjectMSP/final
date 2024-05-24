@@ -664,6 +664,7 @@ def show_answers(isQ, idO):
 
 # Отображение всех статей на frontend
 def filtre_states(fil):
+    status = 0
     filtrs = ''
     for i in fil:
         if fil[i] != '':
@@ -674,96 +675,168 @@ def filtre_states(fil):
             else:
                 if i!='name' and i!='descriptions':
                     filtrs+=f'{i}=$${fil[i]}$$'
-    try: 
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
+    if filtrs != '' or fil['name'] != '':
+        try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
 
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            ids = []
+            if fil['name'] != '': 
+                cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+                ids = cursor.fetchall()
+                ors = '('
+                for i in ids:
+                    if ors !='(': ors+=f' or id_u=$${i[0]}$$'
+                    else: ors+=f'id_u=$${i[0]}$$'
+                ors+=')'
+            else: ors = ''
+            if filtrs == '' and ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors}''')
+            elif ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            else: 
+                status = 1
+                return []
+            # print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            q = cursor.fetchall()
+            return_data = []
+            for row in q:
+                return_data.append(dict(row))
 
-        if fil['name'] == '': 
-            cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
-            ids = cursor.fetchall()
-            ors = '('
-            for i in ids:
-                if ors !='(': ors+=f' or id_u=$${i[0]}$$'
-                else: ors+=f'id_u=$${i[0]}$$'
-            ors+=')'
-        else: ors = ''
-        if filtrs == '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors}''')
-        else: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
-        print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
-        q = cursor.fetchall()
-        return_data = []
-        for row in q:
-            return_data.append(dict(row))
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
 
-    except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
+            return_data = f"Error" 
 
-        return_data = f"Error" 
+        finally:
+            if pg and status == 0:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
+    else:
+        try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
 
-    finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute('''select * from states''')
+            q = cursor.fetchall()
+            return_data = []
+            for row in q:
+                return_data.append(dict(row))
+        
+
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
+
+            return_data = f"Error" 
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
 
 # Отображение всех вапросов на frontend
 def filtre_question(fil):
+    status = 0
     filtrs = ''
     for i in fil:
         if fil[i] != '':
+            print(i)
             if filtrs!='':
                 if i!='name' and i!='descriptions':
                     filtrs+=f' and {i}=$${fil[i]}$$'
             else:
                 if i!='name' and i!='descriptions':
                     filtrs+=f'{i}=$${fil[i]}$$'
-    try: 
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
+    if (filtrs != '' or fil['name'] != '') or fil['descriptions'] != '':
+        try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
 
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            ids = []
+            if fil['name'] != '': 
+                cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+                ids = cursor.fetchall()
+                ors = '('
+                for i in ids:
+                    if ors !='(': ors+=f' or id_u=$${i[0]}$$'
+                    else: ors+=f'id_u=$${i[0]}$$'
+                ors+=')'
+            else: ors = ''
+            print(filtrs, ids)
+            if filtrs == '' and ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors}''')
+            elif ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            elif ids == [] and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
+            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
+            elif fil['descriptions'] != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ''')
+            else: 
+                status = 1
+                return []
+            # print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            q = cursor.fetchall()
+            return_data = []
+            for row in q:
+                return_data.append(dict(row))
 
-        if fil['name'] == '': 
-            cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
-            ids = cursor.fetchall()
-            ors = '('
-            for i in ids:
-                if ors !='(': ors+=f' or id_u=$${i[0]}$$'
-                else: ors+=f'id_u=$${i[0]}$$'
-            ors+=')'
-        else: ors = ''
-        if filtrs == '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors}''')
-        else: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
 
-        q = cursor.fetchall()
-        return_data = []
-        for row in q:
-            return_data.append(dict(row))
+            return_data = f"Error" 
 
-    except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
+        finally:
+            if pg and status == 0:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
+    else:
+        try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
 
-        return_data = f"Error" 
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute('''select * from questions''')
+            q = cursor.fetchall()
+            return_data = []
+            for row in q:
+                return_data.append(dict(row))
+        
 
-    finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
+
+            return_data = f"Error" 
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
         
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

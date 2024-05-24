@@ -36,7 +36,7 @@ export default {
                 },
             ],
             Show: false,
-            tag: false,
+            tag: ``,
 
             title: ``,
             author: ``,
@@ -100,7 +100,7 @@ export default {
             <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
             <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
             <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
-            <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
+            <option value=""><img src="./assets/js.jpg" class="image">Без фильтров</option>
         </select>
       </div>
       <!-- плюсик -->

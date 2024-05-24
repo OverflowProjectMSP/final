@@ -13,8 +13,8 @@ export default {
         return {
             quetions: [],
 
-            tag: `false`,
-            dificulty: `false`,
+            tag: ``,
+            dificulty: ``,
             title: ``,
             author: ``,
 
@@ -75,7 +75,7 @@ export default {
                                 <option value="Простой" selected>Лёгкие</option>
                                 <option value="Средний">Средние</option>
                                 <option value="Сложный">Сложные</option>
-                                <option value="false">Без фильтров</option>
+                                <option value="">Без фильтров</option>
                             </select>
                         </div>
 
@@ -88,7 +88,7 @@ export default {
                             <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
                             <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
                             <option value="go"><img src="./assets/js.jpg" class="image">Golang</option>
-                            <option value="false"><img src="./assets/js.jpg" class="image">Без фильтров</option>
+                            <option value=""><img src="./assets/js.jpg" class="image">Без фильтров</option>
                         </select>
                     </div>
                     <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
