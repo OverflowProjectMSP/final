@@ -134,7 +134,8 @@ export default {
         },
 
         fixN(text) {
-            text.replaceAll("\n", '<br>')
+            return text
+            // text.replaceAll("\n", '<br>')
         },
     },
     mounted() {
@@ -217,7 +218,7 @@ export default {
             </div>
         </div>
 
-        <form class="content-3" @submit.prevent="addComment">
+        <form v-if="this.userNow.id" class="content-3" @submit.prevent="addComment">
         
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
