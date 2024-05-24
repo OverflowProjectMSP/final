@@ -50,7 +50,7 @@ export default {
                 <div class="ans_check">
                     <div class="d-flex flex-column check">
                         <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
-                        <p :class="isCheck_class">{{ item.acnt }}1</p>
+                        <p :class="isCheck_class">{{ item.acnt }}</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
                     <a :href="`/StateItem?id=` + item.id + `&question=` + item.question" class="answ"><button>Ответить</button></a>

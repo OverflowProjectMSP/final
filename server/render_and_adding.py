@@ -675,7 +675,7 @@ def filtre_states(fil):
             else:
                 if i!='name' and i!='descriptions':
                     filtrs+=f'{i}=$${fil[i]}$$'
-    if filtrs != '' or fil['name'] != '':
+    if (filtrs != '' or fil['name'] != '') or fil['descriptions'] != '':
         try: 
             pg = psycopg2.connect(f"""
                 host={HOST_PG}
@@ -696,8 +696,12 @@ def filtre_states(fil):
                     else: ors+=f'id_u=$${i[0]}$$'
                 ors+=')'
             else: ors = ''
+            print(filtrs, ors)
             if filtrs == '' and ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors}''')
             elif ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            elif ids == [] and filtrs != '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
+            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
+            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' ''')
             else: 
                 status = 1
                 return []
@@ -705,7 +709,10 @@ def filtre_states(fil):
             q = cursor.fetchall()
             return_data = []
             for row in q:
-                return_data.append(dict(row))
+                a = dict(row)
+                cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
+                a['acnt'] = cursor.fetchone()[0]
+                return_data.append(a)
 
         except (Exception, Error) as error:
             logging.error(f'DB: ', error)
@@ -718,35 +725,8 @@ def filtre_states(fil):
                 pg.close
                 logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
-    else:
-        try: 
-            pg = psycopg2.connect(f"""
-                host={HOST_PG}
-                dbname=postgres
-                user={USER_PG}
-                password={PASSWORD_PG}
-                port={PORT_PG}
-            """)
+    else: return render_states()
 
-            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-            cursor.execute('''select * from states''')
-            q = cursor.fetchall()
-            return_data = []
-            for row in q:
-                return_data.append(dict(row))
-        
-
-        except (Exception, Error) as error:
-            logging.error(f'DB: ', error)
-
-            return_data = f"Error" 
-
-        finally:
-            if pg:
-                cursor.close
-                pg.close
-                logging.info("Соединение с PostgreSQL закрыто")
-                return return_data
 
 # Отображение всех вапросов на frontend
 def filtre_question(fil):
@@ -782,12 +762,14 @@ def filtre_question(fil):
                     else: ors+=f'id_u=$${i[0]}$$'
                 ors+=')'
             else: ors = ''
-            print(filtrs, ids)
+            # print(filtrs, ids, fil['descriptions'])
+            # print(filtrs == '' and ids != [], ids != [], ids == [] and filtrs != '', fil['descriptions'] != '' and filtrs != '', fil['descriptions'] != '' and (fil['name'] == '' and ids == []))
             if filtrs == '' and ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors}''')
             elif ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
             elif ids == [] and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
             elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
-            elif fil['descriptions'] != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ''')
+            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ''')
+            # elif fil['descriptions'] != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ''')
             else: 
                 status = 1
                 return []
@@ -795,7 +777,10 @@ def filtre_question(fil):
             q = cursor.fetchall()
             return_data = []
             for row in q:
-                return_data.append(dict(row))
+                a = dict(row)
+                cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+                a['acnt'] = cursor.fetchone()[0]
+                return_data.append(a)
 
         except (Exception, Error) as error:
             logging.error(f'DB: ', error)
@@ -808,35 +793,7 @@ def filtre_question(fil):
                 pg.close
                 logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
-    else:
-        try: 
-            pg = psycopg2.connect(f"""
-                host={HOST_PG}
-                dbname=postgres
-                user={USER_PG}
-                password={PASSWORD_PG}
-                port={PORT_PG}
-            """)
-
-            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-            cursor.execute('''select * from questions''')
-            q = cursor.fetchall()
-            return_data = []
-            for row in q:
-                return_data.append(dict(row))
-        
-
-        except (Exception, Error) as error:
-            logging.error(f'DB: ', error)
-
-            return_data = f"Error" 
-
-        finally:
-            if pg:
-                cursor.close
-                pg.close
-                logging.info("Соединение с PostgreSQL закрыто")
-                return return_data
+    else: return render_questions()
         
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
