@@ -189,6 +189,7 @@ def delete(id, isQ):
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
             cursor.execute(f'''DELETE FROM questions WHERE id=$${id}$$''')
+            cursor.execute(f'''DELETE FROM answers WHERE id_q=$${id}$$''')
 
             pg.commit()
             return_data = 'ok'
@@ -215,6 +216,7 @@ def delete(id, isQ):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         logging.info(type(id))
         cursor.execute(f'''DELETE FROM states WHERE id=$${id}$$;''')
+        cursor.execute(f'''DELETE FROM comments WHERE id_s=$${id}$$;''')
 
         pg.commit()
         return_data = 'Ok'

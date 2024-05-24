@@ -186,7 +186,7 @@ export default {
             </div>
         </div>
 
-        <form @submit="addComment" class="content-3">
+        <form @submit.prevent="addComment" class="content-3">
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
