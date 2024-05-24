@@ -95,6 +95,11 @@ export default {
                 text: this.text,
             });
             this.text = ``;
+            this.answers.push({
+                text: this.text,
+                user: this.userNow
+            });
+            this.loadState();
         },
         async deleteState() {
             await axios.delete('/delete', {
