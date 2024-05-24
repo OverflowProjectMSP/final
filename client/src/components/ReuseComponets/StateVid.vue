@@ -245,6 +245,14 @@ text-align: center;
         }
     }
 
+    @media (max-width: 630px) {
+        .main-container {
+            width: 500px;
+            gap: 10px;
+        }
+
+    }
+
     
 
     @media (max-width: 540px) {
