@@ -137,11 +137,12 @@ export default {
         },
 
         fixN(text) {
-            if (text != undefined) {
-                return text.replaceAll("\n", "<br>");
+            if (text == undefined) {
+                return text 
             } else {
-                return text
+                return text.replaceAll("\n", "<br>");
             }
+            
         
         },
     },
