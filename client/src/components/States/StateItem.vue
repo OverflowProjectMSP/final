@@ -141,9 +141,7 @@ export default {
                 return text 
             } else {
                 return text.replaceAll("\n", "<br>");
-            }
-            
-        
+            }        
         },
     },
 }
@@ -183,7 +181,7 @@ export default {
             </div>
         </div>
 
-        <div class="content-3">
+        <form @submit="addComment" class="content-3">
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
@@ -198,9 +196,9 @@ export default {
                 <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
             </div>
             <div class="send-ans d-flex justify-content-end">
-                <button @click="addComment()" type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
+                <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
             </div>
-        </div>
+        </form>
         <div v-if="!this.loading && this.answers.length != 0">
             <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
             <div class="d-flex justify-content-center">
