@@ -24,7 +24,8 @@ export default {
 
             avaComment: ``,
 
-            loading: false
+            loading: false,
+            a: '',
         }
     },
 
@@ -136,9 +137,12 @@ export default {
         },
 
         fixN(text) {
-            // if (text.includes("\n")){
+            if (text != undefined) {
                 return text.replaceAll("\n", "<br>");
-            // }
+            } else {
+                return text
+            }
+        
         },
     },
 }
