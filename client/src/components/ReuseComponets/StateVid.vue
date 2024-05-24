@@ -50,7 +50,7 @@ export default {
                 <div class="ans_check">
                     <div class="d-flex flex-column check">
                         <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
-                        <p :class="isCheck_class">{{ item.acnt }}</p>
+                        <p :class="isCheck_class">{{ item.acnt }}1</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
                     <a :href="`/StateItem?id=` + item.id + `&question=` + item.question" class="answ"><button>Ответить</button></a>
@@ -62,7 +62,7 @@ export default {
 
 <style>
 .answ{
-text-align: center;
+/* text-align: center; */
 }
     .window {
         display: flex;
@@ -245,6 +245,41 @@ text-align: center;
         }
     }
 
+    @media (max-width: 630px) {
+        /* .main-container {
+            width: 500px;
+            
+        } */
+        
+        /* .ans_check button {
+            margin-left: 50px;
+            margin-bottom: 20px;
+        } */
+
+        .ans_check {
+            /* flex-direction: row; */
+        }
+
+        .answ {
+            /* width: 100px; */
+            /* height: 100px; */
+        }
+        
+        
+        .check p {
+            font-size: 18px;
+        }
+
+        
+
+    }
+
+    @media (max-width: 600px) {
+        .main-container {
+            
+        }
+    }
+
     
 
     @media (max-width: 540px) {
@@ -260,16 +295,38 @@ text-align: center;
             font-size: 18px;
         }
 
+        .check {
+            align-items: end;
+        }
+
+        .main-container {
+            position: relative;
+        }
+
+        .check {
+            /* position: absolute; */
+
+            top: 20px !important;   
+        }
+
+        .main-container {
+            height: 150px;
+        }
+
+        .ans_check button {
+            margin-top: 10px;
+        }
+
         .info {
             flex-direction: column;
         }
 
         .info p {
-            border-right: none;
+            /* border-right: none;
             padding: 0;
             border-bottom: 2px solid #3B82F6;
             width: 150px;
-            padding-bottom: 10px;
+            padding-bottom: 10px; */
         }
 
         .text h5 {
