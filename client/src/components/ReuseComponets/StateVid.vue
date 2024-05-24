@@ -71,8 +71,6 @@ text-align: center;
 
     .main-container {
         margin: 8px;
-
-        width: auto;
         height: auto;
         border: 1px solid #121212;
         border-radius: 15px;
@@ -87,7 +85,7 @@ text-align: center;
 
     @media (min-width: 1900px) {
         .main-container {
-            width: 60% !important;
+            width: 1400% !important;
         }
     }
 
@@ -230,7 +228,7 @@ text-align: center;
         }
 
         .ans_check button {
-            width: 250px;
+            width: 200px;
             margin-left: 160px;
             margin-bottom: 0;
         }
@@ -246,6 +244,8 @@ text-align: center;
             margin-top: 0;
         }
     }
+
+    
 
     @media (max-width: 540px) {
         .account img {
@@ -277,7 +277,8 @@ text-align: center;
         }
 
         .ans_check {
-            gap: 0;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .ans_check button {
