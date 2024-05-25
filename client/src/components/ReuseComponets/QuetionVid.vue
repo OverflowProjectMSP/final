@@ -8,14 +8,14 @@ export default {
     data() {
         return {
             // item: {
-            //     // title: `Как создать переменную?`,
-            //     //     subscribers: 50,
-            //     //     hours: 43,
-            //     //     views: 43,
-            //     //     answers: 423,
-            //     //     language: 'Python',
-            //     //     complexity: 'Средне',
-            //     //     id: 0
+            //     title: `Как создать переменную?`,
+            //         subscribers: 50,
+            //         hours: 43,
+            //         views: 43,
+            //         answers: 423,
+            //         language: 'Python',
+            //         complexity: 'Средне',
+            //         id: 0
             // },
 
             isCheck_class: `ch check-false`,
