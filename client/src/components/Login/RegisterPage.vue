@@ -52,6 +52,7 @@ export default {
                         !this.password.includes('[') && 
                         !this.password.includes(']') && 
                         !this.password.includes('{') && 
+                
                         !this.password.includes('}') && 
                         !this.password.includes('\\') && 
                         !this.password.includes('|') && 
