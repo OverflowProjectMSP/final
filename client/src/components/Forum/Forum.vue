@@ -168,7 +168,7 @@ export default {
                     <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search"
                         v-model="title">
                 </div>
-                <div class="d-flex" v-if='this.isQuestion'>
+                <div class="d-flex filt" v-if='this.isQuestion'>
                     <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select form-1 " v-model="dificulty">
                         <option value="Простой" selected>Лёгкие</option>
@@ -349,6 +349,15 @@ a {
 
     margin-bottom: 30px;
 }
+
+.filt img {
+    border-radius: 7px 0px 0px 7px;
+}
+
+.filt select {
+    border-radius: 0px 7px 7px 0px;
+}
+
 
 .sort-select {
     width: 150px;
