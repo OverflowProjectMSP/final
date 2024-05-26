@@ -45,6 +45,7 @@ export default {
             this.questionInfo = responce.data.all.question;
             this.answers = responce.data.all.answers;
             this.loadAnswerUser();
+            console.log(this.questionInfo)
         },
 
         async loadAnswerUser() {
@@ -136,6 +137,7 @@ export default {
                 id: this.$route.query.id,
                 is_solved: is,
             });
+            this.loadQuestion();
         },
 
         fixN(text) {
@@ -168,8 +170,8 @@ export default {
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
-                            <li v-if="this.questionInfo.is_solved == 'false'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос решён!</a></li>
-                            <li v-else><a class="dropdown-item" @click="solveQuestion(false)">Вопрос ещё не решён!</a></li>
+                            <li v-if="this.questionInfo.is_solved == true"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
+                            <li v-else><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
                             <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
@@ -200,8 +202,8 @@ export default {
                             </a>
                         </div>
                     </div>
-                    <div class="description mt-3">
-                        <p v-html="fixN(answer.text)"></p>
+                    <div class="description my-1">
+                        <span v-html="fixN(answer.text)"></span>
                     </div>
                     <!-- <div class="btn-group">
                         <div class="left">
@@ -365,6 +367,11 @@ img {
     width: 100%;
 }
 
+.description span {
+    margin-left: 75px;
+    /* margin-top: 52px !important; */
+
+}
 
 .answer-btn {
     width: 180px;
