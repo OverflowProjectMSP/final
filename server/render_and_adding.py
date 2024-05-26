@@ -66,7 +66,7 @@ def render_questions():
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * from questions")
+        cursor.execute(f"SELECT * from questions ORDER BY data")
 
         all_questions = cursor.fetchall()  
 
@@ -144,9 +144,9 @@ def show_all_by_user(id):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         logging.info(id)
-        cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$')
+        cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$ ORDER BY data')
         questions = cursor.fetchall()
-        cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$')
+        cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$ ORDER BY data')
         states = cursor.fetchall()
         q = []
         for row in questions:
@@ -321,9 +321,9 @@ def show_forum(filtre):
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f'''SELECT * FROM states WHERE tag=$${filtre}$$''')
+        cursor.execute(f'''SELECT * FROM states WHERE tag=$${filtre}$$ ORDER BY data''')
         states = cursor.fetchall()
-        cursor.execute(f'''SELECT * FROM questions WHERE tag=$${filtre}$$''')
+        cursor.execute(f'''SELECT * FROM questions WHERE tag=$${filtre}$$ ORDER BY data''')
         questions = cursor.fetchall()
 
         q = []
@@ -371,7 +371,7 @@ def render_states():
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"SELECT * from states")
+        cursor.execute(f"SELECT * from states ORDER BY data")
         
         all_states = cursor.fetchall()  
         return_data = []
@@ -707,11 +707,11 @@ def filtre_states(fil):
                     else: ors+=f'id_u=$${i[0]}$$'
                 ors+=')'
             else: ors = ''
-            if filtrs == '' and ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors}''')
-            elif ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            if filtrs == '' and ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors} ORDER BY data''')
+            elif ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors} ORDER BY data''')
             elif ids == [] and filtrs != '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
-            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
-            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' ''')
+            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data''')
+            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' ORDER BY data''')
             else: 
                 status = 1
                 return []
@@ -774,11 +774,11 @@ def filtre_question(fil):
             else: ors = ''
             # print(filtrs, ids, fil['descriptions'])
             # print(filtrs == '' and ids != [], ids != [], ids == [] and filtrs != '', fil['descriptions'] != '' and filtrs != '', fil['descriptions'] != '' and (fil['name'] == '' and ids == []))
-            if filtrs == '' and ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors}''')
-            elif ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
-            elif ids == [] and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
-            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')
-            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ''')
+            if filtrs == '' and ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ORDER BY data''')
+            elif ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors} ORDER BY data''')
+            elif ids == [] and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data''')
+            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data''')
+            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ORDER BY data''')
             # elif fil['descriptions'] != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ''')
             else: 
                 status = 1

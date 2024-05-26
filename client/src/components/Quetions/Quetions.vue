@@ -211,7 +211,7 @@ a {
 
 .active-container {
     margin-bottom: 40px;
-    /* margin-left: 122px; */
+
 }
 
 h4 {
