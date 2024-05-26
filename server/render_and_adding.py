@@ -146,17 +146,20 @@ def show_all_by_user(id):
         logging.info(id)
         cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$')
         questions = cursor.fetchall()
-        q = []
-        for row in questions:
-            q.append(dict(row))
-
         cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$')
         states = cursor.fetchall()
+        for row in questions:
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            q.append(a)
 
         s = []
         for row in states:
-            s.append(dict(row))
-        logging.info('Информация отпраленна')
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            s.append(a)
 
 
         return_data = {
@@ -323,12 +326,19 @@ def show_forum(filtre):
         questions = cursor.fetchall()
 
         q = []
+
         for row in questions:
-            q.append(dict(row))
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            q.append(a)
 
         s = []
         for row in states:
-            s.append(dict(row))
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            s.append(a)
         return_data = {
             "states": s,
             "questions": q
