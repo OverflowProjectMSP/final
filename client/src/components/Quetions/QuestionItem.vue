@@ -9,7 +9,19 @@ export default {
     data() {
         return {
             questionInfo: {}, //главная возня
-            answers: [],
+            answers: [
+            {
+                data:"Sat, 11 May 2024 21:55:14 GMT",
+                id:"9b129553-7f6e-4e35-aa66-3cf01a216043",
+                id_q:"9b129553-7f6e-4e35-aa66-3cf01a216043",
+                id_u:"f527d19a-f56b-4614-bab6-63800ed79825",
+                text:"Абдурохман",
+                user:{
+                avatar:"http://127.0.0.1:5000/avatar/a_f527d19a-f56b-4614-bab6-63800ed79825.gif",
+                id:"f527d19a-f56b-4614-bab6-63800ed79825",
+                username:"febolo"
+                }}
+            ],
             answerUser: [],
             userCreater: {},
             userNow: {},
@@ -28,12 +40,13 @@ export default {
 
             isCheck: null,
 
-            loading: false,
+            loading: true,
 
             updQ: false,
         }
     },
 
+<<<<<<< HEAD
     methods: {
         async loadQuestion() {
             let responce = await axios.get(`/show-one`, {
@@ -47,36 +60,51 @@ export default {
             this.loadAnswerUser();
             console.log(this.questionInfo)
         },
+=======
+    // methods: {
+    //     async loadQuestion() {
+    //         let responce = await axios.get(`/show-one`, {
+    //             params: {
+    //                 id: this.$route.query.id,
+    //                 q: true,
+    //             }
+    //         });
+    //         this.questionInfo = responce.data.all.question;
+    //         this.answers = responce.data.all.answers;
+    //         this.loadAnswerUser();
+    //     },
+>>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
 
-        async loadAnswerUser() {
-            this.userCreater = await this.loadUsers(this.questionInfo);
-            this.checkUser();
-            for (let i = 0; i < this.answers.length; i++) {
-                let user = await this.loadUsers(this.answers[i]);
-                this.answerUser.push(user)
-            };
-            this.v_For1();
-        },
+    //     async loadAnswerUser() {
+    //         this.userCreater = await this.loadUsers(this.questionInfo);
+    //         this.checkUser();
+    //         for (let i = 0; i < this.answers.length; i++) {
+    //             let user = await this.loadUsers(this.answers[i]);
+    //             this.answerUser.push(user)
+    //         };
+    //         this.v_For1();
+    //     },
         
 
-        async loadUsers(item) {
-            let res = await axios.get('/user-not-all', {
-                params: {
-                    id: item.id_u,
-                }
-            });
-            return res.data.all;
-        },
+    //     async loadUsers(item) {
+    //         let res = await axios.get('/user-not-all', {
+    //             params: {
+    //                 id: item.id_u,
+    //             }
+    //         });
+    //         return res.data.all;
+    //     },
 
-        symbolsCount() {
-            this.symbols = this.text.length;
-            if (this.symbols >= 2000) {
-                this.symbCount = true;
-            } else {
-                this.symbCount = false;
-            }
-        },
+    //     symbolsCount() {
+    //         this.symbols = this.text.length;
+    //         if (this.symbols >= 2000) {
+    //             this.symbCount = true;
+    //         } else {
+    //             this.symbCount = false;
+    //         }
+    //     },
 
+<<<<<<< HEAD
         async addComment() {
             await axios.post(`/answers`, {
                 id: this.$route.query.id,
@@ -111,27 +139,59 @@ export default {
             let res = await axios.get('/session');
             this.loadNowUser(res.data.id);
         },
+=======
+    //     async addComment() {
+    //         await axios.post(`/answers`, {
+    //             id: this.$route.query.id,
+    //             q: 'true',
+    //             text: this.text,
+    //         });
+    //         this.text = ``;
+    //     },
+    //     async deleteQuestion() {
+    //         await axios.delete('/delete', {
+    //             params: {
+    //                 id: this.$route.query.id,
+    //                 q: true,
+    //             }
+    //         });
+    //         this.$router.push(`/Quetions`)
+    //     },
+    //     async checkUser() {
+    //         let res = await axios.get('/check', {
+    //             params: {
+    //                 id: this.userCreater.id
+    //             }
+    //         });
+    //         this.isCheck = res.data.isEdit;
+    //     },
+    //     async getNowUser() {
+    //         let res = await axios.get('/session');
+    //         this.loadNowUser(res.data.id);
+    //     },
+>>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
 
-        v_For1() {
-            for (let i = 0; i < this.answerUser.length; i++) {
-                this.answers[i].user = this.answerUser[i];
-            }
-            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
-                this.loading = true;
-            } else {
-                this.loading = false;
-            } 
-        }, 
+    //     v_For1() {
+    //         for (let i = 0; i < this.answerUser.length; i++) {
+    //             this.answers[i].user = this.answerUser[i];
+    //         }
+    //         if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
+    //             this.loading = true;
+    //         } else {
+    //             this.loading = false;
+    //         } 
+    //     }, 
 
-        async loadNowUser(id) {
-            let res = await axios.get('/user-not-all', {
-                params: {
-                    id: id,
-                }
-            });
-            this.userNow = res.data.all;
-        },
+    //     async loadNowUser(id) {
+    //         let res = await axios.get('/user-not-all', {
+    //             params: {
+    //                 id: id,
+    //             }
+    //         });
+    //         this.userNow = res.data.all;
+    //     },
 
+<<<<<<< HEAD
         async solveQuestion(is) {
             await axios.put(`/is-solved`, {
                 id: this.$route.query.id,
@@ -139,33 +199,38 @@ export default {
             });
             this.loadQuestion();
         },
+=======
+    //     async solveQuestion(is) {
+    //         await axios.put(`/is-solved`, {
+    //             id: this.$route.query.id,
+    //             is_solved: is,
+    //         });
+    //     },
+>>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
 
-        fixN(text) {
-            return text
-            // text.replaceAll("\n", '<br>')
-        },
-    },
-    mounted() {
-        this.loadQuestion();
-        this.checkUser();
-        this.getNowUser();
-    },
+    //     fixN(text) {
+    //         return text
+    //         // text.replaceAll("\n", '<br>')
+    //     },
+    // },
+    // mounted() {
+    //     this.loadQuestion();
+    //     this.checkUser();
+    //     this.getNowUser();
+    // },
 }
 
 </script>
 
 <template>
-    <div class="container mb-4">
-        <div class="content-1">
-            <div class="account justify-content-between">
-                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile?id=${this.userCreater.id}`">
-                    <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
-                    <div class="name-ring">
-                        <div>
-                            <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
-                        </div>
-                    </div>
+    <div class="content-2" v-for="answer in answers">
+        <div class="account">
+            <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+            <div class="name-ring">
+                <a :href="`/Profile?id=${answer.user.id}`">
+                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                 </a>
+<<<<<<< HEAD
                 <div class="action-select" v-if="this.isCheck == 'true'">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
@@ -177,33 +242,17 @@ export default {
                         </ul>
                     </div>
                 </div>
+=======
+>>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
             </div>
-            <div class="title">
-                <h3 v-html="fixN(questionInfo.descriptions)"></h3>
-            </div>
-            <div class="description">
-                <p v-html="fixN(questionInfo.details)"></p>
-                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
-            </div>
-            <div class="about">
-                <p>{{ questionInfo.data }}</p>
-                <!-- <p>{{ questionInfo.views }} просмотра</p> -->
-            </div>
-        </div>
-        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-        <div v-if="this.loading">
-            <div class="answers-all" v-if="this.answers.length != 0">
-                <div class="content-2" v-for="answer in answers">
-                    <div class="account">
-                        <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                        <div class="name-ring">
-                            <a :href="`/Profile?id=${answer.user.id}`">
-                                <p><span class="name" role="button">{{ answer.user.username }}</span></p>
-                            </a>
-                        </div>
                     </div>
+<<<<<<< HEAD
                     <div class="description my-1">
                         <span v-html="fixN(answer.text)"></span>
+=======
+                    <div class="description mt-3">
+                        <p>fasldkfjlaksdjfkljasdf;lkadflkaf</p>
+>>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
                     </div>
                     <!-- <div class="btn-group">
                         <div class="left">
@@ -211,48 +260,17 @@ export default {
                         </div>
                     </div> -->
                 </div>
-            </div>
-            <div class="content p-2" v-if="this.answers.length == 0">
-                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
-                </h2>
-            </div>
-        </div>
-        <div v-else>
-            <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
-                <div class="spinner-border text-primary" role="status" >
-                    <span class="visually-hidden text-center">Loading...</span>
-                </div>
-            </div>
-        </div>
-
-        <form v-if="this.userNow.id" class="content-3" @submit.prevent="addComment">
-        
-            <div class="account">
-                <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
-                <div class="name-ring">
-                    <div>
-                        <a :href="`/Profile?id=${this.userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3">
-                <div class="content-3-without mb-3">
-                    <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                        placeholder="Оставь свой комментарий:"></textarea>
-                    <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
-                </div>
-            </div>
-            <div class="send-ans d-flex justify-content-end">
-                <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
-            </div>
-        </form>
-
-    </div>
 </template>
 
 <style scoped>
 img {
     user-select: none;
+}
+
+
+.description {
+
+    margin-left: 75px;
 }
 
 .accountIcon {
