@@ -44,10 +44,11 @@ export default {
                     q: false,
                 }
             });
+            const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
 
             this.states = responce.data.all.states;
             this.answers = responce.data.all.answers;
-
+            this.states.details = this.states.details.replaceAll(regex, '<br>')
             this.loadAnswerUser();
             
         },
@@ -123,6 +124,10 @@ export default {
         v_For1() {
             for (let i = 0; i < this.commentUser.length; i++) {
                 this.answers[i].user = this.commentUser[i];
+                const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+                let e = this.answers[i].text.replaceAll(regex, '<br>')
+                this.answers[i].text = e
+                console.log(this.answers)
             }
 
             if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
@@ -142,11 +147,8 @@ export default {
         },
 
         fixN(text) {
-            if (text == undefined) {
-                return text 
-            } else {
-                return text.replaceAll("\n", "<br>");
-            }        
+            return text
+            // }
         },
     },
 }

@@ -44,6 +44,8 @@ export default {
             });
             this.questionInfo = responce.data.all.question;
             this.answers = responce.data.all.answers;
+            const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+            this.questionInfo.details = this.questionInfo.details.replaceAll(regex, '<br>')
             this.loadAnswerUser();
             console.log(this.questionInfo)
         },
@@ -115,6 +117,8 @@ export default {
         v_For1() {
             for (let i = 0; i < this.answerUser.length; i++) {
                 this.answers[i].user = this.answerUser[i];
+                const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+                this.answers[i].text = this.answers[i].text.replaceAll(regex, '<br>')
             }
             if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
                 this.loading = true;

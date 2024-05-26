@@ -206,11 +206,11 @@ export default {
             </div>
             <div class="answer" v-if="this.isQuestion">
                 <a :href="`/QuestionItem?id=` + post.id + `&q=true`"><button><img
-                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span>Ответов</button></a>
+                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Ответов</button></a>
             </div>
             <div class="answer" v-else>
                 <a :href="`/StateItem?id=` + post.id + `&q=false`"><button><img
-                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span>Комментариев</button></a>
+                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Комментариев </button></a>
             </div>
         </div>
 

@@ -148,6 +148,7 @@ def show_all_by_user(id):
         questions = cursor.fetchall()
         cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$')
         states = cursor.fetchall()
+        q = []
         for row in questions:
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
