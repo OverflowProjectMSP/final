@@ -173,7 +173,9 @@ a {
 }
 
 .quest-menu {
-    margin: 0 20% 15px 20%;
+    display: flex;
+    justify-content: center;
+    /* margin: 0 20% 15px 20%; */
     /* min-height: 57.5vh; Изменить на 52 */
 }
 

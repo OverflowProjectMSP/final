@@ -149,7 +149,7 @@ export default {
     .info p {
         font-size: 15px;
         color: #3B82F6;
-        border-right: 1.5px solid #3B82F6;
+        /* border-right: 1.5px solid #3B82F6; */
         padding-right: 8px;
         padding-left: 8px;
     }
@@ -268,7 +268,7 @@ export default {
         .info p {
             border-right: none;
             padding: 0;
-            border-bottom: 2px solid #3B82F6;
+            /* border-bottom: 2px solid #3B82F6; */
             width: 150px;
             padding-bottom: 10px;
         }
