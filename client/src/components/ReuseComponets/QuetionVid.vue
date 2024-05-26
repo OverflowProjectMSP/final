@@ -31,7 +31,7 @@ export default {
 </script>
 
 <template>
-    <a :href="`/QuestionItem?id=${quetion.id}&q=true`">
+    <a :href="`/QuestionItem?id=${quetion.id}&q=true`" class="w-fit">
         <div class="window">
             <div class="main-container">
                 <div class="cont">
