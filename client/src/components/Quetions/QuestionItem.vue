@@ -46,21 +46,6 @@ export default {
         }
     },
 
-<<<<<<< HEAD
-    methods: {
-        async loadQuestion() {
-            let responce = await axios.get(`/show-one`, {
-                params: {
-                    id: this.$route.query.id,
-                    q: true,
-                }
-            });
-            this.questionInfo = responce.data.all.question;
-            this.answers = responce.data.all.answers;
-            this.loadAnswerUser();
-            console.log(this.questionInfo)
-        },
-=======
     // methods: {
     //     async loadQuestion() {
     //         let responce = await axios.get(`/show-one`, {
@@ -73,7 +58,6 @@ export default {
     //         this.answers = responce.data.all.answers;
     //         this.loadAnswerUser();
     //     },
->>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
 
     //     async loadAnswerUser() {
     //         this.userCreater = await this.loadUsers(this.questionInfo);
@@ -104,42 +88,6 @@ export default {
     //         }
     //     },
 
-<<<<<<< HEAD
-        async addComment() {
-            await axios.post(`/answers`, {
-                id: this.$route.query.id,
-                q: 'true',
-                text: this.text,
-            });
-            this.answers.push({
-                id_u: this.userNow.id,
-                text: this.text,
-                user: this.userNow
-            });
-            this.text = ``;
-        },
-        async deleteQuestion() {
-            await axios.delete('/delete', {
-                params: {
-                    id: this.$route.query.id,
-                    q: true,
-                }
-            });
-            this.$router.push(`/Quetions`)
-        },
-        async checkUser() {
-            let res = await axios.get('/check', {
-                params: {
-                    id: this.userCreater.id
-                }
-            });
-            this.isCheck = res.data.isEdit;
-        },
-        async getNowUser() {
-            let res = await axios.get('/session');
-            this.loadNowUser(res.data.id);
-        },
-=======
     //     async addComment() {
     //         await axios.post(`/answers`, {
     //             id: this.$route.query.id,
@@ -169,7 +117,6 @@ export default {
     //         let res = await axios.get('/session');
     //         this.loadNowUser(res.data.id);
     //     },
->>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
 
     //     v_For1() {
     //         for (let i = 0; i < this.answerUser.length; i++) {
@@ -191,22 +138,12 @@ export default {
     //         this.userNow = res.data.all;
     //     },
 
-<<<<<<< HEAD
-        async solveQuestion(is) {
-            await axios.put(`/is-solved`, {
-                id: this.$route.query.id,
-                is_solved: is,
-            });
-            this.loadQuestion();
-        },
-=======
     //     async solveQuestion(is) {
     //         await axios.put(`/is-solved`, {
     //             id: this.$route.query.id,
     //             is_solved: is,
     //         });
     //     },
->>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
 
     //     fixN(text) {
     //         return text
@@ -230,29 +167,10 @@ export default {
                 <a :href="`/Profile?id=${answer.user.id}`">
                     <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                 </a>
-<<<<<<< HEAD
-                <div class="action-select" v-if="this.isCheck == 'true'">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
-                        <ul class="dropdown-menu">
-                            <li v-if="this.questionInfo.is_solved == true"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
-                            <li v-else><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
-                            <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
-                        </ul>
-                    </div>
-                </div>
-=======
->>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
             </div>
                     </div>
-<<<<<<< HEAD
-                    <div class="description my-1">
-                        <span v-html="fixN(answer.text)"></span>
-=======
                     <div class="description mt-3">
                         <p>fasldkfjlaksdjfkljasdf;lkadflkaf</p>
->>>>>>> fef01d2 (чето, я уже устал писать изменения, которые я вводил 2 часа на зад, я не помню что я исправлял, да и сейчас моя жизнь состоит из бессмысленного изменения того, что раньше прекрасно работало...)
                     </div>
                     <!-- <div class="btn-group">
                         <div class="left">
@@ -385,11 +303,6 @@ img {
     width: 100%;
 }
 
-.description span {
-    margin-left: 75px;
-    /* margin-top: 52px !important; */
-
-}
 
 .answer-btn {
     width: 180px;
