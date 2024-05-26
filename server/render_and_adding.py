@@ -408,7 +408,7 @@ def show_one(id, isQ):
             return_data = {
                 'question': all_q,
                 'answers': all_asw     
-                           }
+            }
             logging.info(f'Вопрос {id} был отправлен')
 
         except (Exception, Error) as error:
@@ -696,7 +696,6 @@ def filtre_states(fil):
                     else: ors+=f'id_u=$${i[0]}$$'
                 ors+=')'
             else: ors = ''
-            print(filtrs, ors)
             if filtrs == '' and ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {ors}''')
             elif ids != []: cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
             elif ids == [] and filtrs != '': cursor.execute(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs}''')

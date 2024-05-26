@@ -65,7 +65,7 @@ export default {
                         <textarea class="text-area text-box multi-line" data-val="true"
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="texting"
                             name="info" cols="200" rows="3" style="border-color: #D3D3D3; border-radius: 5px;"
-                            v-model="form.descriptions" maxlength="35"></textarea>
+                            v-model="form.descriptions" maxlength="100"></textarea>
 
                     </div>
                 </div>

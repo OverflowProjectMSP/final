@@ -94,12 +94,12 @@ export default {
                 q: 'false',
                 text: this.text,
             });
-            this.text = ``;
             this.answers.push({
+                id_u: this.userNow.id,
                 text: this.text,
                 user: this.userNow
             });
-            this.loadState();
+            this.text = ``;
         },
         async deleteState() {
             await axios.delete('/delete', {

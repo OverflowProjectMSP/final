@@ -35,6 +35,7 @@ export default {
                     tag: this.$route.query.lang,
                 }
             });
+            console.log(res.data.all)
             if (this.isQuestion) {
                 this.posts = res.data.all.questions;
             } else {
@@ -198,8 +199,8 @@ export default {
                     <h2 class="title">{{ post.title }}</h2>
                     <p class="description">{{ post.descriptions }}</p>
                 </div>
-                <div class="decided" v-if="post.is_solved">
-                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/decided.svg'"
+                <div class="decided" v-if="!post.is_solved">
+                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/Forum/decided.svg'"
                             alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>
