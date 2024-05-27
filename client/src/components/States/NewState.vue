@@ -19,7 +19,7 @@ export default {
 
     methods: {
         async addState() {
-            // if (this.form.details.length >= 20 && this.form.descriptions > 3 && this.form.tag != '') {
+            if (this.form.details.length >= 20 && this.form.descriptions > 3 && this.form.tag != '') {
             let res = await axios.post('/new-state', {
                 form: this.form
             });
@@ -33,9 +33,9 @@ export default {
             console.log(this.error);
             this.error = res.data.res;
             return;
-            // } else {
-            //     this.error = `Введите больше информации`;
-            // };
+            } else {
+                this.error = `Введите больше информации`;
+            };
         },
     }
 }
@@ -58,6 +58,7 @@ export default {
             <div class="forms">
                 <div class="form1">
                     <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
+                        <option selected value=""><img class="image">Выбирите язык</option>
                         <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
                         <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
                         <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
