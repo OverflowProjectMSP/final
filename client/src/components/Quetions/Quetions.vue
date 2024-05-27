@@ -107,7 +107,7 @@ export default {
             </div>
         </div>
     </div>
-    <div class="cont">
+    <div class="cont d-flex align-items-center">
         <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
         <model-wind v-if="Show" @CloseModal="CloseModal" />
     </div>
