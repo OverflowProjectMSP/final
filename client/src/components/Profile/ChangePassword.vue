@@ -13,9 +13,42 @@ export default {
 
     methods: {
         check(){
-            console.log(1)
-            if (!this.newPassword.includes('$') || !this.exPassword.includes('$')){this.putInfo()}
-            else{this.error = 'Ты че, не патриот? доллары всякие тут ставишь'; }
+            if (!this.newPassword.includes('~') && 
+                !this.newPassword.includes('`') && 
+                !this.newPassword.includes('!') && 
+                !this.newPassword.includes('@') && 
+                !this.newPassword.includes('#') && 
+                !this.newPassword.includes('%') && 
+                !this.newPassword.includes('^') && 
+                !this.newPassword.includes('&') && 
+                !this.newPassword.includes('*') && 
+                !this.newPassword.includes('(') && 
+                !this.newPassword.includes(')') && 
+                !this.newPassword.includes('-') && 
+                !this.newPassword.includes('_') && 
+                !this.newPassword.includes('=') && 
+                !this.newPassword.includes('+') && 
+                !this.newPassword.includes('[') && 
+                !this.newPassword.includes(']') && 
+                !this.newPassword.includes('{') && 
+                !this.newPassword.includes('}') && 
+                !this.newPassword.includes('\\') && 
+                !this.newPassword.includes('|') && 
+                !this.newPassword.includes(';') && 
+                !this.newPassword.includes(':') && 
+                !this.newPassword.includes('"') && 
+                !this.newPassword.includes(',') && 
+                !this.newPassword.includes('<') && 
+                !this.newPassword.includes('.') && 
+                !this.newPassword.includes('>') && 
+                !this.newPassword.includes('/') && 
+                !this.newPassword.includes('?')) {
+                    this.error = '*Пароль должен включать спец символ*';
+                } else if (this.newPassword.includes('$')) {
+                    this.error = '*Ты че, не патриот? Доллары всякие тут ставишь*';
+                } else {
+                    this.putInfo();
+                }
         },
         async putInfo() {
             if (this.newPassword == this.exPassword ) {
