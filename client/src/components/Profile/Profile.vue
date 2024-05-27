@@ -186,6 +186,7 @@ body {
 /* профиль с картинкой */
 .profile {
     background-image: url(../../assets/Profile/background.png);
+    background-color: #ffffff;
     background-repeat: no-repeat;
     background-size: 1920px;
     border-radius: 8px;
