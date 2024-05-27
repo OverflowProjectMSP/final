@@ -31,10 +31,14 @@ export default {
 
     methods: {
         async putInfo() {
+            this.form.interestings = this.form.interestings.substr(0, 48)
             await axios.put('/user-info', {
                 form: this.form,
             });
             this.$router.push(`/Profile?id=${this.id}`);
+            return;
+
+
         },
 
         convertFileAvatar(event) {
