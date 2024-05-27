@@ -32,9 +32,9 @@ export default {
 
 <template>
     <a :href="`/QuestionItem?id=${quetion.id}&q=true`" class="w-fit">
-        <div class="window">
-            <div class="main-container">
-                <div class="cont">
+        <div class="window" style="padding-top: 3px;">
+            <div class="main-container" >
+                <div class="cont" >
                     <div class="account">
                         <!-- <img :src="'src/assets/' + avatar" alt=""> -->
                         <a href="#!"><p>{{ quetion.tag }}</p></a>

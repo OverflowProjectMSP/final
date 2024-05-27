@@ -25,18 +25,13 @@ PASSWORD_PG = os.getenv('PASSWORD_PG')
 PORT_PG = os.getenv('PORT_PG')
 USER_PG = os.getenv('USER_PG')
 HOST_PG = os.getenv('HOST_PG')
-SECRET_KEY = os.getenv('SERCRET_KEY')
 
 app = Flask(__name__)
 
-app.secret_key = SECRET_KEY
-app.config['PERMANENT_SESSION_LIFETIME'] = 3600 * 24
-app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-# app.config["SESSION_COOKIE_SECURE"] = "None"
-app.config.update(
-    SESSION_COOKIE_SECURE=False,
-    SESSION_COOKIE_HTTPONLY=True
-)
+app.secret_key = os.getenv('SECRET_KEY')
+app.permanent_session_lifetime = 60 * 60 * 24 * 28
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] =  'None'
 
 # enable CORS
 CORS(app, resources={r"*": {"origins": "http://localhost:5173", 'supports_credentials': True}})
