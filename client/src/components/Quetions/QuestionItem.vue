@@ -102,7 +102,9 @@ export default {
                 text: this.text,
                 user: this.userNow
             });
+            
             this.text = ``;
+            this.v_For1()
         },
         async deleteQuestion() {
             await axios.delete('/delete', {
@@ -132,7 +134,7 @@ export default {
                 const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
                 this.answers[i].text = this.answers[i].text.replaceAll(regex, '<br>')
             }
-            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
+            if ((this.answers[this.answers.length - 1].user.avatar != `` && this.answer[this.answers.length - 1].user) || this.answers.length != 0) {
                 this.loading = true;
             } else {
                 this.loading = false;
