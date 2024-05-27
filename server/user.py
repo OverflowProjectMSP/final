@@ -70,11 +70,12 @@ def login_user(email, pas):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
 
-        # Проверка есть ли такой пользователь 
+        # Проверка есть ли такой пользователь       
         if cursor.fetchall()[0][0]==1:
 
             cursor.execute(f"SELECT * FROM users WHERE email=$${email}$$")
             user = cursor.fetchone()
+
 
             # Проверка пароля
             if user[3] == pas: 
@@ -148,8 +149,8 @@ def add_user_todb(name, email, pas):
  
 # Изменения пароля, если user знает страый
 def change_password(password, old_password, id):
-    try: 
-        if check_old_password(old_password, id): # Вернет True если пароли стовпадает со старым 
+    if check_old_password( id ,old_password): # Вернет True если пароли стовпадает со старым 
+        try: 
             pg = psycopg2.connect(f"""
                 host=localhost
                 dbname=postgres
@@ -169,18 +170,18 @@ def change_password(password, old_password, id):
 
             return_data = "True"
 
-        else: return_data = "False"
 
-    except (Exception, Error) as error:
-        logging.error('DB:', error)
-        return_data = f"Ошибка получения данных: {error}" 
+        except (Exception, Error) as error:
+            logging.error('DB:', error)
+            return_data = f"Ошибка получения данных: {error}" 
 
-    finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
+    else: return_data = "False"
 
 # Проверка совпадениеия старого пароля с ныненшним
 def check_old_password(id, password):
@@ -194,12 +195,13 @@ def check_old_password(id, password):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        password_to_check = cursor.execute(f'SELECT password FROM users WHERE id=$${id}$$')
-
-        if password_to_check == password:
-            return_data = "True"
+        cursor.execute(f'SELECT password FROM users WHERE id=$${id}$$')
+        password_to_check = cursor.fetchone()
+        print(password_to_check, password)
+        if password_to_check[0] == str(password):
+            return_data = True
             logging.info('Пароли не совпадают')
-        else: return_data = "False"
+        else: return_data = False
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -450,7 +452,8 @@ def new_password_with_old():
 
     #Вызов, debug и возврат ответа на клиент функции обновления пароля
     if request.method=='PUT':
-        response_object['res'] = change_password(post_data.get('new_password'),post_data.get('old_passord'), "f527d19a-f56b-4614-bab6-63800ed79825")
+        print(session.get('id'))
+        response_object['res'] = change_password(post_data.get('new_password'),post_data.get('old_password'), session.get('id'))
         logging.info(response_object['res'])
     
     return jsonify(response_object)

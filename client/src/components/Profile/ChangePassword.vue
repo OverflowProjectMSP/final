@@ -6,12 +6,19 @@ export default {
             oldPassword: ``,
             newPassword: ``,
             exPassword: ``,
+            error: '',
+            id:''
         }
     },
 
     methods: {
+        check(){
+            console.log(1)
+            if (!this.newPassword.includes('$') || !this.exPassword.includes('$')){this.putInfo()}
+            else{this.error = 'Ты че, не патриот? доллары всякие тут ставишь'; }
+        },
         async putInfo() {
-            if (this.newPassword == this.exPassword) {
+            if (this.newPassword == this.exPassword ) {
                 let res = await axios.put('/new-password-old', {
                     old_password: this.oldPassword,
                     new_password: this.newPassword,
@@ -19,19 +26,28 @@ export default {
                 if (res.data.res == 'Error') {
                     this.error = '*Ошибка отправки*';
                 } else if (res.data.res == 'True') {
-                    this.$router.push('/Profile');
+                    this.$router.push(`/Profile?id=${this.id}`);
                 } else {
                     this.error = 'Неизветсная ошибка';
                 }
             } else {
                 this.error = 'Пароли не совпадают';
             }
+
+
         },
+        async getId(){
+            let res = await axios.get(`/session`);
+            this.id = res.data.id
+            }
+    },
+    mounted(){
+        this.getId()
     }
 }
 </script>
 <template>
-    <form class="container mb-3" @submit.prevent="putInfo">
+    <form class="container mb-3" @submit.prevent="check">
         <div class="row pt-5">
             <div class="col-3">
                 <h3>Настройки профиля</h3>
@@ -63,6 +79,7 @@ export default {
         <div class="d-flex justify-content-start mt-5 ms-0">
             <button class="btn btn-outline-success w-fit ms-0" type="submit"><b>Сохранить изменения</b></button>
         </div>
+        <span class="text-danger" v-if="this.error">{{ this.error }}</span>
     </form>
 </template>
 <style scoped>

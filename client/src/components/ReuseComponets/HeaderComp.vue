@@ -38,7 +38,6 @@ export default {
       }
     },
     async loadLogin() {
-      setTimeout(()=>{console.log(1)}, 3000 )
       let res = await axios.get(`/check-r`);
       this.ShowLogin = res.data.all;
       console.log(this.ShowLogin)
@@ -53,7 +52,6 @@ export default {
     async getId(){
       let res = await axios.get(`/session`);
       this.id = res.data.id
-      console.log(this.id)
     }
   },
   mounted() {
