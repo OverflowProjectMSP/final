@@ -65,7 +65,7 @@ export default {
 .answ{
     text-align: center;
 }
-.window {
+    .window {
         display: flex;
         justify-content: center;
     }
@@ -221,8 +221,11 @@ export default {
     }
 
     /* АДАПТИВКА */
-
-
+    @media (min-width: 1900px) {
+        .main-container{
+            width: 800px !important;
+        }
+    }
     @media (hover: hover) {
         .account p:hover {
             color: #663ebc;
