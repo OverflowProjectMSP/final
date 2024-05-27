@@ -32,9 +32,9 @@ export default {
 
 <template>
     <a :href="`/QuestionItem?id=${quetion.id}&q=true`" class="w-fit">
-        <div class="window">
-            <div class="main-container">
-                <div class="cont">
+        <div class="window" style="padding-top: 3px;">
+            <div class="main-container" >
+                <div class="cont" >
                     <div class="account">
                         <!-- <img :src="'src/assets/' + avatar" alt=""> -->
                         <a href="#!"><p>{{ quetion.tag }}</p></a>
@@ -65,7 +65,7 @@ export default {
 .answ{
     text-align: center;
 }
-.window {
+    .window {
         display: flex;
         justify-content: center;
     }
@@ -221,8 +221,11 @@ export default {
     }
 
     /* АДАПТИВКА */
-
-
+    @media (min-width: 1900px) {
+        .main-container{
+            width: 800px !important;
+        }
+    }
     @media (hover: hover) {
         .account p:hover {
             color: #663ebc;
