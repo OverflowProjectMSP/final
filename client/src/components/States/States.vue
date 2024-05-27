@@ -143,6 +143,7 @@ export default {
     align-items: center;
     overflow: scroll; 
     height: 555px;
+    padding-top: 10px;
     /* width: auto;
     margin-left: auto;
     margin-right: auto; */
@@ -175,6 +176,7 @@ h4{
     margin: 10px;
     flex-wrap: wrap;
     margin-left: 20%;
+    /* margin-bottom: 100px; */
 }
 .form-control{
     margin: 5px;

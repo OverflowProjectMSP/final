@@ -224,6 +224,16 @@ a {
     transition: all 300ms;
 }
 
+.post {
+        padding-top: 10px;
+        transition: all 0.5s;
+    }
+    
+.post:hover {
+    transform: translateY(-10px);
+    box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
+}
+
 .contant-head {
     margin-left: 30px;
     margin-right: 30px;

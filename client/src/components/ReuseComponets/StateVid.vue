@@ -32,6 +32,7 @@ export default {
 </script>
 
 <template>
+
     <a :href="`/StateItem?id=${item.id}&q=false`">
         <div class="window">
             <div class="main-container">
@@ -67,6 +68,16 @@ export default {
     .window {
         display: flex;
         justify-content: center;
+    }
+
+    .main-container {
+        padding-top: 10px;
+        transition: all 0.5s;
+    }
+    
+    .main-container:hover {
+        transform: translateY(-10px);
+        box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
     }
 
     .main-container {

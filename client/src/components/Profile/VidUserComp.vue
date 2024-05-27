@@ -42,6 +42,17 @@ export default {
 </template>
 
 <style>
+
+.main-container {
+    padding-top: 10px;
+    transition: all 0.5s;
+}
+
+.main-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
+}
+
 .head-1 {
     margin: 0 20%;
     height: 30px;
