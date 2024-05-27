@@ -14,7 +14,7 @@ import axios from 'axios';
     <a href="/Forum?lang=go"><button class="btn btn-outline-primary">Go</button></a>
     <a href="/Forum?lang=ruby"><button class="btn btn-outline-primary">Ruby</button></a>
     <a href="/Forum?lang=kotlin"><button class="btn btn-outline-primary">Kotlin</button></a>
-    <a href="/Forum?lang=typescript" class="a"><button class="btn btn-outline-primary">TypeScript</button></a>
+  <a href="/Forum?lang=typescript" class="a"><button class="btn btn-outline-primary">TypeScript</button></a>
 </div>  
 </template>
 
