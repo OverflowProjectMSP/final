@@ -10,7 +10,7 @@ services:
       - netw
   vue_app:
     build:
-      context: ./vue-project
+      context: ./client
       dockerfile: Dockerfile
     container_name: vue-app
     ports:
@@ -55,4 +55,3 @@ networks:
 
 volumes:
   postgres-data:
-
