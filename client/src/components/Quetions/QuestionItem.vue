@@ -129,16 +129,20 @@ export default {
         },
 
         v_For1() {
-            for (let i = 0; i < this.answerUser.length; i++) {
-                this.answers[i].user = this.answerUser[i];
-                const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-                this.answers[i].text = this.answers[i].text.replaceAll(regex, '<br>')
-            }
-            if ((this.answers[this.answers.length - 1].user.avatar != `` && this.answer[this.answers.length - 1].user) || this.answers.length != 0) {
-                this.loading = true;
+            if (this.answers.length != 0){
+                for (let i = 0; i < this.answerUser.length; i++) {
+                    this.answers[i].user = this.answerUser[i];
+                    const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+                    this.answers[i].text = this.answers[i].text.replaceAll(regex, '<br>')
+                }
+                if (this.answers[this.answers.length - 1].user.avatar != ``) {
+                    this.loading = true;
+                } else {
+                    this.loading = false;
+                } 
             } else {
-                this.loading = false;
-            } 
+                this.loading = true;
+            }
         }, 
 
         async loadNowUser(id) {
@@ -274,8 +278,7 @@ img {
 }
 
 
-.description {
-
+.description span {
     margin-left: 75px;
 }
 

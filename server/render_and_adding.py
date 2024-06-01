@@ -115,7 +115,8 @@ def add_states(discriptions='', details='', id='', tag=''):
         if send_state[0][0]==0:
             logging.info(details, 1)
             state_to_write = (uuid.uuid4().hex, discriptions, details,tag, id, datetime.now().isoformat())
-            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}")
+            print(f"""INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}""")
+            cursor.execute(f"""INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}""")
             pg.commit()
             return_data = "Статья добавлена"
         else: return_data = 'Такая статья уже есть'

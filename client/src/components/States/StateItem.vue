@@ -101,6 +101,7 @@ export default {
                 user: this.userNow
             });
             this.text = ``;
+            this.v_For1();
         },
         async deleteState() {
             await axios.delete('/delete', {
@@ -122,18 +123,21 @@ export default {
         },
 
         v_For1() {
-            for (let i = 0; i < this.commentUser.length; i++) {
-                this.answers[i].user = this.commentUser[i];
-                const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-                let e = this.answers[i].text.replaceAll(regex, '<br>')
-                this.answers[i].text = e
-                console.log(this.answers)
-            }
-
-            if (this.answers[this.answers.length - 1].user.avatar != `` || this.answers.length != 0) {
-                this.loading = true;
+            if (this.answers.length != 0){
+                for (let i = 0; i < this.commentUser.length; i++) {
+                    this.answers[i].user = this.commentUser[i];
+                    const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+                    let e = this.answers[i].text.replaceAll(regex, '<br>')
+                    this.answers[i].text = e
+                    console.log(this.answers)
+                }
+                if (this.answers[this.answers.length - 1].user.avatar != ``) {
+                    this.loading = true;
+                } else {
+                    this.loading = false;
+                }
             } else {
-                this.loading = false;
+                this.loading = true;
             }
         },
 
@@ -224,8 +228,8 @@ export default {
                             <a :href="`/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
                         </div>
                     </div>
-                    <div class="description mt-3">
-                        <p v-html="fixN(answer.text)"></p>
+                    <div class="description-text mt-1">
+                        <span v-html="fixN(answer.text)"></span>
                     </div>
                 </div>
                 <div class="content p-2" v-if="this.answers.length == 0">
@@ -351,8 +355,8 @@ img {
     transition: all 300ms;
 }
 
-.description {
-    margin-left: 5%;
+.description-text {
+    margin-left: 72px !important;
     word-break: break-all;
 }
 

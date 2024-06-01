@@ -62,11 +62,10 @@ export default {
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
-                        <textarea class="text-area text-box multi-line" data-val="true"
+                        <input class="text-area text-box multi-line w-100" data-val="true"
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="texting"
                             name="info" cols="200" rows="3" style="border-color: #D3D3D3; border-radius: 5px;"
-                            v-model="form.descriptions" maxlength="100"></textarea>
-
+                            v-model="form.descriptions" maxlength="100">
                     </div>
                 </div>
             </div>
