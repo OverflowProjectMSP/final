@@ -58,15 +58,15 @@ export default {
             <div class="forms">
                 <div class="form1">
                     <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                        <option selected value=""><img class="image">Выбирите язык</option>
-                        <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
-                        <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
-                        <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
-                        <option value="php"><img src="./assets/js.jpg" class="image">PHP</option>
-                        <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
-                        <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
-                        <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
-                        <option value="go"><img src="./assets/js.jpg" class="image">Golang</option>
+                        <option selected value="">Выбирите язык</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="ts">TS</option>
+                        <option value="python">Python</option>
+                        <option value="php">PHP</option>
+                        <option value="cpp">C++</option>
+                        <option value="java">Java</option>
+                        <option value="cs">C#</option>
+                        <option value="go">Golang</option>
                     </select>
                 </div>
             </div>
