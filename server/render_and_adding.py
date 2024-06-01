@@ -115,8 +115,7 @@ def add_states(discriptions='', details='', id='', tag=''):
         if send_state[0][0]==0:
             logging.info(details, 1)
             state_to_write = (uuid.uuid4().hex, discriptions, details,tag, id, datetime.now().isoformat())
-            print(f"""INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}""")
-            cursor.execute(f"""INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}""")
+            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}")
             pg.commit()
             return_data = "Статья добавлена"
         else: return_data = 'Такая статья уже есть'
@@ -549,18 +548,18 @@ def add_img( base, name, isAvatar, isQ,id):
     dote = name[name.find('.'):]
     if isAvatar:
         name = 'a_'+id+dote
-        with open(os.path.join('avatar/', name), "wb") as file:
+        with open(os.path.join(AVATAR, name), "wb") as file:
             file.write(decoded_bytes)
         return 'http://127.0.0.1:5000/avatar/'+name
     
     if isQ:
         name = 'q_'+id+dote
-        with open(os.path.join('media/', name), "wb") as file:
+        with open(os.path.join(MEDIA, name), "wb") as file:
                 file.write(decoded_bytes)
         return 'http://127.0.0.1:5000/media/'+name
     
     name = 's_'+id+dote
-    with open(os.path.join('media/', name), "wb") as file:
+    with open(os.path.join(MEDIA, name), "wb") as file:
             file.write(decoded_bytes)
     return 'http://127.0.0.1:5000/media/'+name
 
