@@ -93,14 +93,14 @@ export default {
   <div class="down-menu d-flex align-items-center">
       <div class="dropdown-center">
         <select class="form-select me-2" v-model="tag">
-            <option value="javascript"><img src="./assets/js.jpg" class="image">JavaScript</option>
-            <option value="ts"><img :src="'src/assets/js.jpg'" class="image">TS</option>
-            <option value="python"><img src="./assets/js.jpg" class="image">Python</option>
-            <option value="php"><img src="./assets/js.jpg" class="image">PHP</option>
-            <option value="cpp"><img src="./assets/js.jpg" class="image">C++</option>
-            <option value="java"><img src="./assets/js.jpg" class="image">Java</option>
-            <option value="cs"><img src="./assets/js.jpg" class="image">C#</option>
-            <option value=""><img src="./assets/js.jpg" class="image">Без фильтров</option>
+            <option value="javascript">JavaScript</option>
+            <option value="ts">TS</option>
+            <option value="python">Python</option>
+            <option value="php">PHP</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="cs">C#</option>
+            <option value="">Без фильтров</option>
         </select>
       </div>
       <!-- плюсик -->
