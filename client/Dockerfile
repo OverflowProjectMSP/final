@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 
 # install simple http server for serving static content
-RUN npm install -g http-server
+RUN npm install -g serve
 
 # make the 'app' folder the current working directory
 WORKDIR /app
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install
+RUN npm install && npm i axios 
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
@@ -19,4 +19,4 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+CMD [ "serve", "-s", "dist" ]
