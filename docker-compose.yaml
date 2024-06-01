@@ -43,7 +43,7 @@ services:
       PASSWORD_PG: password
       POSTGRES_DB: postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
     networks:
       - netw
     volumes:
