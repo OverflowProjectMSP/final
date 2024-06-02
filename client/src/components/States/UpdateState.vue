@@ -37,7 +37,7 @@ export default {
         async loadQuestion() {
             let res = await axios.get('/show-one', {
                 params: {
-                    q: 'true',
+                    q: 'false',
                     id: this.$route.query.id
                 }
             });
