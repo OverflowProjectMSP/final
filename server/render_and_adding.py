@@ -550,13 +550,13 @@ def add_img( base, name, isAvatar, isQ,id):
         name = 'a_'+id+dote
         with open(os.path.join(AVATAR, name), "wb") as file:
             file.write(decoded_bytes)
-        return 'http://127.0.0.1:5000/avatar/'+name
+        return 'https://api.upfollow.ru/avatar/'+name
     
     if isQ:
         name = 'q_'+id+dote
         with open(os.path.join(MEDIA, name), "wb") as file:
                 file.write(decoded_bytes)
-        return 'http://127.0.0.1:5000/media/'+name
+        return 'https://api.upfollow.ru/media/'+name
     
     name = 's_'+id+dote
     with open(os.path.join(MEDIA, name), "wb") as file:
