@@ -82,5 +82,9 @@ export default createRouter({
       path: "/UpdateQuestion",
       component: () => import("../components/Quetions/UpdateQuestion.vue"),
     },
+    {
+      path: "/UpdateState",
+      component: () => import("../components/States/UpdateState.vue"),
+    },
   ],
 });
