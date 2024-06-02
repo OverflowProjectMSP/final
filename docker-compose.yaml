@@ -30,17 +30,22 @@ services:
     networks:
       - netw
     environment:
-      - PASSWORD_PG=3333333
+      - PASSWORD_PG=password
       - PORT_PG=5432
       - HOST_PG=postgres-db
       - USER_PG=postgres
-  
+      - MEDIA=/app/media
+      - AVATAR=/app/avatar
+    volumes:
+      - ./media:/app/media
+      - ./avatar:/app/avatar
+      
   postgres-db:
     image: postgres:latest
     container_name: postgres-db
     environment:
-      USER_PG: postgres
-      PASSWORD_PG: 3333333
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
