@@ -7,7 +7,7 @@ export default {
         return {
             posts: [],
 
-            plusImg: 'src/assets/Forum/plus.svg',
+            // plusImg: 'src/assets/Forum/plus.svg',
 
             titleLang: ``,
             imageLang: ``,
@@ -153,11 +153,13 @@ export default {
         <div class="container-one">
             <div class="name-and-image">
                 <img class="forum-image" :src="`src/assets/Forum/${this.imageLang}.jpg`" alt="">
+                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="">
+
                 <p>{{ titleLang }}</p>
             </div>
-            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" :src="plusImg"><a href="/Quetion">
+            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/Quetion">
                     Создать вопрос</a></button>
-            <button class="create-post" v-else><img class="plus-icon" :src="plusImg"><a href="/NewState">
+            <button class="create-post" v-else><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewState">
                     Создать статью</a></button>
         </div>
     </div>
@@ -165,7 +167,7 @@ export default {
         <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
             <div class="sort-inside d-flex flex-row gap-3 align-items-center">
                 <div class="cont-search">
-                    <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search"
+                    <img width="30" src="../../assets/Forum/search.svg" alt=""><input class="search" type="search"
                         v-model="title">
                 </div>
                 <div class="d-flex filt" v-if='this.isQuestion'>
