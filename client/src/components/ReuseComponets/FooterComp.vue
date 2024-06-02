@@ -8,7 +8,7 @@
     <div class="d-flex flex-column align-items-center"> 
             <div class="d-flex flex-row">
                 <a href="#" style="--i:7"><img class="link user-select-none" src="../../assets/Footer/Telegram.png" alt="telegram"></a>
-                <a href="#" style="--i:8"><img class="link user-select-none" src="../../assets/Footer/Vk.png" alt="vk"></a>
+                <a href="https://vk.com/club226123105" style="--i:8"><img class="link user-select-none" src="../../assets/Footer/Vk.png" alt="vk"></a>
             </div>
             <p class="text">Upfollow</p>
             <hr class="hr">
