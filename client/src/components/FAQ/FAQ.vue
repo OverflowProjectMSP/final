@@ -79,7 +79,7 @@ export default {
             <div class="quest-block d-flex flex-row justify-content-between p-1 gap-2 align-items-center user-select-none"
                 @click="openAnswer(index)">
                 <span class="fw-bold fs-3">{{ faq.question }}</span>
-                <img :class="{ 'rotate-left': faq.isHide }" class="transition-all" :src="imgClose" alt="close">
+                <img :class="{ 'rotate-left': faq.isHide }" class="transition-all" src="../../assets/FAQ/close.svg" alt="close">
             </div>
             <p class="fs-4" :class="{ 'd-none': faq.isHide }">
                 {{ faq.answer }}
