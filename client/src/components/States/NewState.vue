@@ -58,7 +58,7 @@ export default {
             <div class="forms">
                 <div class="form1">
                     <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                        <option selected value="">Выбирите язык</option>
+                        <option selected value="">Выберите язык</option>
                         <option value="javascript">JavaScript</option>
                         <option value="ts">TS</option>
                         <option value="python">Python</option>
