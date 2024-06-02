@@ -47,7 +47,7 @@ export default {
                 },
                 {
                     name: `Маврин Никита`,
-                    role: `Дизайнер`,
+                    role: `Главный дизайнер`,
                     imageProfileDS: `nekit-CDwF_1Ar.jpg`,
                     dsProfile: `nikit0_17`
                 },
