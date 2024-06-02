@@ -151,8 +151,15 @@ export default {
     <div class="contant-head mt-3">
         <div class="container-one">
             <div class="name-and-image">
-                <img class="forum-image" :src="`src/assets/Forum/${this.imageLang}.jpg`" alt="">
-                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="">
+                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="" v-if="this.$route.query.lang == 'javascript'">
+                <img class="forum-image" src="../../assets/Forum/cpp.jpg" alt="" v-if="this.$route.query.lang == 'cpp'">
+                <img class="forum-image" src="../../assets/Forum/cs.jpg" alt="" v-if="this.$route.query.lang == 'cs'">
+                <img class="forum-image" src="../../assets/Forum/golang.jpg" alt="" v-if="this.$route.query.lang == 'golang'">
+                <img class="forum-image" src="../../assets/Forum/php.jpg" alt="" v-if="this.$route.query.lang == 'php'">
+                <img class="forum-image" src="../../assets/Forum/python.jpg" alt="" v-if="this.$route.query.lang == 'python'">
+                <img class="forum-image" src="../../assets/Forum/kotlin.jpg" alt="" v-if="this.$route.query.lang == 'kotlin'">
+                <img class="forum-image" src="../../assets/Forum/ts.jpg" alt="" v-if="this.$route.query.lang == 'ts'">
+                <img class="forum-image" src="../../assets/Forum/ruby.jpg" alt="" v-if="this.$route.query.lang == 'ruby'">
 
                 <p>{{ titleLang }}</p>
             </div>
