@@ -47,10 +47,6 @@ export default createRouter({
       component: () => import("../components/FAQ/FAQ.vue"),
     },
     {
-      path: "/TestLanding",
-      component: () => import("../components/Landing/LandingPage.vue"),
-    },
-    {
       path: "/Quetions",
       component: () => import("../components/Quetions/Quetions.vue"),
     },

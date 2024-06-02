@@ -25,16 +25,20 @@ PASSWORD_PG = os.getenv('PASSWORD_PG')
 PORT_PG = os.getenv('PORT_PG')
 USER_PG = os.getenv('USER_PG')
 HOST_PG = os.getenv('HOST_PG')
+MEDIA = os.getenv('MEDIA')
+AVATAR = os.getenv('AVATAR')
+
+
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv('SECRET_KEY')
+app.secret_key = "/zxc/"
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] =  'None'
 
 # enable CORS
-CORS(app, resources={r"*": {"origins": "http://localhost:5173", 'supports_credentials': True}})
+CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
 
 #Главная страница
 @app.route('/', methods=['GET'])
@@ -43,7 +47,7 @@ def home():
     response_object = {'status': 'success'} #БаZа
     response_object['message'] = session.get('id')
     logging.warning('1')
-    logging.info(session.get('id')) #debug
+    # logging.info(session.get('id')) #debug
     logging.warning(response_object)
     session.pop('id', None)
     return jsonify(response_object)
@@ -131,7 +135,6 @@ def add_tables():
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
     
 
     
@@ -141,6 +144,7 @@ from render_and_adding import *
 from others import * 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+      add_tables()
+      app.run(host='0.0.0.0', port=80)
 
 

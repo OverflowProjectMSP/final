@@ -8,19 +8,19 @@ export default {
                 {
                     name: `Суров Константин`,
                     role: `Тимлид/Старший Бэкенд разработчик`,
-                    imageProfileDS: `kostya.jpg`,
+                    imageProfileDS: `kostya-B0gccQ8S.jpg`,
                     dsProfile: `kosty_py`
                 },
                 {
                     name: `Шадловский Евгений`,
                     role: `Заместитель тимлида/Старший Фронтенд разработчик`,
-                    imageProfileDS: `jena.png`,
+                    imageProfileDS: `jena-CiubDH9S.png`,
                     dsProfile: `kinestrik`
                 },
                 {
                     name: `Корецкий Александр`,
                     role: `Заместитель ведущего Бэкенд разработчика`,
-                    imageProfileDS: `sanya.png`,
+                    imageProfileDS: `sanya-DGGo_WaA.png`,
                     dsProfile: `febolo`,
                     tgProfile: `febolo`,
                     vkProfile: `febolo`,
@@ -28,33 +28,33 @@ export default {
                 {
                     name: `Горбенко Иван`,
                     role: `Заместитетель ведущего Фронтенд разработчика`,
-                    imageProfileDS: `vanya.jpg`,
+                    imageProfileDS: `vanya-CpiWEV_L.jpg`,
                     dsProfile: `garleenn`,
                     tgProfile: `Garleen`,
                 },
                 {
                     name: `Сары Максим`,
                     role: `Фронтенд разработчик`,
-                    imageProfileDS: `maksym.jpg`,
+                    imageProfileDS: `maksym-BjGvZgxt.jpg`,
                     dsProfile: `habbock`,
                     tgProfile: `HaBBeRL`,
                 },
                 {
                     name: `Лазутин Егор`,
                     role: `Фронтенд разработчик`,
-                    imageProfileDS: `therisingdream.png`,
+                    imageProfileDS: `therisingdream-DLNwvGPg.png`,
                     dsProfile: `therisingdream`
                 },
                 {
                     name: `Маврин Никита`,
                     role: `Дизайнер`,
-                    imageProfileDS: `nekit.jpg`,
+                    imageProfileDS: `nekit-CDwF_1Ar.jpg`,
                     dsProfile: `nikit0_17`
                 },
                 {
                     name: `Беднин Арсений`,
                     role: `Дизайнер`,
-                    imageProfileDS: `kenma.gif`,
+                    imageProfileDS: `kenma-CP1HimCf.gif`,
                     dsProfile: `kenmaxd`
                 },
             ],
@@ -136,25 +136,36 @@ export default {
                 < </div>
                     <div class="collaps-container d-flex justify-content-center flex-wrap gap-4">
                         <div class="dev-card d-flex flex-column gap-0 align-items-center" @click="showDev(this.index)">
-                            <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index]"
+                            <img class="rounded-2 user-select-none" :src="`assets/` + images[index]"
                                 :alt="names[index]">
+                            <!-- НЕ ТРОГАТЬ!!!!!!!!!!!!!! -->
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kostya.jpg">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/jena.png">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/sanya.png">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/vanya.jpg">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/maksym.jpg">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/therisingdream.png">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/nekit.jpg">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kenma.gif">
+                            
+
                             <h4 class="mt-2 text-center">{{ names[index] }}</h4>
                             <span class="text-center">{{ roles[index] }}</span>
                         </div>
                         <div class="dev-card dev-card-2 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index1)">
-                            <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index1]"
+                            <img class="rounded-2 user-select-none" :src="`assets/` + images[index1]"
                                 :alt="names[index1]">
                             <h4 class="mt-2 text-center">{{ names[index1] }}</h4>
                             <span class="text-center">{{ roles[index1] }}</span>
                         </div>
                         <div class="dev-card dev-card-3 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index2)">
-                            <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index2]"
+                            <img class="rounded-2 user-select-none" :src="`assets/` + images[index2]"
                                 :alt="names[index2]">
                             <h4 class="mt-2 text-center">{{ names[index2] }}</h4>
                             <span class="text-center">{{ roles[index2] }}</span>
                         </div>
                         <div class="dev-card dev-card-4 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index3)">
-                            <img class="rounded-2 user-select-none" :src="`src/assets/Main/` + images[index3]"
+                            <img class="rounded-2 user-select-none" :src="`assets/` + images[index3]"
                                 :alt="names[index3]">
                             <h4 class="mt-2 text-center">{{ names[index3] }}</h4>
                             <span class="text-center">{{ roles[index3] }}</span>
@@ -171,6 +182,8 @@ export default {
 </template>
 
 <style scoped>
+.d-none{display: none;}
+
 .dev-card {
     max-width: 250px;
     height: 342.8px;

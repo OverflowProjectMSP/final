@@ -17,8 +17,17 @@ export default {
         <div class="window">
             <span class="close opacity-50 fs-2" @click="$emit('showDev')">x</span>
             <div class="info-block d-flex gap-5 align-items-center">
-                <img class="rounded-5 user-select-none max-h-50" :src="`src/assets/Main/` + developer.imageProfileDS"
-                    :alt="developer.name">
+                <img class="rounded-5 user-select-none max-h-50" :src="`assets/` + developer.imageProfileDS"
+                :alt="developer.name">
+                <!-- НЕ ТРОГАТЬ!!!!!!!!!!!!!! -->
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kostya.jpg">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/jena.png">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/sanya.png">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/vanya.jpg">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/maksym.jpg">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/therisingdream.png">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/nekit.jpg">
+                <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kenma.gif">
                 <div class="about-block d-flex flex-column gap-1">
                     <h2 class="fw-bold">{{ developer.name }}</h2>
                     <span class="text-muted">{{ developer.role }}</span>
