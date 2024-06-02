@@ -1,6 +1,5 @@
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:5000';
 
 export default {
     data() {
@@ -201,8 +200,8 @@ export default {
                     <h2 class="title">{{ post.title }}</h2>
                     <p class="description">{{ post.descriptions }}</p>
                 </div>
-                <div class="decided" v-if="!post.is_solved">
-                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/Forum/decided.svg'"
+                <div class="decided" v-if="post.is_solved">
+                    <div class="decid"><img width="60" class="decided-img" src="../../assets/Forum/decided.svg"
                             alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>
