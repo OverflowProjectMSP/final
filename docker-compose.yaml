@@ -30,7 +30,7 @@ services:
     networks:
       - netw
     environment:
-      - PASSWORD_PG=password
+      - PASSWORD_PG=3333333
       - PORT_PG=5432
       - HOST_PG=postgres-db
       - USER_PG=postgres
@@ -40,7 +40,7 @@ services:
     container_name: postgres-db
     environment:
       USER_PG: postgres
-      PASSWORD_PG: password
+      PASSWORD_PG: 3333333
       POSTGRES_DB: postgres
     ports:
       - "5432:5432"
