@@ -32,7 +32,7 @@ AVATAR = os.getenv('AVATAR')
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv('SECRET_KEY')
+app.secret_key = "/zxc/"
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] =  'None'
