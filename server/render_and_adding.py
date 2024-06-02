@@ -180,7 +180,7 @@ def show_all_by_user(id):
             return return_data
 
 # удалить что-то
-def delete(id, isQ):
+def delete(id, isQ, id_j):
     if isQ:
         try: 
             pg = psycopg2.connect(f"""
@@ -191,13 +191,19 @@ def delete(id, isQ):
                 port={PORT_PG}
             """)
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute(f"select id_u from questions where id=$${id}$$")
+            id_m = cursor.fetchone()[0]
+            
+            if id_j == id_m:
+                cursor.execute(f'''DELETE FROM questions WHERE id=$${id}$$''')
+                cursor.execute(f'''DELETE FROM answers WHERE id_q=$${id}$$''')
 
-            cursor.execute(f'''DELETE FROM questions WHERE id=$${id}$$''')
-            cursor.execute(f'''DELETE FROM answers WHERE id_q=$${id}$$''')
-
-            pg.commit()
-            return_data = 'ok'
-            logging.info(f'Вопрос {id} удален')
+                pg.commit()
+                return_data = 'ok'
+                logging.info(f'Вопрос {id} удален')
+            else:
+                return_data = "а тебе нельзя"
+                logging.info(return_data)
         except (Exception, Error) as error:
             logging.error(f'DB: ', error)
             return_data = f"Error" 
@@ -218,13 +224,19 @@ def delete(id, isQ):
             port={PORT_PG}
         """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        logging.info(type(id))
-        cursor.execute(f'''DELETE FROM states WHERE id=$${id}$$;''')
-        cursor.execute(f'''DELETE FROM comments WHERE id_s=$${id}$$;''')
+        cursor.execute(f"select id_u from states where id=$${id}$$")
+        id_m = cursor.fetchone()[0]
+            
+        if id_j == id_m:
+            cursor.execute(f'''DELETE FROM states WHERE id=$${id}$$;''')
+            cursor.execute(f'''DELETE FROM comments WHERE id_s=$${id}$$;''')
 
-        pg.commit()
-        return_data = 'Ok'
-        logging.info(f'Статья {id} удалена')
+            pg.commit()
+            return_data = 'Ok'
+            logging.info(f'Статья {id} удалена')
+        else:
+            return_data = "а тебе нельзя"
+            logging.info(return_data)
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -260,14 +272,20 @@ def change(id, info, isQ):
             """)
 
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute(f"select id_u from questions where id=$${id}$$")
+            id_m = cursor.fetchone()[0]
+            
+            if id_j == id_m:
+                cursor.execute(f'''UPDATE questions
+                            SET {infor}
+                            WHERE id=$${id}$$''')
 
-            cursor.execute(f'''UPDATE questions
-                        SET {infor}
-                        WHERE id=$${id}$$''')
-
-            pg.commit()
-            return_data = 'ok'
-            logging.info(f'Вопрос {id} изменен')
+                pg.commit()
+                return_data = 'ok'
+                logging.info(f'Вопрос {id} изменен')
+            else:
+                return_data = "а тебе нельзя"
+                logging.info(return_data)
             
         except (Exception, Error) as error:
             logging.error(f'DB: ', error)
@@ -289,13 +307,19 @@ def change(id, info, isQ):
             port={PORT_PG}
         """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        cursor.execute(f'''UPDATE states
-                    SET {info}
-                    WHERE id=$${id}$$''')
-        pg.commit()
-        return_data = 'ok'
-        logging.info(f'Стаья {id} изменена')
+        cursor.execute(f"select id_u from states where id=$${id}$$")
+        id_m = cursor.fetchone()[0]
+        
+        if id_j == id_m:
+            cursor.execute(f'''UPDATE states
+                        SET {info}
+                        WHERE id=$${id}$$''')
+            pg.commit()
+            return_data = 'ok'
+            logging.info(f'Стаья {id} изменена')
+        else:
+            return_data = "а тебе нельзя"
+            logging.info(return_data)
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -444,14 +468,14 @@ def show_one(id, isQ):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print(id)
         cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
-        
+
         all_states = dict(cursor.fetchall()[0])
 
         all_asw = show_answers(False, id)
 
 
         return_data = {
-                'states': all_states,                        
+                'state': all_states,                        
                 'answers': all_asw     
                            }                           
         logging.info(f'Сатья {id} была отправлен')
@@ -894,7 +918,6 @@ def one_something():
     if is_Q == 'true':
         responce_object['all'] = show_one(id, True)
     else:
-        print(1)
         responce_object['all'] = show_one(id, False)
 
 
@@ -908,9 +931,9 @@ def delete_():
     post_data = request.args.get('id')
 
     if  request.args.get('q') == 'true':
-        responce_object['all'] = delete(post_data, True) 
+        responce_object['all'] = delete(post_data, True, session.get("id")) 
     else:
-        responce_object['all'] = delete(post_data, False) 
+        responce_object['all'] = delete(post_data, False, session.get("id")) 
     
     logging.info(responce_object['all'])
 
@@ -924,9 +947,9 @@ def change_():
     post_data = request.get_json()
 
     if post_data.get('q') == "true":
-        responce_object['all'] = change(post_data.get('id'), post_data.get('all'), True) # а что - решим потом (название поменять надо)
+        responce_object['all'] = change(post_data.get('id'), post_data.get('all'), True, session.get("id")) # а что - решим потом (название поменять надо)
     else: 
-        responce_object['all'] = change(post_data.get('id'), post_data.get('all'), False) # а что - решим потом (название поменять надо)
+        responce_object['all'] = change(post_data.get('id'), post_data.get('all'), False, session.get("id")) # а что - решим потом (название поменять надо)
 
     logging.info(responce_object['all'])
 
