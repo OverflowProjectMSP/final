@@ -113,9 +113,6 @@ export default {
 
             <div class="row pt-4">
                 <div class="col-6">
-                    <h4>Сложность вопроса</h4>
-                </div>
-                <div class="col-6">
                     <h4>Ваш язык программирования</h4>
                 </div>
 
