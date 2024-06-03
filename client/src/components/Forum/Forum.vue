@@ -166,7 +166,7 @@ export default {
 
                 <p>{{ titleLang }}</p>
             </div>
-            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/Quetion">
+            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewQuetion">
                     Создать вопрос</a></button>
             <button class="create-post" v-else><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewState">
                     Создать статью</a></button>
