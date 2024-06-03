@@ -19,7 +19,7 @@ export default {
             postUsers: [],
 
             title: ``,
-            dificulty: 'false',
+            dificulty: '',
         }
     },
     mounted() {
@@ -40,6 +40,7 @@ export default {
             } else {
                 this.posts = res.data.all.states;
             }
+            this.postUsers = []
             this.loadAnswerUser()
         },
 
@@ -64,6 +65,7 @@ export default {
                 });
                 this.posts = res.data.all;
             }
+            this.loadAnswerUser()
         },
 
         async loadAnswerUser() {
