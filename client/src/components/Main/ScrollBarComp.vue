@@ -14,7 +14,7 @@ export default {
                 {
                     name: `Шадловский Евгений`,
                     role: `Заместитель тимлида/Старший Фронтенд разработчик`,
-                    imageProfileDS: `jena-CiubDH9S.png`,
+                    imageProfileDS: `jenya-BRojvQJH.png`,
                     dsProfile: `kinestrik`
                 },
                 {
@@ -140,13 +140,15 @@ export default {
                                 :alt="names[index]">
                             <!-- НЕ ТРОГАТЬ!!!!!!!!!!!!!! -->
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kostya.jpg">
-                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/jena.png">
+                            <img class="rounded-2 user-select-none d-none" src="../../assets/Main/jenya.png">
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/sanya.png">
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/vanya.jpg">
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/maksym.jpg">
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/therisingdream.png">
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/nekit.jpg">
                             <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kenma.gif">
+
+
                             
 
                             <h4 class="mt-2 text-center">{{ names[index] }}</h4>
