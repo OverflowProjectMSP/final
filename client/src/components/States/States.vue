@@ -142,6 +142,7 @@ export default {
     flex-direction: column;
     align-items: center;
     overflow: scroll; 
+    overflow-x: hidden;
     height: 555px;
     padding-top: 10px;
     /* width: auto;
