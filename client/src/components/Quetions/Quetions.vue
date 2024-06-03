@@ -11,19 +11,7 @@ export default {
 
     data() {
         return {
-            quetions: [
-                {
-    "acnt": 3,
-    "data": "Sat, 01 Jun 2024 13:53:30 GMT",
-    "descriptions": "\u0413\u0434\u0435 \u043d\u0430\u0439\u0442\u0438 FAQ",
-    "details": "?",
-    "dificulty": "\u041f\u0440\u043e\u0441\u0442\u043e\u0439",
-    "id": "76641375-467e-4661-9734-b3ca068a597f",
-    "id_u": "3e08f7ab-d569-4bd4-bc67-a7450896ac32",
-    "is_solved": false,
-    "tag": "javascript"
-}
-            ],
+            quetions: [],
 
             tag: ``,
             dificulty: ``,
@@ -31,6 +19,8 @@ export default {
             author: ``,
 
             Show: false,
+
+            cnt: 0
         }
     },
     mounted() {
@@ -40,6 +30,7 @@ export default {
         async loadQuestions() {
             let res = await axios.get('/show-questions');
             this.quetions = res.data.all;
+            this.cnt++
         },
         CloseModal(Show) {
             this.Show = false
@@ -123,7 +114,7 @@ export default {
         <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
         <model-wind v-if="Show" @CloseModal="CloseModal" />
     </div>
-    <div class="content p-2" v-if="this.quetions.length == 0">
+    <div class="content p-2" v-if="this.quetions.length == 0 && this.cnt==1">
         <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
     </div>
 </template>
