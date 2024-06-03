@@ -12,6 +12,17 @@ export default {
     data() {
         return {
             quetions: [
+                {
+    "acnt": 3,
+    "data": "Sat, 01 Jun 2024 13:53:30 GMT",
+    "descriptions": "\u0413\u0434\u0435 \u043d\u0430\u0439\u0442\u0438 FAQ",
+    "details": "?",
+    "dificulty": "\u041f\u0440\u043e\u0441\u0442\u043e\u0439",
+    "id": "76641375-467e-4661-9734-b3ca068a597f",
+    "id_u": "3e08f7ab-d569-4bd4-bc67-a7450896ac32",
+    "is_solved": false,
+    "tag": "javascript"
+}
             ],
 
             tag: ``,
@@ -59,8 +70,8 @@ export default {
 <template>
     <div class="quest-menu mt-3">
         <div class="active-container d-flex flex-column p-2">
-            <h2>Активные вопросы</h2>
-            <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
+            <h2 class="mar">Активные вопросы</h2>
+            <p class="mar">В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
             <div class="all-inputs">
                 <div class="inputs">
                     <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос"
@@ -118,6 +129,11 @@ export default {
 </template>
 
 <style scoped>
+
+.mar {
+    margin-left: 30px;
+}
+
 .cont {
     overflow: scroll;
     height: 555px;
@@ -367,3 +383,5 @@ h4 {
     }
 }
 </style>
+
+
