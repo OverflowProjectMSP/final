@@ -182,10 +182,10 @@ export default {
                 <div class="d-flex filt" v-if='this.isQuestion'>
                     <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select form-1 " v-model="dificulty">
-                        <option value="Простой" selected>Лёгкие</option>
+                        <option value="Простой">Лёгкие</option>
                         <option value="Средний">Средние</option>
                         <option value="Сложный">Сложные</option>
-                        <option value="false">Без фильтров</option>
+                        <option value="" selected >Без фильтров</option>
                     </select>
                 </div>
             </div>
