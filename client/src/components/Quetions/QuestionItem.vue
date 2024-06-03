@@ -92,7 +92,7 @@ export default {
         },
 
         async addComment() {
-            if (this.text != ""){
+            if (this.text.length >= 3 ){
                 await axios.post(`/answers`, {
                     id: this.$route.query.id,
                     q: 'true',
