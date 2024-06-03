@@ -92,19 +92,21 @@ export default {
         },
 
         async addComment() {
-            await axios.post(`/answers`, {
-                id: this.$route.query.id,
-                q: 'true',
-                text: this.text,
-            });
-            this.answers.push({
-                id_u: this.userNow.id,
-                text: this.text,
-                user: this.userNow
-            });
-            
-            this.text = ``;
-            this.v_For1()
+            if (this.text != ""){
+                await axios.post(`/answers`, {
+                    id: this.$route.query.id,
+                    q: 'true',
+                    text: this.text,
+                });
+                this.answers.push({
+                    id_u: this.userNow.id,
+                    text: this.text,
+                    user: this.userNow
+                });
+                
+                this.text = ``;
+                this.v_For1()
+            }
         },
         async deleteQuestion() {
             await axios.delete('/delete', {
