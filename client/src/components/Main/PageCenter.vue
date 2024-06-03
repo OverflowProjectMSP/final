@@ -85,11 +85,11 @@ export default {
                 </div>
                 <div class="wehave-item">
                     <img src="../../assets/Main/expert.png" alt="">
-                    <p class="wehave-item-desc">10 экспертов в сети <br> и помогают сейчас</p>
+                    <p class="wehave-item-desc">5 экспертов в сети <br> и помогают сейчас</p>
                 </div>
                 <div class="wehave-item">
                     <img src="../../assets/Main/users.png" alt="">
-                    <p class="wehave-item-desc">100 участников <br> онлайн</p>
+                    <p class="wehave-item-desc">10 участников <br> онлайн</p>
                 </div>
             </div>
         </div>
