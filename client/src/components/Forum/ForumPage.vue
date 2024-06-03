@@ -3,7 +3,7 @@ import axios from 'axios';
 </script>
 
 <template>
-<div class="container d-flex flex-column gap-2 align-items-center">
+<div class="container d-flex flex-column gap-2 align-items-center mt-5">
     <h2 class="text-center mt-3">Выберите язык:</h2>
     <a href="/Forum?lang=javascript"><button class="btn btn-outline-primary">JavaScript</button></a>
     <a href="/Forum?lang=python"><button class="btn btn-outline-primary">Python</button></a>

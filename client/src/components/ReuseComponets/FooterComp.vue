@@ -43,7 +43,8 @@ a {
     justify-content: center;      
     align-content: center;  
     flex-wrap: wrap;
-    margin-top: 0 !important;
+    margin-top: 20px !important;
+    
     /* padding-top: 60px; */
     /* border-radius: 10px 10px 0px 0px; */
 }
@@ -79,6 +80,10 @@ a {
     color: white;
     text-align: center;
 }
+
+
+
+
 @media (max-width: 400px) {
     .footer{
         padding-top: 30px;
