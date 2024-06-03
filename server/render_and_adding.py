@@ -570,6 +570,7 @@ def add_img( base, name, isAvatar, isQ,id):
     base=base[base.find(',')+1:]
     decoded_bytes = base64.b64decode(base)
     dote = name[name.find('.'):]
+    if dote == ".mp4": return 'https://cdn.discordapp.com/attachments/1176895493452865638/1247138303086690334/mda.png?ex=665eef8e&is=665d9e0e&hm=a0d6752b3531192284b4913733b96c850b53ab4242d701558084ee5a01075c5b&
     if isAvatar:
         name = 'a_'+id+dote
         with open(os.path.join(AVATAR, name), "wb") as file:
