@@ -499,7 +499,7 @@ def filtre(filters, isQ):
         filtr = ' WHERE'
         for i in filters:
             logging.info(i)
-            if filters[i] != 'false':
+            if filters[i] != '':
                 if i == 'filtr':
                     continue
                 if filtr == ' WHERE':
