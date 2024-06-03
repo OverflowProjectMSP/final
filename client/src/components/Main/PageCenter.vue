@@ -346,6 +346,10 @@ hr {
     gap: 20px;
 }
 
+.wehave p {
+    user-select: none;
+}
+
 
 
 @media (max-width: 1225px) {
