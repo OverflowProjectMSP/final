@@ -67,7 +67,8 @@ export default {
         },
 
         async loadAnswerUser() {
-            for (let i = 0; i < this.posts.length; i++) {
+            this.postUsers = []
+            for (let i = 0; i < this.posts.length; i++) {       
                 let user = await this.loadUsers(this.posts[i]);
                 this.postUsers.push(user)
             };
