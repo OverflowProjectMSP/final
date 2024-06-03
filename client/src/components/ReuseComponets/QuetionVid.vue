@@ -291,11 +291,15 @@ export default {
         }
 
         .ans_check {
-            gap: 0;
+            
         }
 
         .ans_check button {
             margin-right: 30px;
+        }
+
+        .check {
+            top: 40px !important;
         }
     }
 
@@ -361,6 +365,20 @@ export default {
             margin-right: -20;
 
         } */
+    }
+
+    @media (max-width: 415px) {
+        .main-container {
+            width: 350px !important;
+        }
+
+        .check {
+            top: 65px !important;
+        }
+
+        .ans_check button {
+            bottom: 10px !important;
+        }
     }
 
     @media (max-width: 540px) {
