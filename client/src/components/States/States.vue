@@ -11,35 +11,13 @@ export default {
     },
     data() {
         return {
-            states: [
-                {
-                    discriptions: `VUE JS IS PARASHА??`,
-                    tag: 'Python',
-                    subscribers: 50,
-                    hours: 43,
-                    views: 43,
-                    answers: 423,
-                    complexity: 'Средне',
-                    id: 0,
-                    question: false,            
-                },
-                {
-                    discriptions: `VUE JS IS PARASHА??`,
-                    tag: 'Python',
-                    subscribers: 50,
-                    hours: 43,
-                    views: 43,
-                    answers: 423,
-                    complexity: 'Средне',
-                    id: 0,
-                    question: false,            
-                },
-            ],
+            states: [],
             Show: false,
             tag: ``,
 
             title: ``,
             author: ``,
+            cnt: 0
         }
     },
     methods: {
@@ -52,6 +30,7 @@ export default {
         async loadStates() {
             let res = await axios.get('/show-states');
             this.states = res.data.all;
+            this.cnt++
             // console.log(res.data)
         },
 
@@ -124,7 +103,7 @@ export default {
         </a>
     </div>
 </div>
-<div class="content p-2" v-if="this.states.length == 0">
+<div class="content p-2" v-if="this.states.length == 0 && this.cnt==1">
     <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
 </div>
 
