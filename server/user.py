@@ -218,12 +218,12 @@ def check_old_password(id, password):
 def change_password_send(password, email):
     try: 
         pg = psycopg2.connect(f"""
-                    host=localhost
-                    dbname=postgres
-                    user=postgres
-                    password={os.getenv('PASSWORD_PG')}
-                    port={os.getenv('PORT_PG')}
-                """)
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print(f'''UPDATE users
                 SET password=$${password}$$
@@ -471,7 +471,7 @@ def new_password_with_email():
     
     elif request.method == 'POST' and post_data.get('email'):
         #Восстановление пароля если мы НЕ в аккаунте
-        logging.info(send_code(post_data.get('email')))
+        send_code(post_data.get('email'))
     
     else:
         # ХЗ, вроде проверка кода подтверждения
