@@ -4,7 +4,7 @@
 
 <template>
 
-<div class="footer mt-3">
+<div class="footer">
     <div class="d-flex flex-column align-items-center"> 
             <div class="d-flex flex-row">
                 <a href="https://t.me/upfollowru" style="--i:7"><img class="link user-select-none" src="../../assets/Footer/Telegram.png" alt="telegram"></a>
@@ -43,7 +43,6 @@ a {
     justify-content: center;      
     align-content: center;  
     flex-wrap: wrap;
-    margin-top: 20px !important;
     
     /* padding-top: 60px; */
     /* border-radius: 10px 10px 0px 0px; */
