@@ -20,18 +20,22 @@ export default {
             }
         }
     },
-    methods: {
+   methods: {
         async addQuestion() {
-            let res = await axios.post('/new-question', {
-                form: this.form,
-            });
-            if (res.data.res == 'Вопрос добавлен') {
-                this.error = ''
-                this.$router.push('/Quetions')
+            if(this.form.tag != ``) {
+                let res = await axios.post('/new-question', {
+                    form: this.form,
+                });
+                if (res.data.res == 'Вопрос добавлен') {
+                    this.error = ''
+                    this.$router.push('/Quetions')
+                    return;
+                }
+                this.error = 'Такой вопрос уже существует'
                 return;
+            } else {
+                this.error = 'Выберите язык программирования'
             }
-            this.error = 'Такой вопрос уже существует'
-            return;
         },
     }
 }
@@ -119,7 +123,8 @@ export default {
                             <option value="java">Java</option>
                             <option value="cs">C#</option>
                             <option value="go">Golang</option>
-                            <option value="false">Без фильтров</option>
+                            <option value="IB">ИБ</option>
+                            <option value="">Без фильтров</option>
                         </select>
 
                     </div>
