@@ -91,6 +91,7 @@ export default {
                             <option value="java">Java</option>
                             <option value="cs">C#</option>
                             <option value="go">Golang</option>
+                            <option value="IB">ИБ</option>
                             <option value="">Без фильтров</option>
                         </select>
                     </div>
