@@ -198,8 +198,7 @@ export default {
             <h5 role="button" class="mb-0" :class="{ 'border-bottom border-2 border-dark fw-semibold': !isQuestion }"
                 @click="loadForum">Статьи</h5>
         </div>
-
-        <div class="post" v-for="post in posts">
+        <div class="post" v-for="post in posts" v-if="this.posts.length != 0">
             <div class="account">
                 <a :href="`/Profile?id=${post.id_u}`">
                     <img class="account-img" :src="post.user.avatar" alt="">{{ post.user.username }}
@@ -218,17 +217,18 @@ export default {
             <div class="answer" v-if="this.isQuestion">
                 <a :href="`/QuestionItem?id=` + post.id + `&q=true`"><button><img
                     :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Ответов</button></a>
-            </div>
+                    </div>
             <div class="answer" v-else>
                 <a :href="`/StateItem?id=` + post.id + `&q=false`"><button><img
                     :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Комментариев </button></a>
             </div>
-        </div>
+            </div>
+        <div class="mt-2" v-else><h3>Ничего не найдено!</h3></div>
 
     </div>
 </template>
 
-<style scoped>
+<style scoped>  
 a {
     text-decoration: none !important;
     color: #fff;
