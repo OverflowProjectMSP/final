@@ -9,6 +9,7 @@
             <div class="d-flex flex-row">
                 <a href="https://t.me/upfollowru" style="--i:7"><img class="link user-select-none" src="../../assets/Footer/Telegram.png" alt="telegram"></a>
                 <a href="https://vk.com/club226123105" style="--i:8"><img class="link user-select-none" src="../../assets/Footer/Vk.png" alt="vk"></a>
+                                <a href="https://discord.gg/RmEbfBCs" style="--i:9"><img class="link user-select-none" src="../../assets/Footer/Discord.png" alt="discord"></a>
             </div>
             <p class="text">Upfollow</p>
             <hr class="hr">
