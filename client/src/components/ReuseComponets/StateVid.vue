@@ -62,8 +62,8 @@ export default {
 </template>
 
 <style>
-.answ{
-/* text-align: center; */
+.answ button {
+
 }
     .window {
         display: flex;
@@ -317,7 +317,7 @@ export default {
         .check {
             /* position: absolute; */
 
-            top: 20px !important;   
+            top: 40px !important;   
         }
 
         .main-container {
@@ -388,9 +388,11 @@ export default {
 
         .main-container {
             flex-direction: row;
-            align-items: flex-end;
             gap: 0;
+            height: 160px;
         }
+
+
 
         .info p {
             width: 120px;
@@ -416,6 +418,20 @@ export default {
             margin-right: -20;
 
         } */
+    }
+
+    @media (max-width: 415px) {
+        .main-container {
+            width: 350px !important;
+        }
+
+        .check {
+            top: 65px !important;
+        }
+
+        .ans_check button {
+            bottom: 10px !important;
+        }
     }
 
     @media (max-width: 540px) {

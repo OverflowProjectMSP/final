@@ -1,13 +1,12 @@
 <script>
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:5000';
 
 export default {
     data() {
         return {
             posts: [],
 
-            plusImg: 'src/assets/Forum/plus.svg',
+            // plusImg: 'src/assets/Forum/plus.svg',
 
             titleLang: ``,
             imageLang: ``,
@@ -20,7 +19,7 @@ export default {
             postUsers: [],
 
             title: ``,
-            dificulty: 'false',
+            dificulty: '',
         }
     },
     mounted() {
@@ -41,6 +40,7 @@ export default {
             } else {
                 this.posts = res.data.all.states;
             }
+            this.postUsers = []
             this.loadAnswerUser()
         },
 
@@ -65,10 +65,12 @@ export default {
                 });
                 this.posts = res.data.all;
             }
+            this.loadAnswerUser()
         },
 
         async loadAnswerUser() {
-            for (let i = 0; i < this.posts.length; i++) {
+            this.postUsers = []
+            for (let i = 0; i < this.posts.length; i++) {       
                 let user = await this.loadUsers(this.posts[i]);
                 this.postUsers.push(user)
             };
@@ -152,12 +154,21 @@ export default {
     <div class="contant-head mt-3">
         <div class="container-one">
             <div class="name-and-image">
-                <img class="forum-image" :src="`src/assets/Forum/${this.imageLang}.jpg`" alt="">
+                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="" v-if="this.$route.query.lang == 'javascript'">
+                <img class="forum-image" src="../../assets/Forum/cpp.jpg" alt="" v-if="this.$route.query.lang == 'cpp'">
+                <img class="forum-image" src="../../assets/Forum/cs.jpg" alt="" v-if="this.$route.query.lang == 'cs'">
+                <img class="forum-image" src="../../assets/Forum/golang.jpg" alt="" v-if="this.$route.query.lang == 'golang'">
+                <img class="forum-image" src="../../assets/Forum/php.jpg" alt="" v-if="this.$route.query.lang == 'php'">
+                <img class="forum-image" src="../../assets/Forum/python.jpg" alt="" v-if="this.$route.query.lang == 'python'">
+                <img class="forum-image" src="../../assets/Forum/kotlin.jpg" alt="" v-if="this.$route.query.lang == 'kotlin'">
+                <img class="forum-image" src="../../assets/Forum/ts.jpg" alt="" v-if="this.$route.query.lang == 'ts'">
+                <img class="forum-image" src="../../assets/Forum/ruby.jpg" alt="" v-if="this.$route.query.lang == 'ruby'">
+
                 <p>{{ titleLang }}</p>
             </div>
-            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" :src="plusImg"><a href="/Quetion">
+            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewQuetion">
                     Создать вопрос</a></button>
-            <button class="create-post" v-else><img class="plus-icon" :src="plusImg"><a href="/NewState">
+            <button class="create-post" v-else><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewState">
                     Создать статью</a></button>
         </div>
     </div>
@@ -165,16 +176,16 @@ export default {
         <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
             <div class="sort-inside d-flex flex-row gap-3 align-items-center">
                 <div class="cont-search">
-                    <img width="30" :src="'src/assets/Forum/search.svg'" alt=""><input class="search" type="search"
+                    <img width="30" src="../../assets/Forum/search.svg" alt=""><input class="search" type="search"
                         v-model="title">
                 </div>
                 <div class="d-flex filt" v-if='this.isQuestion'>
                     <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
                     <select class="form-select form-1 " v-model="dificulty">
-                        <option value="Простой" selected>Лёгкие</option>
+                        <option value="Простой">Лёгкие</option>
                         <option value="Средний">Средние</option>
                         <option value="Сложный">Сложные</option>
-                        <option value="false">Без фильтров</option>
+                        <option value="" selected >Без фильтров</option>
                     </select>
                 </div>
             </div>
@@ -199,8 +210,8 @@ export default {
                     <h2 class="title">{{ post.title }}</h2>
                     <p class="description">{{ post.descriptions }}</p>
                 </div>
-                <div class="decided" v-if="!post.is_solved">
-                    <div class="decid"><img width="60" class="decided-img" :src="'src/assets/Forum/decided.svg'"
+                <div class="decided" v-if="post.is_solved">
+                    <div class="decid"><img width="60" class="decided-img" src="../../assets/Forum/decided.svg"
                             alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
                 </div>
             </div>

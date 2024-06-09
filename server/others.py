@@ -108,14 +108,13 @@ def helper(phone, email, msg, id_u):
             return return_data
 
 def is_solved(id, isS):
-    print(id, isS)
     try: 
         pg = psycopg2.connect(f"""
-            host=localhost
+            host={HOST_PG}
             dbname=postgres
-            user=postgres
-            password={os.getenv('PASSWORD_PG')}
-            port={os.getenv('PORT_PG')}
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -137,7 +136,33 @@ def is_solved(id, isS):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
     
+def count_reg():
+    try: 
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
 
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute('''SELECT COUNT(*) FROM users''')
+
+        return_data = cursor.fetchall()[0]
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+    
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -219,7 +244,6 @@ def session__():
         logging.info('Пользователь не зашел в аккаунт')
         return jsonify({'status': 'success', 'all': 'false'})
 
-
 @app.route('/is-solved', methods=['PUT'])
 def is_s():
     response_object = {'status': 'success'} #БаZа
@@ -227,3 +251,11 @@ def is_s():
 
     is_solved(post_data.get('id'), post_data.get('is_solved'))
     return  jsonify(response_object) 
+
+@app.route('/users-reg', methods=['GET'])
+def reg_():
+    responce_object = {'status': 'success'} #БаZа
+
+    responce_object['regs'] = count_reg()[0]
+
+    return jsonify(responce_object)

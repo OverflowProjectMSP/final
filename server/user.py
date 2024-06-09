@@ -123,7 +123,7 @@ def add_user_todb(name, email, pas):
         send_user.append(cursor.fetchone())
         # Проверка существует ли такой пользователь
         if send_user[0][0] == 0 and send_user[1][0] == 0:
-            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', 'src/assets/Header/AvatarDef.svg', False, datetime.now().isoformat())
+            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', 'https://cdn.discordapp.com/attachments/1176895493452865638/1247138303086690334/mda.png?ex=665eef8e&is=665d9e0e&hm=a0d6752b3531192284b4913733b96c850b53ab4242d701558084ee5a01075c5b&', False, datetime.now().isoformat())
             
             cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c) VALUES {user_to_write}""")      
             
@@ -218,12 +218,12 @@ def check_old_password(id, password):
 def change_password_send(password, email):
     try: 
         pg = psycopg2.connect(f"""
-                    host=localhost
-                    dbname=postgres
-                    user=postgres
-                    password={os.getenv('PASSWORD_PG')}
-                    port={os.getenv('PORT_PG')}
-                """)
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print(f'''UPDATE users
                 SET password=$${password}$$
@@ -471,7 +471,7 @@ def new_password_with_email():
     
     elif request.method == 'POST' and post_data.get('email'):
         #Восстановление пароля если мы НЕ в аккаунте
-        logging.info(send_code(post_data.get('email')))
+        send_code(post_data.get('email'))
     
     else:
         # ХЗ, вроде проверка кода подтверждения

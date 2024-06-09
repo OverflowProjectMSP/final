@@ -19,6 +19,8 @@ export default {
             author: ``,
 
             Show: false,
+
+            cnt: 0
         }
     },
     mounted() {
@@ -28,6 +30,7 @@ export default {
         async loadQuestions() {
             let res = await axios.get('/show-questions');
             this.quetions = res.data.all;
+            this.cnt++
         },
         CloseModal(Show) {
             this.Show = false
@@ -58,8 +61,8 @@ export default {
 <template>
     <div class="quest-menu mt-3">
         <div class="active-container d-flex flex-column p-2">
-            <h2>Активные вопросы</h2>
-            <p>В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
+            <h2 class="mar">Активные вопросы</h2>
+            <p class="mar">В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
             <div class="all-inputs">
                 <div class="inputs">
                     <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос"
@@ -111,12 +114,17 @@ export default {
         <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
         <model-wind v-if="Show" @CloseModal="CloseModal" />
     </div>
-    <div class="content p-2" v-if="this.quetions.length == 0">
+    <div class="content p-2" v-if="this.quetions.length == 0 && this.cnt==1">
         <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
     </div>
 </template>
 
 <style scoped>
+
+.mar {
+    margin-left: 30px;
+}
+
 .cont {
     overflow: scroll;
     height: 555px;
@@ -366,3 +374,5 @@ h4 {
     }
 }
 </style>
+
+

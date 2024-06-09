@@ -122,7 +122,7 @@ export default {
                 </a>
             </div>
         </div>
-        <div v-else>
+        <div v-if="!this.isQ && this.states.length != 0">
             <div class="scroll"> 
                 <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
                     <VidUserComp :item="state"/>

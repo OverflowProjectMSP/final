@@ -32,7 +32,6 @@ export default {
     mounted() {
         this.loadState();
         this.getNowUser();
-        this.checkUser();
 
     },
     
@@ -46,7 +45,7 @@ export default {
             });
             const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
 
-            this.states = responce.data.all.states;
+            this.states = responce.data.all.state;
             this.answers = responce.data.all.answers;
             this.states.details = this.states.details.replaceAll(regex, '<br>')
             this.loadAnswerUser();
@@ -90,18 +89,20 @@ export default {
         },
 
         async addComment() {
-            await axios.post(`/answers`, {
-                id: this.$route.query.id,
-                q: 'false',
-                text: this.text,
-            });
-            this.answers.push({
-                id_u: this.userNow.id,
-                text: this.text,
-                user: this.userNow
-            });
-            this.text = ``;
-            this.v_For1();
+            if (this.text != ""){
+                await axios.post(`/answers`, {
+                    id: this.$route.query.id,
+                    q: 'false',
+                    text: this.text,
+                });
+                this.answers.push({
+                    id_u: this.userNow.id,
+                    text: this.text,
+                    user: this.userNow
+                });
+                this.text = ``;
+                this.v_For1();
+            }
         },
         async deleteState() {
             await axios.delete('/delete', {
@@ -120,6 +121,7 @@ export default {
                 }
             });
 
+            this.isCheck = res.data.isEdit
         },
 
         v_For1() {
@@ -184,7 +186,7 @@ export default {
             <div class="title">
                 <h3 v-html="fixN(this.states.descriptions)"></h3>
             </div>
-            <div class="description">
+            <div class="description uy">
                 <p v-html="fixN(this.states.details)"></p>
             </div>
             <div class="about">
@@ -242,6 +244,10 @@ export default {
 </template>
 
 <style scoped>
+.uy{
+    word-break: break-all !important;
+}
+
 .accountIcon {
     width: 60px;
     height: 60px;

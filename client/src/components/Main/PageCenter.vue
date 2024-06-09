@@ -1,4 +1,6 @@
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -11,6 +13,7 @@ export default {
             index3: 3,
             index4: 4,
             index5: 5,
+            usersReg: 10
         }
     },
     methods: {
@@ -56,6 +59,13 @@ export default {
                 this.index5 = this.langueges.length - 1;
             }
         },
+        async regUser(){
+            let res = await axios.get(`/users-reg`)
+            this.usersReg = res.data.regs
+        }
+    },
+    mounted(){
+        this.regUser()
     }
 }
 </script>
@@ -81,15 +91,15 @@ export default {
             <div class="wehave-items">
                 <div class="wehave-item">
                     <img src="../../assets/Main/user1.png" style="width: 40px;" alt="">
-                    <p class="wehave-item-desc">Зарегистрированно более <br> 10000 пользователей</p>
+                    <p class="wehave-item-desc">Зарегистрированно <br> {{this.usersReg}} пользователей</p>
                 </div>
                 <div class="wehave-item">
                     <img src="../../assets/Main/expert.png" alt="">
-                    <p class="wehave-item-desc">10 экспертов в сети <br> и помогают сейчас</p>
+                    <p class="wehave-item-desc">5 экспертов в сети <br> и помогают сейчас</p>
                 </div>
                 <div class="wehave-item">
                     <img src="../../assets/Main/users.png" alt="">
-                    <p class="wehave-item-desc">100 участников <br> онлайн</p>
+                    <p class="wehave-item-desc">10 участников <br> онлайн</p>
                 </div>
             </div>
         </div>
@@ -334,6 +344,10 @@ hr {
     align-items: center;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+.wehave p {
+    user-select: none;
 }
 
 

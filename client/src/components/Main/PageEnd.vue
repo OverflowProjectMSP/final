@@ -49,6 +49,14 @@ a {
     margin-bottom: 0;
 }
 
+.pageend p  {
+  user-select: none;
+}
+
+.pageend h3  {
+  user-select: none;
+}
+
 .join-us-title {
     text-align: center;
     font-weight: 400;
