@@ -186,7 +186,7 @@ export default {
                     <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
-                            <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
+                            <a :href="`/Profile?id=${this.userCreater.id}`"><span class="name">{{ userCreater.username }}</span></a>
                         </div>
                     </div>
                 </a>
