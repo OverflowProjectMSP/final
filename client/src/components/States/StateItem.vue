@@ -194,7 +194,7 @@ export default {
             </div>
         </div>
 
-        <form @submit.prevent="addComment" class="content-3">
+        <form v-if="this.userNow.id" @submit.prevent="addComment" class="content-3">
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
