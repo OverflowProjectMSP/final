@@ -30,7 +30,7 @@ export default {
                 </div>
             </div>
             <div class="ans_check">
-                <a href="#!"><button>Ответить</button></a>
+                <a :href="`/QuestionItem/${item.id}`"><button>Ответить</button></a>
                 <div class="check">
                     <!-- <img v-if="isCheck" width="15" src="../assets/check.svg" alt=""> -->
                     <p :class="isCheck_class">{{ item.acnt }}</p>
