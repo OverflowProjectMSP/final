@@ -28,6 +28,11 @@ HOST_PG = os.getenv('HOST_PG')
 MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
 
+def escape_quotes(text):
+    return text.replace("'", "''")
+
+def unescape_quotes(text):
+    return text.replace("''", "'")
 
 
 app = Flask(__name__)

@@ -34,7 +34,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         if send_question[0][0]==0:
             logging.info(details, 1)
             question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), False)
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")   
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES('{uuid.uuid4().hex}', '{escape_quotes(discriptions)}', '{escape_quotes(details)}', '{dificulty}','{tag}', '{id}', '{datetime.now().isoformat()}', '{False}')")   
             # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
             return_data = "Вопрос добавлен"
@@ -113,9 +113,8 @@ def add_states(discriptions='', details='', id='', tag=''):
 
         # Существует ли таккая же
         if send_state[0][0]==0:
-            logging.info(details, 1)
-            state_to_write = (uuid.uuid4().hex, discriptions, details,tag, id, datetime.now().isoformat())
-            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}")
+            state_to_write = (uuid.uuid4().hex, escape_quotes(discriptions), escape_quotes(details), tag, id, datetime.now().isoformat())
+            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES('{uuid.uuid4().hex}', '{escape_quotes(discriptions)}', '{escape_quotes(details)}', '{tag}', '{id}', '{datetime.now().isoformat()}')")
             pg.commit()
             return_data = "Статья добавлена"
         else: return_data = 'Такая статья уже есть'
@@ -439,6 +438,8 @@ def show_one(id, isQ):
             
             all_asw = show_answers(True, id)
             
+            all_q['descriptions'] = unescape_quotes(all_q['descriptions'])
+            all_q['details'] = unescape_quotes(all_q['details'])
 
             return_data = {
                 'question': all_q,
@@ -473,7 +474,8 @@ def show_one(id, isQ):
 
         all_asw = show_answers(False, id)
 
-
+        all_states['descriptions'] = unescape_quotes(all_states['descriptions'])
+        all_states['details'] = unescape_quotes(all_states['details'])
         return_data = {
                 'state': all_states,                        
                 'answers': all_asw     
@@ -609,7 +611,7 @@ def add_ans(text, isQ, idO, id_u):
         print(f"INSERT INTO {obj} VALUES{to_write}")
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        cursor.execute(f"INSERT INTO {obj} VALUES{to_write}")      
+        cursor.execute(f"INSERT INTO {obj} VALUES('{uuid.uuid4().hex}', '{id_u}', '{idO}', '{escape_quotes(text)}', '{date}')")
 
         pg.commit()  
 
@@ -648,7 +650,9 @@ def show_answers(isQ, idO):
             data_ = cursor.fetchall()
             return_data = []
             for row in data_:
-                return_data.append(dict(row))
+                a = dict(row)
+                a['text'] = unescape_quotes(a['text'])
+                return_data.append(a)
 
             logging.info('Все ответы показаны')
 
@@ -682,9 +686,10 @@ def show_answers(isQ, idO):
                        WHERE id_s = $${idO}$$
                        ORDER BY data ''')
         return_data = []
-        for row in data:
-            return_data.append(dict(row))
-
+        for row in data_:
+            a = dict(row)
+            a['text'] = unescape_quotes(a['text'])
+            return_data.append(a)
         logging.info('Все комментарии отправлены')
 
     except (Exception, Error) as error:
