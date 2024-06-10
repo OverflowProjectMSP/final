@@ -113,9 +113,8 @@ def add_states(discriptions='', details='', id='', tag=''):
 
         # Существует ли таккая же
         if send_state[0][0]==0:
-            logging.info(details, 1)
-            state_to_write = (uuid.uuid4().hex, discriptions, details,tag, id, datetime.now().isoformat())
-            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES {state_to_write}")
+            state_to_write = (uuid.uuid4().hex, escape_quotes(discriptions), escape_quotes(details), tag, id, datetime.now().isoformat())
+            cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES ('{uuid.uuid4().hex}', '{escape_quotes(discriptions)}', '{escape_quotes(details)}', '{tag}', '{id}', '{datetime.now().isoformat()}')")
             pg.commit()
             return_data = "Статья добавлена"
         else: return_data = 'Такая статья уже есть'
@@ -473,7 +472,8 @@ def show_one(id, isQ):
 
         all_asw = show_answers(False, id)
 
-
+        all_states['descriptions'] = unescape_quotes(all_states['descriptions'])
+        all_states['details'] = unescape_quotes(all_states['details'])
         return_data = {
                 'state': all_states,                        
                 'answers': all_asw     
