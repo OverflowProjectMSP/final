@@ -249,7 +249,7 @@ def delete(id, isQ, id_j):
             return return_data
 
 # обновить что-то
-def change(id, info, isQ):
+def change(id, info, isQ, id_j):
     infor = ''
     for i in info:
         print(i)
@@ -273,7 +273,7 @@ def change(id, info, isQ):
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             cursor.execute(f"select id_u from questions where id=$${id}$$")
             id_m = cursor.fetchone()[0]
-            
+            logging.info(infor)
             if id_j == id_m:
                 cursor.execute(f'''UPDATE questions
                             SET {infor}
@@ -308,10 +308,10 @@ def change(id, info, isQ):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute(f"select id_u from states where id=$${id}$$")
         id_m = cursor.fetchone()[0]
-        
+
         if id_j == id_m:
             cursor.execute(f'''UPDATE states
-                        SET {info}
+                        SET {infor}
                         WHERE id=$${id}$$''')
             pg.commit()
             return_data = 'ok'
