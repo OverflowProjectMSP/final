@@ -43,6 +43,7 @@ export default {
             loading: false,
 
             updQ: false,
+            ShowAdd: true,
         }
     },
 
@@ -117,14 +118,14 @@ export default {
             });
             this.$router.push(`/Quetions`)
         },
-        async checkUser() {
-            let res = await axios.get('/check', {
-                params: {
-                    id: this.userCreater.id
-                }
-            });
-            this.isCheck = res.data.isEdit;
-        },
+        // async checkUser() {
+        //     let res = await axios.get('/check', {
+        //         params: {
+        //             id: this.userCreater.id
+        //         }
+        //     });
+        //     this.isCheck = res.data.isEdit;
+        // },
         async getNowUser() {
             let res = await axios.get('/session');
             this.loadNowUser(res.data.id);
@@ -168,6 +169,16 @@ export default {
             return text
             // text.replaceAll("\n", '<br>')
         },
+        async checkUser() {
+            let res = await axios.get(`/check-r`);
+            this.ShowAdd = res.data.all;
+            if (this.ShowAdd == "true") {
+                this.ShowAdd = true
+                return
+                
+            }
+            this.ShowAdd = false
+        }
     },
     mounted() {
         this.loadQuestion();
@@ -186,7 +197,7 @@ export default {
                     <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
-                            <a href="#!"><span class="name">{{ userCreater.username }}</span></a>
+                            <span class="name">{{ userCreater.username }}</span>
                         </div>
                     </div>
                 </a>
@@ -199,28 +210,29 @@ export default {
                             <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="title">
-                <h3 v-html="fixN(questionInfo.descriptions)"></h3>
-            </div>
-            <div class="description">
-                <p v-html="fixN(questionInfo.details)"></p>
-                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
-            </div>
-            <div class="about">
-                <p>{{ questionInfo.data }}</p>
-                <!-- <p>{{ questionInfo.views }} просмотра</p> -->
-            </div>
-        </div>
-        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-        <div v-if="this.loading">
-            <div class="answers-all" v-if="this.answers.length != 0">
-                <div class="content-2" v-for="answer in answers">
-                    <div class="account">
-                        <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                        <div class="name-ring">
+                        </div>
+                        </div>
+                        </div>
+                        <div class="title">
+                            <h3 v-html="fixN(questionInfo.descriptions)"></h3>
+                            </div>
+                            <div class="description">
+                                <p v-html="fixN(questionInfo.details)"></p>
+                                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
+                                </div>
+                                <div class="about">
+                                    <p>{{ questionInfo.data }}</p>
+                                    <!-- <p>{{ questionInfo.views }} просмотра</p> -->
+                                    </div>
+                                    </div>
+                                    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button> <a href="#iii" class="link mt-3">Ответить</a>
+                                    <div v-if="this.loading">
+                                        <div class="container mt-5"><h4>Ответы:</h4></div>
+                                        <div class="answers-all" v-if="this.answers.length != 0">
+                                            <div class="content-2" v-for="answer in answers">
+                                                <div class="account">
+                                                    <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                                                    <div class="name-ring">
                             <a :href="`/Profile?id=${answer.user.id}`">
                                 <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                             </a>
@@ -249,7 +261,7 @@ export default {
             </div>
         </div>
 
-        <form v-if="this.userNow.id" class="content-3" @submit.prevent="addComment">
+        <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
         
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
@@ -270,11 +282,19 @@ export default {
                 <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
             </div>
         </form>
-
     </div>
 </template>
 
 <style scoped>
+.link{
+    font-size: 20px;
+    color:#3B82F6;
+    position: absolute;
+    right: 140px;
+
+
+    
+}
 img {
     user-select: none;
 }

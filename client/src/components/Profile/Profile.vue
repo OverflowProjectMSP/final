@@ -68,8 +68,8 @@ export default {
             <div class="circle">
                 <img :src="user.avatar">
             </div>
-
             <p class="nikname t-alig-c">@{{ user.username }}</p>
+            <div class="conatiner"><h4>Дата регистрации: {{ user.data_c }}</h4></div>
             <div class="loc-tel">
                 <p class="location">{{ user.city }}</p>
                 <p class="telephone">{{ user.phonenumber }}</p>
