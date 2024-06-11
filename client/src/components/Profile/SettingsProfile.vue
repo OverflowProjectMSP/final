@@ -73,6 +73,9 @@ export default {
             this.$router.push('/')
             let res = await axios.get('/');
             this.$router.go(0);
+        },
+        forgot() {
+            this.$router.push("/RecoveryPassPage")
         }
     }
 }
@@ -139,7 +142,7 @@ export default {
 
                         <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label"><h5>Выйти из аккаунта</h5></label>
-                    <button class="btn btn-primary logout" @click="logout">Выйти</button><button class="btn btn-primary">Забыли пароль?</button>
+                    <button class="btn btn-primary logout" @click="logout">Выйти</button><button class="btn btn-primary" @click="forgot">Забыли пароль?</button>
                         </div>
 
                     </div>
