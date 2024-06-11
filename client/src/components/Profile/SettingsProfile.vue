@@ -36,8 +36,8 @@ export default {
                 form: this.form,
             });
             this.$router.push(`/Profile?id=${this.id}`);
+            this.$router.go(0);
             return;
-
 
         },
 
@@ -68,6 +68,14 @@ export default {
         },
         deleteAvatar() {
             this.form.avatar = this.defaultAvatar;
+        },
+        async logout() {
+            this.$router.push('/')
+            let res = await axios.get('/');
+            this.$router.go(0);
+        },
+        forgot() {
+            this.$router.push("/RecoveryPassPage")
         }
     }
 }
@@ -131,6 +139,12 @@ export default {
                     <label for="exampleFormControlInput1" class="form-label"><h5>Обновить фото</h5></label>
                     <input type="file" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" @change="convertFileAvatar">
                         </div>
+
+                        <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label"><h5>Выйти из аккаунта</h5></label>
+                    <button class="btn btn-primary logout" @click="logout">Выйти</button><button class="btn btn-primary" @click="forgot">Забыли пароль?</button>
+                        </div>
+
                     </div>
                 </div>
                 <hr>
@@ -210,10 +224,16 @@ export default {
     </form>
 </template>
 <style scoped>
+.form-label{
+    width: 100%;
+}
+
 .contact-plus div {
     width: 260px;
 }
-
+.logout{
+    margin-right: 10px;
+}
 #download,
 #save {
     background-color: white;
