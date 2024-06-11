@@ -26,12 +26,14 @@ export default {
 
             loading: false,
             a: '',
+            ShowAdd: true
         }
     },
 
     mounted() {
         this.loadState();
         this.getNowUser();
+        this.checkUser()
 
     },
     
@@ -151,6 +153,16 @@ export default {
             });
             this.userNow = res.data.all;
         },
+        async checkUser() {
+            let res = await axios.get(`/check-r`);
+            this.ShowAdd = res.data.all;
+            if (this.ShowAdd == "true") {
+                this.ShowAdd = true
+                return
+                
+            }
+            this.ShowAdd = false
+        },
 
         fixN(text) {
             return text
@@ -193,8 +205,8 @@ export default {
                 <p v-html="fixN(this.states.data)"></p>
             </div>
         </div>
-
-        <form v-if="this.userNow.id" @submit.prevent="addComment" class="content-3">
+        
+        <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
             <div class="account">
                 <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                 <div class="name-ring">
@@ -209,9 +221,10 @@ export default {
                 <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
             </div>
             <div class="send-ans d-flex justify-content-end">
-                <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
-            </div>
-        </form>
+                <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
+                </div>
+                </form>
+            <div class="container mt-3" v-if="this.answers.length != 0"><h4>Комментарии:</h4></div>
         <div v-if="!this.loading && this.answers.length != 0">
             <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
             <div class="d-flex justify-content-center">
@@ -234,16 +247,18 @@ export default {
                         <span v-html="fixN(answer.text)"></span>
                     </div>
                 </div>
-                <div class="content p-2" v-if="this.answers.length == 0">
-                    <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
-                </div>
             </div>
         </div>
-
+        <div class="content p-2" v-if="this.answers.length == 0">
+            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под этой статьей!</h2>
+        </div>
     </div>
 </template>
 
 <style scoped>
+.toMain{
+    border-radius: 10px;
+}
 .uy{
     word-break: break-all !important;
 }
