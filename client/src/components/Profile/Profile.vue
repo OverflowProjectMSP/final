@@ -64,9 +64,9 @@ export default {
     <div class="profile">
         <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
             alt="Настройки" class="il"></a>
-        <div class="head">
-            <div class="circle">
-                <img :src="user.avatar">
+            <div class="head">
+                <div class="circle">
+                    <img :src="user.avatar">
             </div>
             <p class="nikname t-alig-c">@{{ user.username }}</p>
             <div class="loc-tel">
@@ -77,7 +77,7 @@ export default {
                 <div class="cell">
                     <p class="num">{{ user.qcnt }}</p>
                     <p class="info">Вопросов</p>
-                </div>
+                    </div>
                 <div class="cell">
                     <p class="num">{{ user.scnt }}</p>
                     <p class="info">Статей</p>
@@ -87,6 +87,7 @@ export default {
                     <p class="info">Ответов</p>
                 </div>
             </div>
+            <p class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</p>
             <div class="about rounded-5">
                 <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }} </p>
                 <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
@@ -104,7 +105,6 @@ export default {
                 <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
             </div>
         </div> 
-    <p class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</p>
     </div>
 
     <div class="container d-flex align-items-center flex-column">
@@ -205,10 +205,9 @@ body {
     cursor: pointer;
 }
 .il-2 {
-    position: absolute;
+    /* position: absolute; */
     text-align: center;
-    bottom: 10px;
-    cursor: pointer;
+    /* bottom: 10px; */
     font-size: 12px !important;
 }
 
@@ -254,13 +253,14 @@ body {
 .table {
     display: flex;
     justify-content: center;
+    margin-bottom: 0 !important;
 }
 
 .cell {
     padding: 25px;
     border-right: 1px solid #AEB8BC;
     border-bottom: 1px solid #AEB8BC;
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 }
 
 .dis-r {
