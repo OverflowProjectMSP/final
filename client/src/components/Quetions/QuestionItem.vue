@@ -225,7 +225,7 @@ export default {
                                     <!-- <p>{{ questionInfo.views }} просмотра</p> -->
                                     </div>
                                     </div>
-                                    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button> <a href="#iii" class="link mt-3">Ответить</a>
+                                    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
                                     <div v-if="this.loading">
                                         <div class="container mt-5"><h4>Ответы:</h4></div>
                                         <div class="answers-all" v-if="this.answers.length != 0">
@@ -279,7 +279,7 @@ export default {
                 </div>
             </div>
             <div class="send-ans d-flex justify-content-end">
-                <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
+                <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
             </div>
         </form>
     </div>
@@ -291,6 +291,9 @@ export default {
     color:#3B82F6;
     position: absolute;
     right: 140px;
+
+
+    
 }
 img {
     user-select: none;
