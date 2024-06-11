@@ -62,7 +62,6 @@ export default {
 
 <template>
     <div class="profile">
-        <div class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</div>
         <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
             alt="Настройки" class="il"></a>
         <div class="head">
@@ -82,9 +81,9 @@ export default {
                 <div class="cell">
                     <p class="num">{{ user.scnt }}</p>
                     <p class="info">Статей</p>
-                </div>
-                <div class="cell dis-r">
-                    <p class="num">{{ user.acnt }}</p>
+                    </div>
+                    <div class="cell dis-r">
+                        <p class="num">{{ user.acnt }}</p>
                     <p class="info">Ответов</p>
                 </div>
             </div>
@@ -105,6 +104,7 @@ export default {
                 <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
             </div>
         </div> 
+    <p class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</p>
     </div>
 
     <div class="container d-flex align-items-center flex-column">
@@ -114,7 +114,7 @@ export default {
                 <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe(false)">статьи</p>
             </div>
             <p class="vse" @click="Olezha">пользователя</p>
-        </div>
+            </div>
         <div v-if='this.isQ && this.questions.length != 0'>
             <div class="scroll">
                 <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
@@ -206,7 +206,8 @@ body {
 }
 .il-2 {
     position: absolute;
-    left: 15px;
+    text-align: center;
+    bottom: 10px;
     cursor: pointer;
     font-size: 12px !important;
 }
@@ -575,7 +576,7 @@ p .u {
     .nikname {
         font-size: 28px;
     }
-
+    
     .num {
         font-size: var(--size-22);
     }
@@ -616,4 +617,5 @@ p .u {
         padding-top: 13px;
     }
 }
+
 </style>
