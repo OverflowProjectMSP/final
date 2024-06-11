@@ -32,6 +32,7 @@ export default {
                 all: this.form,
                 q: 'false'
             });
+            this.$router.push(`/StateItem?id=${this.$route.query.id}&q=false`);
         },
 
         async loadQuestion() {

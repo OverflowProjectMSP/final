@@ -6,7 +6,7 @@ export default {
         return {
             langueges: ['TS', 'PHP', 'Python', 'JS', 'C#', 'Ruby', 'C++', 'Go', 'Java', 'Kotlin'],
             stylesLang: ['ts', 'php', 'py', 'js', 'cs', 'ruby', 'cpp', 'go', 'ja', 'ko'],
-
+            links: ['ts', 'php', 'python', 'javascript', 'cs', 'ruby', 'cpp', 'go', 'java', 'kotlin'],
             index: 0,
             index1: 1,
             index2: 2,
@@ -77,12 +77,12 @@ export default {
         <div class="languages">
             <button @click="prevLang" class="btn-arrow leftarrow">&lt;</button>
             <div class="lang-items">
-                <div class="lang-item lang-item-col-1" :class="stylesLang[index]">{{ langueges[index] }}</div>
-                <div class="lang-item lang-item-col-2" :class="stylesLang[index1]">{{ langueges[index1] }}</div>
-                <div class="lang-item lang-item-col-3" :class="stylesLang[index2]">{{ langueges[index2] }}</div>
-                <div class="lang-item lang-item-col-4" :class="stylesLang[index3]">{{ langueges[index3] }}</div>
-                <div class="lang-item lang-item-col-5" :class="stylesLang[index4]">{{ langueges[index4] }}</div>
-                <div class="lang-item lang-item-col-6" :class="stylesLang[index5]">{{ langueges[index5] }}</div>
+                <a :href="`/Forum?lang=${links[index]}`"><div class="lang-item lang-item-col-1" :class="stylesLang[index]">{{ langueges[index] }}</div></a>
+                <a :href="`/Forum?lang=${links[index1]}`"><div class="lang-item lang-item-col-2" :class="stylesLang[index1]">{{ langueges[index1] }}</div></a>
+                <a :href="`/Forum?lang=${links[index2]}`"><div class="lang-item lang-item-col-3" :class="stylesLang[index2]">{{ langueges[index2] }}</div></a>
+                <a :href="`/Forum?lang=${links[index3]}`"><div class="lang-item lang-item-col-4" :class="stylesLang[index3]">{{ langueges[index3] }}</div></a>
+                <a :href="`/Forum?lang=${links[index4]}`"><div class="lang-item lang-item-col-5" :class="stylesLang[index4]">{{ langueges[index4] }}</div></a>
+                <a :href="`/Forum?lang=${links[index5]}`"><div class="lang-item lang-item-col-6" :class="stylesLang[index5]">{{ langueges[index5] }}</div></a>
             </div>
             <button @click="nextLang" class="btn-arrow rightarrow">&gt;</button>
         </div>
