@@ -224,7 +224,7 @@ export default {
                 <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
                 </div>
                 </form>
-            <div class="container mt-3"><h4>Комментарии:</h4></div>
+            <div v-if="this.answers.length != 0" class="container mt-3"><h4>Комментарии:</h4></div>
         <div v-if="!this.loading && this.answers.length != 0">
             <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
             <div class="d-flex justify-content-center">
@@ -247,10 +247,10 @@ export default {
                         <span v-html="fixN(answer.text)"></span>
                     </div>
                 </div>
-                <div class="content p-2" v-if="this.answers.length == 0">
-                    <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
-                </div>
             </div>
+        </div>
+        <div class="content p-2" v-if="this.answers.length == 0">
+            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под этой статьей!</h2>
         </div>
     </div>
 </template>
