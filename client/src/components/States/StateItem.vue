@@ -244,7 +244,7 @@ export default {
                         </div>
                     </div>
                     <div class="description-text mt-1">
-                        <span v-html="fixN(answer.text)"></span>
+                        <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                     </div>
                 </div>
             </div>

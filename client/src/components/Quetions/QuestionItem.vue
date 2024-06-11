@@ -224,22 +224,22 @@ export default {
                                     <p>{{ questionInfo.data }}</p>
                                     <!-- <p>{{ questionInfo.views }} просмотра</p> -->
                                     </div>
-                                    </div>
-                                    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-                                    <div v-if="this.loading">
-                                        <div class="container mt-5"><h4>Ответы:</h4></div>
-                                        <div class="answers-all" v-if="this.answers.length != 0">
-                                            <div class="content-2" v-for="answer in answers">
-                                                <div class="account">
-                                                    <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                                                    <div class="name-ring">
+                                </div>
+                            <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+            <div v-if="this.loading">
+                <div class="container mt-5"><h4>Ответы:</h4></div>
+                <div class="answers-all" v-if="this.answers.length != 0">
+                    <div class="content-2" v-for="answer in answers">
+                        <div class="account">
+                            <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                            <div class="name-ring">
                             <a :href="`/Profile?id=${answer.user.id}`">
                                 <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                             </a>
                         </div>
                     </div>
                     <div class="description my-1">
-                        <span v-html="fixN(answer.text)"></span>
+                        <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                     </div>
                     <!-- <div class="btn-group">
                         <div class="left">
