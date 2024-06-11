@@ -62,6 +62,7 @@ export default {
 
 <template>
     <div class="profile">
+        <div class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</div>
         <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
             alt="Настройки" class="il"></a>
         <div class="head">
@@ -69,7 +70,6 @@ export default {
                 <img :src="user.avatar">
             </div>
             <p class="nikname t-alig-c">@{{ user.username }}</p>
-            <div class="conatiner"><h4>Дата регистрации: {{ user.data_c }}</h4></div>
             <div class="loc-tel">
                 <p class="location">{{ user.city }}</p>
                 <p class="telephone">{{ user.phonenumber }}</p>
@@ -203,6 +203,12 @@ body {
     height: 25px;
     width: 25px;
     cursor: pointer;
+}
+.il-2 {
+    position: absolute;
+    left: 15px;
+    cursor: pointer;
+    font-size: 12px !important;
 }
 
 /* аватар + ник */
