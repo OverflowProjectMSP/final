@@ -32,6 +32,7 @@ export default {
                 all: this.form,
                 q: 'false'
             });
+            this.$router.push(`/StateItem?id=${this.$route.query.id}&q=false`);
         },
 
         async loadQuestion() {
@@ -62,21 +63,16 @@ export default {
         <form class="container" @submit.prevent="addQuestion">
             <div class="row pt-4">
                 <div class="col-12">
-                    <h3>Новый вопрос</h3>
+                    <h3>Обновить статью</h3>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-12">
-                    <h4>Суть вопроса</h4>
+                    <h4>Суть статьи</h4>
                 </div>
             </div>
-            <div class="row" style="display: flex; gap: 40px;">
-                <div class="col-12">
-                    <h5 style="color: gray; font-weight: 400;">Сформулируйте вопрос так, чтобы сразу было понятно, о чём
-                        речь.</h5>
-                </div>
-            </div>
+      
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
@@ -90,22 +86,17 @@ export default {
             </div>
             <div class="row">
                 <div class="col-12">
-                    <h4>Детали вопроса</h4>
+                    <h4>Содержание статьи</h4>
                 </div>
             </div>
-            <div class="row" style="display: flex; gap: 40px;">
-                <div class="col-12">
-                    <h5 style="color: gray; font-weight: 400;">Опишите в подробностях свой вопрос, чтобы получить более
-                        точный ответ.</h5>
-                </div>
-            </div>
+    
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
                         <textarea class="text-area text-box multi-line yy" data-val="true"
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
                             name="info" cols="200" rows="3"
-                            style="border-color: #D3D3D3; border-radius: 5px;" v-model="form.details"></textarea>
+                            style="border-color: #D3D3D3; border-radius: 5px; height: 210px;" v-model="form.details"></textarea>
 
                     </div>
                 </div>
