@@ -221,10 +221,10 @@ export default {
                 <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
             </div>
             <div class="send-ans d-flex justify-content-end">
-                <button type="submit" class="toMain btgr p-4 fs-4">Отправить!</button>
+                <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
                 </div>
                 </form>
-            <div v-if="this.answers.length != 0" class="container mt-3"><h4>Комментарии:</h4></div>
+            <div class="container mt-3" v-if="this.answers.length != 0"><h4>Комментарии:</h4></div>
         <div v-if="!this.loading && this.answers.length != 0">
             <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
             <div class="d-flex justify-content-center">
@@ -256,6 +256,9 @@ export default {
 </template>
 
 <style scoped>
+.toMain{
+    border-radius: 10px;
+}
 .uy{
     word-break: break-all !important;
 }
