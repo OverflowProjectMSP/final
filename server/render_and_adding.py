@@ -586,7 +586,7 @@ def add_img( base, name, isAvatar, isQ,id):
     name = 's_'+id+dote
     with open(os.path.join(MEDIA, name), "wb") as file:
             file.write(decoded_bytes)
-    return 'http://127.0.0.1:5000/media/'+name
+    return 'https://api.upfollow.ru/media/'+name
 
 # Добовление ответа
 def add_ans(text, isQ, idO, id_u):
