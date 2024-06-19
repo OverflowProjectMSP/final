@@ -133,7 +133,6 @@ def add_tables():
         pg.commit()
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error" 
 
     finally:
         if pg:
