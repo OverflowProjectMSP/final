@@ -38,10 +38,6 @@ def chat(id, time, msg):
         return_data = f"Ошибка обращения к базе данных: {error}" 
 
     finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
  
 def show_avatar(id):
@@ -71,10 +67,6 @@ def show_avatar(id):
         return_data = 'No'
 
     finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 def helper(phone, email, msg, id_u):
@@ -101,10 +93,6 @@ def helper(phone, email, msg, id_u):
         return_data = 'Errro'
 
     finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 def is_solved(id, isS):
@@ -130,10 +118,6 @@ def is_solved(id, isS):
         return_data = 'Errro'
 
     finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
     
 def count_reg():
@@ -157,10 +141,6 @@ def count_reg():
         return_data = 'Errro'
 
     finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
     
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
