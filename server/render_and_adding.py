@@ -613,11 +613,7 @@ def show_answers(isQ, idO):
             return_data = 'Error'
 
         finally:
-            if pg:
-                cursor.close
-                pg.close
-
-                return return_data
+            return return_data
     try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
@@ -648,7 +644,7 @@ def show_answers(isQ, idO):
         return_data = 'Error'
 
     finally:
-            return return_data
+        return return_data
 
 # Отображение всех статей на frontend
 def filtre_states(fil):

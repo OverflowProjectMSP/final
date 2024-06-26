@@ -50,11 +50,7 @@ def refresh_data(info, id):
         return_data = f"Error" 
 
     finally:
-
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        return return_data
 
 # LogIn
 def login_user(email, pas):
@@ -96,11 +92,7 @@ def login_user(email, pas):
         return_data = f"Error" 
 
     finally:
-
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        return return_data
  
 # Регистрация пользователя
 def add_user_todb(name, email, pas):
@@ -141,11 +133,7 @@ def add_user_todb(name, email, pas):
         return_data = f"Error" 
 
     finally:
-
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        return return_data
  
 # Изменения пароля, если user знает страый
 def change_password(password, old_password, id):
@@ -180,7 +168,7 @@ def change_password(password, old_password, id):
                 cursor.close
                 pg.close
                 logging.info("Соединение с PostgreSQL закрыто")
-                return return_data
+            return return_data
     else: return_data = "False"
 
 # Проверка совпадениеия старого пароля с ныненшним
@@ -208,11 +196,7 @@ def check_old_password(id, password):
         return_data = f"Error" 
 
     finally:
-
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        return return_data
 
 # Измения пароля с праолем на email
 def change_password_send(password, email):
@@ -245,11 +229,7 @@ def change_password_send(password, email):
         return_data = "Error"
 
     finally:
-
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        return return_data
 
 # Отпрака кода на почту
 def send_code(email):
@@ -343,7 +323,7 @@ def show_user_info(id, isAll):
 
     finally:
 
-            return return_data
+        return return_data
  
 # показ id avtar name
 def show_not_all(id):
@@ -375,11 +355,7 @@ def show_not_all(id):
         return_data = 'No'
 
     finally:
-
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+        return return_data
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
