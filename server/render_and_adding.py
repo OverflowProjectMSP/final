@@ -242,6 +242,14 @@ def change(id, info, isQ, id_j):
                 infor += f', {i}=$${info[i]}$$'
     if isQ:
         try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             cursor.execute(f"select id_u from questions where id=$${id}$$")
             id_m = cursor.fetchone()[0]
@@ -270,6 +278,13 @@ def change(id, info, isQ, id_j):
                 return return_data
 
     try: 
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute(f"select id_u from states where id=$${id}$$")
         id_m = cursor.fetchone()[0]
@@ -295,6 +310,14 @@ def change(id, info, isQ, id_j):
 # Вопросы форума    
 def show_forum(filtre):
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f'''SELECT * FROM states WHERE tag=$${filtre}$$ ORDER BY data DESC''')
@@ -333,6 +356,14 @@ def show_forum(filtre):
 # Отображение всех статей на frontend
 def render_states():
     try: 
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"SELECT * from states ORDER BY data DESC")
@@ -358,6 +389,14 @@ def render_states():
 def show_one(id, isQ):
     if isQ:
         try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
             cursor.execute(f"SELECT * from questions WHERE id = $${id}$$")
@@ -385,6 +424,14 @@ def show_one(id, isQ):
 
                 return return_data
     try: 
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print(id)
         cursor.execute(f"SELECT * from states WHERE id = $${id}$$")
@@ -425,6 +472,14 @@ def filtre(filters, isQ):
                     filtr += f' AND {i}=$${filters[i]}$$'
     if isQ:
         try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
             cursor.execute(f"SELECT * FROM questions{filtr}")
             result = cursor.fetchall()
@@ -446,6 +501,14 @@ def filtre(filters, isQ):
                 return return_data
 
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor) 
         cursor.execute(f"SELECT * FROM states{filtr}")
         result = cursor.fetchall()
@@ -495,6 +558,14 @@ def add_ans(text, isQ, idO, id_u):
         obj = "comments(id, id_u, id_s, text, data)"
 
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         print(f"INSERT INTO {obj} VALUES{to_write}")
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -511,11 +582,19 @@ def add_ans(text, isQ, idO, id_u):
         return_data = "Error"
 
     finally:
-        return return_data
+            return return_data
 
-def show_answers(isQ: bool, idO: str):
+def show_answers(isQ, idO):
     if isQ:
         try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             
             cursor.execute(f'''SELECT * FROM answers 
@@ -536,11 +615,19 @@ def show_answers(isQ: bool, idO: str):
         finally:
             return return_data
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f'''SELECT * FROM comments 
                        WHERE id_s = $${idO}$$
-                       ORDER BY data''')
+                       ORDER BY data DESC''')
         
         data = cursor.fetchall()
         print(f'''SELECT * FROM comments 
@@ -632,6 +719,13 @@ def filtre_question(fil):
                 filtrs+=f'{i}=$${fil[i]}$$'
     if (filtrs != '' or fil['name'] != '') or fil['descriptions'] != '':
         try: 
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
             constFiltr = "select * from questions where descriptions like"
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             ids = []

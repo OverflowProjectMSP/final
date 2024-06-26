@@ -24,6 +24,14 @@ def refresh_data(info, id):
                 data += f', {i}=$${info[i]}$$'
 
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         if 'filename' in info:
             src = add_img(info['avatar'], info['filename'], True, False, session.get('id') )
@@ -47,6 +55,14 @@ def refresh_data(info, id):
 # LogIn
 def login_user(email, pas):
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
 
@@ -81,6 +97,14 @@ def login_user(email, pas):
 # Регистрация пользователя
 def add_user_todb(name, email, pas):
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         send_user = []
@@ -115,6 +139,13 @@ def add_user_todb(name, email, pas):
 def change_password(password, old_password, id):
     if check_old_password( id ,old_password): # Вернет True если пароли стовпадает со старым 
         try: 
+            pg = psycopg2.connect(f"""
+                host=localhost
+                dbname=postgres
+                user=postgres
+                password={os.getenv('PASSWORD_PG')}
+                port={os.getenv('PORT_PG')}
+            """)
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
             cursor.execute(f'''UPDATE users
@@ -170,6 +201,13 @@ def check_old_password(id, password):
 # Измения пароля с праолем на email
 def change_password_send(password, email):
     try: 
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         print(f'''UPDATE users
                 SET password=$${password}$$
@@ -241,6 +279,14 @@ def check_password(password, true_password):
 # показ всего о юзере
 def show_user_info(id, isAll):
     try: 
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"SELECT * from users WHERE id=$${id}$$")
@@ -282,6 +328,14 @@ def show_user_info(id, isAll):
 # показ id avtar name
 def show_not_all(id):
     try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f'''SELECT id, username, avatar FROM users
