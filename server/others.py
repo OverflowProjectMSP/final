@@ -14,13 +14,6 @@ logging.info("others.py have connected")
 # Добавление сообщения в бд (чат форума)
 def chat(id, time, msg):
     try: 
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         message_id = uuid.uuid4().hex # Записываем id сообщения в отдельную переменную для отпраки на клиент
@@ -42,14 +35,6 @@ def chat(id, time, msg):
  
 def show_avatar(id):
     try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f'''SELECT avatar FROM users
@@ -71,14 +56,6 @@ def show_avatar(id):
 
 def helper(phone, email, msg, id_u):
     try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"INSERT INTO helper VALUES('{uuid.uuid4().hex}', '{msg}', '{phone}', '{email}', '{id_u}')")
@@ -97,14 +74,6 @@ def helper(phone, email, msg, id_u):
 
 def is_solved(id, isS):
     try: 
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         
         cursor.execute(f"UPDATE questions SET is_solved=$${isS}$$ WHERE id=$${id}$$")
@@ -122,14 +91,6 @@ def is_solved(id, isS):
     
 def count_reg():
     try: 
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute('''SELECT COUNT(*) FROM users''')
