@@ -655,12 +655,14 @@ def filtre_states(fil):
     status = 0
     filtrs = ''
     for i in fil:
-        if fil[i] == '': continue
-        if filtrs!='' and i!='name' and i!='descriptions':
-            filtrs+=f' and {i}=$${fil[i]}$$'
-            continue
-        if i!='name' and i!='descriptions':
-                filtrs+=f'{i}=$${fil[i]}$$'
+        if fil[i] != '':
+            print(i)
+            if filtrs!='':
+                if i!='name' and i!='descriptions':
+                    filtrs+=f' and {i}=$${fil[i]}$$'
+            else:
+                if i!='name' and i!='descriptions':
+                    filtrs+=f'{i}=$${fil[i]}$$'
     if (filtrs != '' or fil['name'] != '') or fil['descriptions'] != '':
         try: 
             pg = psycopg2.connect(f"""
@@ -715,12 +717,14 @@ def filtre_question(fil):
     status = 0
     filtrs = ''
     for i in fil:
-        if fil[i] == '': continue
-        if filtrs!='' and i!='name' and i!='descriptions':
-            filtrs+=f' and {i}=$${fil[i]}$$'
-            continue
-        if i!='name' and i!='descriptions':
-                filtrs+=f'{i}=$${fil[i]}$$'
+        if fil[i] != '':
+            print(i)
+            if filtrs!='':
+                if i!='name' and i!='descriptions':
+                    filtrs+=f' and {i}=$${fil[i]}$$'
+            else:
+                if i!='name' and i!='descriptions':
+                    filtrs+=f'{i}=$${fil[i]}$$'
     if (filtrs != '' or fil['name'] != '') or fil['descriptions'] != '':
         try: 
             pg = psycopg2.connect(f"""
@@ -730,7 +734,7 @@ def filtre_question(fil):
                 password={PASSWORD_PG}
                 port={PORT_PG}
             """)
-            constFiltr = "select * from questions where descriptions like"
+
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             ids = []
             if fil['name'] != '': 
@@ -744,11 +748,11 @@ def filtre_question(fil):
             else: ors = ''
             # print(filtrs, ids, fil['descriptions'])
             # print(filtrs == '' and ids != [], ids != [], ids == [] and filtrs != '', fil['descriptions'] != '' and filtrs != '', fil['descriptions'] != '' and (fil['name'] == '' and ids == []))
-            if filtrs == '' and ids != []: cursor.execute(f'''{constFiltr} '%{fil["descriptions"]}%' and {ors} ORDER BY data DESC''')
-            elif ids != []: cursor.execute(f'''{constFiltr} '%{fil["descriptions"]}%' and {filtrs} and {ors} ORDER BY data DESC''')
-            elif ids == [] and filtrs != '': cursor.execute(f'''{constFiltr} '%{fil["descriptions"]}%' and {filtrs} ORDER BY data DESC''')
-            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''{constFiltr} '%{fil["descriptions"]}%' and {filtrs} ORDER BY data DESC''')
-            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''{constFiltr} '%{fil["descriptions"]}%' ORDER BY data DESC''')
+            if filtrs == '' and ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ORDER BY data DESC''')
+            elif ids != []: cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors} ORDER BY data DESC''')
+            elif ids == [] and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data DESC''')
+            elif fil['descriptions'] != '' and filtrs != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data DESC''')
+            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ORDER BY data DESC''')
             # elif fil['descriptions'] != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ''')
             else: 
                 status = 1
