@@ -46,7 +46,11 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
             logging.info(return_data)
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # Отображение всех вапросов на frontend
@@ -82,6 +86,10 @@ def render_questions():
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # Добоволение статьи
@@ -115,7 +123,11 @@ def add_states(discriptions='', details='', id='', tag=''):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
             logging.info(return_data)
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # Все вопросы/статьи от одного юзера
@@ -160,6 +172,10 @@ def show_all_by_user(id):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # удалить что-то
@@ -195,7 +211,7 @@ def delete(id, isQ, id_j):
             if pg:
                 cursor.close
                 pg.close
-
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
 
     try: 
@@ -226,6 +242,10 @@ def delete(id, isQ, id_j):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # обновить что-то
@@ -274,7 +294,7 @@ def change(id, info, isQ, id_j):
             if pg:
                 cursor.close
                 pg.close
-
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
 
     try: 
@@ -305,6 +325,10 @@ def change(id, info, isQ, id_j):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # Вопросы форума    
@@ -351,6 +375,10 @@ def show_forum(filtre):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # Отображение всех статей на frontend
@@ -383,6 +411,10 @@ def render_states():
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
         
 # Показываем что-то определенное
@@ -421,7 +453,7 @@ def show_one(id, isQ):
             if pg:
                 cursor.close
                 pg.close
-
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     try: 
         pg = psycopg2.connect(f"""
@@ -453,6 +485,10 @@ def show_one(id, isQ):
         return_data = f"Error" 
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
         
 # ФИЛЬТРЫ
@@ -497,7 +533,7 @@ def filtre(filters, isQ):
             if pg:
                 cursor.close
                 pg.close
-
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
 
     try:
@@ -524,6 +560,10 @@ def filtre(filters, isQ):
         return_data = 'Error'
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
             
 def add_img( base, name, isAvatar, isQ,id):
@@ -582,6 +622,10 @@ def add_ans(text, isQ, idO, id_u):
         return_data = "Error"
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 def show_answers(isQ, idO):
@@ -616,7 +660,7 @@ def show_answers(isQ, idO):
             if pg:
                 cursor.close
                 pg.close
-
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     try:
         pg = psycopg2.connect(f"""
@@ -648,6 +692,10 @@ def show_answers(isQ, idO):
         return_data = 'Error'
 
     finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
 # Отображение всех статей на frontend
@@ -708,6 +756,9 @@ def filtre_states(fil):
 
         finally:
             if pg and status == 0:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     else: return render_states()
 
@@ -773,6 +824,9 @@ def filtre_question(fil):
 
         finally:
             if pg and status == 0:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
                 return return_data
     else: return render_questions()
         

@@ -56,19 +56,16 @@ def home():
     logging.warning(response_object)
     session.pop('id', None)
     return jsonify(response_object)
-try:
-    pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
-except (Exception, Error) as error:
-    logging.error(f'DB: ', error)
 
 def add_tables():
     try:
+        pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"""create table if not exists users(
@@ -136,6 +133,12 @@ def add_tables():
         pg.commit()
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
     
 
     

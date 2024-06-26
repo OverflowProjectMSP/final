@@ -50,7 +50,7 @@ def refresh_data(info, id):
         return_data = f"Error" 
 
     finally:
-
+        if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
@@ -96,7 +96,7 @@ def login_user(email, pas):
         return_data = f"Error" 
 
     finally:
-
+        if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
@@ -141,7 +141,7 @@ def add_user_todb(name, email, pas):
         return_data = f"Error" 
 
     finally:
-
+        if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
@@ -208,7 +208,7 @@ def check_old_password(id, password):
         return_data = f"Error" 
 
     finally:
-
+        if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
@@ -245,7 +245,7 @@ def change_password_send(password, email):
         return_data = "Error"
 
     finally:
-
+        if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
@@ -342,7 +342,10 @@ def show_user_info(id, isAll):
         return_data = f"Error" 
 
     finally:
-
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
             return return_data
  
 # показ id avtar name
@@ -375,7 +378,7 @@ def show_not_all(id):
         return_data = 'No'
 
     finally:
-
+        if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
