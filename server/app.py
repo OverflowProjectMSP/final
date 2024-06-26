@@ -56,7 +56,6 @@ def home():
     logging.warning(response_object)
     session.pop('id', None)
     return jsonify(response_object)
-
 try:
     pg = psycopg2.connect(f"""
             host={HOST_PG}
