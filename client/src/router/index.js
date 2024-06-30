@@ -86,5 +86,9 @@ export default createRouter({
       path: "/UpdateState",
       component: () => import("../components/States/UpdateState.vue"),
     },
+    {
+      path: "/Test",
+      component: () => import("../components/TestComp.vue"),
+    },
   ],
 });

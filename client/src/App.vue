@@ -2,11 +2,13 @@
 import FooterComp from "./components/ReuseComponets/FooterComp.vue";
 import HeaderComp from "./components/ReuseComponets/HeaderComp.vue";
 import PreloaderComp from "./PreloaderComp.vue";
+import add from './AddComp.vue'
 export default {
   components: {
     HeaderComp,
     FooterComp,
     PreloaderComp,
+    add
   },
   data() {
         return {
@@ -43,6 +45,8 @@ export default {
   <RouterView class="RouterView"/>
   <footer-comp />
   </div>
+
+ 
 </template>
 
 <style scoped>
