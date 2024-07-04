@@ -213,8 +213,7 @@ def serve_file(filename):
     return send_from_directory(directory='avatar/', path=path)
 
 @app.route('/session', methods=['GET'])
-def session_():
-    
+def session_(): 
     return jsonify({'status': 'success', 'id': session.get('id')})
  
 @app.route('/help', methods=['POST'])
