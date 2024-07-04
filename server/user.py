@@ -1,5 +1,20 @@
 from app import *
+# from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG
 from render_and_adding import add_img
+import os
+import uuid
+import psycopg2
+from psycopg2 import extras, Error
+from flask import Flask, jsonify, request, session, make_response, send_from_directory
+from flask_cors import CORS
+import smtplib
+from email.mime.text import MIMEText
+import random
+from datetime import datetime
+from dotenv import load_dotenv
+import base64
+import logging
+import asyncio
 
 load_dotenv()
 
@@ -390,20 +405,75 @@ def show_not_all(id):
 @app.route('/registration', methods=['GET', 'POST'])
 def user_registration():
     response_object = {'status': 'success'} #БаZа
-
     if request.method == 'POST':
         post_data = request.get_json()
         logging.info(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
 
     return jsonify(response_object)
 
+def add_img_f(file, name):
+    # name = file.filename
+    try:
+        logging.info(file)
+        file.save(os.path.join(AVATAR, name))
+        return_data = 'https://api.upfollow.ru/avatar/'+name
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = error 
+    finally:
+        return return_data
+
+def refresh_data_tset(info, id):
+    data = ''
+    for i in info:
+        if info[i] != 'false':
+            if i == 'avatar' or i == 'filename':
+                continue
+            if data == '':
+                data += f' {i}=$${info[i]}$$'
+            else:
+                data += f', {i}=$${info[i]}$$'
+
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        if 'filename' in info:
+            src = add_img_t(info['avatar'], info['filename'], True, False, session.get('id'), True)
+            data+= f', avatar=$${src}$$'
+        print(data)
+        cursor.execute(f"""UPDATE users 
+                    SET {data}
+                    WHERE id=$${id}$$;""")
+        pg.commit()
+
+        return_data = "Ok"
+        logging.info('Данные о пользотвател обновлены')
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error" 
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
 #Изменение информации пользователя
 @app.route('/user-info', methods=['GET', 'PUT'])
 def user_info():
     response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
 
     if request.method == 'PUT':
-        post_data = request.get_json()
         #Вызов функции обновления бд
         post_data = post_data.get('form')
         refresh_data(post_data, session.get('id'))
@@ -414,6 +484,8 @@ def user_info():
     response_object['all'] = show_user_info(request.args.get('id'), False)
     print(response_object)
     return jsonify(response_object)
+    
+
 
 #Изменение информации пользователя
 @app.route('/user-info-r', methods=['GET'])

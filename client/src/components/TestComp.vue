@@ -37,6 +37,7 @@ export default {
             },
        })
           this.link = res.data.res
+        this.formdata = new FormData()
     },
     async convertFileAvatar(event, name) {
       const file = event.target.files[0];

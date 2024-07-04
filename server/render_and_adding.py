@@ -566,7 +566,7 @@ def filtre(filters, isQ):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
             
-def add_img( base, name, isAvatar, isQ,id):
+def add_img( base, name, isAvatar, isQ, id):
     base=base[base.find(',')+1:]
     decoded_bytes = base64.b64decode(base)
     dote = name[name.find('.'):]
