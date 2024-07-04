@@ -65,7 +65,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.questionInfo);
-            this.checkUser();
+            this.CheckUserIsEdit()
             for (let i = 0; i < this.answers.length; i++) {
                 let user = await this.loadUsers(this.answers[i]);
                 this.answerUser.push(user)
@@ -163,6 +163,16 @@ export default {
                 id: this.$route.query.id,
                 is_solved: is,
             });
+        },
+        
+        async CheckUserIsEdit() {
+            let res = await axios.get('/check', {
+                params: {
+                    id: this.userCreater.id,
+                }
+            });
+
+            this.isCheck = res.data.isEdit
         },
 
         fixN(text) {

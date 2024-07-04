@@ -33,8 +33,7 @@ export default {
     mounted() {
         this.loadState();
         this.getNowUser();
-        this.checkUser()
-
+        this.checkUser();
     },
     
     methods: {
@@ -56,7 +55,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.states);
-            this.checkUser();
+            this.CheckUserIsEdit()
             if (this.answers.length!=0){
                 for(let i = 0; i < this.answers.length; i++) {
                     let user = await this.loadUsers(this.answers[i]);
@@ -116,7 +115,7 @@ export default {
             this.$router.push('/States');
         },
 
-        async checkUser() {
+        async CheckUserIsEdit() {
             let res = await axios.get('/check', {
                 params: {
                     id: this.userCreater.id,
