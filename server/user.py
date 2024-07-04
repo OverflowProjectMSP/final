@@ -423,57 +423,57 @@ def add_img_f(file, name):
     finally:
         return return_data
 
-def refresh_data_tset(info, id):
-    data = ''
-    for i in info:
-        if info[i] != 'false':
-            if i == 'avatar' or i == 'filename':
-                continue
-            if data == '':
-                data += f' {i}=$${info[i]}$$'
-            else:
-                data += f', {i}=$${info[i]}$$'
+# def refresh_data_tset(info, id):
+#     data = ''
+#     for i in info:
+#         if info[i] != 'false':
+#             if i == 'avatar' or i == 'filename':
+#                 continue
+#             if data == '':
+#                 data += f' {i}=$${info[i]}$$'
+#             else:
+#                 data += f', {i}=$${info[i]}$$'
 
-    try:
-        pg = psycopg2.connect(f"""
-            host={HOST_PG}
-            dbname=postgres
-            user={USER_PG}
-            password={PASSWORD_PG}
-            port={PORT_PG}
-        """)
+#     try:
+#         pg = psycopg2.connect(f"""
+#             host={HOST_PG}
+#             dbname=postgres
+#             user={USER_PG}
+#             password={PASSWORD_PG}
+#             port={PORT_PG}
+#         """)
 
-        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        if 'filename' in info:
-            src = add_img_t(info['avatar'], info['filename'], True, False, session.get('id'), True)
-            data+= f', avatar=$${src}$$'
-        print(data)
-        cursor.execute(f"""UPDATE users 
-                    SET {data}
-                    WHERE id=$${id}$$;""")
-        pg.commit()
+#         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#         if 'filename' in info:
+#             src = add_img_t(info['avatar'], info['filename'], True, False, session.get('id'), True)
+#             data+= f', avatar=$${src}$$'
+#         print(data)
+#         cursor.execute(f"""UPDATE users 
+#                     SET {data}
+#                     WHERE id=$${id}$$;""")
+#         pg.commit()
 
-        return_data = "Ok"
-        logging.info('Данные о пользотвател обновлены')
+#         return_data = "Ok"
+#         logging.info('Данные о пользотвател обновлены')
 
-    except (Exception, Error) as error:
-        logging.error(f'DB: ', error)
-        return_data = f"Error" 
+#     except (Exception, Error) as error:
+#         logging.error(f'DB: ', error)
+#         return_data = f"Error" 
 
-    finally:
-        if pg:
-            cursor.close
-            pg.close
-            logging.info("Соединение с PostgreSQL закрыто")
-            return return_data
+#     finally:
+#         if pg:
+#             cursor.close
+#             pg.close
+#             logging.info("Соединение с PostgreSQL закрыто")
+#             return return_data
 
 #Изменение информации пользователя
 @app.route('/user-info', methods=['GET', 'PUT'])
 def user_info():
     response_object = {'status': 'success'} #БаZа
-    post_data = request.get_json()
 
     if request.method == 'PUT':
+        post_data = request.get_json()
         #Вызов функции обновления бд
         post_data = post_data.get('form')
         refresh_data(post_data, session.get('id'))
