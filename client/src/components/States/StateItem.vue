@@ -207,7 +207,7 @@ export default {
         
         <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
             <div class="account">
-                 <a :href="`/Profile?id=${this.userNow.id}`">
+                 <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
@@ -239,7 +239,7 @@ export default {
             <div class="content-2 mt-2" v-for="answer in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
-                        <a :href="`/Profile?id=${answer.user.id}`">
+                        <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
                             <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                             <div class="name-ring">
                                 <span class="name" role="button">{{ answer.user.username }}</span>
