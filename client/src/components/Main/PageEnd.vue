@@ -13,9 +13,9 @@ export default {
         <h3 class="join-us-title">Присоединяйся к нам!</h3>
         <p class="join-us-desc">Ведь у нас ты можешь:</p>
         <div class="join-us-items">
-            <a><div class="join-us-item"><button>Задавать вопросы</button></div></a>
-            <a><div class="join-us-item"><button>Помогать новичкам</button></div></a>
-            <a><div class="join-us-item"><button>Находить партнёров</button></div></a>
+            <a href="/Quetions"><div class="join-us-item"><button>Задавать вопросы</button></div></a>
+            <a href="/Quetions"><div class="join-us-item"><button>Помогать новичкам</button></div></a>
+            <a href="/Quetions"><div class="join-us-item"><button>Находить партнёров</button></div></a>
         </div>
     </div>
 </template>
