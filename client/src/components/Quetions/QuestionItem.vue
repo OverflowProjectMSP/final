@@ -241,12 +241,12 @@ export default {
                 <div class="answers-all" v-if="this.answers.length != 0">
                     <div class="content-2" v-for="answer in answers">
                         <div class="account">
-                            <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                            <div class="name-ring">
                             <a :href="`/Profile?id=${answer.user.id}`">
-                                <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                                <div class="name-ring">
+                                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                                </div>
                             </a>
-                        </div>
                     </div>
                     <div class="description my-1">
                         <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
@@ -274,12 +274,14 @@ export default {
         <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
         
             <div class="account">
-                <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
-                <div class="name-ring">
-                    <div>
-                        <a :href="`/Profile?id=${this.userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                <a :href="`/Profile?id=${this.userNow.id}`">
+                    <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+                    <div class="name-ring">
+                        <div>
+                            <span class="name">{{ userNow.username }}</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="mb-3">
                 <div class="content-3-without mb-3">
