@@ -1,613 +1,431 @@
 <script>
-import VidUserComp from './VidUserComp.vue';
-import axios from 'axios';
-
+import axios from "axios";
 export default {
-    components: {
-        VidUserComp
-    },
-    data() {
-        return {
-            questions: [],
-            states: [],
+  data() {
+    return {
+      form: {
+        name: ``,
+        surname: ``,
+        interestings: ``,
+        about: ``,
+        country: ``,
+        region: ``,
+        city: ``,
+        email: ``,
+        telegram: ``,
+        skype: ``,
+        discord: ``,
+        facebook: ``,
+        phonenumber: ``,
+        github: ``,
+        avatar: ``,
+      },
+      defaultAvatar: `src/assets/Header/AvatarDef.svg`,
+      id: "",
+      isUploading: true,
+      percentCompleted: 0,
+      isLoading: false,
+    };
+  },
 
-            user: {},
-            uuuuserNAMANSKLFDJNBALKS: ``,
+  mounted() {
+    this.getUser();
+  },
 
-            isCreator: false,
+  methods: {
+    async putInfo() {
+      this.form.interestings = this.form.interestings.substr(0, 48);
+      this.isLoading = true;
+      this.isUploading = true; // Включаем индикатор загрузки
+      try {
+        await axios.put(
+          "/user-info",
+          {
+            form: this.form,
+          },
+          {
+            onUploadProgress: (progressEvent) => {
+              const percentCompleted = Math.round(
+                (progressEvent.loaded * 100) / progressEvent.total
+              );
+              this.percentCompleted = percentCompleted;
+            },
+          }
+        );
+        this.isUploading = true; // Выключаем индикатор загрузки
+        this.$router.push(`/Profile?id=${this.id}`);
+      } catch (error) {
+        console.error("Ошибка при отправке данных:", error);
+        this.isUploading = false; // Выключаем индикатор загрузки
+        // Добавьте обработку ошибки
+      }
+    },
 
-            isQ: true
-        }
+    convertFileAvatar(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      const filename = event.target.files[0].name;
+      this.form.filename = filename;
+      reader.onload = () => {
+        this.form.avatar = reader.result;
+        console.log(reader.result);
+      };
+      reader.readAsDataURL(file);
     },
-    mounted() {
-        this.allByHe();
-        this.loadUser();
-        this.check();
+    async getUser() {
+      let res = await axios.get("/session");
+      this.id = res.data.id;
+
+      this.getUserInfo(this.id);
     },
-    methods: {
-        async allByHe(dick) {
-            this.isQ = dick;
-            let res = await axios.get('/show-all-by-user', {
-                params: {
-                    id: this.$route.query.id
-                }
-            });
-            
-            if(this.isQ) {
-                this.questions = res.data.all.questions;
-            } else {
-                this.states = res.data.all.states;
-            }
+    async getUserInfo(id) {
+      let res = await axios.get("/user-info-r", {
+        params: {
+          id: id,
         },
-        async loadUser() {
-            let res = await axios.get(`/user-info`, {
-                params: {
-                    id: this.$route.query.id
-                }
-            });
-            this.user = res.data.all;
-        },
-        async check() {
-            let res = await axios.get('/check', {
-                params: {
-                    id: this.$route.query.id
-                }
-            });
-            this.isCreator = res.data.isEdit;
-        }
+      });
+      this.form = res.data.all;
     },
-}
-
+    deleteAvatar() {
+      this.form.avatar = this.defaultAvatar;
+    },
+    async logout() {
+      this.$router.push("/");
+      let res = await axios.get("/");
+      this.$router.go(0);
+    },
+    forgot() {
+      this.$router.push("/RecoveryPassPage");
+    },
+  },
+};
 </script>
-
 <template>
-    <div class="profile">
-        <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
-            alt="Настройки" class="il"></a>
-        <div class="head">
-            <div class="circle">
-                <img :src="user.avatar">
-            </div>
-            <p class="nikname t-alig-c">@{{ user.username }}</p>
-            <div class="conatiner"><h4>Дата регистрации: {{ user.data_c }}</h4></div>
-            <div class="loc-tel">
-                <p class="location">{{ user.city }}</p>
-                <p class="telephone">{{ user.phonenumber }}</p>
-            </div>
-            <div class="table t-alig-c">
-                <div class="cell">
-                    <p class="num">{{ user.qcnt }}</p>
-                    <p class="info">Вопросов</p>
-                </div>
-                <div class="cell">
-                    <p class="num">{{ user.scnt }}</p>
-                    <p class="info">Статей</p>
-                </div>
-                <div class="cell dis-r">
-                    <p class="num">{{ user.acnt }}</p>
-                    <p class="info">Ответов</p>
-                </div>
-            </div>
-            <div class="about rounded-5">
-                <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }} </p>
-                <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
-                <!-- <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p> -->
-                <p v-if="this.user.telegram != '' || this.user.skype != '' || this.user.discord != '' || this.user.facebook != ''"><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
-                <ul class="fs-5">
-                    <li v-if="user.telegram">Мой Telegram: {{ user.telegram }}</li>
-                    <li v-if="user.skype">Мой Skype: {{ user.skype }}</li>
-                    <li v-if="user.discord">Мой Discord: {{ user.discord }}</li>
-                    <li v-if="user.facebook">Мой Facebook: {{ user.facebook }}</li>
-                    <li v-if="user.github">Мой GitHub: <a class='text-info' :href='user.github' target="_blank">{{ user.github }}</a></li>
-                </ul>
-                <p v-if="this.user.about != ''" class="fs-5 abobus"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
-                <p v-if="this.user.interesting != ''"><span  v-if="this.user.interestings != ''" class="fw-bold">Мои интересы: </span></p>
-                <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
-            </div>
-        </div> 
+  <form class="container mb-3" @submit.prevent="putInfo">
+    <div class="row pt-5">
+      <div class="col-3">
+        <h3>Настройки профиля</h3>
+      </div>
     </div>
+    <hr />
+    <div class="ancet d-flex" style="display: flex; gap: 40px">
+      <h5 role="button" class="mb-0 border-bottom border-2 border-dark">
+        <a href="/ProfileSettings">Анкета</a>
+      </h5>
+      <h5 role="button" class="mb-0" style="color: gray; font-weight: 400">
+        <a href="/ChangePassword">Аккаунт</a>
+      </h5>
+    </div>
+    <hr />
+    <div class="main-block d-flex flex-row gap-4 mt-2">
+      <hr class="hr-down" />
+      <div class="image-block">
+        <div class="d-flex flex-column justify-content-center">
+          <div style="text-align: center">
+            <img
+              v-if="this.form.avatar == ``"
+              :src="defaultAvatar"
+              class="mb-2"
+              alt="Фото профиля"
+              style="height: 100px"
+            />
+            <img
+              v-else
+              :src="form.avatar"
+              class="mb-2"
+              alt="Фото профиля"
+              style="height: 100px"
+            />
+            <p style="color: gray">Ваша фотография.</p>
+            <p style="color: gray">
+              Размер загружаемой фотографии <br />
+              не должен быть более 10 МБ.
+            </p>
+            <!-- <button class="btn btn-outline-primary" style="margin-right: 10px;"
+                            type="file">Загрузить</button> -->
+            <button class="btn btn-outline-secondary" @click="deleteAvatar">
+              Удалить
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="info-block">
+        <div class="row">
+          <div class="col-6">
+            <div>
+              <h5>Имя</h5>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" v-model="form.name" />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div>
+              <h5>Фамилия</h5>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.surname"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h5>Интересы</h5>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Interests"
+                aria-describedby="basic-addon1"
+                v-model="form.interestings"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label"
+                ><h5>Обновить фото</h5></label
+              >
+              <input
+                type="file"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="name@example.com"
+                @change="convertFileAvatar"
+              />
+            </div>
 
-    <div class="container d-flex align-items-center flex-column">
-        <div class="q-user head-1 mb-3 mt-1 user-select-none">
-            <div class=" d-flex flex-row align-items-center gap-4">
-                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe(true)">Вопросы</p>/
-                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe(false)">статьи</p>
+            
+            <div class="mb-3" v-if="isLoading">
+              <label for="exampleFormControlInput1" class="form-label mt-3"
+              ><h5>Загрузка данных на сервер...</h5></label
+              >
+              <progress
+                max="100"
+                :value="this.percentCompleted"
+                v-if="this.isUploading"
+              ></progress> <p>{{ this.percentCompleted }} %</p>
             </div>
-            <p class="vse" @click="Olezha">пользователя</p>
+          </div>
         </div>
-        <div v-if='this.isQ && this.questions.length != 0'>
-            <div class="scroll">
-                <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
-                    <VidUserComp :item="quetion" /> 
-                </a>
+        <hr />
+        <div class="row">
+          <div class="col-12">
+            <h5>О себе</h5>
+            <div class="input-group mb-3">
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder=""
+                aria-label="About"
+                aria-describedby="basic-addon1"
+                style="height: 150px"
+                v-model="form.about"
+                ></textarea>
+              </div>
             </div>
+          </div>
+          <div class="row contact-container">
+            <h5>Контакты</h5>
+            <div class="col-12" style="display: flex">
+              <div class="d-flex flex-column">
+                <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                  <div class="border px-3 py-1 rounded-3 h-fit">Email</div>
+                  <input
+                  type="text"
+                  class="form-control contact-input"
+                  style="margin-left: 30px"
+                  v-model="form.email"
+                  />
+                </div>
+                <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                  <div class="border px-3 py-1 rounded-3 h-fit">GitHub</div>
+                  <input
+                  type="text"
+                  class="form-control contact-input"
+                  style="margin-left: 30px"
+                  v-model="form.github"
+                  />
+                </div>
+                <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                  <div class="border px-3 py-1 rounded-3 h-fit">Telegram</div>
+                  <input
+                  type="text"
+                  class="form-control contact-input"
+                  style="margin-left: 30px"
+                  v-model="form.telegram"
+                  />
+                </div>
+                <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                  <div class="border px-3 py-1 rounded-3 h-fit">Skype</div>
+                <input
+                  type="text"
+                  class="form-control contact-input"
+                  style="margin-left: 30px"
+                  v-model="form.skype"
+                  />
+              </div>
+              <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                <div class="border px-3 py-1 rounded-3 h-fit">Discord</div>
+                <input
+                  type="text"
+                  class="form-control contact-input"
+                  style="margin-left: 30px"
+                  v-model="form.discord"
+                />
+              </div>
+              <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                <div class="border px-3 py-1 rounded-3 h-fit">Facebook</div>
+                <input
+                type="text"
+                class="form-control contact-input"
+                style="margin-left: 30px"
+                v-model="form.facebook"
+                />
+              </div>
+              <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                <div class="border px-3 py-1 rounded-3 h-fit">
+                  Номер телефона:
+                </div>
+                <input
+                  type="text"
+                  class="form-control contact-input"
+                  style="margin-left: 30px"
+                  v-model="form.phonenumber"
+                  />
+                </div>
+              </div>
+          </div>
         </div>
-        <div v-if="!this.isQ && this.states.length != 0">
-            <div class="scroll"> 
-                <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
-                    <VidUserComp :item="state"/>
-                </a>
-            </div>
+        <div class="pt-4">
+          <h5>Местоположение</h5>
+          <div class="row place-container gap-3" style="display: flex">
+            <select
+            style="width: 350px"
+            role="button"
+            class="country-select col-12 ms-2 w-50"
+            v-model="form.country"
+            >
+            <option value="Russia" selected>Россия</option>
+            <option value="Belarus">Белоруссия</option>
+            <option value="Germany">Германия</option>
+              <option value="China">Китай</option>
+              <option value="Japan">Япония</option>
+              <option value="USA">США</option>
+              <option value="UK">Великобритания</option>
+            </select>
+            <input
+            type="text"
+            class="s-place col-12 ms-2 w-50"
+            placeholder="Регион"
+            v-model="form.region"
+            />
+            <input
+              type="text"
+              class="s-place col-12 ms-2 w-50"
+              placeholder="Город"
+              v-model="form.city"
+            />
+          </div>
         </div>
-        <div class="content p-2" v-if="this.states.length == 0 && !this.isQ">
-            <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет статей</h2>
+        <div class="d-flex justify-content-start mt-4 ms-0 mb-3">
+          <button class="btn btn-success w-fit ms-0" type="submit">
+            <b>Сохранить изменения</b>
+          </button>
         </div>
-        <div class="content p-2" v-if="this.questions.length == 0 && this.isQ">
-            <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет вопросов</h2>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><h5>Действия с аккунтом</h5></label
+          >
+          <button class="btn btn-danger logout" @click="logout">
+            Выйти из акканта</button
+          ><button class="btn btn-primary" @click="forgot">
+            Забыли пароль?
+          </button>
         </div>
+      </div>
     </div>
+  </form>
 </template>
 <style scoped>
-@import url('https://fonts.cdnfonts.com/css/rubik');
-
-.active-shose {
-    text-decoration: underline;
-    font-weight: 600;
+.form-label {
+  width: 100%;
 }
 
-/* общее */
-:root {
-    --size-20: 20px;
-    --size-26: 26px;
-    --size-22: 22px;
-    --size-18: 18px;
+.contact-plus div {
+  width: 260px;
+}
+.logout {
+  margin-right: 10px;
+}
+#download,
+#save {
+  background-color: white;
+  color: #7ac97a;
+  border-color: #90ee90;
+  border-radius: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align: center;
+  transition: all 300ms;
+  padding: 10px 25px;
 }
 
-html {
-    margin: 0;
-    background-color: #EEF1F4;
+#delete:hover {
+  color: #000;
 }
 
-main {
-    margin: 10px
+select {
+  padding: 7.5px 15px 7.5px 2px;
+  border-radius: 3px;
+  transition: all 300ms;
 }
 
-body {
-    font-family: Rubik !important;
+select:hover {
+  border-color: blue;
 }
 
-/*популярные классы */
-.t-alig-c {
-    text-align: center;
-}
-
-.scroll {
-    overflow: scroll;
-    max-height: 555px;
-    width: auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.interes {
-    word-break: break-word !important;
-}
-
-/* профиль с картинкой */
-.profile {
-    background-image: url(../../assets/Profile/background.png);
-    background-color: #ffffff;
-    background-repeat: no-repeat;
-    background-size: 1920px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-/* шесетренка */
-.il {
-    position: absolute;
-    right: 30px;
-    height: 25px;
-    width: 25px;
-    cursor: pointer;
-}
-
-/* аватар + ник */
-.circle {
-    margin: auto;
-    height: 150px;
-    width: 150px;
-    border-radius: 100%;
-    border: 1px solid #000;
-}
-
-.circle img {
-    height: 150px;
-    width: 150px;
-    border-radius: 100%;
-}
-
-.nikname {
-    color: #000;
-    font-size: 38px;
-    font-style: normal;
-    font-weight: 400;
-}
-
-
-.loc-tel {
+@media (max-width: 1224px) {
+  .place-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    gap: 15px !important;
+  }
+
+  .s-place {
+    margin-left: 10px !important;
+    width: 90% !important;
+  }
+
+  .country-select {
+    width: 100% !important;
+  }
+
+  .main-block {
+    flex-direction: column !important;
+  }
+
+  .hr-down {
+    display: none !important;
+  }
 }
 
-.loc-tel p {
-    margin: 0;
-    font-size: 24px;
+@media (max-width: 540px) {
+  .country-select {
+    max-width: 90% !important;
+  }
+
+  .contact-input {
+    margin-left: 12px !important;
+  }
 }
 
-.telephone {
-    margin-bottom: 40px !important;
-}
-
-/* табличка */
-.table {
-    display: flex;
-    justify-content: center;
-}
-
-.cell {
-    padding: 25px;
-    border-right: 1px solid #AEB8BC;
-    border-bottom: 1px solid #AEB8BC;
-    margin-bottom: 30px;
-}
-
-.dis-r {
-    border-right: none;
-}
-
-.num {
-    font-size: 34px;
-    margin: 0;
-}
-
-.info {
-    font-size: 34px;
-}
-
-/* Описание */
-.about {
-    padding: 10px 60px;
-    background: #FFF;
-    box-shadow: 0px 4px 40px 5px rgba(45, 114, 217, 0.60);
-    margin-bottom: 20px;
-    max-width: 650px;
-}
-
-.about p {
-    font-size: 26px;
-    margin: 5px 0px;
-    word-break: break-all !important;
-}
-
-.about img {
-    width: 28px;
-    height: 18px;
-    vertical-align: middle;
-    margin-right: 4px;
-}
-
-p .u {
-    width: 38px;
-    height: 22px;
-}
-
-/* Вопросы пользователя */
-.quest {
-    background-color: white;
-    border-radius: 8px;
-    padding: 10px;
-    margin: 0 20%;
-}
-
-.q-user {
-    display: flex;
-    align-items: center;
-    justify-content: center
-}
-
-/* До линии */
-.head-1 {
-    padding-bottom: 10px;
-    height: 30px;
-    display: flex;
-    gap: 10px;
-    margin: -15px;
-    padding: 0 20px;
-}
-
-.vse {
-    margin: 0;
-    color: #2D72D9;
-    font-size: 24px;
-    text-decoration: none;
-}
-
-.q {
-    font-size: 24px;
-    margin: 0;
-}
-
-/* после линии */
-.imp-1 {
-    padding: 10px;
-    padding-top: 15px;
-    border-top: 1px solid #000000;
-}
-
-/* виджет с вопросами */
-.vid {
-    background-color: #EEF1F4;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 15px;
-    margin-bottom: 15px;
-}
-
-/* общее расположение элементов */
-
-.right {
-    display: flex;
-    align-items: center;
-}
-
-.right-in {
-    display: flexbox;
-}
-
-.right p {
-    margin: 0;
-    margin: 0;
-    color: #AEB8BC;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-
-/* расцветовка */
-.light {
-    color: #488D57
-}
-
-.middle {
-    color: #D8A326;
-}
-
-.hard {
-    color: #D9382E;
-}
-
-/* левая чать виджета */
-
-/* Верх */
-.top-1 {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 10px;
-}
-
-.top-1 p {
-    margin: 0;
-}
-
-.t {
-    vertical-align: middle;
-    width: 10px;
-    height: 10px;
-}
-
-/* серидина */
-.mid-1 {
-    font-size: 28px;
-}
-
-.mid-1 p {
-    margin: 0;
-}
-
-/* низ */
-.bottom-1 {
-    display: flex;
-    font-size: 15px;
-    color: #AEB8BC;
-}
-
-.el {
-    border-right: 1px solid #AEB8BC;
-    padding: 7px;
-}
-
-.el-d {
-    border-right: none;
-    padding: 7px;
-}
-
-.-d {
-    border-right: none;
-}
-
-.el p {
-    margin: 0;
-}
-
-
-/* анимация */
-
-
-
-
-
-/* Адаптивка */
-@media(max-width: 1200px) {
-    .nikname {
-        font-size: 30px;
-    }
-
-    .num {
-        font-size: var(--size-26);
-    }
-
-    .info {
-        font-size: var(--size-26);
-    }
-
-    .about p {
-        font-size: var(--size-22);
-    }
-
-    .vse {
-        font-size: var(--size-20);
-    }
-
-    .q {
-        font-size: var(--size-20);
-    }
-}
-
-@media(max-width: 992px) {
-    .nikname {
-        font-size: 28px;
-    }
-
-    .num {
-        font-size: var(--size-22);
-    }
-
-    .info {
-        font-size: var(--size-22);
-    }
-
-    .about p {
-        font-size: var(--size-18);
-    }
-
-    .vse {
-        font-size: var(--size-18);
-    }
-
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: 24px;
-    }
-
-}
-
-@media(max-width: 576px) {
-    .nikname {
-        font-size: var(--size-26);
-    }
-
-    .q-user {
-        flex-wrap: wrap;
-        padding-bottom: 65px;
-    }
-
-    .num {
-        font-size: var(--size-22);
-    }
-
-    .info {
-        font-size: var(--size-22);
-    }
-
-    .about {
-        padding: 10px 20px !important;
-    }
-
-
-    .interes {
-        font-size: 16px;
-    }
-
-    .about p {
-        font-size: var(--size-18);
-    }
-
-    .vse {
-        font-size: var(--size-18);
-    }
-
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: var(--size-20);
-    }
-
-    .bottom-1 {
-        font-size: 13px;
-    }
-
-    .right p {
-        font-size: var(--size-18);
-    }
-
-    .imp-1 {
-        padding-top: 13px;
-    }
-}
-
-@media(max-width: 768px) {
-    .nikname {
-        font-size: 28px;
-    }
-
-    .num {
-        font-size: var(--size-22);
-    }
-
-    .info {
-        font-size: var(--size-22);
-    }
-
-    .about p {
-        font-size: var(--size-18);
-    }
-
-    .vse {
-        font-size: var(--size-18);
-    }
-
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: var(--size-20);
-    }
-
-    .bottom-1 {
-        font-size: 13px;
-    }
-
-    .right p {
-        font-size: var(--size-18);
-    }
-
-    .imp-1 {
-        padding-top: 13px;
-    }
+@media (max-width: 360px) {
+  .country-select {
+    max-width: 90% !important;
+  }
 }
 </style>
