@@ -65,7 +65,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.questionInfo);
-            this.checkUser();
+            this.CheckUserIsEdit()
             for (let i = 0; i < this.answers.length; i++) {
                 let user = await this.loadUsers(this.answers[i]);
                 this.answerUser.push(user)
@@ -164,6 +164,16 @@ export default {
                 is_solved: is,
             });
         },
+        
+        async CheckUserIsEdit() {
+            let res = await axios.get('/check', {
+                params: {
+                    id: this.userCreater.id,
+                }
+            });
+
+            this.isCheck = res.data.isEdit
+        },
 
         fixN(text) {
             return text
@@ -224,22 +234,22 @@ export default {
                                     <p>{{ questionInfo.data }}</p>
                                     <!-- <p>{{ questionInfo.views }} просмотра</p> -->
                                     </div>
-                                    </div>
-                                    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-                                    <div v-if="this.loading">
-                                        <div class="container mt-5"><h4>Ответы:</h4></div>
-                                        <div class="answers-all" v-if="this.answers.length != 0">
-                                            <div class="content-2" v-for="answer in answers">
-                                                <div class="account">
-                                                    <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                                                    <div class="name-ring">
-                            <a :href="`/Profile?id=${answer.user.id}`">
-                                <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                                </div>
+                            <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+            <div v-if="this.loading">
+                <div class="container mt-5"><h4>Ответы:</h4></div>
+                <div class="answers-all" v-if="this.answers.length != 0">
+                    <div class="content-2" v-for="answer in answers">
+                        <div class="account">
+                            <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                                <div class="name-ring">
+                                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                                </div>
                             </a>
-                        </div>
                     </div>
                     <div class="description my-1">
-                        <span v-html="fixN(answer.text)"></span>
+                        <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                     </div>
                     <!-- <div class="btn-group">
                         <div class="left">
@@ -264,12 +274,14 @@ export default {
         <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
         
             <div class="account">
-                <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
-                <div class="name-ring">
-                    <div>
-                        <a :href="`/Profile?id=${this.userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                    <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+                    <div class="name-ring">
+                        <div>
+                            <span class="name">{{ userNow.username }}</span>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="mb-3">
                 <div class="content-3-without mb-3">
