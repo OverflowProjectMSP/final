@@ -33,8 +33,7 @@ export default {
     mounted() {
         this.loadState();
         this.getNowUser();
-        this.checkUser()
-
+        this.checkUser();
     },
     
     methods: {
@@ -56,7 +55,7 @@ export default {
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.states);
-            this.checkUser();
+            this.CheckUserIsEdit()
             if (this.answers.length!=0){
                 for(let i = 0; i < this.answers.length; i++) {
                     let user = await this.loadUsers(this.answers[i]);
@@ -116,7 +115,7 @@ export default {
             this.$router.push('/States');
         },
 
-        async checkUser() {
+        async CheckUserIsEdit() {
             let res = await axios.get('/check', {
                 params: {
                     id: this.userCreater.id,
@@ -208,12 +207,14 @@ export default {
         
         <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
             <div class="account">
-                <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
-                <div class="name-ring">
-                    <div>
-                        <a :href="`/Profile?id=${this.userNow.id}`"><span class="name">{{ userNow.username }}</span></a>
+                 <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                    <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+                    <div class="name-ring">
+                        <div>
+                           <span class="name">{{ userNow.username }}</span>
+                        </div>
                     </div>
-                </div>
+                    </a>
             </div>
             <div class="content-3-without mb-3">
                 <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
@@ -238,13 +239,15 @@ export default {
             <div class="content-2 mt-2" v-for="answer in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
-                        <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                        <div class="name-ring">
-                            <a :href="`/Profile?id=${answer.user.id}`"><span class="name" role="button">{{ answer.user.username }}</span></a>
-                        </div>
+                        <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                            <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                            <div class="name-ring">
+                                <span class="name" role="button">{{ answer.user.username }}</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="description-text mt-1">
-                        <span v-html="fixN(answer.text)"></span>
+                        <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                     </div>
                 </div>
             </div>
