@@ -1,69 +1,79 @@
 <script>
-import axios, { all } from 'axios';
+
+import UpdateQuestion from './UpdateQuestion.vue';
+
+import axios from 'axios';
 
 export default {
+  components: { UpdateQuestion },
   data() {
     return {
-      isAdmin: false,
-
-      user: {},
-
-      states: {}, //главная возня
-      answers: [],
-      commentUser: [],
+      questionInfo: {}, //главная возня
+      answers: [
+        // {
+        //     data:"Sat, 11 May 2024 21:55:14 GMT",
+        //     id:"9b129553-7f6e-4e35-aa66-3cf01a216043",
+        //     id_q:"9b129553-7f6e-4e35-aa66-3cf01a216043",
+        //     id_u:"f527d19a-f56b-4614-bab6-63800ed79825",
+        //     text:"Абдурохман",
+        //     user:{
+        //     avatar:"http://127.0.0.1:5000/avatar/a_f527d19a-f56b-4614-bab6-63800ed79825.gif",
+        //     id:"f527d19a-f56b-4614-bab6-63800ed79825",
+        //     username:"febolo"
+        //     }}
+      ],
       answerUser: [],
       userCreater: {},
       userNow: {},
-
       text: ``,
 
+      user: {},
+
+      text: '',
       symbols: 0,
       symbCount: false,
+      isBold: false,
+      isItalic: false,
 
-      isCheck: false,
+      count: 0,
+      countmin: 0,
 
-      avaComment: ``,
+      isCheck: null,
 
       loading: false,
-      a: '',
-      ShowAdd: true
+
+      updQ: false,
+      ShowAdd: true,
+      isAdmin: false
     }
   },
 
-  mounted() {
-    this.loadState();
-    this.getNowUser();
-    this.checkUser();
-  },
-
   methods: {
-    async loadState() {
+    async loadQuestion() {
       let responce = await axios.get(`/show-one`, {
         params: {
           id: this.$route.query.id,
-          q: false,
+          q: true,
         }
       });
-      const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-
-      this.states = responce.data.all.state;
+      this.questionInfo = responce.data.all.question;
       this.answers = responce.data.all.answers;
-      this.states.details = this.states.details.replaceAll(regex, '<br>')
+      const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+      this.questionInfo.details = this.questionInfo.details.replaceAll(regex, '<br>')
       this.loadAnswerUser();
-
+      console.log(this.questionInfo)
     },
 
     async loadAnswerUser() {
-      this.userCreater = await this.loadUsers(this.states);
+      this.userCreater = await this.loadUsers(this.questionInfo);
       this.CheckUserIsEdit()
-      if (this.answers.length!=0){
-        for(let i = 0; i < this.answers.length; i++) {
-          let user = await this.loadUsers(this.answers[i]);
-          this.commentUser.push(user)
-        };
-        this.v_For1();
-      }
+      for (let i = 0; i < this.answers.length; i++) {
+        let user = await this.loadUsers(this.answers[i]);
+        this.answerUser.push(user)
+      };
+      this.v_For1();
     },
+
 
     async loadUsers(item) {
       let res = await axios.get('/user-not-all', {
@@ -71,29 +81,23 @@ export default {
           id: item.id_u,
         }
       });
-      console.log(item)
       return res.data.all;
     },
 
-    async getNowUser() {
-      let res = await axios.get('/session');
-      this.loadNowUser(res.data.id);
-    },
-
     symbolsCount() {
-      this.question.symbols = this.question.text.length;
-      if (this.question.symbols >= 2000) {
-        this.question.symbCount = true;
+      this.symbols = this.text.length;
+      if (this.symbols >= 2000) {
+        this.symbCount = true;
       } else {
-        this.question.symbCount = false;
+        this.symbCount = false;
       }
     },
 
     async addComment() {
-      if (this.text != ""){
+      if (this.text.length >= 3 ){
         await axios.post(`/answers`, {
           id: this.$route.query.id,
-          q: 'false',
+          q: 'true',
           text: this.text,
         });
         this.answers.push({
@@ -101,39 +105,39 @@ export default {
           text: this.text,
           user: this.userNow
         });
+
         this.text = ``;
-        this.v_For1();
+        this.v_For1()
       }
     },
-    async deleteState() {
+    async deleteQuestion() {
       await axios.delete('/delete', {
-        params:{
-          id: this.$route.query.id,
-          q: 'false',
-        }
-      });
-      this.$router.push('/States');
-    },
-
-    async CheckUserIsEdit() {
-      let res = await axios.get('/check', {
         params: {
-          id: this.userCreater.id,
+          id: this.$route.query.id,
+          q: true,
         }
       });
-
-      this.isCheck = res.data.isEdit
-      this.checkIsAdmin()
+      this.$router.push(`/Quetions`)
+    },
+    // async checkUser() {
+    //     let res = await axios.get('/check', {
+    //         params: {
+    //             id: this.userCreater.id
+    //         }
+    //     });
+    //     this.isCheck = res.data.isEdit;
+    // },
+    async getNowUser() {
+      let res = await axios.get('/session');
+      this.loadNowUser(res.data.id);
     },
 
     v_For1() {
       if (this.answers.length != 0){
-        for (let i = 0; i < this.commentUser.length; i++) {
-          this.answers[i].user = this.commentUser[i];
+        for (let i = 0; i < this.answerUser.length; i++) {
+          this.answers[i].user = this.answerUser[i];
           const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-          let e = this.answers[i].text.replaceAll(regex, '<br>')
-          this.answers[i].text = e
-          console.log(this.answers)
+          this.answers[i].text = this.answers[i].text.replaceAll(regex, '<br>')
         }
         if (this.answers[this.answers.length - 1].user.avatar != ``) {
           this.loading = true;
@@ -146,12 +150,37 @@ export default {
     },
 
     async loadNowUser(id) {
+
       let res = await axios.get('/user-not-all', {
         params: {
           id: id,
         }
       });
       this.userNow = res.data.all;
+    },
+
+    async solveQuestion(is) {
+      await axios.put(`/is-solved`, {
+        id: this.$route.query.id,
+        is_solved: is,
+      });
+    },
+
+    async CheckUserIsEdit() {
+      let res = await axios.get('/check', {
+        params: {
+          id: this.userCreater.id,
+        }
+      });
+
+      this.isCheck = res.data.isEdit
+
+      this.checkIsAdmin()
+    },
+
+    fixN(text) {
+      return text
+      // text.replaceAll("\n", '<br>')
     },
     async checkUser() {
       let res = await axios.get(`/check-r`);
@@ -164,14 +193,14 @@ export default {
       this.ShowAdd = false
     },
     async checkIsAdmin(){
-      let res = await axios.get("/check-for-admin")
+      let res = await axios.get("check-for-admin")
       this.isAdmin = res.data.res
-    },
-
-    fixN(text) {
-      return text
-      // }
-    },
+    }
+  },
+  mounted() {
+    this.loadQuestion();
+    this.checkUser();
+    this.getNowUser();
   },
 }
 
@@ -182,10 +211,10 @@ export default {
     <div class="content-1">
       <div class="account justify-content-between">
         <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile?id=${this.userCreater.id}`">
-          <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
+          <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
           <div class="name-ring">
             <div>
-              <a :href="`/Profile?id=${this.userCreater.id}`"><span class="name">{{ userCreater.username }}</span></a>
+              <span class="name">{{ userCreater.username }}</span>
             </div>
           </div>
         </a>
@@ -193,6 +222,8 @@ export default {
           <div class="dropdown">
             <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
             <ul class="dropdown-menu">
+              <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
+              <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
               <li v-if="this.isCheck == 'true'"><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
               <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
             </ul>
@@ -200,17 +231,54 @@ export default {
         </div>
       </div>
       <div class="title">
-        <h3 v-html="fixN(this.states.descriptions)"></h3>
+        <h3 v-html="fixN(questionInfo.descriptions)"></h3>
       </div>
-      <div class="description uy">
-        <p v-html="fixN(this.states.details)"></p>
+      <div class="description">
+        <p v-html="fixN(questionInfo.details)"></p>
+        <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
       </div>
       <div class="about">
-        <p v-html="fixN(this.states.data)"></p>
+        <p>{{ questionInfo.data }}</p>
+        <!-- <p>{{ questionInfo.views }} просмотра</p> -->
+      </div>
+    </div>
+    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+    <div v-if="this.loading">
+      <div class="container mt-5"><h4>Ответы:</h4></div>
+      <div class="answers-all" v-if="this.answers.length != 0">
+        <div class="content-2" v-for="answer in answers">
+          <div class="account">
+            <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+              <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+              <div class="name-ring">
+                <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+              </div>
+            </a>
+          </div>
+          <div class="description my-1">
+            <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
+          </div>
+          <!-- <div class="btn-group">
+              <div class="left">
+                  <button class="comm-add btgr">Добавить комментарий</button>
+              </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="content p-2" v-if="this.answers.length == 0">
+        <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
+        </h2>
+      </div>
+    </div>
+    <div v-else>
+      <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
+        <div class="spinner-border text-primary" role="status" >
+          <span class="visually-hidden text-center">Loading...</span>
+        </div>
       </div>
     </div>
 
-    <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
+    <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
       <div class="account">
         <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
           <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
@@ -221,54 +289,37 @@ export default {
           </div>
         </a>
       </div>
-      <div class="content-3-without mb-3">
-                <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                          placeholder="Оставь свой комментарий:"></textarea>
-        <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
+      <div class="mb-3">
+        <div class="content-3-without mb-3">
+                    <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
+                              placeholder="Оставь свой комментарий:"></textarea>
+          <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
+        </div>
       </div>
       <div class="send-ans d-flex justify-content-end">
         <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
       </div>
     </form>
-    <div class="container mt-3" v-if="this.answers.length != 0"><h4>Комментарии:</h4></div>
-    <div v-if="!this.loading && this.answers.length != 0">
-      <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
-      <div class="d-flex justify-content-center">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden text-center z-10">Loading...</span>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="this.loading && this.answers.length != 0">
-      <div class="content-2 mt-2" v-for="answer in answers">
-        <div v-if="this.answers.length != 0">
-          <div class="account">
-            <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
-              <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-              <div class="name-ring">
-                <span class="name" role="button">{{ answer.user.username }}</span>
-              </div>
-            </a>
-          </div>
-          <div class="description-text mt-1">
-            <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="content p-2" v-if="this.answers.length == 0">
-      <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под этой статьей!</h2>
-    </div>
   </div>
 </template>
 
 <style scoped>
-.toMain{
-  border-radius: 10px;
+.link{
+  font-size: 20px;
+  color:#3B82F6;
+  position: absolute;
+  right: 140px;
+
+
+
 }
-.uy{
-  word-break: break-all !important;
+img {
+  user-select: none;
+}
+
+
+.description span {
+  margin-left: 75px;
 }
 
 .accountIcon {
@@ -276,10 +327,6 @@ export default {
   height: 60px;
   border-radius: 50px;
   border: 3px solid #1d1d1d;
-}
-
-img {
-  user-select: none;
 }
 
 /* CONTENT-1 */
@@ -330,18 +377,17 @@ img {
   gap: 12px;
   align-items: center;
 }
-/*
+
 .accountIcon {
-    border-radius: 50px !important;
-    border: 2px solid #1d1d1d;
-} */
+  border-radius: 50px;
+  border: 2px solid #1d1d1d;
+}
 
 .name {
   font-weight: 700;
   color: #8355E3;
   margin-right: 10px;
 }
-
 
 
 .name-ring {
@@ -384,9 +430,8 @@ img {
   transition: all 300ms;
 }
 
-.description-text {
-  margin-left: 72px !important;
-  word-break: break-all;
+.description {
+  width: 100%;
 }
 
 
@@ -404,6 +449,7 @@ img {
 
   transition: all 200ms;
 }
+
 
 
 .about {
@@ -512,13 +558,15 @@ img {
 
 .content-3 {
   margin-top: 50px;
+  margin-bottom: 50px;
+
 }
 
 .content-3-without {
   margin-top: 13px;
 
   width: 100%;
-  /* height: 100px !important; */
+  height: 250px;
 
   padding: 19px;
 
@@ -543,7 +591,7 @@ img {
 
 .comm-input {
   width: 100%;
-  height: 100px !important;
+  height: 190px;
 
   border: none;
   resize: none;
@@ -568,6 +616,7 @@ img {
   .name:hover {
     color: #6140a7;
   }
+
 }
 
 @media (min-width: 1000px) {
@@ -593,6 +642,10 @@ img {
   .comm-input {
     height: 250px;
   }
+
+  .content-3-without {
+    height: 310px;
+  }
 }
 
 @media (max-width: 770px) {
@@ -609,6 +662,12 @@ img {
   .comm-input {
     height: 350px;
   }
+
+  .content-3-without {
+    height: 410px;
+  }
+
+
 }
 
 
