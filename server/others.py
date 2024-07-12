@@ -1,17 +1,5 @@
-import os
-import uuid
-import psycopg2
-from psycopg2 import extras, Error
-from flask import Flask, jsonify, request, session, make_response, send_from_directory
-from flask_cors import CORS
-import smtplib
-from email.mime.text import MIMEText
-import random
-from datetime import datetime
-from dotenv import load_dotenv
-import base64
-import logging
-import asyncio
+from app import *
+
 
 load_dotenv()
 
@@ -21,137 +9,287 @@ logging.basicConfig(
     datefmt="%Y—%m—%d %H:%M:%S",
 )
 
-PASSWORD_PG = os.getenv('PASSWORD_PG')
-PORT_PG = os.getenv('PORT_PG')
-USER_PG = os.getenv('USER_PG')
-HOST_PG = os.getenv('HOST_PG')
-MEDIA = os.getenv('MEDIA')
-AVATAR = os.getenv('AVATAR')
-TG_BOT_TOKEN = os.getenv("TG_BOT_TOKEN")
+logging.info("others.py have connected")
 
-def escape_quotes(text):
-    return text.replace("'", "''")
-
-def unescape_quotes(text):
-    return text.replace("''", "'")
-
-
-app = Flask(__name__)
-
-app.secret_key = "/zxc/"
-app.permanent_session_lifetime = 60 * 60 * 24 * 28
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] =  'None'
-
-# enable CORS
-CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
-
-#Главная страница
-@app.route('/', methods=['GET'])
-def home():
-
-    response_object = {'status': 'success'} #БаZа
-    response_object['message'] = session.get('id')
-    logging.warning('1')
-    # logging.info(session.get('id')) #debug
-    logging.warning(response_object)
-    session.pop('id', None)
-    return jsonify(response_object)
-
-def add_tables():
+# Добавление сообщения в бд (чат форума)
+def chat(id, time, msg):
     try:
         pg = psycopg2.connect(f"""
-                host={HOST_PG}
-                dbname=postgres
-                user={USER_PG}
-                password={PASSWORD_PG}
-                port={PORT_PG}
-            """)
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        cursor.execute(f"""create table if not exists users(
-                        id uuid,
-                        username text,
-                        email text,
-                        password text,
-                        name text,
-                        surname text,
-                        interestings text,
-                        about text,
-                        country text,
-                        region text,
-                        city text,
-                        telegram text,
-                        skype text,
-                        discord text,
-                        facebook text,
-                        phonenumber text,
-                        github text,
-                        avatar text,
-                        admin bool,
-                        data_c timestamp,
-                        tg_id text,
-                        tg_chat_id text
-                    )""")
-        cursor.execute(f"""CREATE TABLE IF NOT EXISTS questions(
-                    id uuid,
-                    descriptions text,
-                    details text,
-                    dificulty text,
-                    tag text,
-                    id_u uuid,
-                    data timestamp,
-                    is_solved bool
-                )""")
-        cursor.execute(f"""CREATE TABLE IF NOT EXISTS states(
-                    id uuid,
-                    descriptions text,
-                    details text,
-                    tag text,   
-                    id_u uuid,
-                    data timestamp
-                )""")
-        cursor.execute(f"""create table if not exists answers(
-                    id text,
-                    id_u text, 
-                    id_q text,
-                    text text,
-                    data timestamp
-                )""")
-        cursor.execute(f"""create table if not exists comments(
-                    id text,
-                    id_u text, 
-                    id_s text,
-                    text text,
-                    data timestamp
-                )""")
-        cursor.execute(f"""create table if not exists helper(
-                id uuid,
-                msg text,
-                phone text,
-                email text,
-                id_u uuid
-            )""")
+        message_id = uuid.uuid4().hex # Записываем id сообщения в отдельную переменную для отпраки на клиент
 
+        message_to_write = (message_id, id, time, msg)
+        cursor.execute(f"INSERT INTO messages(message_id, user_id, time, msg) VALUES {message_to_write}")
         pg.commit()
+
+        logging.info('Сообщение добавлено')
+
+        return_data = message_id
+
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
+        return_data = f"Ошибка обращения к базе данных: {error}"
 
     finally:
         if pg:
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def show_avatar(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f'''SELECT avatar FROM users
+                      WHERE id = $${id}$$''')
+
+        link = cursor.fetchall()[0]
+
+        logging.info(f'Аватар юзере {id} отображен')
+
+        if link == [None]:
+            return_data = 'No'
+        else: return_data = link
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'No'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def helper(phone, email, msg, id_u):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"INSERT INTO helper VALUES('{uuid.uuid4().hex}', '{msg}', '{phone}', '{email}', '{id_u}')")
+
+        pg.commit()
+
+        logging.info(f"Добавлен в helper '{msg}', '{phone}', '{email}', '{id_u}' ")
+
+        return 'Ваня'
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def is_solved(id, isS):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"UPDATE questions SET is_solved=$${isS}$$ WHERE id=$${id}$$")
+        pg.commit()
+
+        logging.info('Информаация о решенности вопроса обновлена')
+        return_data = 'ok'
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def count_reg():
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute('''SELECT COUNT(*) FROM users''')
+
+        return_data = cursor.fetchall()[0]
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def check_is_admin(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT admin FROM users WHERE id = $${id}$$")
+
+        return_data = cursor.fetchall()[0]
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+# Чат форума
+@app.route('/chat', methods=['POST', 'PUT'])
+def chat_forum():
+    responce_object = {'status' : 'success'} #БаZа
+    post_data = request.get_json()
+
+    if request.method == 'PUT': # Обновка вопроса
+        pass
+    else:
+        responce_object['id_question'] = chat(session.get('id'), datetime.now(), post_data.get('msg')) #   Возвращает id сообщения и добовляет его в бд (сообщение)       
+
+    return jsonify(responce_object)
+
+# проверка может ли юзер исправлять что-то
+@app.route('/check', methods=['GET'])
+def check():
+    response_object = {'status': 'success'} #БаZа
+    id = request.args.get('id')
+
+    if id == session.get('id'):
+        response_object['isEdit'] = 'true'
+        logging.info(f'Пользователь {id} может внести изменения')
+    else:
+        response_object['isEdit'] = 'false'
+        logging.info(f'Пользователь {id} не может вносить изменения')
+
+    return  jsonify(response_object)
+
+@app.route('/avatar', methods=['GET'])
+def ava():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object['link'] = show_avatar(session.get('id'))
+
+    return jsonify(response_object)
+
+@app.route('/avatar/<path:filename>')
+def serve_file(filename):
+    path = filename
+    print(AVATAR+path)
+    # if not os.path.exists('{}/{}'.format('avatar/', filename)):
+    #     logging.info({'error': 'File not found'}, 404)
+    #     return jsonify({'error': 'File not found'}), 404
+
+    return send_from_directory(directory='avatar/', path=path)
+
+@app.route('/session', methods=['GET'])
+def session_():
+    return jsonify({'status': 'success', 'id': session.get('id')})
+
+@app.route('/help', methods=['POST'])
+def help_():
+    responce_object = {'status' : 'success'} #БаZа
+
+    post_data = request.get_json()
+
+    responce_object['all'] = helper(post_data.get('phone'), post_data.get('email'), post_data.get('message'), session.get('id'))
+
+    return  jsonify(responce_object)
+
+@app.route('/avatarka', methods=['GET'])
+def ava_():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object['link'] = show_avatar(session.get('id'))
+
+    return jsonify(response_object)
+
+@app.route('/check-r', methods=['GET'])
+def session__():
+    if 'id' in session:
+        logging.info('Пользователь зашел в аккаунт')
+        return jsonify({'status': 'success', 'all': 'true'})
+    else:
+        logging.info('Пользователь не зашел в аккаунт')
+        return jsonify({'status': 'success', 'all': 'false'})
+
+@app.route('/is-solved', methods=['PUT'])
+def is_s():
+    response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
+
+    is_solved(post_data.get('id'), post_data.get('is_solved'))
+    return  jsonify(response_object)
+
+@app.route('/users-reg', methods=['GET'])
+def reg_():
+    responce_object = {'status': 'success'} #БаZа
+
+    responce_object['regs'] = count_reg()[0]
+
+    return jsonify(responce_object)
 
 
-from user import *
-from render_and_adding import *
-from others import *
-
-if __name__ == '__main__':
-    add_tables()
-    app.run(host='0.0.0.0', port=80)
-
-
+@app.route('/check-for-admin', methods=['GET'])
+def admin_check():
+    responce_object = {'status': 'success'} #БаZа
+    # if "id" in session:
+    responce_object['res'] = check_is_admin(session.get("id"))
+    # responce_object['res'] = "Unreg"
+    return jsonify(responce_object)
