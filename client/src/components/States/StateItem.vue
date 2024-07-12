@@ -4,7 +4,7 @@ import axios, { all } from 'axios';
 export default {
     data() {
         return {
-        
+            isAdmin: false,
 
             user: {},
 
@@ -123,6 +123,7 @@ export default {
             });
 
             this.isCheck = res.data.isEdit
+            this.checkIsAdmin()
         },
 
         v_For1() {
@@ -167,6 +168,10 @@ export default {
             return text
             // }
         },
+        async checkIsAdmin(){
+              let res = await axios.get("check-for-admin")
+              this.isAdmin = res.data.res
+        },
     },
 }
 
@@ -184,14 +189,14 @@ export default {
                         </div>
                     </div>
                 </a>
-                <div class="action-select" v-if="this.isCheck == 'true'">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" :href="`/UpdateState?id=${this.$route.query.id}&q=false`">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
-                        </ul>
-                    </div>
+                <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
+                    <ul class="dropdown-menu">
+                      <li v-if="this.isCheck == 'true'"><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+                      <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
+                    </ul>
+                  </div>
                 </div>
             </div>
             <div class="title">
