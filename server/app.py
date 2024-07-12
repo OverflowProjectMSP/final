@@ -27,6 +27,7 @@ USER_PG = os.getenv('USER_PG')
 HOST_PG = os.getenv('HOST_PG')
 MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 def escape_quotes(text):
     return text.replace("'", "''")
@@ -37,7 +38,7 @@ def unescape_quotes(text):
 
 app = Flask(__name__)
 
-app.secret_key = "/zxc/"
+app.secret_key = SECRET_KEY
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] =  'None'
