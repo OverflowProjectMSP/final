@@ -44,6 +44,7 @@ export default {
 
             updQ: false,
             ShowAdd: true,
+            isAdmin: false
         }
     },
 
@@ -173,6 +174,8 @@ export default {
             });
 
             this.isCheck = res.data.isEdit
+
+            this.checkIsAdmin()
         },
 
         fixN(text) {
@@ -188,6 +191,10 @@ export default {
                 
             }
             this.ShowAdd = false
+        },
+        async checkIsAdmin(){
+          let res = await axios.get("check-for-admin")
+          this.isAdmin = res.data.res
         }
     },
     mounted() {
@@ -211,51 +218,51 @@ export default {
                         </div>
                     </div>
                 </a>
-                <div class="action-select" v-if="this.isCheck == 'true'">
+                <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
-                            <li v-if="this.questionInfo.is_solved == true"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
-                            <li v-else><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
-                            <li><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+                            <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
+                            <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
+                            <li v-if="this.isCheck == 'true'"><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
-                        </div>
-                        </div>
-                        </div>
-                        <div class="title">
-                            <h3 v-html="fixN(questionInfo.descriptions)"></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="title">
+              <h3 v-html="fixN(questionInfo.descriptions)"></h3>
+            </div>
+            <div class="description">
+                <p v-html="fixN(questionInfo.details)"></p>
+              <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
+            </div>
+            <div class="about">
+                  <p>{{ questionInfo.data }}</p>
+                  <!-- <p>{{ questionInfo.views }} просмотра</p> -->
+            </div>
+        </div>
+        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+        <div v-if="this.loading">
+            <div class="container mt-5"><h4>Ответы:</h4></div>
+            <div class="answers-all" v-if="this.answers.length != 0">
+                <div class="content-2" v-for="answer in answers">
+                    <div class="account">
+                        <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                            <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                            <div class="name-ring">
+                                <p><span class="name" role="button">{{ answer.user.username }}</span></p>
                             </div>
-                            <div class="description">
-                                <p v-html="fixN(questionInfo.details)"></p>
-                                <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
-                                </div>
-                                <div class="about">
-                                    <p>{{ questionInfo.data }}</p>
-                                    <!-- <p>{{ questionInfo.views }} просмотра</p> -->
-                                    </div>
-                                </div>
-                            <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-            <div v-if="this.loading">
-                <div class="container mt-5"><h4>Ответы:</h4></div>
-                <div class="answers-all" v-if="this.answers.length != 0">
-                    <div class="content-2" v-for="answer in answers">
-                        <div class="account">
-                            <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
-                                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                                <div class="name-ring">
-                                    <p><span class="name" role="button">{{ answer.user.username }}</span></p>
-                                </div>
-                            </a>
+                        </a>
                     </div>
-                    <div class="description my-1">
-                        <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
+                <div class="description my-1">
+                    <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
+                </div>
+                <!-- <div class="btn-group">
+                    <div class="left">
+                        <button class="comm-add btgr">Добавить комментарий</button>
                     </div>
-                    <!-- <div class="btn-group">
-                        <div class="left">
-                            <button class="comm-add btgr">Добавить комментарий</button>
-                        </div>
-                    </div> -->
+                </div> -->
                 </div>
             </div>
             <div class="content p-2" v-if="this.answers.length == 0">
@@ -272,7 +279,6 @@ export default {
         </div>
 
         <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
-        
             <div class="account">
                 <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
