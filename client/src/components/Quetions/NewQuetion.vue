@@ -223,9 +223,6 @@ export default {
     align-items: center;
 }
 
-.right-in {
-    display: flexbox;
-}
 
 .right p {
     margin: 0;
