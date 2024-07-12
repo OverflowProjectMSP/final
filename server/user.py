@@ -16,6 +16,8 @@ import base64
 import logging
 import asyncio
 
+import requests as req
+
 load_dotenv()
 
 logging.basicConfig(
@@ -23,10 +25,10 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(message)s",
     datefmt="%Y—%m—%d %H:%M:%S",
 )
- 
+
 logging.info("user.py have connected")
 
-# Обновление доп данных о 
+# Обновление доп данных о
 def refresh_data(info, id):
     data = ''
     for i in info:
@@ -62,7 +64,7 @@ def refresh_data(info, id):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error" 
+        return_data = f"Error"
 
     finally:
         if pg:
@@ -85,7 +87,7 @@ def login_user(email, pas):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
 
-        # Проверка есть ли такой пользователь       
+        # Проверка есть ли такой пользователь
         if cursor.fetchall()[0][0]==1:
 
             cursor.execute(f"SELECT * FROM users WHERE email=$${email}$$")
@@ -93,22 +95,22 @@ def login_user(email, pas):
 
 
             # Проверка пароля
-            if user[3] == pas: 
+            if user[3] == pas:
                 return_data = user[2]
 
                 logging.info(f"Вход выполнен! Здравствуйте, {user[2]}")
                 return_data=['ok', user[0]]
 
-            else: 
+            else:
                 logging.warning("Неверный пароль!")
                 return_data = 'Неверный пароль!'
-        else: 
+        else:
             logging.warning("Аккаунта с такой почтой не существует!")
             return_data = "Аккаунта с такой почтой не существует!"
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error" 
+        return_data = f"Error"
 
     finally:
         if pg:
@@ -116,7 +118,7 @@ def login_user(email, pas):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
- 
+
 # Регистрация пользователя
 def add_user_todb(name, email, pas):
     try:
@@ -131,7 +133,7 @@ def add_user_todb(name, email, pas):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         send_user = []
-        cursor.execute(f"SELECT COUNT(*) FROM users WHERE username=$${name}$$")  
+        cursor.execute(f"SELECT COUNT(*) FROM users WHERE username=$${name}$$")
         send_user.append(cursor.fetchone())
 
         cursor.execute(f"SELECT COUNT(*) FROM users WHERE email=$${email}$$")
@@ -139,11 +141,11 @@ def add_user_todb(name, email, pas):
         # Проверка существует ли такой пользователь
         if send_user[0][0] == 0 and send_user[1][0] == 0:
             user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', 'https://api.upfollow.ru/avatar/AvatarDef.png', False, datetime.now().isoformat())
-            
-            cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c) VALUES {user_to_write}""")      
-            
+
+            cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c) VALUES {user_to_write}""")
+
             pg.commit()
-            
+
             logging.info("Пользователь зарегестрирован!")
             return_data = 'Ok'
 
@@ -153,7 +155,7 @@ def add_user_todb(name, email, pas):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error" 
+        return_data = f"Error"
 
     finally:
         if pg:
@@ -161,11 +163,11 @@ def add_user_todb(name, email, pas):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
- 
+
 # Изменения пароля, если user знает страый
 def change_password(password, old_password, id):
-    if check_old_password( id ,old_password): # Вернет True если пароли стовпадает со старым 
-        try: 
+    if check_old_password( id ,old_password): # Вернет True если пароли стовпадает со старым
+        try:
             pg = psycopg2.connect(f"""
                 host=localhost
                 dbname=postgres
@@ -188,7 +190,7 @@ def change_password(password, old_password, id):
 
         except (Exception, Error) as error:
             logging.error('DB:', error)
-            return_data = f"Ошибка получения данных: {error}" 
+            return_data = f"Ошибка получения данных: {error}"
 
         finally:
             if pg:
@@ -220,7 +222,7 @@ def check_old_password(id, password):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error" 
+        return_data = f"Error"
 
     finally:
         if pg:
@@ -231,7 +233,7 @@ def check_old_password(id, password):
 
 # Измения пароля с праолем на email
 def change_password_send(password, email):
-    try: 
+    try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
             dbname=postgres
@@ -273,12 +275,12 @@ def send_code(email):
 
     code_pas = ""
 
-# ------------------------Улучшить бы----------------------------------------------------
+    # ------------------------Улучшить бы----------------------------------------------------
     for _ in range(4):
         a = random.randint(0, 9) # А че тут улучшать? (Без негатива, от febolo)
         code_pas += str(a)
-#-----------------------------------------------------------------------------------------
-    
+    #-----------------------------------------------------------------------------------------
+
     msg = MIMEText(f"Ваш код для изменения пароля: {code_pas}. Не сообщайте его никому!")
     msg["Subject"] = "Ваш код"
 
@@ -305,7 +307,7 @@ def check_password(password, true_password):
     if password == true_password:
         return_data = 'True'
         logging.info('Пароли совпали')
-    else: 
+    else:
         logging.info('Пароли не совпали')
         return_data = 'False'
     session.pop('sent-password', None)
@@ -313,7 +315,7 @@ def check_password(password, true_password):
 
 # показ всего о юзере
 def show_user_info(id, isAll):
-    try: 
+    try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
             dbname=postgres
@@ -325,7 +327,7 @@ def show_user_info(id, isAll):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"SELECT * from users WHERE id=$${id}$$")
-        
+
         all_states = dict(cursor.fetchall()[0])
         logging.info('Инфа есть')
         return_data={}
@@ -354,7 +356,7 @@ def show_user_info(id, isAll):
         logging.info(f'Инофрмация профиля {id} отображена')
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error" 
+        return_data = f"Error"
 
     finally:
         if pg:
@@ -362,7 +364,7 @@ def show_user_info(id, isAll):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
- 
+
 # показ id avtar name
 def show_not_all(id):
     try:
@@ -378,7 +380,7 @@ def show_not_all(id):
 
         cursor.execute(f'''SELECT id, username, avatar FROM users
                       WHERE id = $${id}$$''')
-        
+
         info = dict(cursor.fetchall()[0])
         return_data = {}
 
@@ -398,6 +400,63 @@ def show_not_all(id):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
+
+def sub_time(timestamp):
+    timestamp = str(timestamp)
+    timestamp = timestamp.replace("<", "").replace(">", "").replace(":", "")  # remove extra chars
+
+    year = timestamp[:4]
+    month = timestamp[5:7]
+    day = timestamp[8:10]
+    hour = timestamp[11:13]
+    minute = timestamp[14:16]
+
+    dt = datetime(int(year), int(month), int(day), int(hour), int(minute))
+    current_time = datetime.now()
+
+    return dt > current_time
+
+
+def auth_tg(hash_id, uf_id):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT * FROM tg_hashs WHERE id_hash=$${hash_id}$$")
+        result = cursor.fetchall()
+        if len(result) != 0:
+            result = dict(result[0])
+            if sub_time(result["time"]) and uf_id:
+                cursor.execute(f"UPDATE users SET tg_id=$${result["tg_id"]}$$, tg_chat_id=$${result["chat_id"]}$$ WHERE id=$${uf_id}$$")
+                return_data = "all ok"
+            elif not sub_time(result["time"]):
+                result = {"chat_id": -1}
+                return_data = "Время жизни ссылки истекло"
+            else:
+                result = {"chat_id": -1}
+                return_data = "Пользователь не в аккаунте"
+        else:
+            result = {"chat_id": -1}
+            return_data = "Невалидная ссылка"
+
+            # TODO: добавить в бд столбец-статус - ссылка уже использованна
+    except (Exception, Error) as error:
+        logging.error(f"Ошибка получения данных: {error}")
+        return_data = 'Err'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data, result["chat_id"]
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -419,7 +478,7 @@ def add_img_f(file, name):
         return_data = 'https://api.upfollow.ru/avatar/'+name
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = error 
+        return_data = error
     finally:
         return return_data
 
@@ -448,7 +507,7 @@ def add_img_f(file, name):
 #             src = add_img_t(info['avatar'], info['filename'], True, False, session.get('id'), True)
 #             data+= f', avatar=$${src}$$'
 #         print(data)
-#         cursor.execute(f"""UPDATE users 
+#         cursor.execute(f"""UPDATE users
 #                     SET {data}
 #                     WHERE id=$${id}$$;""")
 #         pg.commit()
@@ -458,7 +517,7 @@ def add_img_f(file, name):
 
 #     except (Exception, Error) as error:
 #         logging.error(f'DB: ', error)
-#         return_data = f"Error" 
+#         return_data = f"Error"
 
 #     finally:
 #         if pg:
@@ -479,18 +538,18 @@ def user_info():
         refresh_data(post_data, session.get('id'))
 
         return jsonify(response_object)
-    
+
     print(request.args.get('id'))
     response_object['all'] = show_user_info(request.args.get('id'), False)
     print(response_object)
     return jsonify(response_object)
-    
+
 
 
 #Изменение информации пользователя
 @app.route('/user-info-r', methods=['GET'])
 def user_info__():
-    response_object = {'status': 'success'} #БаZа    
+    response_object = {'status': 'success'} #БаZа
 
     print(request.args.get('id'))
 
@@ -527,7 +586,7 @@ def new_password_with_old():
         print(session.get('id'))
         response_object['res'] = change_password(post_data.get('new_password'),post_data.get('old_password'), session.get('id'))
         logging.info(response_object['res'])
-    
+
     return jsonify(response_object)
 
 #Восстановление пароля
@@ -540,19 +599,19 @@ def new_password_with_email():
         #Восстановление пароля если мы в аккаунте
         print(post_data.get('password'), session.get('email'))
         response_object['res'] = change_password_send(post_data.get('password'), session.get('email'))
-    
+
     elif request.method == 'POST' and post_data.get('email'):
         #Восстановление пароля если мы НЕ в аккаунте
         send_code(post_data.get('email'))
-    
+
     else:
         # ХЗ, вроде проверка кода подтверждения
         response_object['res'] = check_password(post_data.get('emailCode'), session.get('code'))
-    
-    return jsonify(response_object)
- 
 
- # может ли юзер удалять/менять или нет
+    return jsonify(response_object)
+
+
+# может ли юзер удалять/менять или нет
 
 # показ id avtar name
 @app.route('/user-not-all', methods=['GET'])
@@ -562,3 +621,26 @@ def user__():
     response_object['all'] = show_not_all(request.args.get('id'))
 
     return jsonify(response_object)
+
+
+@app.route('/auth-tg', methods=["POST"])
+def auth_tg_():
+
+    response_object = {'status': 'success'} #БаZа
+
+    post_data = request.get_json()
+
+    response_object['res'], chat_id = auth_tg(post_data.get("hash_id"), session.get("id"))
+    if chat_id!=-1:
+        url=f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
+        payload = {
+            'chat_id': chat_id,
+            'text': "Поздравляю с успешной ауентифкацией на сайте"
+        }
+        res = req.post(url, data=payload)
+        if not res.ok:
+            response_object['res'] = "err"
+            logging.info(res)
+    return jsonify(response_object)
+
+
