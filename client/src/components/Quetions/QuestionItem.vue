@@ -29,7 +29,6 @@ export default {
 
       user: {},
 
-      text: '',
       symbols: 0,
       symbCount: false,
       isBold: false,
