@@ -63,16 +63,16 @@ export default {
       console.log(this.questionInfo)
     },
 
-    async loadAnswerUser() {
-      this.userCreater = await this.loadUsers(this.questionInfo);
-      this.CheckUserIsEdit()
-      for (let i = 0; i < this.answers.length; i++) {
-        let user = await this.loadUsers(this.answers[i]);
-        this.answerUser.push(user)
-      };
-      this.v_For1();
-    },
-
+        async loadAnswerUser() {
+            this.userCreater = await this.loadUsers(this.questionInfo);
+            this.CheckUserIsEdit()
+            for (let i = 0; i < this.answers.length; i++) {
+                let user = await this.loadUsers(this.answers[i]);
+                this.answerUser.push(user)
+            };
+            this.v_For1();
+        },
+        
 
     async loadUsers(item) {
       let res = await axios.get('/user-not-all', {
@@ -310,7 +310,7 @@ export default {
   right: 140px;
 
 
-
+    
 }
 img {
   user-select: none;
