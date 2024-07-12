@@ -37,6 +37,23 @@ export default {
                 this.error = 'Выберите язык программирования'
             }
         },
+
+        updateCursor(event) {
+            this.cursorPosition = event.target.selectionStart;
+        },
+
+        addBoldTag(tags) {
+            const beforeCursor = this.form.details.slice(0, this.cursorPosition);
+            const afterCursor = this.form.details.slice(this.cursorPosition);
+
+            this.form.details = beforeCursor + tags + afterCursor;
+            this.$nextTick(() => {
+                const newCursorPosition = this.cursorPosition + 3;
+                this.$refs.textArea.focus();
+                this.$refs.textArea.setSelectionRange(newCursorPosition, newCursorPosition);
+                this.updateCursor({ target: this.$refs.textArea });
+            });
+        }
     }
 }
 
@@ -63,6 +80,7 @@ export default {
                         речь.</h5>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
@@ -82,12 +100,18 @@ export default {
                 <div class="col-12">
                     <h5 style="color: gray; font-weight: 400;">Опишите в подробностях свой вопрос, чтобы получить более
                         точный ответ.</h5>
+                    </div>
                 </div>
+            <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                <button @click="addBoldTag('<b></b>')" type="button" class="btn btn-primary"><b>B</b></button>
+                <button @click="addBoldTag('<i></i>')" type="button" class="btn btn-primary"><i>i</i></button>
+                <button @click="addBoldTag('<u></u>')" type="button" class="btn btn-primary"><u>U</u></button>
+                <button type="button" class="btn btn-primary">&#11014; <b>Добавить фото</b></button>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
-                        <textarea class="text-area text-box multi-line yy" data-val="true"
+                        <textarea ref="textArea" @input="updateCursor" @click="updateCursor" class="text-area text-box multi-line yy" data-val="true"
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
                             name="info" cols="200" rows="3" style="border-color: #D3D3D3; border-radius: 5px;"
                             v-model="form.details"></textarea>
@@ -124,7 +148,6 @@ export default {
                             <option value="cs">C#</option>
                             <option value="go">Golang</option>
                             <option value="IB">ИБ</option>
-                            <option value="">Без фильтров</option>
                         </select>
 
                     </div>
