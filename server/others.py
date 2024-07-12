@@ -177,7 +177,7 @@ def check_is_admin(id):
 
         cursor.execute(f"SELECT admin FROM users WHERE id = $${id}$$")
 
-        return_data = cursor.fetchall()[0]
+        return_data = cursor.fetchall()[0][0]
 
     except (Exception, Error) as error:
         logging.info(f"Ошибка получения данных: {error}")
