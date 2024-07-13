@@ -293,3 +293,23 @@ def admin_check():
     responce_object['res'] = check_is_admin(session.get("id"))
     # responce_object['res'] = "Unreg"
     return jsonify(responce_object)
+
+@app.route("/add-img", methods=['POST'])
+def add_img_():
+    responce_object = {'status': 'success'}
+
+    post_data = request.get_json()
+
+    post_data['link'] = add_img_qs(post_data.get('base'), post_data.get('name'))
+
+    return jsonify(responce_object)
+
+
+def add_img_qs(base, name):
+    base=base[base.find(',')+1:]
+    decoded_bytes = base64.b64decode(base)
+    dote = name[name.find('.'):]
+    name = 'm_'+uuid.uuid4().hex+dote
+    with open(os.path.join(MEDIA, name), "wb") as file:
+        file.write(decoded_bytes)
+    return 'https://api.upfollow.ru/media/'+name
