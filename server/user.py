@@ -403,13 +403,14 @@ def show_not_all(id):
 
 def sub_time(timestamp):
     timestamp = str(timestamp)
+    logging.info(timestamp)
     timestamp = timestamp.replace("<", "").replace(">", "").replace(":", "")  # remove extra chars
 
     year = timestamp[:4]
     month = timestamp[5:7]
     day = timestamp[8:10]
     hour = timestamp[11:13]
-    minute = timestamp[14:16]
+    minute = timestamp[13:15]
 
     dt = datetime(int(year), int(month), int(day), int(hour), int(minute))
     current_time = datetime.now()
@@ -642,7 +643,7 @@ def auth_tg_():
     post_data = request.get_json()
 
     response_object['res'], chat_id = auth_tg(post_data.get("hash_id"), session.get("id"))
-    if chat_id!=-1:
+    if chat_id!=-1 and response_object['res'] != "Err":
         response_object["res"] = tg_sendMessage(chat_id, "Поздравляю с успешной ауентифкацией на сайте")
     return jsonify(response_object)
 
