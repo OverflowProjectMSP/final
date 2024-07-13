@@ -28,6 +28,7 @@ HOST_PG = os.getenv('HOST_PG')
 MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
 SECRET_KEY = os.getenv('SECRET_KEY')
+TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
 
 def escape_quotes(text):
     return text.replace("'", "''")
@@ -140,16 +141,16 @@ def add_tables():
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
-    
 
-    
 
-from user import * 
+
+
+from user import *
 from render_and_adding import *
-from others import * 
+from others import *
 
 if __name__ == '__main__':
-      add_tables()
-      app.run(host='0.0.0.0', port=80)
+    add_tables()
+    app.run(host='0.0.0.0', port=80)
 
 
