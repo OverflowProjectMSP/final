@@ -637,7 +637,6 @@ def user__():
 
 @app.route('/auth-tg', methods=["POST"])
 def auth_tg_():
-
     response_object = {'status': 'success'} #БаZа
 
     post_data = request.get_json()
