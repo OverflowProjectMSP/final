@@ -1,3 +1,5 @@
+from psycopg2.extras import RealDictCursor
+
 from app import *
 
 load_dotenv()
@@ -10,6 +12,30 @@ logging.basicConfig(
 
 logging.info("tg.py have connected")
 
+def check_is_tg(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT tg_chat_id FROM users WHERE id=$${id}$$")
+
+        return_data = cursor.fetchall()[0][0]
+
+    except (Exception, Error) as error:
+        logging.error(f"Ошибка получения данных: {error}")
+        return_data = 'Err'
+
+    finally:
+        cursor.close
+        pg.close
+        return return_data
 
 def sub_time(timestamp):
     timestamp = str(timestamp)
