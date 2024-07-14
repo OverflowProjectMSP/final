@@ -6,3 +6,4 @@
 /server/basic.log
 /server/__pycache__
 /server/test.py
+.idea

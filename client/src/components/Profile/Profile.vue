@@ -12,7 +12,6 @@ export default {
             states: [],
 
             user: {},
-            uuuuserNAMANSKLFDJNBALKS: ``,
 
             isCreator: false,
 
@@ -257,10 +256,14 @@ body {
 }
 
 .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 25px;
     border-right: 1px solid #AEB8BC;
     border-bottom: 1px solid #AEB8BC;
     margin-bottom: 1rem;
+    width: 33.33%;
 }
 
 .dis-r {
@@ -363,9 +366,6 @@ p .u {
     align-items: center;
 }
 
-.right-in {
-    display: flexbox;
-}
 
 .right p {
     margin: 0;

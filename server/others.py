@@ -1,5 +1,5 @@
-from app import * 
-
+from app import *
+import uuid
 
 load_dotenv()
 
@@ -13,7 +13,7 @@ logging.info("others.py have connected")
 
 # Добавление сообщения в бд (чат форума)
 def chat(id, time, msg):
-    try: 
+    try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
             dbname=postgres
@@ -35,7 +35,7 @@ def chat(id, time, msg):
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Ошибка обращения к базе данных: {error}" 
+        return_data = f"Ошибка обращения к базе данных: {error}"
 
     finally:
         if pg:
@@ -43,7 +43,7 @@ def chat(id, time, msg):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
- 
+
 def show_avatar(id):
     try:
         pg = psycopg2.connect(f"""
@@ -58,11 +58,11 @@ def show_avatar(id):
 
         cursor.execute(f'''SELECT avatar FROM users
                       WHERE id = $${id}$$''')
-        
+
         link = cursor.fetchall()[0]
 
         logging.info(f'Аватар юзере {id} отображен')
-        
+
         if link == [None]:
             return_data = 'No'
         else: return_data = link
@@ -90,7 +90,7 @@ def helper(phone, email, msg, id_u):
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute(f"INSERT INTO helper VALUES('{uuid.uuid4().hex}', '{msg}', '{phone}', '{email}', '{id_u}')")
-        
+
         pg.commit()
 
         logging.info(f"Добавлен в helper '{msg}', '{phone}', '{email}', '{id_u}' ")
@@ -108,7 +108,7 @@ def helper(phone, email, msg, id_u):
             return return_data
 
 def is_solved(id, isS):
-    try: 
+    try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
             dbname=postgres
@@ -118,7 +118,7 @@ def is_solved(id, isS):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        
+
         cursor.execute(f"UPDATE questions SET is_solved=$${isS}$$ WHERE id=$${id}$$")
         pg.commit()
 
@@ -135,9 +135,9 @@ def is_solved(id, isS):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-    
+
 def count_reg():
-    try: 
+    try:
         pg = psycopg2.connect(f"""
             host={HOST_PG}
             dbname=postgres
@@ -162,7 +162,33 @@ def count_reg():
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-    
+
+def check_is_admin(id):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT admin FROM users WHERE id = $${id}$$")
+
+        return_data = cursor.fetchall()[0][0]
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -174,11 +200,11 @@ def chat_forum():
 
     if request.method == 'PUT': # Обновка вопроса
         pass
-    else: 
-        responce_object['id_question'] = chat(session.get('id'), datetime.now(), post_data.get('msg')) #   Возвращает id сообщения и добовляет его в бд (сообщение)       
-    
+    else:
+        responce_object['id_question'] = chat(session.get('id'), datetime.now(), post_data.get('msg')) #   Возвращает id сообщения и добовляет его в бд (сообщение)
+
     return jsonify(responce_object)
-  
+
 # проверка может ли юзер исправлять что-то
 @app.route('/check', methods=['GET'])
 def check():
@@ -193,7 +219,7 @@ def check():
         logging.info(f'Пользователь {id} не может вносить изменения')
 
     return  jsonify(response_object)
- 
+
 @app.route('/avatar', methods=['GET'])
 def ava():
     response_object = {'status': 'success'} #БаZа
@@ -214,9 +240,8 @@ def serve_file(filename):
 
 @app.route('/session', methods=['GET'])
 def session_():
-    
     return jsonify({'status': 'success', 'id': session.get('id')})
- 
+
 @app.route('/help', methods=['POST'])
 def help_():
     responce_object = {'status' : 'success'} #БаZа
@@ -237,10 +262,10 @@ def ava_():
 
 @app.route('/check-r', methods=['GET'])
 def session__():
-    if 'id' in session: 
+    if 'id' in session:
         logging.info('Пользователь зашел в аккаунт')
         return jsonify({'status': 'success', 'all': 'true'})
-    else: 
+    else:
         logging.info('Пользователь не зашел в аккаунт')
         return jsonify({'status': 'success', 'all': 'false'})
 
@@ -250,7 +275,7 @@ def is_s():
     post_data = request.get_json()
 
     is_solved(post_data.get('id'), post_data.get('is_solved'))
-    return  jsonify(response_object) 
+    return  jsonify(response_object)
 
 @app.route('/users-reg', methods=['GET'])
 def reg_():
@@ -259,3 +284,45 @@ def reg_():
     responce_object['regs'] = count_reg()[0]
 
     return jsonify(responce_object)
+
+
+@app.route('/check-for-admin', methods=['GET'])
+def admin_check():
+    responce_object = {'status': 'success'} #БаZа
+    # if "id" in session:
+    responce_object['res'] = check_is_admin(session.get("id"))
+    # responce_object['res'] = "Unreg"
+    return jsonify(responce_object)
+
+@app.route("/add-img", methods=['POST'])
+def add_img_():
+    responce_object = {'status': 'success'}
+
+    post_data = request.get_json()
+    if post_data.get("base") != "":
+        responce_object['link'] = add_img(post_data.get('base'), post_data.get('name'), True, False, uuid.uuid4().hex )
+
+        return jsonify(responce_object)
+    responce_object['link'] = 'base64 is ""'
+    return jsonify(responce_object)
+
+
+def add_img_qs(base, name):
+    base=base[base.find(',')+1:]
+    decoded_bytes = base64.b64decode(base)
+    dote = name[name.find('.'):]
+    name = 'm_'+uuid.uuid4().hex+dote
+    with open(os.path.join(MEDIA, name), "wb") as file:
+        file.write(decoded_bytes)
+    return 'https://api.upfollow.ru/media/'+name
+
+
+@app.route('/media/<path:filename>')
+def serve_file_(filename):
+    path = filename
+    print(MEDIA+path)
+    # if not os.path.exists('{}/{}'.format('avatar/', filename)):
+    #     logging.info({'error': 'File not found'}, 404)
+    #     return jsonify({'error': 'File not found'}), 404
+
+    return send_from_directory(directory='media/', path=path)

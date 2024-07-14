@@ -27,6 +27,8 @@ USER_PG = os.getenv('USER_PG')
 HOST_PG = os.getenv('HOST_PG')
 MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
+SECRET_KEY = os.getenv('SECRET_KEY')
+TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
 
 def escape_quotes(text):
     return text.replace("'", "''")
@@ -37,7 +39,7 @@ def unescape_quotes(text):
 
 app = Flask(__name__)
 
-app.secret_key = "/zxc/"
+app.secret_key = SECRET_KEY
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
 app.config["SESSION_COOKIE_SAMESITE"] = "None"
 app.config["SESSION_COOKIE_SECURE"] =  'None'
@@ -139,16 +141,17 @@ def add_tables():
             cursor.close
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
-    
 
-    
 
-from user import * 
+
+
+from user import *
 from render_and_adding import *
-from others import * 
+from others import *
+from tg import *
 
 if __name__ == '__main__':
-      add_tables()
-      app.run(host='0.0.0.0', port=80)
+    add_tables()
+    app.run(host='0.0.0.0', port=80)
 
 
