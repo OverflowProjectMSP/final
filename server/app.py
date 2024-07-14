@@ -148,6 +148,7 @@ def add_tables():
 from user import *
 from render_and_adding import *
 from others import *
+from tg import *
 
 if __name__ == '__main__':
     add_tables()

@@ -636,14 +636,3 @@ def user__():
     return jsonify(response_object)
 
 
-@app.route('/auth-tg', methods=["POST"])
-def auth_tg_():
-    response_object = {'status': 'success'} #БаZа
-
-    post_data = request.get_json()
-
-    response_object['res'], chat_id = auth_tg(post_data.get("hash_id"), session.get("id"))
-    if chat_id!=-1 and response_object['res'] != "Err":
-        response_object["res"] = tg_sendMessage(chat_id, "Поздравляю с успешной ауентифкацией на сайте")
-    return jsonify(response_object)
-
