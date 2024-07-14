@@ -401,23 +401,6 @@ def show_not_all(id):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-def sub_time(timestamp):
-    timestamp = str(timestamp)
-    logging.info(timestamp)
-    timestamp = timestamp.replace("<", "").replace(">", "").replace(":", "")  # remove extra chars
-
-    year = timestamp[:4]
-    month = timestamp[5:7]
-    day = timestamp[8:10]
-    hour = timestamp[11:13]
-    minute = timestamp[13:15]
-
-    dt = datetime(int(year), int(month), int(day), int(hour), int(minute))
-    current_time = datetime.now()
-
-    return dt > current_time
-
-
 def auth_tg(hash_id, uf_id):
     try:
         pg = psycopg2.connect(f"""
