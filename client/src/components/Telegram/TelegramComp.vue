@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 
 const link = ref("");
 const res = ref("");
+const name = ref("")
 
 const load = ref(true);
 const ok = ref(false);
@@ -21,6 +22,7 @@ const authTg = async () => {
   try {
     const response = await axios.post('/auth-tg', { hash_id: link.value });
     res.value = response.data.res;
+    name.value = response.data.name
     console.log(res.value);
   } catch (error) {
     console.error("Ошибка при авторизации:", error);
@@ -65,7 +67,7 @@ onMounted(() => {
               <img src="../../assets/Telegram/telegram-icon.svg" alt="">
               <h2>Привязка Telegram</h2>
               <div class="link-good">
-                  <p class="text-def">Телеграм @kinestrik привязан к вашему аккаунту.</p>
+                  <p class="text-def">Телеграм {{ name }} привязан к вашему аккаунту.</p>
               </div>
               <div class="btns">
                   <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
