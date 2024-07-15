@@ -1,37 +1,41 @@
 <script setup>
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
-import { useRoute } from 'vue-router'; 
+import { useRoute, useRouter } from "vue-router";
 
 const link = ref("");
 const res = ref("");
-const name = ref("")
+const name = ref("");
 
 const load = ref(true);
 const ok = ref(false);
 const notvalid = ref(false);
 const notacc = ref(false);
-const time = ref(false)
-const error = ref(false)
+const time = ref(false);
 
-const route = useRoute(); 
-
+const route = useRoute();
+const router = useRouter();
 const authTg = async () => {
   link.value = route.params.id;
 
   try {
-    const response = await axios.post('/auth-tg', { hash_id: link.value });
+    const response = await axios.post("/auth-tg", { hash_id: link.value });
     res.value = response.data.res;
-    name.value = response.data.name
+    name.value = response.data.name;
     console.log(res.value);
   } catch (error) {
     console.error("Ошибка при авторизации:", error);
-    res.value = "Error";
   }
 };
 const gotoProfile = () => {
-  route.push("/ProfileSettings")
-}
+  router.push("/ProfileSettings"); // Используйте router.push()
+};
+const gotoMain = () => {
+  router.push("/"); // Используйте router.push()
+};
+const gotoInfo = () => {
+  router.push("/auth-tg-info"); // Используйте router.push()
+};
 watch(res, (newRes) => {
   switch (newRes){
     case 'all ok':
@@ -58,9 +62,6 @@ onMounted(() => {
   authTg();
 });
 </script>
-
-
-
 
 <template>
   <div class="window">
@@ -140,9 +141,7 @@ onMounted(() => {
               <img src="../../public/link-icon.svg" alt="">
           </div>
       </div>
-      </div>
-
-      
+    </div>
   </div>
 </template>
 
@@ -151,7 +150,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ECEDEE;
+  background-color: #ecedee;
 
   width: 100%;
   height: 100vh;
@@ -206,7 +205,7 @@ onMounted(() => {
 }
 
 .text-def {
-text-align: center;
+  text-align: center;
   font-size: 27px;
   font-weight: bold;
   line-height: 30px;
@@ -218,9 +217,9 @@ text-align: center;
   width: 230px;
   height: 78px;
   border-radius: 15px;
-  background-color: #EAE9E9;
+  background-color: #eae9e9;
   border: none;
-  
+
   transition: all 100ms;
 }
 
@@ -249,7 +248,7 @@ text-align: center;
   position: absolute;
   top: 50px;
   right: 60px;
-  background-color: #EAE9E9;
+  background-color: #eae9e9;
   width: 50px;
   height: 50px;
   border-radius: 50px;
@@ -293,176 +292,174 @@ text-align: center;
   background-color: #a5a5a5;
 }
 
-
 /* АДАПТИВКА */
-
 
 @media (max-width: 1280px) {
   .main-container {
-      width: 1000px;
-      height: 550px;
+    width: 1000px;
+    height: 550px;
   }
 
   .mount {
-      width: 370px;
-      height: 550px;
+    width: 370px;
+    height: 550px;
   }
 
   .link-cont img {
-      width: 100px;
+    width: 100px;
   }
 
   .link-cont h2 {
-      font-size: 40px;
+    font-size: 40px;
   }
 
   .link-good {
-      width: 400px;
-      height: 90px;
-      padding: 17px 10px 17px 10px;
+    width: 400px;
+    height: 90px;
+    padding: 17px 10px 17px 10px;
   }
 
   .text-def {
-      font-size: 22px;
-      line-height: 25px;
+    font-size: 22px;
+    line-height: 25px;
   }
 
   .bt {
-      width: 180px;
-      height: 60px;
+    width: 180px;
+    height: 60px;
   }
 }
 
 @media (max-width: 1015px) {
   .main-container {
-      width: 700px;
-      height: 400px;
+    width: 700px;
+    height: 400px;
   }
 
   .mount {
-      width: 280px;
-      height: 400px;
+    width: 280px;
+    height: 400px;
   }
 
   .link-cont {
-      gap: 10px;
+    gap: 10px;
   }
 
   .link-cont img {
-      width: 70px;
+    width: 70px;
   }
 
   .link-cont h2 {
-      font-size: 30px;
+    font-size: 30px;
   }
 
   .link-good {
-      width: 300px;
-      height: 60px;
-      padding: 10px 6px 10px 6px;
+    width: 300px;
+    height: 60px;
+    padding: 10px 6px 10px 6px;
   }
 
   .text-def {
-      font-size: 17px;
-      line-height: 20px;
+    font-size: 17px;
+    line-height: 20px;
   }
 
   .bt {
-      width: 130px;
-      height: 50px;
+    width: 130px;
+    height: 50px;
   }
 
   .close {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      background-color: #EAE9E9;
-      width: 40px;
-      height: 40px;
-      border-radius: 50px;
-      cursor: pointer;
-      user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: #eae9e9;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    user-select: none;
   }
 
   .link img {
-      width: 30px;
+    width: 30px;
   }
 
   .link {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      bottom: 15px;
-      right: 15px;
-      width: 50px;
-      height: 50px;
-      background-color: #ffffff;
-      border-radius: 50px;
-      cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 50px;
+    cursor: pointer;
 
-      transition: all 100ms;
+    transition: all 100ms;
   }
 }
 
 @media (max-width: 740px) {
   .mount {
-      display: none;
+    display: none;
   }
 
   .main-container {
-      width: 500px;
-      height: 600px;
+    width: 500px;
+    height: 600px;
   }
 
   .link-cont {
-      gap: 20px;
+    gap: 20px;
   }
 
   .link-cont img {
-      width: 120px;
+    width: 120px;
   }
 
   .link-cont h2 {
-      font-size: 40px;
+    font-size: 40px;
   }
 
   .link-good {
-      width: 400px;
-      height: 80px;
-      padding: 20px 17px 20px 17px;
+    width: 400px;
+    height: 80px;
+    padding: 20px 17px 20px 17px;
   }
 
   .text-def {
-      font-size: 20px;
-      line-height: 23px;
+    font-size: 20px;
+    line-height: 23px;
   }
 
   .bt {
-      width: 180px;
-      height: 60px;
+    width: 180px;
+    height: 60px;
   }
 }
 
 @media (max-width: 520px) {
   .main-container {
-      width: 350px;
-      height: 500px;
+    width: 350px;
+    height: 500px;
   }
 
   .link-cont {
-      gap: 10px;
+    gap: 10px;
   }
 
   .link-cont img {
-      width: 80px;
+    width: 80px;
   }
 
   .link-cont h2 {
-      font-size: 30px;
+    font-size: 30px;
   }
 
   .link-good {
@@ -472,15 +469,13 @@ text-align: center;
   }
 
   .text-def {
-      font-size: 18px;
-      line-height: 22px;
+    font-size: 18px;
+    line-height: 22px;
   }
 
   .bt {
-      width: 130px;
-      height: 50px;
+    width: 130px;
+    height: 50px;
   }
 }
-
-
 </style>
