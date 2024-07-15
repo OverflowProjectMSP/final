@@ -184,9 +184,6 @@ export default {
       this.isAdmin = res.data.res
     },
 
-
-
-
     processHtml(text) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(text, 'text/html');
@@ -199,7 +196,16 @@ export default {
       });
 
       return doc.body.innerHTML;
-    }
+    },
+
+    async deleteAnswer(id) {
+      await axios.delete('/delete-ans', {
+        params: {
+          id: id,
+          isQ: true,
+        }
+      });
+    },
 
   },
   mounted() {
@@ -269,11 +275,9 @@ export default {
           <div class="description my-1">
             <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
           </div>
-          <!-- <div class="btn-group">
-              <div class="left">
-                  <button class="comm-add btgr">Добавить комментарий</button>
-              </div>
-          </div> -->
+          <div class="delete-btn" @click='deleteAnswer(answer.id)' v-if='userNow.id == answer.id_u || isAdmin'>
+              <button class="comm-add btgr">X</button>
+          </div>
         </div>
       </div>
       <div class="content p-2" v-if="this.answers.length == 0">
@@ -315,6 +319,12 @@ export default {
 </template>
 
 <style scoped>
+.delete-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px
+}
+
 .link {
   font-size: 20px;
   color: #3B82F6;
@@ -495,6 +505,7 @@ img {
 /* CONTENT-2 */
 
 .content-2 {
+  position: relative;
   margin-top: 50px;
   width: 100%;
   height: auto;
@@ -542,7 +553,7 @@ img {
 
 .btgr {
   padding: 9px 26px;
-  background-color: #3B82F6;
+  background-color: #f63b3b;
   color: #fff;
   user-select: none;
 
