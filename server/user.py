@@ -401,22 +401,6 @@ def show_not_all(id):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-def sub_time(timestamp):
-    timestamp = str(timestamp)
-    timestamp = timestamp.replace("<", "").replace(">", "").replace(":", "")  # remove extra chars
-
-    year = timestamp[:4]
-    month = timestamp[5:7]
-    day = timestamp[8:10]
-    hour = timestamp[11:13]
-    minute = timestamp[14:16]
-
-    dt = datetime(int(year), int(month), int(day), int(hour), int(minute))
-    current_time = datetime.now()
-
-    return dt > current_time
-
-
 def auth_tg(hash_id, uf_id):
     try:
         pg = psycopg2.connect(f"""
@@ -457,6 +441,18 @@ def auth_tg(hash_id, uf_id):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data, result["chat_id"]
+
+def tg_sendMessage(chat_id, text):
+    url=f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
+    payload = {
+        'chat_id': chat_id,
+        'text': "Поздравляю с успешной ауентифкацией на сайте"
+    }
+    res = req.post(url, data=payload)
+    if not res.ok:
+        logging.info(res)
+        return "err"
+    return "ok"
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -620,27 +616,6 @@ def user__():
 
     response_object['all'] = show_not_all(request.args.get('id'))
 
-    return jsonify(response_object)
-
-
-@app.route('/auth-tg', methods=["POST"])
-def auth_tg_():
-
-    response_object = {'status': 'success'} #БаZа
-
-    post_data = request.get_json()
-
-    response_object['res'], chat_id = auth_tg(post_data.get("hash_id"), session.get("id"))
-    if chat_id!=-1:
-        url=f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
-        payload = {
-            'chat_id': chat_id,
-            'text': "Поздравляю с успешной ауентифкацией на сайте"
-        }
-        res = req.post(url, data=payload)
-        if not res.ok:
-            response_object['res'] = "err"
-            logging.info(res)
     return jsonify(response_object)
 
 

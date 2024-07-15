@@ -88,7 +88,17 @@ export default createRouter({
     },
     {
       path: "/Test",
-      component: () => import("../components/TestComp.vue"),
+      component: () => import("../components/Telegram/DescriptionTg.vue"),
+    },
+    {
+      path: "/auth-tg/:id",
+      component: () => import('../components/Telegram/TelegramComp.vue'),
+      props: true
+    },
+    {
+      path: "/auth-tg-info",
+      component: () => import('../components/Telegram/TelegramInfoComp.vue'),
+      props: true
     },
   ],
 });

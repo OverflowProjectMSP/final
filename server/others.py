@@ -1,5 +1,5 @@
 from app import *
-
+import uuid
 
 load_dotenv()
 
@@ -201,7 +201,7 @@ def chat_forum():
     if request.method == 'PUT': # Обновка вопроса
         pass
     else:
-        responce_object['id_question'] = chat(session.get('id'), datetime.now(), post_data.get('msg')) #   Возвращает id сообщения и добовляет его в бд (сообщение)       
+        responce_object['id_question'] = chat(session.get('id'), datetime.now(), post_data.get('msg')) #   Возвращает id сообщения и добовляет его в бд (сообщение)
 
     return jsonify(responce_object)
 
@@ -293,3 +293,36 @@ def admin_check():
     responce_object['res'] = check_is_admin(session.get("id"))
     # responce_object['res'] = "Unreg"
     return jsonify(responce_object)
+
+@app.route("/add-img", methods=['POST'])
+def add_img_():
+    responce_object = {'status': 'success'}
+
+    post_data = request.get_json()
+    if post_data.get("base") != "":
+        responce_object['link'] = add_img(post_data.get('base'), post_data.get('name'), True, False, uuid.uuid4().hex )
+
+        return jsonify(responce_object)
+    responce_object['link'] = 'base64 is ""'
+    return jsonify(responce_object)
+
+
+def add_img_qs(base, name):
+    base=base[base.find(',')+1:]
+    decoded_bytes = base64.b64decode(base)
+    dote = name[name.find('.'):]
+    name = 'm_'+uuid.uuid4().hex+dote
+    with open(os.path.join(MEDIA, name), "wb") as file:
+        file.write(decoded_bytes)
+    return 'https://api.upfollow.ru/media/'+name
+
+
+@app.route('/media/<path:filename>')
+def serve_file_(filename):
+    path = filename
+    print(MEDIA+path)
+    # if not os.path.exists('{}/{}'.format('avatar/', filename)):
+    #     logging.info({'error': 'File not found'}, 404)
+    #     return jsonify({'error': 'File not found'}), 404
+
+    return send_from_directory(directory='media/', path=path)
