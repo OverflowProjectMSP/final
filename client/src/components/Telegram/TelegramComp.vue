@@ -11,7 +11,7 @@ const ok = ref(false);
 const notvalid = ref(false);
 const notacc = ref(false);
 const time = ref(false)
-const error = ref(false)
+
 
 const route = useRoute(); 
 
@@ -24,11 +24,10 @@ const authTg = async () => {
     console.log(res.value);
   } catch (error) {
     console.error("Ошибка при авторизации:", error);
-    res.value = "Error";
   }
 };
 const gotoProfile = () => {
-  route.push("/ProfileSettings")
+  route.push("/")
 }
 watch(res, (newRes) => {
     if (newRes === 'all ok') {
@@ -43,9 +42,6 @@ watch(res, (newRes) => {
       load.value = false;   
     }else if (newRes === 'Время жизни ссылки истекло') {
       time.value = true;
-      load.value = false;   
-  }  else if (newRes === 'err') {
-      error.value = true;
       load.value = false;   
     }
 });
@@ -109,23 +105,10 @@ onMounted(() => {
                   <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Войти</p></button></a>
               </div>
-
-              <div class="link-cont" v-else-if="error">
-              <img src="../../assets/Telegram/tg.png" alt="">
-              <h2>Привязка Telegram</h2>
-              <div class="link-good">
-                  <p class="text-def">Ошибка сервера!</p>
-              </div>
-              <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
-                  <a href="#!"><button class="bt next"><p class="text-def">Войти</p></button></a>
-              </div>
           </div>
-
           <div class="link">
               <img src="../../public/link-icon.svg" alt="">
           </div>
-      </div>
       </div>
 
       
