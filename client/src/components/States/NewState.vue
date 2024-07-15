@@ -37,60 +37,94 @@ export default {
                 this.error = `Введите больше информации`;
             };
         },
+
+        updateCursor(event) {
+            this.cursorPosition = event.target.selectionStart;
+        },
+
+        addBoldTag(tags) {
+            const beforeCursor = this.form.details.slice(0, this.cursorPosition);
+            const afterCursor = this.form.details.slice(this.cursorPosition);
+
+            this.form.details = beforeCursor + tags + afterCursor;
+            this.$nextTick(() => {
+                const newCursorPosition = this.cursorPosition + 3;
+                this.$refs.textArea.focus();
+                this.$refs.textArea.setSelectionRange(newCursorPosition, newCursorPosition);
+                this.updateCursor({ target: this.$refs.textArea });
+            });
+        }
     }
 }
 </script>
 
 <template>
-    <div class="title">
-        <h2>Новая статья</h2>
-    </div>
-    <hr>
-    <div class="name">
-        <h4>Название статьи</h4>
-        <p class="transparent mb-0">Сформулируйте название так, чтобы сразу было понятно, о чём речь.</p>
-        <input type="text" class="form-control" id="inputlg" v-model="form.descriptions">
-    </div>
-    <div class="text">
-        <h4>Текст статьи</h4>
-        <p class="transparent">Делайте что хотите, в ваших руках все инструменты!</p>
-        <div class="string">
-            <div class="forms">
-                <div class="form1">
-                    <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                        <option selected value="">Выберите язык</option>
-                        <option value="javascript">JavaScript</option>
-                        <option value="ts">TS</option>
-                        <option value="python">Python</option>
-                        <option value="php">PHP</option>
-                        <option value="cpp">C++</option>
-                        <option value="java">Java</option>
-                        <option value="cs">C#</option>
-                        <option value="go">Golang</option>
-                        <option value="IB">ИБ</option>
-                    </select>
+    <div class="a52">
+
+        <div class="title">
+            <h2>Новая статья</h2>
+        </div>
+        <hr>
+        <div class="name">
+            <h4>Название статьи</h4>
+            <p class="transparent mb-0">Сформулируйте название так, чтобы сразу было понятно, о чём речь.</p>
+            <input type="text" class="form-control" id="inputlg" v-model="form.descriptions">
+        </div>
+        <div class="text">
+            <h4>Текст статьи</h4>
+            <p class="transparent mb-2">Делайте что хотите, в ваших руках все инструменты!</p>
+            <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
+                <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
+                <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
+                <!-- <input type="file" class="btn btn-primary">&#11014; <b>Добавить фото</b></input> -->
+                <label class="input-file">
+                    <input @change="convertFileAvatar" type="file"
+                        name="file">
+                    <span>Выберите файл</span>
+                </label>
+            </div>
+            <div class="string">
+                <div class="forms">
+                    <div class="form1">
+                        <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
+                            <option selected value="">Выберите язык</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="ts">TS</option>
+                            <option value="python">Python</option>
+                            <option value="php">PHP</option>
+                            <option value="cpp">C++</option>
+                            <option value="java">Java</option>
+                            <option value="cs">C#</option>
+                            <option value="go">Golang</option>
+                            <option value="IB">ИБ</option>
+                        </select>
+                    </div>
                 </div>
             </div>
+            <div class="form-floating">
+                <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;"
+                    v-model="form.details"></textarea>
+            </div>
+            <div class="mb-3">
+            </div>
         </div>
-        <div class="form-floating">
-            <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;"
-                v-model="form.details"></textarea>
-        </div>
-        <div class="mb-3">
+    
+        <div class="row pt-5 block">
+            <div class="col-6">
+                <button id="save" @click="addState"><b>Опубликовать</b></button>
+                <span class="text-danger" v-if="this.error">{{ error }}</span>
+            </div>
         </div>
     </div>
-
-    <div class="row pt-5 block">
-        <div class="col-6">
-            <button id="save" @click="addState"><b>Опубликовать</b></button>
-            <span class="text-danger" v-if="this.error">{{ error }}</span>
-        </div>
-    </div>
-
 </template>
 
 <style scoped>
 /* стили кнопок */
+.a52 {
+    overflow: hidden !important;
+}
+
 #save {
     background-color: rgb(255, 255, 255);
     color: #7ac97a;
@@ -290,11 +324,11 @@ hr {
         width: 85%;
     }
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 30px;
         padding: 1% 6%;
         font-size: 10px;
-    }
+    } */
 
     hr {
         width: 85%;
@@ -316,11 +350,11 @@ hr {
 }
 
 @media only screen and (min-width: 250px) {
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 35px;
         padding: 1% 2%;
         font-size: 11px;
-    }
+    } */
 
     .forms {
         width: 95%;
@@ -330,11 +364,11 @@ hr {
 
 
 @media only screen and (min-width: 310px) {
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 35px;
         padding: 1% 3.75%;
         font-size: 10px;
-    }
+    } */
 
     .form-control {
         width: 80%;
@@ -347,11 +381,11 @@ hr {
 }
 
 @media only screen and (min-width: 350px) {
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 35px;
         padding: 1% 4.5%;
         font-size: 10px;
-    }
+    } */
 
     .form-control {
         width: 80%;
@@ -369,19 +403,19 @@ hr {
         margin-left: 15%;
     }
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 30px;
         padding: 1% 5.5%;
         font-size: 10px;
-    }
+    } */
 }
 
 @media only screen and (min-width: 540px) {
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 30px;
         padding: 1% 9%;
         font-size: 10px;
-    }
+    } */
 }
 
 
@@ -399,11 +433,11 @@ hr {
     }
 
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 40px;
         font-size: 15px;
         padding: 10px 4%;
-    }
+    } */
 
     .forms {
         flex-direction: column;
@@ -426,11 +460,11 @@ hr {
         width: 90%;
     }
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 40px;
         font-size: 15px;
         padding: 7px 6%;
-    }
+    } */
 
     .forms {
         margin-top: -81.5px;
@@ -450,11 +484,11 @@ hr {
         width: 90%;
     }
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-left: 40px;
         font-size: 16px;
         padding: 10px 30px;
-    }
+    } */
 
     .forms {
         margin-top: -70px;
@@ -474,12 +508,12 @@ hr {
         width: 90%;
     }
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-bottom: 4%;
         margin-left: 35px;
         font-size: 16px;
         padding: 10px 20px;
-    }
+    } */
 
     .forms {
         gap: 1px;
@@ -510,14 +544,68 @@ hr {
         width: 20%;
     }
 
-    .btn-group .btn {
+    /* .btn-group .btn {
         margin-bottom: 2.5%;
         margin-left: 35px;
         font-size: 16px;
         padding: 10px 40px;
-    }
+    } */
 }
 
+
+.input-file {
+    position: relative;
+    display: inline-block;
+}
+
+.input-file span {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    font-size: 14px;
+    vertical-align: middle;
+    color: rgb(255 255 255);
+    text-align: center;
+    border-radius: 0 0.375rem 0.375rem 0;
+    background-color: #0d6efd;
+    line-height: 22px;
+    height: 40px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border: none;
+    margin: 0;
+    transition: background-color 0.2s;
+}
+
+.input-file input[type=file] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+/* Focus */
+.input-file input[type=file]:focus+span {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+/* Hover/active */
+.input-file:hover span {
+    background-color: #0b5ed7;
+}
+
+.input-file:active span {
+    background-color: rgb(23, 113, 247);
+}
+
+/* Disabled */
+.input-file input[type=file]:disabled+span {
+    background-color: #eee;
+}
 
 /* @media only screen and (max-width: 768px) {
         .btn {

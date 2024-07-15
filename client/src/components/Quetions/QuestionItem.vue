@@ -51,16 +51,16 @@ export default {
       console.log(this.questionInfo)
     },
 
-        async loadAnswerUser() {
-            this.userCreater = await this.loadUsers(this.questionInfo);
-            this.CheckUserIsEdit()
-            for (let i = 0; i < this.answers.length; i++) {
-                let user = await this.loadUsers(this.answers[i]);
-                this.answerUser.push(user)
-            };
-            this.v_For1();
-        },
-        
+    async loadAnswerUser() {
+      this.userCreater = await this.loadUsers(this.questionInfo);
+      this.CheckUserIsEdit()
+      for (let i = 0; i < this.answers.length; i++) {
+        let user = await this.loadUsers(this.answers[i]);
+        this.answerUser.push(user)
+      };
+      this.v_For1();
+    },
+
 
     async loadUsers(item) {
       let res = await axios.get('/user-not-all', {
@@ -81,7 +81,7 @@ export default {
     },
 
     async addComment() {
-      if (this.text.length >= 3 ){
+      if (this.text.length >= 3) {
         await axios.post(`/answers`, {
           id: this.$route.query.id,
           q: 'true',
@@ -120,7 +120,7 @@ export default {
     },
 
     v_For1() {
-      if (this.answers.length != 0){
+      if (this.answers.length != 0) {
         for (let i = 0; i < this.answerUser.length; i++) {
           this.answers[i].user = this.answerUser[i];
           const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
@@ -179,7 +179,7 @@ export default {
       }
       this.ShowAdd = false
     },
-    async checkIsAdmin(){
+    async checkIsAdmin() {
       let res = await axios.get("check-for-admin")
       this.isAdmin = res.data.res
     },
@@ -190,20 +190,16 @@ export default {
     processHtml(text) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(text, 'text/html');
-      const images = doc.querySelectorAll('img');
+      const images = document.querySelectorAll('.description p img');
 
       images.forEach(img => {
-        img.classList.add('imageinp');
+        img.style.maxWidth='100%'
+        img.style.borderRadius='10px'
+        img.style.marginBottom='20px'
       });
 
-      text = doc.body.innerHTML;
-
-      return doc.body.innerHTML
+      return doc.body.innerHTML;
     }
-  
-
-
-
 
   },
   mounted() {
@@ -229,11 +225,15 @@ export default {
         </a>
         <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
           <div class="dropdown">
-            <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
+            <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Дейсвие</button>
             <ul class="dropdown-menu">
-              <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
-              <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
-              <li v-if="this.isCheck == 'true'"><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+              <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item"
+                  @click="solveQuestion(false)">Вопрос решён!</a></li>
+              <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не
+                  решён!</a></li>
+              <li v-if="this.isCheck == 'true'"><a class="dropdown-item"
+                  :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
               <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
             </ul>
           </div>
@@ -253,7 +253,9 @@ export default {
     </div>
     <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
     <div v-if="this.loading">
-      <div class="container mt-5"><h4>Ответы:</h4></div>
+      <div class="container mt-5">
+        <h4>Ответы:</h4>
+      </div>
       <div class="answers-all" v-if="this.answers.length != 0">
         <div class="content-2" v-for="answer in answers">
           <div class="account">
@@ -281,7 +283,7 @@ export default {
     </div>
     <div v-else>
       <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
-        <div class="spinner-border text-primary" role="status" >
+        <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden text-center">Loading...</span>
         </div>
       </div>
@@ -300,8 +302,8 @@ export default {
       </div>
       <div class="mb-3">
         <div class="content-3-without mb-3">
-                    <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                              placeholder="Оставь свой комментарий:"></textarea>
+          <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
+            placeholder="Оставь свой комментарий:"></textarea>
           <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
         </div>
       </div>
@@ -313,19 +315,18 @@ export default {
 </template>
 
 <style scoped>
-.link{
+.link {
   font-size: 20px;
-  color:#3B82F6;
+  color: #3B82F6;
   position: absolute;
   right: 140px;
-
-
-    
 }
+
 img {
   user-select: none;
   border-radius: 100% !important;
   object-fit: cover !important;
+  width: 50px;
 }
 
 
@@ -452,7 +453,7 @@ img {
 }
 
 .description p {
- max-width: 100px;
+  /* max-width: 100px; */
 }
 
 
