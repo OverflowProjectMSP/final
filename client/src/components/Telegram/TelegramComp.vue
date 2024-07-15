@@ -33,20 +33,22 @@ const gotoProfile = () => {
   route.push("/ProfileSettings")
 }
 watch(res, (newRes) => {
-    if (newRes === 'all ok') {
-        ok.value = true;
-        load.value = false;
-    } else if (newRes === 'Невалидная ссылка') {
-        notvalid.value = true;
+  switch (newRes){
+    case 'all ok':
+      ok.value = true;
+      load.value = false;
+
+    case 'Невалидная ссылка':
+      notvalid.value = true;
       load.value = false;
         
-    }else if (newRes === 'Пользователь не в аккаунте') {
+    case 'Пользователь не в аккаунте':
       notacc.value = true;
       load.value = false;   
-    }else if (newRes === 'Время жизни ссылки истекло') {
+    case 'Время жизни ссылки истекло':
       time.value = true;
       load.value = false;   
-  }  else if (newRes === 'err') {
+    case 'err':
       error.value = true;
       load.value = false;   
     }
@@ -67,14 +69,25 @@ onMounted(() => {
           <div class="close" @click="gotoProfile">
               <img src="../../assets/Telegram/close-icon.svg" alt="">
           </div>
-          <div class="link-cont" v-if="ok">
+        <div class="link-cont" v-if="load">
+          <img src="../../assets/Telegram/telegram-icon.svg" alt="">
+          <h2>Привязка Telegram</h2>
+          <div class="link-good">
+            <p class="text-def">Телеграм привязывается, пожалуйста подаждите...</p>
+          </div>
+<!--          <div class="btns">-->
+<!--            <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>-->
+<!--            <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>-->
+<!--          </div>-->
+        </div>
+          <div class="link-cont" v-else-if="ok">
               <img src="../../assets/Telegram/telegram-icon.svg" alt="">
               <h2>Привязка Telegram</h2>
               <div class="link-good">
                   <p class="text-def">Телеграм {{ name }} привязан к вашему аккаунту.</p>
               </div>
               <div class="btns">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
+                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>
               </div>
           </div>
@@ -85,13 +98,13 @@ onMounted(() => {
                   <p class="text-def">Ссылка недействительна!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
+                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>
               </div>
           </div>
 
           <div class="link-cont" v-else-if="notacc">
-              <img src="../../assets/Telegram/tg.png" alt="">
+              <img src="../../assets/Telegram/telegram-icon.svg" alt="">
               <h2>Привязка Telegram</h2>
               <div class="link-good">
                   <p class="text-def">Войдите в аккаунт!</p>
@@ -102,27 +115,26 @@ onMounted(() => {
           </div>
 
           <div class="link-cont" v-else-if="time">
-              <img src="../../assets/Telegram/tg.png" alt="">
+              <img src="../../assets/Telegram/telegram-icon.svg" alt="">
               <h2>Привязка Telegram</h2>
               <div class="link-good">
                   <p class="text-def">Время жизни ссылки истекло!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
+                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Войти</p></button></a>
               </div>
-
-              <div class="link-cont" v-else-if="error">
-              <img src="../../assets/Telegram/tg.png" alt="">
+            <div class="link-cont" v-else-if="error">
+              <img src="../../assets/Telegram/telegram-icon.svg" alt="">
               <h2>Привязка Telegram</h2>
               <div class="link-good">
                   <p class="text-def">Ошибка сервера!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее</p></button></a>
+                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Войти</p></button></a>
               </div>
-          </div>
+            </div>
 
           <div class="link">
               <img src="../../public/link-icon.svg" alt="">
