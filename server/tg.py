@@ -70,7 +70,11 @@ def auth_tg(hash_id, uf_id):
         if len(result) != 0:
             result = dict(result[0])
             if sub_time(result["time"]) and uf_id:
+                logging.info(result)
+                logging.info(uf_id)
                 cursor.execute(f"UPDATE users SET tg_id=$${result["tg_id"]}$$, tg_chat_id=$${result["chat_id"]}$$ WHERE id=$${uf_id}$$")
+                logging.info(f"UPDATE users SET tg_id=$${result["tg_id"]}$$, tg_chat_id=$${result["chat_id"]}$$ WHERE id=$${uf_id}$$")
+                pg.commit()
                 return_data = "all ok"
                 name = result["name"]
             elif not sub_time(result["time"]):
@@ -99,7 +103,7 @@ def tg_sendMessage(chat_id, text):
     url=f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
     payload = {
         'chat_id': chat_id,
-        'text': "Поздравляю с успешной ауентифкацией на сайте"
+        'text': text
     }
     res = req.post(url, data=payload)
     if not res.ok:
@@ -112,7 +116,7 @@ def auth_tg_():
     response_object = {'status': 'success'} #БаZа
 
     post_data = request.get_json()
-
+    logging.info(session.get("id"))
     response_object['res'], chat_id, response_object["name"] = auth_tg(post_data.get("hash_id"), session.get("id"))
     if chat_id!=-1 and response_object['res'] != "Err":
         response_object["res"] = tg_sendMessage(chat_id, "Поздравляю с успешной ауентифкацией на сайте")
