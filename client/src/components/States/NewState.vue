@@ -84,24 +84,7 @@ export default {
                     <span>Выберите файл</span>
                 </label>
             </div>
-            <div class="string">
-                <div class="forms">
-                    <div class="form1">
-                        <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                            <option selected value="">Выберите язык</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="ts">TS</option>
-                            <option value="python">Python</option>
-                            <option value="php">PHP</option>
-                            <option value="cpp">C++</option>
-                            <option value="java">Java</option>
-                            <option value="cs">C#</option>
-                            <option value="go">Golang</option>
-                            <option value="IB">ИБ</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            
             <div class="form-floating">
                 <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;"
                     v-model="form.details"></textarea>
@@ -110,9 +93,21 @@ export default {
             </div>
         </div>
     
-        <div class="row pt-5 block">
-            <div class="col-6">
-                <button id="save" @click="addState"><b>Опубликовать</b></button>
+        <div class="row  block">
+            <div class="change-public">
+                <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
+                    <option selected value="">Выберите язык</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="ts">TS</option>
+                    <option value="python">Python</option>
+                    <option value="php">PHP</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="cs">C#</option>
+                    <option value="go">Golang</option>
+                    <option value="IB">ИБ</option>
+                </select>
+                <button class="btn btn-public" @click="addState"><b>Опубликовать</b></button>
                 <span class="text-danger" v-if="this.error">{{ error }}</span>
             </div>
         </div>
@@ -125,15 +120,26 @@ export default {
     overflow: hidden !important;
 }
 
-#save {
+.btn-public {
     background-color: rgb(255, 255, 255);
     color: #7ac97a;
-    border-color: #90EE90;
+    border: 2px solid #7ac97a;
     border-radius: 5px;
-    padding-right: 15px;
-    padding-left: 15px;
+    width: 175px;
+    padding: 5px 15px;
     text-align: center;
+    transition: all 200ms;
+
     margin-left: 30px;
+}
+
+.btn-public:hover {
+    background-color: #7ac97a;
+    color: #ffffff;
+}
+
+.btn-public:active {
+    background-color: #5ba35b;
 }
 
 #preview {
@@ -188,12 +194,30 @@ hr {
     margin: 20px 35px 0px;
 }
 
+.change-public {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-select {
+    margin-left: 30px;
+}
+
 .transparent {
     color: #B3B3B3;
     margin: 7px 36px 0px;
     margin-bottom: 40px;
 }
 
+.input-file span {
+    height: 46px !important;
+}
+
+.btn-group {
+    margin-left: 35px;
+}
 
 /* 3. Стили для ввода имени, текста и кнопок */
 .name input {
