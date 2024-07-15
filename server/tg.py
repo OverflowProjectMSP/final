@@ -67,6 +67,7 @@ def auth_tg(hash_id, uf_id):
 
         cursor.execute(f"SELECT * FROM tg_hashs WHERE id_hash=$${hash_id}$$")
         result = cursor.fetchall()
+        logging.info(len(result))
         if len(result) != 0:
             result = dict(result[0])
             if sub_time(result["time"]) and uf_id:
@@ -83,11 +84,13 @@ def auth_tg(hash_id, uf_id):
             else:
                 result = {"chat_id": -1}
                 return_data = "Пользователь не в аккаунте"
+            cursor.execute(f"DELETE FROM tg_hashs WHERE id_hash=$${hash_id}$$")
+            pg.commit()
         else:
             result = {"chat_id": -1}
             return_data = "Невалидная ссылка"
 
-            # TODO: добавить в бд столбец-статус - ссылка уже использованна
+
     except (Exception, Error) as error:
         logging.error(f"Ошибка получения данных: {error}")
         return_data = 'Err'
