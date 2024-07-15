@@ -9,19 +9,7 @@ export default {
   data() {
     return {
       questionInfo: {}, //главная возня
-      answers: [
-        // {
-        //     data:"Sat, 11 May 2024 21:55:14 GMT",
-        //     id:"9b129553-7f6e-4e35-aa66-3cf01a216043",
-        //     id_q:"9b129553-7f6e-4e35-aa66-3cf01a216043",
-        //     id_u:"f527d19a-f56b-4614-bab6-63800ed79825",
-        //     text:"Абдурохман",
-        //     user:{
-        //     avatar:"http://127.0.0.1:5000/avatar/a_f527d19a-f56b-4614-bab6-63800ed79825.gif",
-        //     id:"f527d19a-f56b-4614-bab6-63800ed79825",
-        //     username:"febolo"
-        //     }}
-      ],
+      answers: [],
       answerUser: [],
       userCreater: {},
       userNow: {},
@@ -194,7 +182,29 @@ export default {
     async checkIsAdmin(){
       let res = await axios.get("check-for-admin")
       this.isAdmin = res.data.res
+    },
+
+
+
+
+    processHtml(text) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+      const images = doc.querySelectorAll('img');
+
+      images.forEach(img => {
+        img.classList.add('imageinp');
+      });
+
+      text = doc.body.innerHTML;
+
+      return doc.body.innerHTML
     }
+  
+
+
+
+
   },
   mounted() {
     this.loadQuestion();
@@ -233,7 +243,7 @@ export default {
         <h3 v-html="fixN(questionInfo.descriptions)"></h3>
       </div>
       <div class="description">
-        <p v-html="fixN(questionInfo.details)"></p>
+        <p v-html="processHtml(questionInfo.details)"></p>
         <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
       </div>
       <div class="about">
@@ -314,6 +324,8 @@ export default {
 }
 img {
   user-select: none;
+  border-radius: 100% !important;
+  object-fit: cover !important;
 }
 
 
@@ -429,8 +441,18 @@ img {
   transition: all 300ms;
 }
 
-.description {
-  width: 100%;
+img {
+  max-width: 100px !important;
+
+}
+
+.imageinp {
+  width: 52px !important;
+  border-radius: 100%;
+}
+
+.description p {
+ max-width: 100px;
 }
 
 
