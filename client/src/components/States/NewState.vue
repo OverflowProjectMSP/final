@@ -107,8 +107,10 @@ export default {
                     <option value="go">Golang</option>
                     <option value="IB">ИБ</option>
                 </select>
-                <button class="btn btn-public" @click="addState"><b>Опубликовать</b></button>
-                <span class="text-danger" v-if="this.error">{{ error }}</span>
+                <div class="btn-error">
+                    <button class="btn btn-public" @click="addState"><b>Опубликовать</b></button>
+                    <span class="text-danger" v-if="this.error">{{ error }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -140,6 +142,13 @@ export default {
 
 .btn-public:active {
     background-color: #5ba35b;
+}
+
+.btn-error {
+    width: 700px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 #preview {

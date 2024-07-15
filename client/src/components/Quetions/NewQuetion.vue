@@ -192,14 +192,14 @@ export default {
                     </div>
                 </div>
                 <div class="row pt-5 block">
-                    <div class="col-6">
-                        <button id="save" type="submit"><b>Опубликовать</b></button>
+                    <div class="col-6 btn-error">
+                        <button class="btn btn-public"type="submit"><b>Опубликовать</b></button>
+                        <p class="error" :class="color">{{ error }}</p>
+                        <!-- виджет -->
                     </div>
 
                 </div>
 
-                <p class="error" :class="color">{{ error }}</p>
-                <!-- виджет -->
 
             </div>
 
@@ -212,14 +212,35 @@ export default {
     </main>
 </template>
 <style scoped>
-#save {
+.btn-public {
     background-color: rgb(255, 255, 255);
     color: #7ac97a;
-    border-color: #90EE90;
+    border: 2px solid #7ac97a;
     border-radius: 5px;
+    width: 175px;
+    height: 50px;
     padding: 5px 15px;
     text-align: center;
-    transition: all 300ms;
+    transition: all 200ms;
+}
+
+.btn-public:hover {
+    background-color: #7ac97a;
+    color: #ffffff;
+}
+
+.btn-public:active {
+    background-color: #5ba35b;
+}
+
+.btn-error {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.error {
+    margin: 0px;
 }
 
 #preview {
