@@ -464,7 +464,6 @@ onMounted(() => {
 
   .link-good {
       width: 300px;
-      //height: 80px;
       padding: 15px 5px 15px 5px;
   }
 
