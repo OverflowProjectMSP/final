@@ -588,14 +588,70 @@ def add_img( base, name, isAvatar, isQ, id):
         file.write(decoded_bytes)
     return 'https://api.upfollow.ru/media/'+name
 
+def get_id_u(idO, isQ):
+    if isQ:
+        try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+            cursor.execute(f"SELECT id_u, descriptions FROM questions WHERE id=$${idO}$$")
+
+            return_data = cursor.fetchone()["id_u"], cursor.fetchone()["descriptions"]
+        except (Exception, Error) as error:
+            logging.error(f"Ошибка добавления в базу данных: {error}")
+            return_data = "Err", ""
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data
+    try:
+        pg = psycopg2.connect(f"""
+                    host={HOST_PG}
+                    dbname=postgres
+                    user={USER_PG}
+                    password={PASSWORD_PG}
+                    port={PORT_PG}
+                """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT id_u,descriptions FROM states WHERE id=$${idO}$$")
+
+        return_data = cursor.fetchone()["id_u"], cursor.fetchone()["descriptions"]
+
+    except (Exception, Error) as error:
+        logging.error(f"Ошибка добавления в базу данных: {error}")
+        return_data = "Err", ""
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
 # Добовление ответа
 def add_ans(text, isQ, idO, id_u):
     date = datetime.now().isoformat()
     to_write = (uuid.uuid4().hex, id_u, idO, text, date)
+    id_u, name = get_id_u(idO, isQ)
+    if id_u!= "Err": chat_id = check_is_tg(id_u)
     if isQ:
         obj = "answers(id, id_u, id_q, text, data)"
+        if id_u!= "Err": tg_sendMessage(chat_id, f"На ваш вопрос {name} поступил ответ!")
     else:
         obj = "comments(id, id_u, id_s, text, data)"
+        if id_u!= "Err": tg_sendMessage(chat_id, f"Вашу статью {name} прокмеентировали")
 
     try:
         pg = psycopg2.connect(f"""
