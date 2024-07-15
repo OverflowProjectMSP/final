@@ -95,5 +95,10 @@ export default createRouter({
       component: () => import('../components/Telegram/TelegramComp.vue'),
       props: true
     },
+    {
+      path: "/auth-tg-info",
+      component: () => import('../components/Telegram/TelegramInfoComp.vue'),
+      props: true
+    },
   ],
 });

@@ -2,59 +2,13 @@
 import axios from "axios";
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-const link = ref("");
-const res = ref("");
-const name = ref("");
-
-const load = ref(true);
-const ok = ref(false);
-const notvalid = ref(false);
-const notacc = ref(false);
-const time = ref(false);
-
 const route = useRoute();
 const router = useRouter();
-const authTg = async () => {
-  link.value = route.params.id;
 
-  try {
-    const response = await axios.post("/auth-tg", { hash_id: link.value });
-    res.value = response.data.res;
-    name.value = response.data.name;
-    console.log(res.value);
-  } catch (error) {
-    console.error("Ошибка при авторизации:", error);
-  }
-};
 const gotoProfile = () => {
   router.push("/ProfileSettings"); // Используйте router.push()
 };
-const gotoMain = () => {
-  router.push("/"); // Используйте router.push()
-};
-const gotoInfo = () => {
-  router.push("/auth-tg-info"); // Используйте router.push()
-};
-watch(res, (newRes) => {
-  if (newRes === "all ok") {
-    ok.value = true;
-    load.value = false;
-  } else if (newRes === "Невалидная ссылка") {
-    notvalid.value = true;
-    load.value = false;
-  } else if (newRes === "Пользователь не в аккаунте") {
-    notacc.value = true;
-    load.value = false;
-  } else if (newRes === "Время жизни ссылки истекло") {
-    time.value = true;
-    load.value = false;
-  }
-});
 
-onMounted(() => {
-  authTg();
-});
 </script>
 
 <template>
@@ -62,67 +16,22 @@ onMounted(() => {
     <div class="main-container">
       <img class="mount" src="../../assets/Telegram/mounted.png" alt="" />
       <div class="close" @click="gotoProfile">
-       <a href="/ProfileSettings"><img src="../../assets/Telegram/close-icon.svg" alt="" /></a> 
+        <a href="/ProfileSettings"
+          ><img src="../../assets/Telegram/close-icon.svg" alt=""
+        /></a>
       </div>
-      <div class="link-cont" v-if="ok">
+      <div class="link-cont">
         <img src="../../assets/Telegram/telegram-icon.svg" alt="" />
         <h2>Привязка Telegram</h2>
         <div class="link-good">
           <p class="text-def">
-            Телеграм {{ name }} привязан к вашему аккаунту.
+            Подключая ваш аккаунт к Telegram вы будите получать:
+            <br class="mt-5">   
+            1. Получение информации о вашем аккаунте.
+            <br>
+            2. Получать актуальную информацию о ваших вопросах и статьях
           </p>
         </div>
-        <div class="btns">
-       
-            <button class="bt more">
-              <p class="text-def" @click="gotoInfo">Подробнее</p>
-            </button>
-       <button class="bt next"><p class="text-def" @click="gotoMain">Далее</p></button>
-        </div>
-      </div>
-      <div class="link-cont" v-else-if="notvalid">
-        <img src="../../assets/Telegram/telegram-icon.svg" alt="" />
-        <h2>Привязка Telegram</h2>
-        <div class="link-good">
-          <p class="text-def">Ссылка недействительна!</p>
-        </div>
-        <div class="btns" v-if="false">
-         
-            <button class="bt more">
-              <p class="text-def" @click="gotoInfo">Подробнее</p>
-            </button>
-         
-            <button class="bt next"><p class="text-def">Далее</p></button>
-        </div>
-      </div>
-
-      <div class="link-cont" v-else-if="notacc">
-        <img src="../../assets/Telegram/tg.png" alt="" />
-        <h2>Привязка Telegram</h2>
-        <div class="link-good">
-          <p class="text-def">Войдите в аккаунт!</p>
-        </div>
-        <div class="btns" v-if="true">
-         <button class="bt next"><p class="text-def">Войти</p></button>
-        </div>
-      </div>
-
-      <div class="link-cont" v-else-if="time">
-        <img src="../../assets/Telegram/tg.png" alt="" />
-        <h2>Привязка Telegram</h2>
-        <div class="link-good">
-          <p class="text-def">Время жизни ссылки истекло!</p>
-        </div>
-        <div class="btns" v-if="false">
-         <button class="bt more">
-              <p class="text-def">Подробнее</p>
-            </button>
-          
-     <button class="bt next"><p class="text-def">Войти</p></button>
-        </div>
-      </div>
-      <div class="link">
-        <img src="../../public/link-icon.svg" alt="" />
       </div>
     </div>
   </div>
@@ -181,7 +90,7 @@ onMounted(() => {
 
 .link-good {
   width: 500px;
-  height: 120px;
+  height: 300px;
   background-color: #eae9e9;
   border-radius: 15px;
 
@@ -189,7 +98,6 @@ onMounted(() => {
 }
 
 .text-def {
-  text-align: center;
   font-size: 27px;
   font-weight: bold;
   line-height: 30px;
@@ -299,7 +207,7 @@ onMounted(() => {
 
   .link-good {
     width: 400px;
-    height: 90px;
+    height: 250px;
     padding: 17px 10px 17px 10px;
   }
 
@@ -339,7 +247,7 @@ onMounted(() => {
 
   .link-good {
     width: 300px;
-    height: 60px;
+    height: 200px;
     padding: 10px 6px 10px 6px;
   }
 
@@ -413,7 +321,7 @@ onMounted(() => {
 
   .link-good {
     width: 400px;
-    height: 80px;
+    height: 180px;
     padding: 20px 17px 20px 17px;
   }
 
@@ -448,7 +356,7 @@ onMounted(() => {
 
   .link-good {
     width: 300px;
-    height: 80px;
+    height: 150px;
     padding: 15px 5px 15px 5px;
   }
 
