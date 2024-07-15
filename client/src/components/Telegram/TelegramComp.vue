@@ -199,7 +199,6 @@ onMounted(() => {
 
 .link-good {
   width: 500px;
-  height: 120px;
   background-color: #EAE9E9;
   border-radius: 15px;
 
@@ -468,7 +467,7 @@ text-align: center;
 
   .link-good {
       width: 300px;
-      height: 80px;
+      //height: 80px;
       padding: 15px 5px 15px 5px;
   }
 
