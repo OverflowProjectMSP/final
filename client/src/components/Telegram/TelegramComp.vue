@@ -61,7 +61,6 @@ onMounted(() => {
 </script>
 
 <template>
-{{ load }}
   <div class="window">
       <div class="main-container">
           <img class="mount" src="../../assets/Telegram/mounted.png" alt="">
