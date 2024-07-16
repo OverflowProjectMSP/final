@@ -277,7 +277,7 @@ export default {
                         <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                     </div>
                     <div class="delete-btn" @click='deleteAnswer(answer.id, index)'
-                        v-if='userNow.id == answer.id_u || isAdmin'>
+                        v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
                         <button class="comm-add btgr">X</button>
                     </div>
                 </div>
