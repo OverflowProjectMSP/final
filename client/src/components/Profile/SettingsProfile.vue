@@ -51,7 +51,7 @@ export default {
           }
         );
         this.isUploading = true; // Выключаем индикатор загрузки
-        this.$router.push(`/Profile?id=${this.id}`);
+        // this.$router.push(`/Profile?id=${this.id}`);
       } catch (error) {
         console.error("Ошибка при отправке данных:", error);
         this.isUploading = false; // Выключаем индикатор загрузки
@@ -128,7 +128,7 @@ export default {
               :src="defaultAvatar"
               class="mb-2"
               alt="Фото профиля"
-              style="height: 100px"
+              style="height: 100px;"
             />
             <img
               v-else
@@ -199,7 +199,7 @@ export default {
             </div>
 
             
-            <div class="mb-3" v-if="isLoading">
+            <div class="mb-3" v-if="false">
               <label for="exampleFormControlInput1" class="form-label mt-3"
               ><h5>Загрузка данных на сервер...</h5></label
               >

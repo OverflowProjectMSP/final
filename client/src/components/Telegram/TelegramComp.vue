@@ -51,10 +51,7 @@ watch(res, (newRes) => {
       load.value = false;   
     case 'Время жизни ссылки истекло':
       time.value = true;
-      load.value = false;   
-    case 'err':
-      error.value = true;
-      load.value = false;   
+      load.value = false; 
     }
 });
 
@@ -64,6 +61,7 @@ onMounted(() => {
 </script>
 
 <template>
+{{ load }}
   <div class="window">
       <div class="main-container">
           <img class="mount" src="../../assets/Telegram/mounted.png" alt="">
@@ -74,9 +72,9 @@ onMounted(() => {
           <img src="../../assets/Telegram/telegram-icon.svg" alt="">
           <h2>Привязка Telegram</h2>
           <div class="link-good">
-            <p class="text-def">Телеграм привязывается, пожалуйста подаждите...</p>
+            <p class="text-def">Телеграм привязывается, пожалуйста подождите...</p>
           </div>
-<!--          <div class="btns">-->
+<!--    так       <div class="btns">-->
 <!--            <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>-->
 <!--            <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>-->
 <!--          </div>-->
@@ -88,8 +86,8 @@ onMounted(() => {
                   <p class="text-def">Телеграм {{ name }} привязан к вашему аккаунту.</p>
               </div>
               <div class="btns">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
-                  <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>
+                  <a href="#!"><button class="bt more" @click="gotoInfo"><p class="text-def">Подробнее</p></button></a>
+                  <a href="#!"><button class="bt next" @click="gotoMain"><p class="text-def">Далее</p></button></a>
               </div>
           </div>
           <div class="link-cont" v-else-if="notvalid">
