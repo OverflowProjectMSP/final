@@ -48,7 +48,6 @@ export default {
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
       this.questionInfo.details = this.questionInfo.details.replaceAll(regex, '<br>')
       this.loadAnswerUser();
-      console.log(this.questionInfo)
     },
 
     async loadAnswerUser() {
@@ -167,8 +166,8 @@ export default {
 
     fixN(text) {
       return text
-      // text.replaceAll("\n", '<br>')
     },
+
     async checkUser() {
       let res = await axios.get(`/check-r`);
       this.ShowAdd = res.data.all;
@@ -179,6 +178,7 @@ export default {
       }
       this.ShowAdd = false
     },
+
     async checkIsAdmin() {
       let res = await axios.get("check-for-admin")
       this.isAdmin = res.data.res
@@ -190,21 +190,30 @@ export default {
       const images = document.querySelectorAll('.description p img');
 
       images.forEach(img => {
-        img.style.maxWidth='100%'
-        img.style.borderRadius='10px'
-        img.style.marginBottom='20px'
+        img.style.maxWidth = '100%'
+        img.style.borderRadius = '10px'
+        img.style.marginBottom = '20px'
       });
 
-      return doc.body.innerHTML;
+      const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+
+      // doc.body.innerHTML = text.replace(regex, '<br>');
+
+      return doc.body.innerHTML.replaceAll(regex, '<br>');
     },
 
-    async deleteAnswer(id) {
-      await axios.delete('/delete-ans', {
-        params: {
-          id: id,
-          isQ: true,
-        }
-      });
+    async deleteAnswer(id, index) {
+      try {
+        await axios.delete('/delete-ans', {
+          params: {
+            id: id,
+            isQ: 'true',
+          }
+        });
+        this.answers.splice(index, 1);
+      } catch (error) {
+        console.error(error)
+      }
     },
 
   },
@@ -263,7 +272,7 @@ export default {
         <h4>Ответы:</h4>
       </div>
       <div class="answers-all" v-if="this.answers.length != 0">
-        <div class="content-2" v-for="answer in answers">
+        <div class="content-2" v-for="(answer, index) in answers">
           <div class="account">
             <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
               <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
