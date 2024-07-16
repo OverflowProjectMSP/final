@@ -100,5 +100,10 @@ export default createRouter({
       component: () => import('../components/Telegram/TelegramInfoComp.vue'),
       props: true
     },
+    {
+      path: "/auth-tg-desription",
+      component: () => import('../components/Telegram/DescriptionTg.vue'),
+      props: true
+    },
   ],
 });

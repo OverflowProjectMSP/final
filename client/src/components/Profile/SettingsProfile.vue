@@ -13,9 +13,7 @@ export default {
         city: ``,
         email: ``,
         telegram: ``,
-        skype: ``,
         discord: ``,
-        facebook: ``,
         phonenumber: ``,
         github: ``,
         avatar: ``,
@@ -96,6 +94,9 @@ export default {
     },
     forgot() {
       this.$router.push("/RecoveryPassPage");
+    },
+    des() {
+      this.$router.push("/auth-tg-desription");
     },
   },
 };
@@ -211,6 +212,20 @@ export default {
           </div>
         </div>
         <hr />
+        <div class="mb-3 actions">
+          <label for="exampleFormControlInput1" class="form-label"
+            ><h5>Действия с аккаунтом</h5></label
+            >
+            <button class="btn btn-primary" @click="des">
+              Привязка Telegram <img src="../../assets/Footer/Telegram.png" class="tg-img"/>
+            </button> 
+          <button class="btn btn-danger logout" @click="logout">
+            Выйти из акканта</button
+          ><button class="btn btn-primary" @click="forgot">
+            Забыли пароль?
+          </button>
+        </div>
+        <hr/>
         <div class="row">
           <div class="col-12">
             <h5>О себе</h5>
@@ -258,7 +273,7 @@ export default {
                   v-model="form.telegram"
                   />
                 </div>
-                <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+                <!-- <div class="contact-plus d-flex align-items-center gap-0 mb-3">
                   <div class="border px-3 py-1 rounded-3 h-fit">Skype</div>
                 <input
                   type="text"
@@ -266,7 +281,7 @@ export default {
                   style="margin-left: 30px"
                   v-model="form.skype"
                   />
-              </div>
+              </div> -->
               <div class="contact-plus d-flex align-items-center gap-0 mb-3">
                 <div class="border px-3 py-1 rounded-3 h-fit">Discord</div>
                 <input
@@ -276,7 +291,7 @@ export default {
                   v-model="form.discord"
                 />
               </div>
-              <div class="contact-plus d-flex align-items-center gap-0 mb-3">
+              <!-- <div class="contact-plus d-flex align-items-center gap-0 mb-3">
                 <div class="border px-3 py-1 rounded-3 h-fit">Facebook</div>
                 <input
                 type="text"
@@ -284,7 +299,7 @@ export default {
                 style="margin-left: 30px"
                 v-model="form.facebook"
                 />
-              </div>
+              </div> -->
               <div class="contact-plus d-flex align-items-center gap-0 mb-3">
                 <div class="border px-3 py-1 rounded-3 h-fit">
                   Номер телефона:
@@ -299,16 +314,17 @@ export default {
               </div>
           </div>
         </div>
-        <div class="pt-4">
-          <h5>Местоположение</h5>
+        <div class="mt-3">
+          <h5 class="location mb-3">Местоположение</h5>
           <div class="row place-container gap-3" style="display: flex">
             <select
             style="width: 350px"
             role="button"
-            class="country-select col-12 ms-2 w-50"
+            class="country-select form-select"
             v-model="form.country"
             >
-            <option value="Russia" selected>Россия</option>
+            <option value="Belarus" selected>Страна невыбрана</option>
+            <option value="Russia">Россия</option>
             <option value="Belarus">Белоруссия</option>
             <option value="Germany">Германия</option>
               <option value="China">Китай</option>
@@ -318,31 +334,21 @@ export default {
             </select>
             <input
             type="text"
-            class="s-place col-12 ms-2 w-50"
+            class="form-control"
             placeholder="Регион"
             v-model="form.region"
             />
             <input
               type="text"
-              class="s-place col-12 ms-2 w-50"
+              class="form-control"
               placeholder="Город"
               v-model="form.city"
             />
           </div>
         </div>
         <div class="d-flex justify-content-start mt-4 ms-0 mb-3">
-          <button class="btn btn-success w-fit ms-0" type="submit">
+          <button class="btn btn-success" type="submit">
             <b>Сохранить изменения</b>
-          </button>
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label"
-            ><h5>Действия с аккунтом</h5></label
-          >
-          <button class="btn btn-danger logout" @click="logout">
-            Выйти из акканта</button
-          ><button class="btn btn-primary" @click="forgot">
-            Забыли пароль?
           </button>
         </div>
       </div>
@@ -350,6 +356,30 @@ export default {
   </form>
 </template>
 <style scoped>
+.tg-img{
+width: 25px;
+height: 25px;
+margin-left: 5px;
+}
+.actions{
+display: flex;
+gap: 8px;
+flex-wrap: wrap
+;
+}
+.location{
+  margin-left: -11px;
+}
+.btn-success{
+  margin-left: -11px;
+}
+  .country-select {
+    width: 100% !important;
+    border: solid 1px black;
+    margin-left: -100px;
+    padding-left: 10px;
+    margin-left: 0px;
+  }
 .form-label {
   width: 100%;
 }
@@ -358,7 +388,7 @@ export default {
   width: 260px;
 }
 .logout {
-  margin-right: 10px;
+  margin-right: 0px;
 }
 #download,
 #save {
@@ -377,11 +407,11 @@ export default {
   color: #000;
 }
 
-select {
+/* select {
   padding: 7.5px 15px 7.5px 2px;
   border-radius: 3px;
   transition: all 300ms;
-}
+} */
 
 select:hover {
   border-color: blue;
@@ -402,6 +432,7 @@ select:hover {
 
   .country-select {
     width: 100% !important;
+    border: solid 1px black;
   }
 
   .main-block {

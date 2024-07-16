@@ -1,12 +1,23 @@
-<script setup>
-
+<script>
+export default {
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    prev() {
+      this.$router.push("/ProfileSettings")
+    }
+  }
+}
 </script>
 
 <template>
   <div class="window">
     <div class="main-container">
       <img class="mount" src="../../assets/Telegram/mounted.png" alt="">
-      <div class="close" @click="gotoProfile">
+      <div class="close" @click="prev">
         <img src="../../assets/Telegram/close-icon.svg" alt="">
       </div>
       <div class="link-cont">
@@ -14,18 +25,16 @@
         <h2>Привязка Telegram</h2>
         <div class="link-good">
           <p class="text-def">
-            1. Зайдите в нашего телеграмм бота и получите ссулку на аунтификацию <br>
-            2. Пройдите по ссылке (она действует 12 часов, какже необходимо войти в аккаунт)<br>
-            3. Вы приявзяли свой телеграмм! <br>
-            <br>
-            С привязанным телеграмм Вы будете получать информацию о новых ответах и комментариях на Ваши публикации
+           1. Зайдите в нашего <a href="https://t.me/ufAuth_bot" style="color: #3B82F6;">Telegram бота</a> и получите ссылку на аутентификацию.<hr сlass="mt-1">
+            2. Пройдите по ссылке (она действует 12 часов, какже необходимо войти в аккаунт)<hr>
+            3. Вы привязали свой телеграмм! <hr>
+        
+           <span style="color:#3B82F6">Готово!</span> Теперь вы будете получать информацию о новых ответах и комментариях на Ваши публикации
           </p>
         </div>
       </div>
 
-      <div class="link">
-        <img src="../../public/link-icon.svg" alt="">
-      </div>
+      
     </div>
   </div>
 
@@ -92,7 +101,7 @@
 
 .text-def {
   text-align: left;
-  font-size: 27px;
+  font-size: 20px;
   font-weight: 450;
   line-height: 30px;
   margin: 0;
@@ -146,9 +155,6 @@
   background-color: #cfcfcf;
 }
 
-.close:active {
-  background-color: #a5a5a5;
-}
 
 .link img {
   width: 40px;
@@ -185,12 +191,12 @@
 @media (max-width: 1280px) {
   .main-container {
     width: 1000px;
-    height: 550px;
+    height: 600px;
   }
 
   .mount {
     width: 370px;
-    height: 550px;
+    height: 600px;
   }
 
   .link-cont img {
@@ -203,12 +209,12 @@
 
   .link-good {
     width: 400px;
-    height: 90px;
+    height: 310px;
     padding: 17px 10px 17px 10px;
   }
 
   .text-def {
-    font-size: 22px;
+    font-size: 13px;
     line-height: 25px;
   }
 
@@ -221,16 +227,17 @@
 @media (max-width: 1015px) {
   .main-container {
     width: 700px;
-    height: 400px;
+    height: 500px;
   }
 
   .mount {
     width: 280px;
-    height: 400px;
+    height: 500px;
   }
 
   .link-cont {
-    gap: 10px;
+    gap: 5px;
+    margin-left: -20px;
   }
 
   .link-cont img {
@@ -243,12 +250,12 @@
 
   .link-good {
     width: 300px;
-    height: 60px;
-    padding: 10px 6px 10px 6px;
+    height: 320px;
+    padding: 15px 8px 15px 8px;
   }
 
   .text-def {
-    font-size: 17px;
+    font-size: 15px;
     line-height: 20px;
   }
 
@@ -262,8 +269,8 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 20px;
+    right: 20px;
     background-color: #EAE9E9;
     width: 40px;
     height: 40px;
@@ -304,7 +311,8 @@
   }
 
   .link-cont {
-    gap: 20px;
+    gap: 10px;
+    margin-left: 0;
   }
 
   .link-cont img {
@@ -317,12 +325,12 @@
 
   .link-good {
     width: 400px;
-    height: 80px;
+    height: 350px;
     padding: 20px 17px 20px 17px;
   }
 
   .text-def {
-    font-size: 20px;
+    font-size: 19px;
     line-height: 23px;
   }
 
@@ -339,7 +347,7 @@
   }
 
   .link-cont {
-    gap: 10px;
+    gap: 5px;
   }
 
   .link-cont img {
@@ -352,11 +360,12 @@
 
   .link-good {
     width: 300px;
-    padding: 15px 5px 15px 5px;
+    height: 310px;
+    padding: 10px 10px 10px 10px;
   }
 
   .text-def {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 22px;
   }
 
