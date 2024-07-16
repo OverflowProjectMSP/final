@@ -471,10 +471,6 @@ img {
   border-radius: 100%;
 }
 
-.description p {
-  /* max-width: 100px; */
-}
-
 
 .answer-btn {
   width: 180px;
