@@ -96,7 +96,7 @@ onMounted(() => {
                   <p class="text-def">Ссылка недействительна!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
+                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязке</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>
               </div>
           </div>
@@ -197,7 +197,6 @@ onMounted(() => {
   width: 500px;
   background-color: #EAE9E9;
   border-radius: 15px;
-
   padding: 25px 23px 25px 23px;
 }
 
@@ -312,7 +311,6 @@ onMounted(() => {
 
   .link-good {
     width: 400px;
-    height: 90px;
     padding: 17px 10px 17px 10px;
   }
 
@@ -352,7 +350,6 @@ onMounted(() => {
 
   .link-good {
     width: 300px;
-    height: 60px;
     padding: 10px 6px 10px 6px;
   }
 
@@ -426,7 +423,6 @@ onMounted(() => {
 
   .link-good {
     width: 400px;
-    height: 80px;
     padding: 20px 17px 20px 17px;
   }
 
