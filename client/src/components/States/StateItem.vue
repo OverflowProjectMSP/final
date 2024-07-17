@@ -35,7 +35,7 @@ export default {
         this.getNowUser();
         this.checkUser();
     },
-    
+
     methods: {
         async loadState() {
             let responce = await axios.get(`/show-one`, {
@@ -50,14 +50,14 @@ export default {
             this.answers = responce.data.all.answers;
             this.states.details = this.states.details.replaceAll(regex, '<br>')
             this.loadAnswerUser();
-            
+
         },
 
         async loadAnswerUser() {
             this.userCreater = await this.loadUsers(this.states);
             this.CheckUserIsEdit()
-            if (this.answers.length!=0){
-                for(let i = 0; i < this.answers.length; i++) {
+            if (this.answers.length != 0) {
+                for (let i = 0; i < this.answers.length; i++) {
                     let user = await this.loadUsers(this.answers[i]);
                     this.commentUser.push(user)
                 };
@@ -90,7 +90,7 @@ export default {
         },
 
         async addComment() {
-            if (this.text != ""){
+            if (this.text != "") {
                 await axios.post(`/answers`, {
                     id: this.$route.query.id,
                     q: 'false',
@@ -107,7 +107,7 @@ export default {
         },
         async deleteState() {
             await axios.delete('/delete', {
-                params:{
+                params: {
                     id: this.$route.query.id,
                     q: 'false',
                 }
@@ -127,7 +127,7 @@ export default {
         },
 
         v_For1() {
-            if (this.answers.length != 0){
+            if (this.answers.length != 0) {
                 for (let i = 0; i < this.commentUser.length; i++) {
                     this.answers[i].user = this.commentUser[i];
                     const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
@@ -159,7 +159,7 @@ export default {
             if (this.ShowAdd == "true") {
                 this.ShowAdd = true
                 return
-                
+
             }
             this.ShowAdd = false
         },
@@ -168,9 +168,23 @@ export default {
             return text
             // }
         },
-        async checkIsAdmin(){
-              let res = await axios.get("check-for-admin")
-              this.isAdmin = res.data.res
+        async checkIsAdmin() {
+            let res = await axios.get("check-for-admin")
+            this.isAdmin = res.data.res
+        },
+
+        async deleteAnswer(id, index) {
+            try {
+                await axios.delete('/delete-ans', {
+                    params: {
+                        id: id,
+                        isQ: 'false',
+                    }
+                });
+                this.answers.splice(index, 1);
+            } catch (error) {
+                console.error(error)
+            }
         },
     },
 }
@@ -181,22 +195,26 @@ export default {
     <div class="container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
-                <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile?id=${this.userCreater.id}`">
+                <a class="creator-info d-flex flex-row align-items-center gap-3"
+                    :href="`/Profile?id=${this.userCreater.id}`">
                     <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
                     <div class="name-ring">
                         <div>
-                            <a :href="`/Profile?id=${this.userCreater.id}`"><span class="name">{{ userCreater.username }}</span></a>
+                            <a :href="`/Profile?id=${this.userCreater.id}`"><span class="name">{{ userCreater.username
+                                    }}</span></a>
                         </div>
                     </div>
                 </a>
                 <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
-                    <ul class="dropdown-menu">
-                      <li v-if="this.isCheck == 'true'"><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
-                      <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
-                    </ul>
-                  </div>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Дейсвие</button>
+                        <ul class="dropdown-menu">
+                            <li v-if="this.isCheck == 'true'"><a class="dropdown-item"
+                                    :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="title">
@@ -209,28 +227,31 @@ export default {
                 <p v-html="fixN(this.states.data)"></p>
             </div>
         </div>
-        
+
         <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
             <div class="account">
-                 <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                <a :href="`/Profile?id=${this.userNow.id}`"
+                    class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
-                           <span class="name">{{ userNow.username }}</span>
+                            <span class="name">{{ userNow.username }}</span>
                         </div>
                     </div>
-                    </a>
+                </a>
             </div>
             <div class="content-3-without mb-3">
                 <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                placeholder="Оставь свой комментарий:"></textarea>
+                    placeholder="Оставь свой комментарий:"></textarea>
                 <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
             </div>
             <div class="send-ans d-flex justify-content-end">
                 <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
-                </div>
-                </form>
-            <div class="container mt-3" v-if="this.answers.length != 0"><h4>Комментарии:</h4></div>
+            </div>
+        </form>
+        <div class="container mt-3" v-if="this.answers.length != 0">
+            <h4>Комментарии:</h4>
+        </div>
         <div v-if="!this.loading && this.answers.length != 0">
             <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
             <div class="d-flex justify-content-center">
@@ -241,10 +262,11 @@ export default {
         </div>
 
         <div v-if="this.loading && this.answers.length != 0">
-            <div class="content-2 mt-2" v-for="answer in answers">
+            <div class="content-2 mt-2" v-for="(answer, index) in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
-                        <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                        <a :href="`/Profile?id=${answer.user.id}`"
+                            class="creator-info d-flex flex-row align-items-center gap-3">
                             <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                             <div class="name-ring">
                                 <span class="name" role="button">{{ answer.user.username }}</span>
@@ -254,20 +276,48 @@ export default {
                     <div class="description-text mt-1">
                         <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                     </div>
+                    <div class="delete-btn" @click='deleteAnswer(answer.id, index)'
+                        v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
+                        <button class="comm-add btgr">X</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="content p-2" v-if="this.answers.length == 0">
-            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под этой статьей!</h2>
+            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под
+                этой статьей!</h2>
         </div>
     </div>
 </template>
 
 <style scoped>
-.toMain{
+img {
+    object-fit: cover;
+}
+.delete-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.delete-btn button {
+    padding: 9px 26px;
+    background-color: #f63b3b;
+    color: #fff;
+    user-select: none;
+
+    border: none;
+    border-radius: 16px;
+    font-size: 22px;
+
+    transition: all 200ms;
+}
+
+.toMain {
     border-radius: 10px;
 }
-.uy{
+
+.uy {
     word-break: break-all !important;
 }
 
@@ -330,6 +380,7 @@ img {
     gap: 12px;
     align-items: center;
 }
+
 /* 
 .accountIcon {
     border-radius: 50px !important;
@@ -427,6 +478,7 @@ img {
 /* CONTENT-2 */
 
 .content-2 {
+    position: relative;
     margin-top: 50px;
     width: 100%;
     height: auto;

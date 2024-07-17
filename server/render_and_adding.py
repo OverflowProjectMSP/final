@@ -1,5 +1,5 @@
 from app import *
-
+from tg import *
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
             logging.info(details, 1)
             question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), False)
             cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")
-            # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
+            # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")
             pg.commit()
             return_data = "Вопрос добавлен"
         else : return_data = "Уже существует"
@@ -113,7 +113,6 @@ def add_states(discriptions='', details='', id='', tag=''):
 
         # Существует ли таккая же
         if send_state[0][0]==0:
-            state_to_write = (uuid.uuid4().hex, escape_quotes(discriptions), escape_quotes(details), tag, id, datetime.now().isoformat())
             cursor.execute(f"INSERT INTO states(id, descriptions, details, tag, id_u, data) VALUES ('{uuid.uuid4().hex}', '{escape_quotes(discriptions)}', '{escape_quotes(details)}', '{tag}', '{id}', '{datetime.now().isoformat()}')")
             pg.commit()
             return_data = "Статья добавлена"
@@ -126,7 +125,6 @@ def add_states(discriptions='', details='', id='', tag=''):
         if pg:
             cursor.close
             pg.close
-            logging.info(return_data)
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
@@ -142,7 +140,6 @@ def show_all_by_user(id):
         """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        logging.info(id)
         cursor.execute(f'SELECT * FROM questions WHERE id_u=$${id}$$ ORDER BY data DESC')
         questions = cursor.fetchall()
         cursor.execute(f'SELECT * FROM states WHERE id_u=$${id}$$ ORDER BY data DESC')
@@ -157,7 +154,7 @@ def show_all_by_user(id):
         s = []
         for row in states:
             a = dict(row)
-            cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+            cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
             s.append(a)
 
@@ -252,7 +249,6 @@ def delete(id, isQ, id_j):
 def change(id, info, isQ, id_j):
     infor = ''
     for i in info:
-        print(i)
         if info[i] != 'false':
             if i == 'data':
                 infor += f' {i}=$${datetime.now().isoformat()}$$'
@@ -331,7 +327,7 @@ def change(id, info, isQ, id_j):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# Вопросы форума    
+# Вопросы форума
 def show_forum(filtre):
     try:
         pg = psycopg2.connect(f"""
@@ -435,6 +431,7 @@ def show_one(id, isQ):
             # print(cursor.fetchall())
 
             all_q = dict(cursor.fetchall()[0])
+            all_q["details"] = all_q["details"].replace('\n', '<br>')
 
             all_asw = show_answers(True, id)
 
@@ -474,6 +471,7 @@ def show_one(id, isQ):
 
         all_states['descriptions'] = unescape_quotes(all_states['descriptions'])
         all_states['details'] = unescape_quotes(all_states['details'])
+        all_states["details"] = all_states["details"].replace('\n', '<br>')
         return_data = {
             'state': all_states,
             'answers': all_asw
@@ -498,7 +496,6 @@ def filtre(filters, isQ):
     elif filters["filtr"]:
         filtr = ' WHERE'
         for i in filters:
-            logging.info(i)
             if filters[i] != '':
                 if i == 'filtr':
                     continue
@@ -600,10 +597,11 @@ def get_id_u(idO, isQ):
             """)
 
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
+            logging.info(idO)
             cursor.execute(f"SELECT id_u, descriptions FROM questions WHERE id=$${idO}$$")
 
-            return_data = cursor.fetchone()["id_u"], cursor.fetchone()["descriptions"]
+            return_data = cursor.fetchall()[0][0], cursor.fetchall()[0][1]
+            logging.info(return_data)
         except (Exception, Error) as error:
             logging.error(f"Ошибка добавления в базу данных: {error}")
             return_data = "Err", ""
@@ -624,10 +622,12 @@ def get_id_u(idO, isQ):
                 """)
 
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-        cursor.execute(f"SELECT id_u,descriptions FROM states WHERE id=$${idO}$$")
-
-        return_data = cursor.fetchone()["id_u"], cursor.fetchone()["descriptions"]
+        logging.info(idO)
+        cursor.execute(f"SELECT id_u, descriptions FROM states WHERE id=$${idO}$$")
+        data = cursor.fetchall()[0]
+        logging.info(data)
+        return_data = data[0], data[1]
+        logging.info(return_data)
 
     except (Exception, Error) as error:
         logging.error(f"Ошибка добавления в базу данных: {error}")
@@ -645,13 +645,14 @@ def add_ans(text, isQ, idO, id_u):
     date = datetime.now().isoformat()
     to_write = (uuid.uuid4().hex, id_u, idO, text, date)
     id_u, name = get_id_u(idO, isQ)
-    if id_u!= "Err": chat_id = check_is_tg(id_u)
+    if id_u!= "Err":
+        chat_id = check_is_tg(id_u)
     if isQ:
         obj = "answers(id, id_u, id_q, text, data)"
-        if id_u!= "Err": tg_sendMessage(chat_id, f"На ваш вопрос {name} поступил ответ!")
+        if id_u!= "Err": tg_sendMessage(chat_id, f'На ваш вопрос "{name}" поступил ответ!')
     else:
         obj = "comments(id, id_u, id_s, text, data)"
-        if id_u!= "Err": tg_sendMessage(chat_id, f"Вашу статью {name} прокмеентировали")
+        if id_u!= "Err": tg_sendMessage(chat_id, f'Вашу статью "{name}" прокмментировали')
 
     try:
         pg = psycopg2.connect(f"""
@@ -977,7 +978,6 @@ def one_something():
     else:
         responce_object['all'] = show_one(id, False)
 
-
     return jsonify(responce_object)
 
 # Удаление чего-то
@@ -1035,7 +1035,7 @@ def show_all_by_user_route():
 
 @app.route('/answers', methods=['POST'])
 def add_a():
-
+    logging.info(1)
     response_object = {'status': 'success'} #БаZа
 
     post_data = request.get_json()

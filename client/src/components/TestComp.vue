@@ -1,5 +1,11 @@
+<template>
+  <div>
+    <textarea ref="textArea" v-model="text" @input="updateCursor" @click="updateCursor"></textarea>
+    <button @click="addBoldTag">B</button>
+  </div>
+</template>
+
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -120,7 +126,8 @@ export default {
 </template>
 
 <style scoped>
-.link {
-  font-size: 50px;
+textarea {
+  width: 100%;
+  height: 100px;
 }
 </style>
