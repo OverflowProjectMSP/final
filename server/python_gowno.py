@@ -58,7 +58,7 @@ def delete_ans(id, isQ):
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-
+        
 
 def is_can_edit(idO: str, isQ: bool, id_u: str) -> str:
     try:
@@ -74,7 +74,7 @@ def is_can_edit(idO: str, isQ: bool, id_u: str) -> str:
         if isQ:
             cursor.execute(f"SELECT id_u FROM answers WHERE id=$${idO}$$")
             return_data = cursor.fetchone()[0] == id_u
-        else:
+        else: 
             cursor.execute(f"SELECT id_u FROM comments WHERE id=$${idO}$$")
             logging.info(id_u)
             logging.info(cursor.fetchone()[0])
@@ -91,5 +91,5 @@ def is_can_edit(idO: str, isQ: bool, id_u: str) -> str:
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
-
+        
 
