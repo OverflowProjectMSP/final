@@ -715,7 +715,7 @@ img {
   }
 
   .comm-add {
-    width: 170%;
+    width: 100%;
   }
 }
 
