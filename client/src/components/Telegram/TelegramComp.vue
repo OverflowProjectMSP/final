@@ -134,9 +134,9 @@ onMounted(() => {
               </div>
             </div>
 
-          <div class="link">
-              <img src="../../public/link-icon.svg" alt="">
-          </div>
+<!--          <div class="link">-->
+<!--              <img src="../../public/link-icon.svg" alt="">-->
+<!--          </div>-->
       </div>
     </div>
   </div>
