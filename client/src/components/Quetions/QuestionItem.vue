@@ -9,19 +9,7 @@ export default {
   data() {
     return {
       questionInfo: {}, //главная возня
-      answers: [
-        // {
-        //     data:"Sat, 11 May 2024 21:55:14 GMT",
-        //     id:"9b129553-7f6e-4e35-aa66-3cf01a216043",
-        //     id_q:"9b129553-7f6e-4e35-aa66-3cf01a216043",
-        //     id_u:"f527d19a-f56b-4614-bab6-63800ed79825",
-        //     text:"Абдурохман",
-        //     user:{
-        //     avatar:"http://127.0.0.1:5000/avatar/a_f527d19a-f56b-4614-bab6-63800ed79825.gif",
-        //     id:"f527d19a-f56b-4614-bab6-63800ed79825",
-        //     username:"febolo"
-        //     }}
-      ],
+      answers: [],
       answerUser: [],
       userCreater: {},
       userNow: {},
@@ -60,7 +48,6 @@ export default {
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
       this.questionInfo.details = this.questionInfo.details.replaceAll(regex, '<br>')
       this.loadAnswerUser();
-      console.log(this.questionInfo)
     },
 
     async loadAnswerUser() {
@@ -93,7 +80,7 @@ export default {
     },
 
     async addComment() {
-      if (this.text.length >= 3 ){
+      if (this.text.length >= 3) {
         await axios.post(`/answers`, {
           id: this.$route.query.id,
           q: 'true',
@@ -132,7 +119,7 @@ export default {
     },
 
     v_For1() {
-      if (this.answers.length != 0){
+      if (this.answers.length != 0) {
         for (let i = 0; i < this.answerUser.length; i++) {
           this.answers[i].user = this.answerUser[i];
           const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
@@ -179,8 +166,8 @@ export default {
 
     fixN(text) {
       return text
-      // text.replaceAll("\n", '<br>')
     },
+
     async checkUser() {
       let res = await axios.get(`/check-r`);
       this.ShowAdd = res.data.all;
@@ -191,10 +178,44 @@ export default {
       }
       this.ShowAdd = false
     },
-    async checkIsAdmin(){
+
+    async checkIsAdmin() {
       let res = await axios.get("check-for-admin")
       this.isAdmin = res.data.res
-    }
+    },
+
+    processHtml(text) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+      const images = document.querySelectorAll('.description p img');
+
+      images.forEach(img => {
+        img.style.maxWidth = '100%'
+        img.style.borderRadius = '10px'
+        img.style.marginBottom = '20px'
+      });
+
+      const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
+
+      // doc.body.innerHTML = text.replace(regex, '<br>');
+
+      return doc.body.innerHTML.replaceAll(regex, '<br>');
+    },
+
+    async deleteAnswer(id, index) {
+      try {
+        await axios.delete('/delete-ans', {
+          params: {
+            id: id,
+            isQ: 'true',
+          }
+        });
+        this.answers.splice(index, 1);
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
   },
   mounted() {
     this.loadQuestion();
@@ -219,11 +240,15 @@ export default {
         </a>
         <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
           <div class="dropdown">
-            <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown" aria-expanded="false">Дейсвие</button>
+            <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Дейсвие</button>
             <ul class="dropdown-menu">
-              <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a></li>
-              <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a></li>
-              <li v-if="this.isCheck == 'true'"><a class="dropdown-item" :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+              <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item"
+                  @click="solveQuestion(false)">Вопрос решён!</a></li>
+              <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не
+                  решён!</a></li>
+              <li v-if="this.isCheck == 'true'"><a class="dropdown-item"
+                  :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
               <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
             </ul>
           </div>
@@ -233,7 +258,7 @@ export default {
         <h3 v-html="fixN(questionInfo.descriptions)"></h3>
       </div>
       <div class="description">
-        <p v-html="fixN(questionInfo.details)"></p>
+        <p v-html="processHtml(questionInfo.details)"></p>
         <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
       </div>
       <div class="about">
@@ -243,9 +268,11 @@ export default {
     </div>
     <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
     <div v-if="this.loading">
-      <div class="container mt-5"><h4>Ответы:</h4></div>
+      <div class="container mt-5">
+        <h4>Ответы:</h4>
+      </div>
       <div class="answers-all" v-if="this.answers.length != 0">
-        <div class="content-2" v-for="answer in answers">
+        <div class="content-2" v-for="(answer, index) in answers">
           <div class="account">
             <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
               <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
@@ -257,11 +284,9 @@ export default {
           <div class="description my-1">
             <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
           </div>
-          <!-- <div class="btn-group">
-              <div class="left">
-                  <button class="comm-add btgr">Добавить комментарий</button>
-              </div>
-          </div> -->
+          <div class="delete-btn" @click='deleteAnswer(answer.id)' v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
+              <button class="comm-add btgr">X</button>
+          </div>
         </div>
       </div>
       <div class="content p-2" v-if="this.answers.length == 0">
@@ -271,7 +296,7 @@ export default {
     </div>
     <div v-else>
       <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
-        <div class="spinner-border text-primary" role="status" >
+        <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden text-center">Loading...</span>
         </div>
       </div>
@@ -290,8 +315,8 @@ export default {
       </div>
       <div class="mb-3">
         <div class="content-3-without mb-3">
-                    <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                              placeholder="Оставь свой комментарий:"></textarea>
+          <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
+            placeholder="Оставь свой комментарий:"></textarea>
           <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
         </div>
       </div>
@@ -303,17 +328,24 @@ export default {
 </template>
 
 <style scoped>
-.link{
+.delete-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px
+}
+
+.link {
   font-size: 20px;
-  color:#3B82F6;
+  color: #3B82F6;
   position: absolute;
   right: 140px;
-
-
-
 }
+
 img {
   user-select: none;
+  border-radius: 100% !important;
+  object-fit: cover !important;
+  width: 50px;
 }
 
 
@@ -429,8 +461,14 @@ img {
   transition: all 300ms;
 }
 
-.description {
-  width: 100%;
+img {
+  max-width: 100px !important;
+
+}
+
+.imageinp {
+  width: 52px !important;
+  border-radius: 100%;
 }
 
 
@@ -472,6 +510,7 @@ img {
 /* CONTENT-2 */
 
 .content-2 {
+  position: relative;
   margin-top: 50px;
   width: 100%;
   height: auto;
@@ -519,7 +558,7 @@ img {
 
 .btgr {
   padding: 9px 26px;
-  background-color: #3B82F6;
+  background-color: #f63b3b;
   color: #fff;
   user-select: none;
 

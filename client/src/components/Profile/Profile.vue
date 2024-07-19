@@ -63,9 +63,9 @@ export default {
     <div class="profile">
         <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
             alt="Настройки" class="il"></a>
-            <div class="head">
+            <div class="head object-fit-cover">
                 <div class="circle">
-                    <img :src="user.avatar">
+                    <img :src="user.avatar" class='object-fit-cover'
             </div>
             <p class="nikname t-alig-c">@{{ user.username }}</p>
             <div class="loc-tel">
@@ -212,16 +212,17 @@ body {
 
 /* аватар + ник */
 .circle {
+    object-fit: cover !important;
     margin: auto;
-    height: 150px;
-    width: 150px;
+    height: 180px;
+    width: 180px;
     border-radius: 100%;
     border: 1px solid #000;
 }
 
 .circle img {
-    height: 150px;
-    width: 150px;
+    height: 180px;
+    width: 180px;
     border-radius: 100%;
 }
 

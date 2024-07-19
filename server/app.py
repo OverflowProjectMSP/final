@@ -149,9 +149,11 @@ from user import *
 from render_and_adding import *
 from others import *
 from tg import *
+from python_gowno import *
 
 if __name__ == '__main__':
     add_tables()
     app.run(host='0.0.0.0', port=80)
+
 
 

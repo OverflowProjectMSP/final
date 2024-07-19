@@ -147,6 +147,7 @@ header {
   margin-left: 5px;
   border-radius: 10px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .form {
