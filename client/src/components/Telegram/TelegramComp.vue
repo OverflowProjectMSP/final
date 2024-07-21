@@ -85,8 +85,8 @@ onMounted(() => {
                   <p class="text-def">Телеграм {{ name }} привязан к вашему аккаунту.</p>
               </div>
               <div class="btns">
-                  <a href="#!"><button class="bt more" @click="gotoInfo"><p class="text-def">Подробнее</p></button></a>
-                  <a href="#!"><button class="bt next" @click="gotoMain"><p class="text-def">Далее</p></button></a>
+                  <button class="bt more" @click="gotoInfo"><p class="text-def">Подробнее</p></button>
+                  <button class="bt next" @click="gotoMain"><p class="text-def">Далее</p></button>
               </div>
           </div>
           <div class="link-cont" v-else-if="notvalid">
@@ -96,7 +96,7 @@ onMounted(() => {
                   <p class="text-def">Ссылка недействительна!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязке</p></button></a>
+                  <a href="/auth-tg-description"><button class="bt more"><p class="text-def">Подробнее о привязке</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Далее</p></button></a>
               </div>
           </div>
@@ -119,7 +119,7 @@ onMounted(() => {
                   <p class="text-def">Время жизни ссылки истекло!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
+                  <a href="/auth-tg-description"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Войти</p></button></a>
               </div>
             <div class="link-cont" v-else-if="error">
@@ -129,14 +129,14 @@ onMounted(() => {
                   <p class="text-def">Ошибка сервера!</p>
               </div>
               <div class="btns" v-if="false">
-                  <a href="#!"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
+                  <a href="/auth-tg-description"><button class="bt more"><p class="text-def">Подробнее о привязки</p></button></a>
                   <a href="#!"><button class="bt next"><p class="text-def">Войти</p></button></a>
               </div>
             </div>
 
-<!--          <div class="link">-->
-<!--              <img src="../../public/link-icon.svg" alt="">-->
-<!--          </div>-->
+          <!-- <div class="link">
+              <img src="../../public/link-icon.svg" alt="">
+          </div> -->
       </div>
     </div>
   </div>
