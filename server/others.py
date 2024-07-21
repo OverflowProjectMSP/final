@@ -300,7 +300,7 @@ def add_img_():
 
     post_data = request.get_json()
     if post_data.get("base") != "":
-        responce_object['link'] = add_img(post_data.get('base'), post_data.get('name'), True, False, uuid.uuid4().hex )
+        responce_object['link'] = add_img_qs(post_data.get('base'), post_data.get('name'))
 
         return jsonify(responce_object)
     responce_object['link'] = 'base64 is ""'
