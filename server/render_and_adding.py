@@ -1,5 +1,6 @@
 from app import *
 from tg import *
+from others import *
 
 load_dotenv()
 
@@ -599,8 +600,9 @@ def get_id_u(idO, isQ):
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             logging.info(idO)
             cursor.execute(f"SELECT id_u, descriptions FROM questions WHERE id=$${idO}$$")
-
-            return_data = cursor.fetchall()[0][0], cursor.fetchall()[0][1]
+            data = cursor.fetchall()[0]
+            logging.info(data)
+            return_data = data[0], data[1]
             logging.info(return_data)
         except (Exception, Error) as error:
             logging.error(f"Ошибка добавления в базу данных: {error}")
