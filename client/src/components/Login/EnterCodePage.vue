@@ -5,7 +5,7 @@ import eye_img from "@/assets/Login/eye-open.svg"
 export default {
   data() {
     return {
-      CIFRY: null,
+      CIFRY: "",
 
       error: '',
       eyeOpen1: true,
