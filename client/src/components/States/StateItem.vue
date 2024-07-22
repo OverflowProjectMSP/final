@@ -212,7 +212,7 @@ export default {
                         <ul class="dropdown-menu">
                             <li v-if="this.isCheck == 'true'"><a class="dropdown-item"
                                     :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
+                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
                         </ul>
                     </div>
                 </div>
@@ -688,3 +688,4 @@ img {
     }
 }
 </style>
+
