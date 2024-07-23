@@ -16,39 +16,18 @@ export default {
       showPassword: 'password',
       isShowExPassword: false,
       showExPassword: 'password',
-
+      src: 'src/assets/Login/23.png',
       inputNumber: '',
+      button: true,
+      gre: false,
+      disabled: false,
+
     }
   },
   methods: {
     check() {
       this.checkCode();
     },
-    toggleVisibility1() {
-      this.isShowPassword = !this.isShowPassword;
-      this.eyeOpen1 = !this.eyeOpen1
-
-      if (this.isShowPassword) {
-        this.showPassword = 'text'
-        this.eyeImg1 = '/src/assets/svg-editor-image2.svg'
-      } else {
-        this.showPassword = 'password'
-        this.eyeImg1 = eye_img
-      }
-    },
-    toggleVisibility2() {
-      this.isShowExPassword = !this.isShowExPassword;
-      this.eyeOpen2 = !this.eyeOpen2
-
-      if (this.isShowExPassword) {
-        this.showExPassword = 'text'
-        this.eyeImg2 = '/src/assets/svg-editor-image2.svg'
-      } else {
-        this.showExPassword = 'password'
-        this.eyeImg2 = eye_img
-      }
-    },
-
     async checkCode() {
       let res = await axios.post('/new-password-email', {
         emailCode: this.CIFRY,
@@ -60,6 +39,32 @@ export default {
       } else {
         this.error = 'Ошибка';
       }
+    },
+    validateInput($event) {
+      this.button = false
+      this.gre = true
+      if ($event) {
+        console.log(this.CIFRY.length)
+        if (this.CIFRY.length > 4) {
+          this.error = "Не больше 4-х символов."
+          this.button = false
+          this.gre = true
+          this.src = 'src/assets/Login/arrow_forward.png'
+        } else if (this.CIFRY.length == 4) {
+          this.error = null;
+          this.button = true
+          this.gre = false
+          this.src = 'src/assets/Login/23.png'
+        } else if (this.CIFRY.length <= 4) {
+          this.error = null;
+          this.button = false
+          this.gre = true
+          this.src = 'src/assets/Login/arrow_forward.png'
+        }
+      }
+    },
+    pushtoFAQ() {
+      this.$router.push("/FAQ")
     },
   }
 }
@@ -81,15 +86,15 @@ export default {
       <form @submit.prevent="checkCode">
       <div class="input-container">
         <div class="div-nickname">
-          <input type="text" v-model="CIFRY" class="input" auыtofocus required />
+          <input type="text" v-model="CIFRY" class="input" autofocus required @input="validateInput($event)"/>
           <span сlass="nick">Код</span>
         </div>
         <div class="btn-container">
-          <button class="bt login" type="submit"><img src="../../assets/Login/23.png" alt=""></button>
+          <button :class="{'login': button, 'bt': true, 'grey': gre} " :disabled="gre" type="submit" ><img :src="src" alt="" class="str"></button>
         </div>
       </div>
     </form>
-      <div class="mail">
+      <div class="mail" @click="pushtoFAQ">
         <a href=""><img src="/mail.svg" alt="" /></a>
       </div>
       <div class="pass-err">
@@ -272,7 +277,17 @@ h1 {
   text-align: center;
   cursor: pointer;
 }
-.login img {
+.grey {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  text-align: center;
+  color: #fff;
+  background: #EAE9E9;
+  text-align: center;
+  cursor: pointer;
+}
+.str {
   width: 30px;
 }
 .eye {
