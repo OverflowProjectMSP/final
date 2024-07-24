@@ -95,7 +95,7 @@ export default {
       </div>
     </form>
       <div class="mail" @click="pushtoFAQ">
-        <a href=""><img src="/mail.svg" alt="" /></a>
+        <img src="/mail.svg" alt="" />
       </div>
       <div class="pass-err">
         <a href="" class="a mt-3">Не приходит код?</a>
