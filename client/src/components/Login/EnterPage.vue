@@ -54,16 +54,21 @@ export default {
     },
 
     async login() {
-      let res = await axios.post("/login", {
-        email: this.form.email,
-        password: this.form.password,
-      });
-      if (res.data.message == "ok") {
-        this.$router.push("/");
-      } else if (res.data.message == "wrong!") {
-        this.error = "Пароль и почта не совпадают!";
-      } else {
-        this.error = "Неизвестная ошибка.";
+      try {
+        let res = await axios.post("/login", {
+          email: this.form.email,
+          password: this.form.password,
+        });
+        if (res.data.message == "ok") {
+          this.$router.push("/");
+        } else if (res.data.message == "wrong!") {
+          this.error = "Пароль и почта не совпадают!";
+        } else {
+          this.error = "Неизвестная ошибка.";
+        }   
+      } catch (err) {
+        this.error = "Ошибка сервера."
+        console.error(err)
       }
     },
 
@@ -88,7 +93,7 @@ export default {
 
 <template>
   <div class="all-container">
-    <h6>UF</h6>
+    <h6>UF 2.0</h6>
     <div class="login-container container">
       <div class="img-container">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />

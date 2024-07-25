@@ -29,15 +29,20 @@ export default {
       this.checkCode();
     },
     async checkCode() {
-      let res = await axios.post('/new-password-email', {
-        emailCode: this.CIFRY,
-      });
-      if(res.data.res == 'Error') {
-        this.error = '*Ошибка отправки*';
-      } else if(res.data.res == 'True') {
-        this.$router.push('/EnterNewPassword');
-      } else {
-        this.error = 'Ошибка';
+      try {
+        let res = await axios.post('/new-password-email', {
+          emailCode: this.CIFRY,
+        });
+        if(res.data.res == 'Error') {
+          this.error = '.Ошибка отправки.';
+        } else if(res.data.res == 'True') {
+          this.$router.push('/EnterNewPassword');
+        } else {
+          this.error = 'Ошибка';
+        }
+      } catch (err) {
+        this.error = "Ошибка сервера"
+        console.error(err)
       }
     },
     validateInput($event) {
@@ -74,7 +79,7 @@ export default {
 
 <template>
   <div class="all-container">
-    <h6>UF</h6>
+    <h6>UF 2.0</h6>
     <div class="login-container container">
       <div class="img-container">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
