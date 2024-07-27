@@ -7,7 +7,7 @@ export default {
     components: {
     // VidComp,
         ModelWind,
-    VidjetComp  
+        VidjetComp  
     },
     data() {
         return {
@@ -99,13 +99,13 @@ export default {
 <!-- Див с виджетами -->
 <div class="conr">
     <div class="con" v-for="item in states">
-        <a :href="`/StateItem?id=` + item.id + `&question=` + item.question">
+        <a :href="`/StateItem/` + item.id">
             <!-- <vid-comp :item="item" role="button" /> -->
             <vidjet-comp :item="item"    />
         </a>
     </div>
 </div>
-<div class="content p-2" v-if="this.states.length == 0 && this.cnt==1">
+<div class="content p-2" v-if="this.states.length == 0 && this.cnt == 1">
     <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
 </div>
 

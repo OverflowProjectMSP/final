@@ -29,18 +29,18 @@ export default {
     methods: {
         async addQuestion() {
             await axios.put('/change', {
-                id: this.$route.query.id,
+                id: this.$route.params.id,
                 all: this.form,
                 q: 'true'
             });
-            this.$router.push(`/QuestionItem?id=${this.$route.query.id}&q=true`);
+            this.$router.push(`/QuestionItem/${this.$route.query.id}`);
         },
 
         async loadQuestion() {
             let res = await axios.get('/show-one', {
                 params: {
                     q: 'true',
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             this.form = res.data.all.question;
@@ -49,7 +49,7 @@ export default {
         async checkUser() {
             let res = await axios.get('/check', {
                 params: {
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             this.isCheck = Boolean(res.data.isEdit);

@@ -40,7 +40,7 @@ export default {
         async loadState() {
             let responce = await axios.get(`/show-one`, {
                 params: {
-                    id: this.$route.query.id,
+                    id: this.$route.params.id,
                     q: false,
                 }
             });
@@ -92,7 +92,7 @@ export default {
         async addComment() {
             if (this.text != "") {
                 await axios.post(`/answers`, {
-                    id: this.$route.query.id,
+                    id: this.$route.params.id,
                     q: 'false',
                     text: this.text,
                 });
@@ -108,7 +108,7 @@ export default {
         async deleteState() {
             await axios.delete('/delete', {
                 params: {
-                    id: this.$route.query.id,
+                    id: this.$route.params.id,
                     q: 'false',
                 }
             });
@@ -196,11 +196,11 @@ export default {
         <div class="content-1">
             <div class="account justify-content-between">
                 <a class="creator-info d-flex flex-row align-items-center gap-3"
-                    :href="`/Profile?id=${this.userCreater.id}`">
+                    :href="`/Profile/${this.userCreater.id}`">
                     <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
                     <div class="name-ring">
                         <div>
-                            <a :href="`/Profile?id=${this.userCreater.id}`"><span class="name">{{ userCreater.username
+                            <a :href="`/Profile/${this.userCreater.id}`"><span class="name">{{ userCreater.username
                                     }}</span></a>
                         </div>
                     </div>
@@ -210,8 +210,8 @@ export default {
                         <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">Дейсвие</button>
                         <ul class="dropdown-menu">
-                            <li v-if="this.isCheck == 'true'"><a class="dropdown-item"
-                                    :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+                            <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
+                                    :href="`/UpdateState/${this.$route.params.id}`">Редактировать</a></li>
                             <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
                         </ul>
                     </div>
@@ -230,7 +230,7 @@ export default {
 
         <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
             <div class="account">
-                <a :href="`/Profile?id=${this.userNow.id}`"
+                <a :href="`/Profile/${this.userNow.id}`"
                     class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                     <div class="name-ring">
@@ -265,7 +265,7 @@ export default {
             <div class="content-2 mt-2" v-for="(answer, index) in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
-                        <a :href="`/Profile?id=${answer.user.id}`"
+                        <a :href="`/Profile/${answer.user.id}`"
                             class="creator-info d-flex flex-row align-items-center gap-3">
                             <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
                             <div class="name-ring">

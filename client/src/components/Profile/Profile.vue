@@ -28,7 +28,7 @@ export default {
             this.isQ = dick;
             let res = await axios.get('/show-all-by-user', {
                 params: {
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             
@@ -41,7 +41,7 @@ export default {
         async loadUser() {
             let res = await axios.get(`/user-info`, {
                 params: {
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             this.user = res.data.all;
@@ -49,7 +49,7 @@ export default {
         async check() {
             let res = await axios.get('/check', {
                 params: {
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             this.isCreator = res.data.isEdit;
@@ -116,15 +116,15 @@ export default {
             </div>
         <div v-if='this.isQ && this.questions.length != 0'>
             <div class="scroll">
-                <a :href="`/QuestionItem?id=${quetion.id}&q=true`" v-for="quetion in questions">
-                    <VidUserComp :item="quetion" /> 
+                <a :href="`/QuestionItem/${question.id}`" v-for="question in questions">
+                    <VidUserComp :item="question" :type="question"/> 
                 </a>
             </div>
         </div>
         <div v-if="!this.isQ && this.states.length != 0">
             <div class="scroll"> 
-                <a :href="`/StateItem?id=${state.id}&q=false`" v-for="state in states">
-                    <VidUserComp :item="state"/>
+                <a :href="`/StateItem/${state.id}`" v-for="state in states">
+                    <VidUserComp :item="state" :type="state"/>
                 </a>
             </div>
         </div>

@@ -39,7 +39,7 @@ export default {
     async loadQuestion() {
       let responce = await axios.get(`/show-one`, {
         params: {
-          id: this.$route.query.id,
+          id: this.$route.params.id,
           q: true,
         }
       });
@@ -82,7 +82,7 @@ export default {
     async addComment() {
       if (this.text.length >= 3) {
         await axios.post(`/answers`, {
-          id: this.$route.query.id,
+          id: this.$route.params.id,
           q: 'true',
           text: this.text,
         });
@@ -99,7 +99,7 @@ export default {
     async deleteQuestion() {
       await axios.delete('/delete', {
         params: {
-          id: this.$route.query.id,
+          id: this.$route.params.id,
           q: true,
         }
       });
@@ -147,7 +147,7 @@ export default {
 
     async solveQuestion(is) {
       await axios.put(`/is-solved`, {
-        id: this.$route.query.id,
+        id: this.$route.params.id,
         is_solved: is,
       });
     },
@@ -230,7 +230,7 @@ export default {
   <div class="container mb-4">
     <div class="content-1">
       <div class="account justify-content-between">
-        <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile?id=${this.userCreater.id}`">
+        <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile/${this.userCreater.id}`">
           <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
           <div class="name-ring">
             <div>
@@ -247,8 +247,8 @@ export default {
                   @click="solveQuestion(false)">Вопрос решён!</a></li>
               <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не
                   решён!</a></li>
-              <li v-if="this.isCheck == 'true'"><a class="dropdown-item"
-                  :href="`/UpdateQuestion?id=${this.$route.query.id}&q=true`">Редактировать</a></li>
+              <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
+                  :href="`/UpdateQuestion/${this.$route.params.id}`">Редактировать</a></li>
               <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
             </ul>
           </div>
@@ -259,11 +259,9 @@ export default {
       </div>
       <div class="description">
         <p v-html="processHtml(questionInfo.details)"></p>
-        <!-- <img class="user-select-none" :src="'src/assets/' + questionInfo.imageInQuetion + '.png'" alt=""> -->
       </div>
       <div class="about">
         <p>{{ questionInfo.data }}</p>
-        <!-- <p>{{ questionInfo.views }} просмотра</p> -->
       </div>
     </div>
     <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
@@ -272,9 +270,9 @@ export default {
         <h4>Ответы:</h4>
       </div>
       <div class="answers-all" v-if="this.answers.length != 0">
-        <div class="content-2" v-for="(answer, index) in answers">
+        <div class="content-2" v-for="answer in answers">
           <div class="account">
-            <a :href="`/Profile?id=${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+            <a :href="`/Profile/${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
               <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
               <div class="name-ring">
                 <p><span class="name" role="button">{{ answer.user.username }}</span></p>
@@ -304,7 +302,7 @@ export default {
 
     <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
       <div class="account">
-        <a :href="`/Profile?id=${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+        <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
           <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
           <div class="name-ring">
             <div>

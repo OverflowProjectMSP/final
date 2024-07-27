@@ -19,7 +19,7 @@ export default createRouter({
       component: () => import("../components/States/NewState.vue"),
     },
     {
-      path: "/StateItem",
+      path: "/StateItem/:id",
       component: () => import("../components/States/StateItem.vue"),
     },
     {
@@ -55,15 +55,15 @@ export default createRouter({
       component: () => import("../components/Quetions/NewQuetion.vue"),
     },
     {
-      path: "/Profile",
+      path: "/Profile/:id",
       component: () => import("../components/Profile/Profile.vue"),
     },
     {
-      path: "/QuestionItem",
+      path: "/QuestionItem/:id",
       component: () => import("../components/Quetions/QuestionItem.vue"),
     },
     {
-      path: "/Forum",
+      path: "/Forum/:lang",
       component: () => import("../components/Forum/Forum.vue"),
     },
     {
@@ -79,11 +79,11 @@ export default createRouter({
       component: () => import("../components/Profile/ChangePassword.vue"),
     },
     {
-      path: "/UpdateQuestion",
+      path: "/UpdateQuestion/:id",
       component: () => import("../components/Quetions/UpdateQuestion.vue"),
     },
     {
-      path: "/UpdateState",
+      path: "/UpdateState/:id",
       component: () => import("../components/States/UpdateState.vue"),
     },
     {

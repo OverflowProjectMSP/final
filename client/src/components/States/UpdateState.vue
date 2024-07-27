@@ -28,27 +28,28 @@ export default {
     methods: {
         async addQuestion() {
             await axios.put('/change', {
-                id: this.$route.query.id,
+                id: this.$route.params.id,
                 all: this.form,
                 q: 'false'
             });
-            this.$router.push(`/StateItem?id=${this.$route.query.id}&q=false`);
+            this.$router.push(`/StateItem/${this.$route.query.id}`);
         },
 
         async loadQuestion() {
             let res = await axios.get('/show-one', {
                 params: {
                     q: 'false',
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             this.form = res.data.all.state;
+            this.form.details = this.form.details.replaceAll(/\\n|\\r\\n|\\n\\r|\\r/g, '<br>');
         },
 
         async checkUser() {
             let res = await axios.get('/check', {
                 params: {
-                    id: this.$route.query.id
+                    id: this.$route.params.id
                 }
             });
             this.isCheck = Boolean(res.data.isEdit);
@@ -97,7 +98,6 @@ export default {
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
                             name="info" cols="200" rows="3"
                             style="border-color: #D3D3D3; border-radius: 5px; height: 210px;" v-model="form.details"></textarea>
-
                     </div>
                 </div>
             </div>

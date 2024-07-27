@@ -33,7 +33,7 @@ export default {
 
 <template>
 
-    <a :href="`/StateItem?id=${item.id}&q=false`">
+    <a :href="`/StateItem/${item.id}`">
         <div class="window">
             <div class="main-container">
                 <div class="cont">
@@ -54,7 +54,7 @@ export default {
                         <p :class="isCheck_class">{{ item.acnt }}</p>
                         <p :class="isCheck_class">Комментарий (-ев)</p>
                     </div>
-                    <a :href="`/StateItem?id=` + item.id + `&question=` + item.question" class="answ"><button>Ответить</button></a>
+                    <a :href="`/StateItem/${item.id}`" class="answ"><button>Ответить</button></a>
                 </div>
             </div>
         </div>

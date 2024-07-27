@@ -31,7 +31,7 @@ export default {
 </script>
 
 <template>
-    <a :href="`/QuestionItem?id=${quetion.id}&q=true`" class="w-fit">
+    <a :href="`/QuestionItem/${quetion.id}`" class="w-fit">
         <div class="window" style="padding-top: 3px;">
             <div class="main-container" >
                 <div class="cont" >
@@ -54,7 +54,7 @@ export default {
                         <p :class="isCheck_class">{{ quetion.acnt }}</p>
                         <p :class="isCheck_class">Ответа (-ов)</p>
                     </div>
-                    <a :href="`/QuestionItem?id=` + quetion.id + `&question=` + true" class="answ"><button >Ответить</button></a>
+                    <a :href="`/QuestionItem/` + quetion.id" class="answ"><button >Ответить</button></a>
                 </div>
             </div>
         </div>

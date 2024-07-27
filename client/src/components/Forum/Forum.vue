@@ -31,7 +31,7 @@ export default {
             this.isQuestion = !this.isQuestion
             let res = await axios.get('/show-forum', {
                 params: {
-                    tag: this.$route.query.lang,
+                    tag: this.$route.params.lang,
                 }
             });
             console.log(res.data.all)
@@ -49,7 +49,7 @@ export default {
                 let res = await axios.get(`/filtre-questions`, {
                     params: {
                         title: this.title,
-                        tag: this.$route.query.lang,
+                        tag: this.$route.params.lang,
                         dificulty: this.dificulty,
                         author: ``,
                     }
@@ -59,7 +59,7 @@ export default {
                 let res = await axios.get(`/filtre-states`, {
                     params: {
                         title: this.title,
-                        tag: this.$route.query.lang,
+                        tag: this.$route.params.lang,
                         author: ``,
                     }
                 });
@@ -100,7 +100,7 @@ export default {
         },
 
         lang() {
-            switch (this.$route.query.lang) {
+            switch (this.$route.params.lang) {
                 case 'go':
                     this.titleLang = 'Golang';
                     this.imageLang = 'golang';
@@ -142,7 +142,7 @@ export default {
                     this.imageLang = 'ts';
                     break;
                 default:
-                    this.titleLang = this.$route.query.lang;
+                    this.titleLang = this.$route.params.lang;
                     break;
             }
         }
@@ -154,15 +154,15 @@ export default {
     <div class="contant-head mt-3">
         <div class="container-one">
             <div class="name-and-image">
-                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="" v-if="this.$route.query.lang == 'javascript'">
-                <img class="forum-image" src="../../assets/Forum/cpp.jpg" alt="" v-if="this.$route.query.lang == 'cpp'">
-                <img class="forum-image" src="../../assets/Forum/cs.jpg" alt="" v-if="this.$route.query.lang == 'cs'">
-                <img class="forum-image" src="../../assets/Forum/golang.jpg" alt="" v-if="this.$route.query.lang == 'golang'">
-                <img class="forum-image" src="../../assets/Forum/php.jpg" alt="" v-if="this.$route.query.lang == 'php'">
-                <img class="forum-image" src="../../assets/Forum/python.jpg" alt="" v-if="this.$route.query.lang == 'python'">
-                <img class="forum-image" src="../../assets/Forum/kotlin.jpg" alt="" v-if="this.$route.query.lang == 'kotlin'">
-                <img class="forum-image" src="../../assets/Forum/ts.jpg" alt="" v-if="this.$route.query.lang == 'ts'">
-                <img class="forum-image" src="../../assets/Forum/ruby.jpg" alt="" v-if="this.$route.query.lang == 'ruby'">
+                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="" v-if="this.$route.params.lang == 'javascript'">
+                <img class="forum-image" src="../../assets/Forum/cpp.jpg" alt="" v-if="this.$route.params.lang == 'cpp'">
+                <img class="forum-image" src="../../assets/Forum/cs.jpg" alt="" v-if="this.$route.params.lang == 'cs'">
+                <img class="forum-image" src="../../assets/Forum/golang.jpg" alt="" v-if="this.$route.params.lang == 'golang'">
+                <img class="forum-image" src="../../assets/Forum/php.jpg" alt="" v-if="this.$route.params.lang == 'php'">
+                <img class="forum-image" src="../../assets/Forum/python.jpg" alt="" v-if="this.$route.params.lang == 'python'">
+                <img class="forum-image" src="../../assets/Forum/kotlin.jpg" alt="" v-if="this.$route.params.lang == 'kotlin'">
+                <img class="forum-image" src="../../assets/Forum/ts.jpg" alt="" v-if="this.$route.params.lang == 'ts'">
+                <img class="forum-image" src="../../assets/Forum/ruby.jpg" alt="" v-if="this.$route.params.lang == 'ruby'">
 
                 <p>{{ titleLang }}</p>
             </div>
@@ -201,7 +201,7 @@ export default {
 
         <div class="post" v-for="post in posts">
             <div class="account">
-                <a :href="`/Profile?id=${post.id_u}`">
+                <a :href="`/Profile/${post.id_u}`">
                     <img class="account-img" :src="post.user.avatar" alt="">{{ post.user.username }}
                 </a>
             </div>
@@ -216,11 +216,11 @@ export default {
                 </div>
             </div>
             <div class="answer" v-if="this.isQuestion">
-                <a :href="`/QuestionItem?id=` + post.id + `&q=true`"><button><img
+                <a :href="`/QuestionItem/` + post.id"><button><img
                     :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Ответов</button></a>
             </div>
             <div class="answer" v-else>
-                <a :href="`/StateItem?id=` + post.id + `&q=false`"><button><img
+                <a :href="`/StateItem/` + post.id"><button><img
                     :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Комментариев </button></a>
             </div>
         </div>

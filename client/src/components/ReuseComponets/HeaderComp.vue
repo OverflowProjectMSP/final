@@ -105,7 +105,7 @@ export default {
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container" v-else>
-            <a :href="`/Profile?id=${this.id}`"> <img
+            <a :href="`/Profile/${this.id}`"> <img
                 :src="avatar"
                 alt="" class="ava"></a>
           </div>

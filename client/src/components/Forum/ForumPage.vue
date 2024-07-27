@@ -5,16 +5,16 @@ import axios from 'axios';
 <template>
 <div class="container d-flex flex-column gap-2 align-items-center mt-5">
     <h2 class="text-center mt-3">Выберите язык:</h2>
-    <a href="/Forum?lang=javascript"><button class="btn btn-outline-primary">JavaScript</button></a>
-    <a href="/Forum?lang=python"><button class="btn btn-outline-primary">Python</button></a>
-    <a href="/Forum?lang=cs"><button class="btn btn-outline-primary">C#</button></a>
-    <a href="/Forum?lang=ts"><button class="btn btn-outline-primary">TypeScript</button></a>
-    <a href="/Forum?lang=go"><button class="btn btn-outline-primary">Go</button></a>
-    <a href="/Forum?lang=java"><button class="btn btn-outline-primary">Java</button></a>
-    <a href="/Forum?lang=cpp"><button class="btn btn-outline-primary">C++</button></a>
-    <a href="/Forum?lang=kotlin"><button class="btn btn-outline-primary">Kotlin</button></a>
-    <a href="/Forum?lang=ruby"><button class="btn btn-outline-primary">Ruby</button></a>
-    <a href="/Forum?lang=php" class="mb-3"><button class="btn btn-outline-primary">PHP</button></a>
+    <a href="/Forum/javascript"><button class="btn btn-outline-primary">JavaScript</button></a>
+    <a href="/Forum/python"><button class="btn btn-outline-primary">Python</button></a>
+    <a href="/Forum/cs"><button class="btn btn-outline-primary">C#</button></a>
+    <a href="/Forum/ts"><button class="btn btn-outline-primary">TypeScript</button></a>
+    <a href="/Forum/go"><button class="btn btn-outline-primary">Go</button></a>
+    <a href="/Forum/java"><button class="btn btn-outline-primary">Java</button></a>
+    <a href="/Forum/cpp"><button class="btn btn-outline-primary">C++</button></a>
+    <a href="/Forum/kotlin"><button class="btn btn-outline-primary">Kotlin</button></a>
+    <a href="/Forum/ruby"><button class="btn btn-outline-primary">Ruby</button></a>
+    <a href="/Forum/php" class="mb-3"><button class="btn btn-outline-primary">PHP</button></a>
 </div>  
 </template>
 
