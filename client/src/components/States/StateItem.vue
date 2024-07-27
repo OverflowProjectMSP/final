@@ -212,7 +212,7 @@ export default {
                         <ul class="dropdown-menu">
                             <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
                                     :href="`/UpdateState/${this.$route.params.id}`">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
+                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
                         </ul>
                     </div>
                 </div>
