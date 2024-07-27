@@ -22,11 +22,11 @@ ul {
     height: fit-content;
 }
 
-input, textarea {
+/* input, textarea {
     border: 1px solid #000 !important;
     border-radius: 5.75px !important;
     color: #000 !important;
-}
+} */
 
 .form-control:focus,.form-control:focus-visible  {
     outline: none !important;

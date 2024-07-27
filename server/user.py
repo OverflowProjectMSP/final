@@ -595,8 +595,9 @@ def new_password_with_email():
         #Восстановление пароля если мы в аккаунте
         print(post_data.get('password'), session.get('email'))
         response_object['res'] = change_password_send(post_data.get('password'), session.get('email'))
-
+    # if post_data.get("email") is None:
     elif request.method == 'POST' and post_data.get('email'):
+        logging.info(post_data.get("email"))
         #Восстановление пароля если мы НЕ в аккаунте
         send_code(post_data.get('email'))
 

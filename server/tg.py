@@ -90,7 +90,7 @@ def auth_tg(hash_id, uf_id):
             result = {"chat_id": -1}
             return_data = "Невалидная ссылка"
 
-
+            
     except (Exception, Error) as error:
         logging.error(f"Ошибка получения данных: {error}")
         return_data = 'Err'

@@ -25,7 +25,7 @@ export default {
         <h2>Привязка Telegram</h2>
         <div class="link-good">
           <p class="text-def">
-           1. Зайдите в нашего <a href="https://t.me/ufAuth_bot" style="color: #3B82F6;">Telegram бота</a> и получите ссылку на аутентификацию.<hr сlass="mt-1">
+           1. Зайдите в нашего <a href="https://t.me/UpFollow_client_bot" target="_blank" style="color: #3B82F6;">Telegram бота</a> и получите ссылку на аутентификацию.<hr сlass="mt-1">
             2. Пройдите по ссылке (она действует 12 часов, так же необходимо войти в аккаунт)<hr>
             3. Вы привязали свой телеграмм! <hr>
         

@@ -1,5 +1,6 @@
 from app import *
 from tg import *
+from others import *
 
 load_dotenv()
 
@@ -35,7 +36,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
             logging.info(details, 1)
             question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), False)
             cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")
-            # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")
+            # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
             return_data = "Вопрос добавлен"
         else : return_data = "Уже существует"
@@ -327,7 +328,7 @@ def change(id, info, isQ, id_j):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# Вопросы форума
+# Вопросы форума    
 def show_forum(filtre):
     try:
         pg = psycopg2.connect(f"""
@@ -599,8 +600,9 @@ def get_id_u(idO, isQ):
             cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
             logging.info(idO)
             cursor.execute(f"SELECT id_u, descriptions FROM questions WHERE id=$${idO}$$")
-
-            return_data = cursor.fetchall()[0][0], cursor.fetchall()[0][1]
+            data = cursor.fetchall()[0]
+            logging.info(data)
+            return_data = data[0], data[1]
             logging.info(return_data)
         except (Exception, Error) as error:
             logging.error(f"Ошибка добавления в базу данных: {error}")
@@ -645,7 +647,7 @@ def add_ans(text, isQ, idO, id_u):
     date = datetime.now().isoformat()
     to_write = (uuid.uuid4().hex, id_u, idO, text, date)
     id_u, name = get_id_u(idO, isQ)
-    if id_u!= "Err":
+    if id_u!= "Err": 
         chat_id = check_is_tg(id_u)
     if isQ:
         obj = "answers(id, id_u, id_q, text, data)"
