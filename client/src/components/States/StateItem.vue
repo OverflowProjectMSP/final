@@ -48,7 +48,7 @@ export default {
 
             this.states = responce.data.all.state;
             this.answers = responce.data.all.answers;
-            this.states.details = this.states.details.replaceAll(regex, '<br>')
+            // this.states.details = this.states.details.replace(/ {2,}/g, `<div class="format-space-code">$25</div>`);
             this.loadAnswerUser();
 
         },
@@ -71,7 +71,6 @@ export default {
                     id: item.id_u,
                 }
             });
-            console.log(item)
             return res.data.all;
         },
 
@@ -131,9 +130,9 @@ export default {
                 for (let i = 0; i < this.commentUser.length; i++) {
                     this.answers[i].user = this.commentUser[i];
                     const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-                    let e = this.answers[i].text.replaceAll(regex, '<br>')
+                    let e = this.answers[i].text.replaceAll(regex, '<br>');
+                    // this.states.details = this.states.details.replaceAll(/ +(?= )/g,'');
                     this.answers[i].text = e
-                    console.log(this.answers)
                 }
                 if (this.answers[this.answers.length - 1].user.avatar != ``) {
                     this.loading = true;

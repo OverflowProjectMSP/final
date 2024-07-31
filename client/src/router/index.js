@@ -105,5 +105,9 @@ export default createRouter({
       component: () => import('../components/Telegram/DescriptionTg.vue'),
       props: true
     },
+    {
+      path: "/leaders",
+      component: () => import('../components/Profile/LeadersComp.vue'),
+    },
   ],
 });

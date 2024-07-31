@@ -23,7 +23,6 @@ export default {
             let res = await axios.post('/new-state', {
                 form: this.form
             });
-            console.log(res.data.res);
             if (res.data.res == 'Статья добавлена') {
                 console.log(this.error);
                 this.error = ``;
@@ -42,18 +41,18 @@ export default {
             this.cursorPosition = event.target.selectionStart;
         },
 
-        addBoldTag(tags) {
+        addTag(tags, number) {
             const beforeCursor = this.form.details.slice(0, this.cursorPosition);
             const afterCursor = this.form.details.slice(this.cursorPosition);
 
             this.form.details = beforeCursor + tags + afterCursor;
             this.$nextTick(() => {
-                const newCursorPosition = this.cursorPosition + 3;
+                const newCursorPosition = this.cursorPosition + number;
                 this.$refs.textArea.focus();
                 this.$refs.textArea.setSelectionRange(newCursorPosition, newCursorPosition);
                 this.updateCursor({ target: this.$refs.textArea });
             });
-        }
+        },
     }
 }
 </script>
@@ -77,7 +76,7 @@ export default {
                 <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
                 <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
                 <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
-                <!-- <input type="file" class="btn btn-primary">&#11014; <b>Добавить фото</b></input> -->
+                <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary"><span>Вставить код</span></button>
                 <label class="input-file">
                     <input @change="convertFileAvatar" type="file"
                         name="file">
@@ -86,7 +85,10 @@ export default {
             </div>
             
             <div class="form-floating">
-                <textarea class="form-control" id="formchik" style="border-color: #B3B3B3;"
+                <textarea ref="textArea" @input="updateCursor" @click="updateCursor"
+                    class="text-area text-box multi-line yy form-control formchik" data-val="true"
+                    data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
+                    name="info" cols="200" rows="7" style="border-color: #D3D3D3; border-radius: 5px;"
                     v-model="form.details"></textarea>
             </div>
             <div class="mb-3">
@@ -274,7 +276,7 @@ hr {
     width: 80%;
 }
 
-#formchik {
+.formchik {
     margin: 20px 35px 0px;
     border-radius: 7px;
     height: 400px;

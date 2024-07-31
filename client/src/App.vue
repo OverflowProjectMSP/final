@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-<header-comp />
+<header-comp v-if=' this.$route.path != "/" ' />
 
 <div class="co" v-if="this.show">
         <div class="load-item item1"></div>

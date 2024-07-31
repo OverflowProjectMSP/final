@@ -94,7 +94,6 @@ export default {
 <template>
     <HeaderComp />
     <main>
-
         <form class="container" @submit.prevent="addQuestion">
             <div class="row pt-4">
                 <div class="col-12">
@@ -139,7 +138,8 @@ export default {
                 <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
                 <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
                 <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
-                <!-- <input type="file" class="btn btn-primary">&#11014; <b>Добавить фото</b></input> -->
+                <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary"><span>Вставить код</span></button>
+
                 <label class="input-file">
                     <input @change="convertFileAvatar" type="file"
                         name="file">
@@ -194,20 +194,11 @@ export default {
                 <div class="row pt-5 block">
                     <div class="col-6 btn-error">
                         <button class="btn btn-public"type="submit"><b>Опубликовать</b></button>
-                        <p class="error" :class="color">{{ error }}</p>
-                        <!-- виджет -->
+                        <p v-if='error' class="error" :class="color">{{ error }}</p>
                     </div>
-
                 </div>
-
-
             </div>
-
-
-
         </form>
-
-
 
     </main>
 </template>
