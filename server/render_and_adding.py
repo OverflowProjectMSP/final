@@ -34,8 +34,8 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
-            question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), False)
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")
+            # question_to_write = (uuid.uuid4().hex, discriptions, details, dificulty, tag, id, datetime.now().isoformat(), False)
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES ({uuid.uuid4().hex}, '{escape_quotes(discriptions)}', '{escape_quotes(details)}', {dificulty}, {tag}, {id}, {datetime.now().isoformat()}, {False})")
             # print(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data) VALUES {question_to_write}")   
             pg.commit()
             return_data = "Вопрос добавлен"
@@ -433,6 +433,8 @@ def show_one(id, isQ):
 
             all_q = dict(cursor.fetchall()[0])
             all_q["details"] = all_q["details"].replace('\n', '<br>')
+            all_q['descriptions'] = unescape_quotes(all_q['descriptions'])
+            all_q['details'] = unescape_quotes(all_q['details'])
 
             all_asw = show_answers(True, id)
 

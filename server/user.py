@@ -619,4 +619,68 @@ def user__():
 
     return jsonify(response_object)
 
+def get_top():
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("""SELECT 
+                        u.id, 
+                        u.username, 
+                        u.avatar,
+                        COALESCE(c.comment_count, 0) AS comment_count, 
+                        COALESCE(a.answer_count, 0) AS answer_count,
+                        COALESCE(c.comment_count, 0) + COALESCE(a.answer_count, 0) AS total_count
+                    FROM 
+                        users u
+                    LEFT JOIN 
+                        (SELECT id_u, COUNT(*) AS comment_count FROM comments GROUP BY id_u) c ON u.id = c.id_u
+                    LEFT JOIN 
+                        (SELECT id_u, COUNT(*) AS answer_count FROM answers GROUP BY id_u) a ON u.id = a.id_u
+                    ORDER BY 
+                        total_count DESC
+                    LIMIT 10;""")
+
+        r = cursor.fetchall()
+        return_data = []
+        for row in r:
+            a = dict(row)
+            return_data.append(a)
+
+    except (Exception, Error) as error:
+        logging.error(f"Ошибка получения данных: {error}")
+        return_data = 'No'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+@app.route("/get-top", methods=["GET"])
+def top():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object['all'] = get_top()
+
+    return jsonify(response_object)
+
+@app.route("/get-curent-avatar", methods=["GET"])
+def get_curent_avatar():
+    response_object = {'status': 'success'} #БаZа
+
+    if 'id' in session:
+        response_object['all'] = show_not_all(session.get("id"))
+    else:
+        response_object['all'] = None
+
+    return jsonify(response_object)
 
