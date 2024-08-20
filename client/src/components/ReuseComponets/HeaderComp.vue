@@ -338,4 +338,27 @@ li {
     margin-top: 5%;
   }
 }
+
+
+@media (min-width: 1750px) {
+  .nav-link {
+    font-size: 28px;
+  }
+
+  .navbar-brand img {
+    width: 120px;
+    height: 70px;
+  }
+
+  .btn-login {
+    width: 180px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  .ava {
+    width: 70px;
+    height: 60px;
+  }
+}
 </style>

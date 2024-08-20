@@ -1,7 +1,7 @@
 <script>
 import DeveloperProfile from './DeveloperProfile.vue';
 import kosty_py_img from "@/assets/Main/kostya.jpg";
-import kinestrik_img from "@/assets/Main/jenya.png";
+import kinestrik_img from "@/assets/Main/jenya8.png";
 import sanya_img from "@/assets/Main/sanya.png";
 import vanya_img from "@/assets/Main/vanya.jpg";
 import maxim_img from "@/assets/Main/maksym.jpg";
@@ -137,7 +137,7 @@ export default {
 
 <template>
   <hr>
-  <div class="develop mb-5 d-flex gap-3 justify-content-center align-items-center gap-2 mx-5 flex-column my-4">
+  <div class="develop d-flex gap-3 align-items-center gap-2 flex-column">
     <h1>Команда разработчиков</h1>
     <div class="dev-container d-flex flex-row">
       <div @click="prevDev" role="button"
@@ -195,6 +195,13 @@ export default {
 <style scoped>
 .d-none {
   display: none;
+}
+
+.develop {
+  height: 700px;
+  margin-bottom: 0;
+  justify-content: start !important;
+  /* margin-bottom: 30px; */
 }
 
 .dev-card {
@@ -267,4 +274,26 @@ export default {
     margin-top: 200px;
   }
 }
+
+@media (min-width: 1750px) {
+  .dev-card {
+    max-width: 300px;
+  }
+  
+  .dev-card img {
+    max-width: 300px;
+    max-height: 300px;
+  }
+  
+  .dev-card h4 {
+    font-size: 33px;
+  }
+
+  .dev-card span {
+    font-size: 25px;
+  }
+  
+}
+
+
 </style>

@@ -113,4 +113,19 @@ body {
         padding: 20px 40px;
     }
 }
+
+@media (min-width: 1750px) {
+    .title {
+        font-size: 60px;
+    }
+
+    .title-desc {
+        font-size: 26px;
+    }
+
+    .btn-join {
+        padding: 40px 85px;
+        font-size: 32px;
+    }
+}
 </style>

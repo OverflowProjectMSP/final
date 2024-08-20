@@ -111,4 +111,24 @@ a {
     opacity: 1;
   }
 }
+
+@media (min-width: 1750px) {
+  .link {
+    width: 60px;
+    height: 60px;
+  }
+
+  .text {
+    font-size: 38px
+  }
+
+  .text_FAQ {
+    font-size: 38px
+  }
+
+  .arrow {
+    width: 60px;
+    height: 60px;
+  }
+}
 </style>

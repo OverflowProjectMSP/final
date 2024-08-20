@@ -150,4 +150,23 @@ a {
         margin-top: 600px;
     } */
 }
+
+@media (min-width: 1750px) {
+    .pageend {
+        margin-top: 90px;
+    }
+
+    .join-us-title {
+        font-size: 50px;
+    }
+    
+    .join-us-desc {
+        font-size: 28px;
+    }
+    
+    .join-us-item button {
+        font-size: 24px;
+        width: 320px;
+    }
+}
 </style>

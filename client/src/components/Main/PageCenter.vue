@@ -102,7 +102,7 @@ export default {
       <p class="wehave-title">В данный момент на нашем сайте:</p>
       <div class="wehave-items">
         <div class="wehave-item">
-          <img src="../../assets/Main/user1.png" style="width: 40px;" alt="">
+          <img src="../../assets/Main/user1.png" class="img-lox"style="width: 40px;" alt="">
           <p class="wehave-item-desc">Зарегистрированно <br> {{ this.usersReg }} пользователей</p>
         </div>
         <div class="wehave-item">
@@ -477,6 +477,39 @@ hr {
   .lang-item-col-5,
   .lang-item-col-6 {
     display: none;
+  }
+}
+
+@media (min-width: 1750px) {
+  .center-desc {
+    font-size: 34px;
+  }
+
+  .lang-item {
+    width: 160px;
+    height: 70px;
+    font-size: 24px;
+  }
+  
+  .wehave-title {
+    font-size: 34px;
+  }
+  
+  .wehave-item {
+    width: 300px;
+  }
+  
+  .wehave-item-desc {
+    font-size: 28px;
+  }
+  
+  .wehave-item img {
+    width: 80px;
+  }
+
+  .img-lox {
+    width: 60px !important;
+    margin-top: 20px;
   }
 }
 </style>
