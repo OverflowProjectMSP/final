@@ -455,6 +455,41 @@ def tg_sendMessage(chat_id, text):
     return "ok"
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+def send_pas_code(email):
+    sender = "upfollow835@gmail.com"
+    send_password = "zwrx qgne arwj jblp"
+
+    code_pas = ""
+
+    # ------------------------Улучшить бы----------------------------------------------------
+    for _ in range(4):
+        a = random.randint(0, 9) # А че тут улучшать? (Без негатива, от febolo)
+        code_pas += str(a)
+    #-----------------------------------------------------------------------------------------
+
+    msg = MIMEText(f"Ваш код для изменения пароля: {code_pas}. Не сообщайте его никому!")
+    msg["Subject"] = "Ваш код"
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender, send_password)
+        server.sendmail(sender, email, msg.as_string())
+        logging.info("Email sent successfully!")
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return 1
+    finally:
+        server.quit()
+        # держим пароль в сессии
+        session['code'] = str(code_pas)
+        session.modified = True
+        session['email'] = str(email)
+        session.modified = True
+
+        logging.info(f'Пароль {code_pas} отправлен на почту {email}')
+
+        return 0
 
 #Регистрация
 @app.route('/registration', methods=['GET', 'POST'])
@@ -462,7 +497,15 @@ def user_registration():
     response_object = {'status': 'success'} #БаZа
     if request.method == 'POST':
         post_data = request.get_json()
-        logging.info(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
+        res = send_pas_code(post_data.get('email'))
+        if res == 0:
+            session["name"] = post_data.get('name')
+            session.modified = True
+            session['password'] = post_data.get('password')
+            session.modified = True
+            response_object["res"] = "Ok"
+        else: response_object["res"] = "Хуйня почта"
+        # logging.info(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
 
     return jsonify(response_object)
 
@@ -478,6 +521,17 @@ def add_img_f(file, name):
     finally:
         return return_data
 
+@app.route("/reg-code-send", methods=["POST"])
+def reg_fhjfhf():
+    response_object = {'status': 'success'} #БаZа
+    post_data = request.get_json()
+
+    if session["code"] == post_data.get("code"):
+        logging.info(add_user_todb(session.get('name'), session.get('email'),session.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
+        response_object["res"] = "Ok"
+    else: response_object["res"] = "Хуйня код"
+
+    return jsonify(response_object)
 # def refresh_data_tset(info, id):
 #     data = ''
 #     for i in info:
@@ -683,4 +737,3 @@ def get_curent_avatar():
         response_object['all'] = None
 
     return jsonify(response_object)
-
