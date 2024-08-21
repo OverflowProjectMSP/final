@@ -136,7 +136,7 @@ export default {
 </script>
 
 <template>
-  <hr>
+  <hr class="hr-end">
   <div class="develop d-flex gap-3 align-items-center gap-2 flex-column">
     <h1>Команда разработчиков</h1>
     <div class="dev-container d-flex flex-row">
@@ -198,7 +198,7 @@ export default {
 }
 
 .develop {
-  height: 700px;
+  height: 500px;
   margin-bottom: 0;
   justify-content: start !important;
   /* margin-bottom: 30px; */
@@ -276,6 +276,10 @@ export default {
 }
 
 @media (min-width: 1750px) {
+  .develop {
+    height: 600px;
+  }
+
   .dev-card {
     max-width: 300px;
   }
@@ -293,6 +297,67 @@ export default {
     font-size: 25px;
   }
   
+}
+
+@media (min-width: 2600px) {
+  .develop {
+    height: 700px;
+  }
+  
+  .dev-card {
+    max-width: 400px;
+  }
+
+  .dev-card img {
+    max-width: 370px;
+    max-height: 370px;
+  }
+
+  .dev-card h4 {
+    font-size: 38px
+  }
+
+  .dev-card span {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 3800px) {
+  .develop {
+    height: 800px;
+    position: relative;
+  }
+
+  .dev-card {
+    max-width: 600px !important;
+  }
+
+  .dev-card img {
+    max-width: 460px;
+    max-height: 460px;
+  }
+
+  .dev-card h4 {
+    font-size: 50px;
+  }
+  
+  .dev-card span {
+    font-size: 34px;
+    font-weight: 400;
+  }
+
+  .hr-end {
+    margin-top: 140px;
+  }
+
+  .arrow {
+    margin-top: 120px;
+    font-size: 50px !important;
+  }
+
+  .dev-container {
+    max-width: 3000px;
+  }
 }
 
 

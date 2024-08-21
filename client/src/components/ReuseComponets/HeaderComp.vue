@@ -357,8 +357,40 @@ li {
   }
 
   .ava {
-    width: 70px;
-    height: 60px;
+    width: 80px;
+    height: 70px;
+  }
+}
+
+@media (min-width: 2600px) {
+  .nav-link {
+    font-size: 38px;
+  }
+
+  .navbar-brand img {
+    width: 150px;
+    height: 90px;
+  }
+
+  .ava {
+    width: 100px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 3800px) {
+  .nav-link {
+    font-size: 50px;
+  }
+
+  .navbar-brand img {
+    width: 200px;
+    height: 130px;
+  }
+
+  .ava {
+    width: 180px;
+    height: 160px;
   }
 }
 </style>

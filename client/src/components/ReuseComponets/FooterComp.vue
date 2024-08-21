@@ -130,5 +130,9 @@ a {
     width: 60px;
     height: 60px;
   }
+
+  .footer {
+    height: 400px;
+  }
 }
 </style>
