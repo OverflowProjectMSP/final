@@ -72,17 +72,10 @@ export default {
                 </div>
                 <div class="button-select">
                     <div class="selects">
-                        <div class="img-select">
-                            <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
-                            <select class="form-select form-1 " v-model="dificulty">
-                                <option value="Простой" selected>Лёгкие</option>
-                                <option value="Средний">Средние</option>
-                                <option value="Сложный">Сложные</option>
-                                <option value="">Без фильтров</option>
-                            </select>
-                        </div>
+                        
 
                         <select class="form-select form-2 me-2" v-model="tag">
+                            <option value="">Тема вопроса</option>
                             <option value="javascript">JavaScript</option>
                             <option value="ts">TS</option>
                             <option value="python">Python</option>
@@ -92,22 +85,32 @@ export default {
                             <option value="cs">C#</option>
                             <option value="go">Golang</option>
                             <option value="IB">ИБ</option>
-                            <option value="">Без фильтров</option>
                         </select>
+
+                        <div class="img-select">
+                            <!-- <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level"> -->
+                            <select class="form-select form-1 " v-model="dificulty">
+                                <option value="">Степень сложности</option>
+                                <option value="Простой" selected>Лёгкие</option>
+                                <option value="Средний">Средние</option>
+                                <option value="Сложный">Сложные</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2">
-                    </div>
+                    <!-- <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2"> -->
+                    <!-- </div> -->
                     <div class="down-menu d-flex align-items-center">
                         <div class="d-flex align-items-center">
                             <!-- плюсик -->
-                            <div class="contain" @click="OpenModal">
+                            <!-- <div class="contain" @click="OpenModal">
                                 <img src="../../assets/States/add.png" class="add">
-                            </div>
+                            </div> -->
                             <button class="btn find-btn btn-outline-primary text-dark ms-4"
                                 @click="filtre">Найти</button>
                         </div>
                     </div>
                 </div>
+                <button class="create-quetion">Создать вопрос</button>
             </div>
         </div>
     </div>
@@ -165,6 +168,29 @@ a {
 
 .button-select {
     display: flex;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.create-quetion {
+    width: 280px;
+    height: 37px;
+
+    background-color: #3B82F6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 5px;
+    margin-top: 5px;
+
+    transition: all 100ms
+}
+
+.create-quetion:hover {
+    background-color: #20498b;
 }
 
 .form-2 {
@@ -242,7 +268,7 @@ h4 {
 }
 
 .btn {
-    width: 133px;
+    width: 200px;
     font-size: 16px;
     font-weight: bold;
     color: blueviolet;
@@ -317,6 +343,7 @@ h4 {
     .selects {
         display: flex;
         gap: 20px;
+        margin-left: 6px;
     }
 
     .selects {
@@ -326,17 +353,24 @@ h4 {
     }
 
     .form-select {
-        width: 455px !important;
+        width: 501px !important;
     }
 
     .btn {
         margin-top: 2px;
-        width: 450px;
+        width: 501px;
+        margin-left: 6px !important;
     }
 
     .form-2 {
-        width: 503px !important;
+        width: 501px !important;
     }
+
+    .create-quetion {
+        width: 501px;
+        margin-left: -1px;
+    }
+
 }
 
 @media(max-width: 600px) {
@@ -346,12 +380,15 @@ h4 {
     }
 
     .form-select {
-        width: 300px !important;
+        width: 350px !important;
+    }
+
+    .form-1 {
+        margin-left: -4px;
     }
 
     .form-2 {
-        margin-left: 5px;
-        width: 350px !important;
+        margin-left: 2px !important;
     }
 
     .button-select {
@@ -359,7 +396,12 @@ h4 {
     }
 
     .btn {
-        width: 310px;
+        width: 350px;
+    }
+
+    .create-quetion {
+        width: 350px;
+        margin-left: 5px;
     }
 
     .selects img {
