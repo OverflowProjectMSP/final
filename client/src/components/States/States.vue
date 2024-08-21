@@ -88,14 +88,13 @@ export default {
       <!-- <div class="contain" @click="OpenModal" >
         <img src="../../assets/States/add.png" class="add" alt="">
       </div> -->
-      <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Отфильровать</button>
+      <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Найти</button>
 
       </div>
       <div class="create">
           <button class="create-state">Создать статью</button>
       </div>
   </div>
-
 
 
 
