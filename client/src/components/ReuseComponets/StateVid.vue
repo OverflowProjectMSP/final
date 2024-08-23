@@ -81,7 +81,7 @@ export default {
     }
 
     .main-container {
-        margin: 8px;
+        margin: 8px 0 0 8px;
         height: auto;
         border: 1px solid #121212;
         border-radius: 15px;
