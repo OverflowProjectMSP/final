@@ -68,36 +68,31 @@ export default {
 <div class="content d-flex align-items-center">
     <input v-model="title" type="search" class="form-control" placeholder="Название статьи" aria-label="First name">
     <input v-model="author" type="search" class="form-control" placeholder="Автор" aria-label="Last name">
-   <!-- селект -->
-  <div class="down-menu d-flex">
-      <div class="dropdown-center">
-        <select class="form-select me-2" v-model="tag">
-            <option value="javascript">JavaScript</option>
-            <option value="ts">TS</option>
-            <option value="python">Python</option>
-            <option value="php">PHP</option>
-            <option value="cpp">C++</option>
-            <option value="java">Java</option>
-            <option value="cs">C#</option>
-            <option value="go">Golang</option>
-            <option value="IB">ИБ</option>
-            <option value="">Без фильтров</option>
-        </select>
-      </div>
+    <!-- селект -->
+    <div class="down-menu d-flex">
+        <div class="dropdown-center">
+            <select class="form-select me-2" v-model="tag">
+                <option value="javascript">JavaScript</option>
+                <option value="ts">TS</option>
+                <option value="python">Python</option>
+                <option value="php">PHP</option>
+                <option value="cpp">C++</option>
+                <option value="java">Java</option>
+                <option value="cs">C#</option>
+                <option value="go">Golang</option>
+                <option value="IB">ИБ</option>
+                <option value="">Без фильтров</option>
+            </select>
+        </div>
       <!-- плюсик -->
       <!-- <div class="contain" @click="OpenModal" >
         <img src="../../assets/States/add.png" class="add" alt="">
       </div> -->
-      <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Найти</button>
+        <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Найти</button>
 
-      </div>
-      <div class="create">
-          <button class="create-state">Создать статью</button>
-      </div>
-  </div>
-
-
-
+        <button class="create-state">Создать статью</button>
+    </div>
+</div>
 <!-- Див с виджетами -->
 <div class="conr">
     <div class="con" v-for="item in states">
@@ -154,7 +149,9 @@ h4{
 .btn{
     font-size: 16px;
     font-weight: bold;
-    color:rgb(0, 0, 0) ;
+    color:rgb(0, 0, 0);
+
+    margin: 0 !important;
 }
 .content {
     display: flex;
@@ -169,6 +166,8 @@ h4{
 
 .down-menu {
     width: 800px;
+    display: flex;
+    gap: 10px
     
 }
 
@@ -177,19 +176,16 @@ h4{
 }
 
 .form-select {
-    width: 550px;
+    width: 320px;
+    margin: 0 !important;
 }
 
 .btn {
-    width: 250px;
-}
-
-.create {
-    width: 800px;
+    width: 230px;
 }
 
 .create-state {
-    width: 280px;
+    width: 230px;
     height: 37px;
 
     background-color: #3B82F6;
@@ -237,7 +233,7 @@ h4{
     margin-right: 1px;
 }
 .dropdown-center{
-    margin-right:10px;
+    /* margin-right:10px; */
 }
 
 @media (hover: hover) {
