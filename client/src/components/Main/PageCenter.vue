@@ -518,7 +518,7 @@ hr {
   .center-desc {
     font-size: 46px;
   }
-
+/* hhh */
   .lang-item {
     width: 220px;
     height: 100px;
