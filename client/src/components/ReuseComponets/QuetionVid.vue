@@ -291,10 +291,6 @@ export default {
             font-size: 18px;
         }
 
-        .ans_check {
-            
-        }
-
         .ans_check button {
             margin-right: 30px;
         }

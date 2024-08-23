@@ -232,9 +232,6 @@ h4{
     margin-left: 0.2px;
     margin-right: 1px;
 }
-.dropdown-center{
-    /* margin-right:10px; */
-}
 
 @media (hover: hover) {
     .find-btn:hover{

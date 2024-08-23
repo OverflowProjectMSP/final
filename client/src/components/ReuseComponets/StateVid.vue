@@ -62,9 +62,6 @@ export default {
 </template>
 
 <style>
-.answ button {
-
-}
     .window {
         display: flex;
         justify-content: center;
@@ -267,14 +264,6 @@ export default {
             margin-bottom: 20px;
         } */
 
-        .ans_check {
-            /* flex-direction: row; */
-        }
-
-        .answ {
-            /* width: 100px; */
-            /* height: 100px; */
-        }
         
         
         .check p {
@@ -284,13 +273,6 @@ export default {
         
 
     }
-
-    @media (max-width: 600px) {
-        .main-container {
-            
-        }
-    }
-
     
 
     @media (max-width: 540px) {
@@ -332,13 +314,6 @@ export default {
             flex-direction: column;
         }
 
-        .info p {
-            /* border-right: none;
-            padding: 0;
-            border-bottom: 2px solid #3B82F6;
-            width: 150px;
-            padding-bottom: 10px; */
-        }
 
         .text h5 {
             font-size: 18px;
