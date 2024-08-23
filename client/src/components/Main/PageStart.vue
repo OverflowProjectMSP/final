@@ -52,6 +52,12 @@ body {
 }
 
 .greetings {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+
     border-radius: 0px;
     color: #fff;
     display: flex;
@@ -163,7 +169,7 @@ body {
     }
 
     .greetings {
-        height: 1100px;
+        height: 1600px;
     }
 }
 </style>

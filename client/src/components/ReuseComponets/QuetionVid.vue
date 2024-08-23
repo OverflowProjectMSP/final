@@ -66,6 +66,7 @@ export default {
     text-align: center;
 }
     .window {
+        margin-left: 12px;
         display: flex;
         justify-content: center;
     }
