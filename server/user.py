@@ -418,7 +418,7 @@ def auth_tg(hash_id, uf_id):
         if len(result) != 0:
             result = dict(result[0])
             if sub_time(result["time"]) and uf_id:
-                cursor.execute(f"UPDATE users SET tg_id=$${result["tg_id"]}$$, tg_chat_id=$${result["chat_id"]}$$ WHERE id=$${uf_id}$$")
+                cursor.execute(f"UPDATE users SET tg_id=$${result['tg_id']}$$, tg_chat_id=$${result['chat_id']}$$ WHERE id=$${uf_id}$$")
                 return_data = "all ok"
             elif not sub_time(result["time"]):
                 result = {"chat_id": -1}

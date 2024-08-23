@@ -1,6 +1,7 @@
 from app import *
 from tg import *
 from others import *
+from datetime import timedelta, datetime, timezone
 
 load_dotenv()
 
@@ -895,7 +896,6 @@ def filtre_question(fil):
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
 #Новый вопрос
 @app.route('/new-question', methods=['POST'])
 def new_question():
@@ -903,8 +903,15 @@ def new_question():
 
     post_data = request.get_json()
     post_data = post_data.get('form')
-    response_object['res'] = add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id')) #Вызов и debug функции добавления вопроса в бд
 
+    if session.get("last_q") == None or datetime.now().replace(tzinfo=None) - timedelta(minutes=10) > session.get("last_q").replace(tzinfo=None):
+        response_object['res'] = add_question(post_data.get('descriptions'), post_data.get('details'), post_data.get('dificulty'), post_data.get('tag'), session.get('id')) #Вызов и debug функции добавления вопроса в бд
+        session['last_q'] = datetime.now().replace(tzinfo=None)
+    else:
+        responce_object['res'] = {
+            "cd": True,
+            "time": (timedelta(minutes=10) - (datetime.now().replace(tzinfo=None) - session.get("last_q").replace(tzinfo=None))).total_seconds()
+        }
     return jsonify(response_object)
 
 # Новая статья
@@ -914,7 +921,15 @@ def create_state():
 
     post_data = request.get_json().get('form')
     logging.info(1)
-    responce_object['res'] = add_states(post_data.get('descriptions'), post_data.get('details'), session.get('id'), post_data.get('tag')) #Вызов и debug функции добавления вопроса в бд
+
+    if session.get("last_s") == None or datetime.now().replace(tzinfo=None) - timedelta(minutes=10) > session.get("last_s").replace(tzinfo=None):
+        responce_object['res'] = add_states(post_data.get('descriptions'), post_data.get('details'), session.get('id'), post_data.get('tag')) #Вызов и debug функции добавления вопроса в бд
+        session['last_s'] = datetime.now().replace(tzinfo=None)
+    else:
+        responce_object['res'] = {
+            "cd": True,
+            "time": (timedelta(minutes=10) - (datetime.now().replace(tzinfo=None) - session.get("last_s").replace(tzinfo=None))).total_seconds()
+        }
 
     return jsonify(responce_object)
 

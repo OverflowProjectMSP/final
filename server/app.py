@@ -7,7 +7,7 @@ from flask_cors import CORS
 import smtplib
 from email.mime.text import MIMEText
 import random
-from datetime import datetime
+from datetime import timedelta, datetime
 from dotenv import load_dotenv
 import base64
 import logging
@@ -29,6 +29,8 @@ MEDIA = os.getenv('MEDIA')
 AVATAR = os.getenv('AVATAR')
 SECRET_KEY = os.getenv('SECRET_KEY')
 TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
+
+print(PASSWORD_PG)
 
 def escape_quotes(text):
     return text.replace("'", "''")
@@ -57,6 +59,16 @@ def home():
     # logging.info(session.get('id')) #debug
     logging.warning(response_object)
     session.pop('id', None)
+    return jsonify(response_object)
+
+@app.route('/newssss', methods=['GET'])
+def ses():
+    response_object = {'status': 'success'} #БаZа
+    response_object['message'] = session.get('id')
+    logging.warning('1')
+    # logging.info(session.get('id')) #debug
+    logging.warning(response_object)
+    session["id"] = "30f16f62cf154aacad202faa1bafcc04"
     return jsonify(response_object)
 
 def add_tables():

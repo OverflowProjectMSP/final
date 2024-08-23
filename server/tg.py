@@ -73,8 +73,8 @@ def auth_tg(hash_id, uf_id):
             if sub_time(result["time"]) and uf_id:
                 logging.info(result)
                 logging.info(uf_id)
-                cursor.execute(f"UPDATE users SET tg_id=$${result["tg_id"]}$$, tg_chat_id=$${result["chat_id"]}$$ WHERE id=$${uf_id}$$")
-                logging.info(f"UPDATE users SET tg_id=$${result["tg_id"]}$$, tg_chat_id=$${result["chat_id"]}$$ WHERE id=$${uf_id}$$")
+                cursor.execute(f"UPDATE users SET tg_id=$${result['tg_id']}$$, tg_chat_id=$${result['chat_id']}$$ WHERE id=$${uf_id}$$")
+                logging.info(f"UPDATE users SET tg_id=$${result['tg_id']}$$, tg_chat_id=$${result['chat_id']}$$ WHERE id=$${uf_id}$$")
                 pg.commit()
                 return_data = "all ok"
                 name = result["name"]
