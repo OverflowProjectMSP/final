@@ -169,4 +169,48 @@ a {
         width: 320px;
     }
 }
+
+@media (min-width: 2600px) {
+    .pageend {
+        margin-top: 200px;
+    }
+
+    .join-us-title {
+        font-size: 60px;
+    }
+    
+    .join-us-desc {
+        font-size: 34px;
+    }
+
+    .join-us-item button {
+        font-size: 38px;
+        width: 550px;
+        height: 80px;
+    }
+
+    hr {
+        margin-top: 80px;
+    }
+}
+
+@media (min-width: 3800px) {
+    .pageend {
+        margin-top: 400px
+    }
+
+    .join-us-title {
+        font-size: 70px;
+    }
+
+    .join-us-desc {
+        font-size: 46px;
+    }
+
+    .join-us-item button {
+        font-size: 52px;
+        width: 700px;
+        height: 100px;
+    }
+}
 </style>

@@ -69,7 +69,7 @@ export default {
     <input v-model="title" type="search" class="form-control" placeholder="Название статьи" aria-label="First name">
     <input v-model="author" type="search" class="form-control" placeholder="Автор" aria-label="Last name">
    <!-- селект -->
-  <div class="down-menu d-flex align-items-center">
+  <div class="down-menu d-flex">
       <div class="dropdown-center">
         <select class="form-select me-2" v-model="tag">
             <option value="javascript">JavaScript</option>
@@ -85,14 +85,16 @@ export default {
         </select>
       </div>
       <!-- плюсик -->
-      <div class="contain" @click="OpenModal" >
+      <!-- <div class="contain" @click="OpenModal" >
         <img src="../../assets/States/add.png" class="add" alt="">
-      </div>
-      <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Отфильровать</button>
+      </div> -->
+      <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Найти</button>
 
+      </div>
+      <div class="create">
+          <button class="create-state">Создать статью</button>
       </div>
   </div>
-
 
 
 
@@ -155,21 +157,56 @@ h4{
     color:rgb(0, 0, 0) ;
 }
 .content {
-    margin: 10px;
-    flex-wrap: wrap;
-    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    /* margin: 10px; */
+    /* flex-wrap: wrap; */
+    /* margin-left: 20%; */
     /* margin-bottom: 100px; */
 }
+
+.down-menu {
+    width: 800px;
+    
+}
+
 .form-control{
-    margin: 5px;
+    width: 800px;
 }
-.dropdown-center{
-    margin-left: 15px;
+
+.form-select {
+    width: 550px;
 }
-.content input{
-    width: 300px;
-    border-radius: 10px;
+
+.btn {
+    width: 250px;
 }
+
+.create {
+    width: 800px;
+}
+
+.create-state {
+    width: 280px;
+    height: 37px;
+
+    background-color: #3B82F6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+
+    font-size: 20px;
+    font-weight: 500;
+
+    transition: all 100ms
+}
+
+.create-state:hover {
+    background-color: #20498b;
+}
+
 .con{
     width: 750px;
     /* justify-content: start; */
@@ -223,8 +260,33 @@ h4{
 @media (max-width: 900px){
 
 .content input{
-    width: 200px;
+    width: 400px;
 }
+
+.form-select {
+    width: 255px;
+}
+
+.btn {
+    width: 140px;
+    font-size: 14px;
+    margin: 0 !important;
+}
+
+.down-menu {
+    display: flex;
+    justify-content: center;
+}
+
+.create {
+    display: flex;
+    justify-content: center;
+}
+
+.create-state {
+    width: 400px;
+}
+
 .content, h4 {
     margin-left: 100px;
     margin-right: 100px;
@@ -247,5 +309,40 @@ h4{
   .content .form-control{
     width: 400px;
    }
+}
+
+@media (max-width: 500px) {
+    .down-menu {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .form-select {
+        width: 400px;
+        margin-left: 8px;
+    }
+
+    .btn {
+        width: 400px;
+    }
+}
+
+@media (max-width: 400px) {
+    .form-control {
+        width: 250px !important;
+    }
+
+    .form-select {
+        width: 250px;
+    }
+
+    .btn {
+        width: 250px;
+    }
+
+    .create-state {
+        width: 250px;
+    }
 }
 </style>

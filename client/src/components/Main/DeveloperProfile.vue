@@ -122,4 +122,54 @@ img {
     right: 5px;
   }
 }
+
+@media (min-width: 2600px) {
+  img {
+    max-width: 500px;
+    max-height: 500px;
+  }
+
+  .about-block h2 {
+    font-size: 50px;
+  }
+
+  .about-block span {
+    font-size: 30px;
+  }
+
+  .about-block b {
+    font-size: 26px;
+  }
+
+  .about-block li {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 3800px) {
+  img {
+    max-width: 600px;
+    max-height: 600px;
+  }
+
+  .about-block h2 {
+    font-size: 60px;
+  }
+
+  .about-block span {
+    font-size: 40px;
+  }
+
+  .about-block b {
+    font-size: 48px;
+  }
+
+  .about-block li {
+    font-size: 48px;
+  }
+
+  .close {
+    font-size: 70px !important;
+  }
+}
 </style>

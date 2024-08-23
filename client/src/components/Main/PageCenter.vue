@@ -72,7 +72,7 @@ export default {
 
 <template>
   <div class="pagecenter">
-    <hr>
+    <hr class="hr-start">
     <p class="center-desc">Здесь вы можете задать вопросы по таким языкам <br> программирования как</p>
     <div class="languages">
       <button @click="prevLang" class="btn-arrow leftarrow">&lt;</button>
@@ -496,7 +496,8 @@ hr {
   }
   
   .wehave-item {
-    width: 300px;
+    width: 400px;
+    height: 200px;
   }
   
   .wehave-item-desc {
@@ -510,6 +511,84 @@ hr {
   .img-lox {
     width: 60px !important;
     margin-top: 20px;
+  }
+}
+
+@media (min-width: 2600px) {
+  .center-desc {
+    font-size: 46px;
+  }
+/* hhh */
+  .lang-item {
+    width: 220px;
+    height: 100px;
+    font-size: 32px;
+  }
+
+  .wehave-title {
+    font-size: 46px;
+  }
+
+  .wehave-item-desc {
+    font-size: 32px;
+  }
+}
+
+@media (min-width: 3800px) {
+  .center-desc {
+    font-size: 56px;
+  }
+
+  .lang-item {
+    width: 350px;
+    height: 140px;
+    font-size: 45px;
+    border-radius: 22px
+  }
+
+  .wehave {
+    margin-top: 100px;
+  }
+
+  .wehave-title {
+    font-size: 60px;
+  }
+
+  .wehave-item {
+    width: 600px;
+    height: 300px;
+  }
+
+  .wehave-item img {
+    width: 150px;
+  }
+
+  .img-lox {
+    width: 130px !important;
+  }
+
+  .wehave-item-desc {
+    font-size: 43px;
+  }
+
+  .leftarrow {
+    font-size: 70px;
+  }
+
+  .rightarrow {
+    font-size: 70px;
+  }
+
+  .languages {
+    gap: 100px
+  }
+
+  .lang-items {
+    gap: 100px;
+  }
+
+  .hr-start {
+    margin-top: 0 !important;
   }
 }
 </style>

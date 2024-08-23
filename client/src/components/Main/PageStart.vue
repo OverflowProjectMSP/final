@@ -128,4 +128,42 @@ body {
         font-size: 32px;
     }
 }
+
+@media (min-width: 2600px) {
+    .title {
+        font-size: 80px;
+    }
+
+    .title-desc {
+        font-size: 36px;
+    }
+
+    .btn-join {
+        padding: 50px 100px;
+        font-size: 38px;
+    }
+
+    .greetings {
+        height: 800px;
+    }
+}
+
+@media (min-width: 3800px) {
+    .title {
+        font-size: 110px;
+    }
+
+    .title-desc {
+        font-size: 48px;
+    }
+
+    .btn-join {
+        padding: 70px 170px;
+        font-size: 55px;
+    }
+
+    .greetings {
+        height: 1100px;
+    }
+}
 </style>
