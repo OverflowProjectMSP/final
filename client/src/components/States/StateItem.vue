@@ -80,11 +80,11 @@ export default {
         },
 
         symbolsCount() {
-            this.question.symbols = this.question.text.length;
-            if (this.question.symbols >= 2000) {
-                this.question.symbCount = true;
+            this.symbols = this.text.length;
+            if (this.symbols >= 2000) {
+                this.symbCount = true;
             } else {
-                this.question.symbCount = false;
+                this.symbCount = false;
             }
         },
 
