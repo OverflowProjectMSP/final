@@ -109,5 +109,9 @@ export default createRouter({
       path: "/leaders",
       component: () => import('../components/Profile/LeadersComp.vue'),
     },
+    {
+      path: "/edit",
+      component: () => import('../components/Edit/NewqueVid.vue')
+    }
   ],
 });
