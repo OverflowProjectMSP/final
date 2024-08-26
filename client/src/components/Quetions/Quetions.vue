@@ -109,8 +109,8 @@ export default {
                                 @click="filtre">Найти</button>
                         </div>
                     </div>
+                    <button class="create-quetion">Создать вопрос</button>
                 </div>
-                <button class="create-quetion">Создать вопрос</button>
             </div>
         </div>
     </div>
@@ -168,8 +168,11 @@ a {
 
 .button-select {
     display: flex;
-    margin-left: 5px;
-    margin-right: 5px;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+    width: 802px;
+    /* margin-left: 5px;
+    margin-right: 5px; */
 }
 
 .create-quetion {
@@ -183,7 +186,7 @@ a {
 
     font-size: 20px;
     font-weight: 500;
-    margin-left: 5px;
+    /* margin-left: 5px; */
     margin-top: 5px;
 
     transition: all 100ms
@@ -199,8 +202,10 @@ a {
 }
 
 .all-inputs {
+    width: 900px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .form-control {
@@ -417,9 +422,187 @@ h4 {
     }
 }
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
+    .cont {
+        height: 700px;
+    }
+
+    .active-container h2 {
+        font-size: 50px;
+    }
+
+    .active-container p {
+        font-size: 24px;
+    }
+
+    .all-inputs {
+        width: 1000px;
+    }
+
+    .form-control {
+        width: 1000px !important;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .button-select {
+        width: 1000px;
+    }
+
+    .form-select {
+        width: 319px !important;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .find-btn {
+        width: 318px;
+        font-size: 18px;
+        height: 50px;
+    }
+
+    .create-quetion {
+        width: 319px;
+        height: 50px;
+        font-size: 22px;
+    }
+}
+
+@media (min-width: 3200px) {
+    .cont {
+        height: 1200px;
+    }
+
     .active-container h2 {
         font-size: 70px;
+    }
+
+    .active-container p {
+        font-size: 36px;
+    }
+
+    .all-inputs {
+        width: 1400px;
+    }
+
+    .form-control {
+        width: 1300px !important;
+        height: 60px;
+        font-size: 26px;
+    }
+
+    .button-select {
+        width: 1300px;
+    }
+
+    .form-select {
+        width: 418px !important;
+        height: 60px;
+        font-size: 26px;
+    }
+
+    .find-btn {
+        width: 419px;
+        font-size: 26px;
+        height: 60px;
+    }
+
+    .create-quetion {
+        width: 418px;
+        height: 60px;
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 4500px) {
+    .cont {
+        height: 1600px;
+    }
+
+    .active-container h2 {
+        font-size: 100px;
+    }
+
+    .active-container p {
+        font-size: 50px;
+    }
+
+    .all-inputs {
+        width: 1900px;
+    }
+
+    .form-control {
+        width: 1800px !important;
+        height: 90px;
+        font-size: 45px;
+    }
+
+    .button-select {
+        width: 1800px;
+    }
+
+    .form-select {
+        width: 586px !important;
+        height: 90px;
+        font-size: 45px;
+    }
+
+    .find-btn {
+        width: 586px;
+        height: 90px;
+        font-size: 45px;
+    }
+
+    .create-quetion {
+        width: 586px;
+        height: 90px;
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 5800px) {
+    .cont {
+        height: 2400px;
+    }
+
+    .active-container h2 {
+        font-size: 160px;
+    }
+
+    .active-container p {
+        font-size: 70px;
+    }
+
+    .all-inputs {
+        width: 2650px;
+    }
+
+    .form-control {
+        width: 2500px !important;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .button-select {
+        width: 2500px;
+    }
+
+    .form-select {
+        width: 819px !important;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .find-btn {
+        width: 819px;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .create-quetion {
+        width: 819px;
+        height: 120px;
+        font-size: 65px;
     }
 }
 </style>

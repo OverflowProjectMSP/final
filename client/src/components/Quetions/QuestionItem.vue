@@ -227,7 +227,7 @@ export default {
 </script>
 
 <template>
-  <div class="container mb-4">
+  <div class="main-container mb-4">
     <div class="content-1">
       <div class="account justify-content-between">
         <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile/${this.userCreater.id}`">
@@ -263,9 +263,9 @@ export default {
       <div class="about">
         <p>{{ questionInfo.data }}</p>
       </div>
+      <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
     </div>
-    <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
-    <div v-if="this.loading">
+    <div v-if="this.loading" class="ans-cont">
       <div class="container mt-5">
         <h4>Ответы:</h4>
       </div>
@@ -326,6 +326,22 @@ export default {
 </template>
 
 <style scoped>
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: auto;
+}
+
+.ans-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 1000px;
+}
+
 .delete-btn {
   position: absolute;
   right: 10px;
@@ -392,7 +408,7 @@ img {
 .content-1 {
   /* background-color: rgb(225, 225, 225); */
   margin-top: 50px;
-  width: 100%;
+  width: 1000px;
   height: auto;
 
   padding: 19px;
@@ -460,7 +476,7 @@ img {
 }
 
 img {
-  max-width: 100px !important;
+  max-width: 300px !important;
 
 }
 
@@ -510,7 +526,7 @@ img {
 .content-2 {
   position: relative;
   margin-top: 50px;
-  width: 100%;
+  width: 1000px;
   height: auto;
 
   padding: 19px;
@@ -593,6 +609,7 @@ img {
 /* CONTENT-3 */
 
 .content-3 {
+  width: 1000px;
   margin-top: 50px;
   margin-bottom: 50px;
 
@@ -619,6 +636,10 @@ img {
   right: 10px;
 
   color: #767676;
+}
+
+.container {
+  margin-left: 0 !important;
 }
 
 .red-text {
@@ -728,6 +749,295 @@ img {
     padding: 0 0 16px 0;
     margin: 0;
 
+  }
+}
+
+@media (min-width: 2300px) {
+  .accountIcon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .content-1, .content-2, .content-3, .ans-cont {
+    width: 1400px;
+  }
+
+  .name {
+    font-size: 22px;
+  }
+
+  .dropdown-toggle {
+    font-size: 22px;
+  }
+
+  .dropdown-menu li {
+    font-size: 22px
+  }
+
+  .title h3 {
+    font-size: 36px;
+  }
+
+  .description p {
+    font-size: 24px
+  }
+
+  .about p {
+    font-size: 18px;
+  }
+
+  .answer-btn {
+    width: 220px;
+    font-size: 26px;
+    height: 50px;
+  }
+
+  h4 {
+    font-size: 30px
+  }
+
+  .description span {
+    font-size: 28px;
+  }
+
+  textarea {
+    font-size: 24px;
+  }
+
+  .content-3 p {
+    font-size: 24px;
+  }
+
+  .toMain {
+    font-size: 28px !important;
+    width: 230px;
+  }
+
+}
+
+@media (min-width: 3100px) {
+  .accountIcon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .content-1, .content-2, .content-3, .ans-cont {
+    width: 1800px;
+  }
+  
+  .name {
+    font-size: 28px;
+  }
+
+  .dropdown-toggle {
+    font-size: 28px;
+  }
+
+  .dropdown-menu li {
+    font-size: 28px
+  }
+
+  .title h3 {
+    font-size: 46px;
+  }
+
+  .description p {
+    font-size: 30px
+  }
+
+  .about p {
+    font-size: 24px;
+  }
+
+  .answer-btn {
+    width: 280px;
+    height: 60px;
+    font-size: 32px;
+    border-radius: 22px
+  }
+
+  h4 {
+    font-size: 36px;
+  }
+
+  .description span {
+    font-size: 34px;
+  }
+
+  .comm-add {
+    font-size: 28px;
+  }
+
+  textarea {
+    font-size: 30px;
+  }
+
+  .content-3 p {
+    font-size: 28px;
+  }
+
+  .toMain {
+    font-size: 34px !important;
+    width: 260px;
+    border-radius: 14px
+  }
+}
+
+@media (min-width: 4600px) {
+  .content-1, .content-2, .content-3, .ans-cont {
+    width: 2600px;
+  }
+
+  .accountIcon {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .name {
+    font-size: 38px;
+  }
+
+  .dropdown-toggle {
+    font-size: 42px;
+  }
+
+  .dropdown-menu li {
+    font-size: 42px
+  }
+
+  .title h3 {
+    font-size: 64px;
+  }
+
+  .description p {
+    font-size: 42px
+  }
+
+  .about p {
+    font-size: 34px;
+  }
+
+  .answer-btn {
+    width: 360px;
+    height: 80px;
+    font-size: 42px;
+    border-radius: 30px
+  }
+
+  h4 {
+    font-size: 54px
+  }
+
+  .description span {
+    font-size: 46px;
+  }
+
+  .comm-add {
+    font-size: 42px;
+  }
+
+
+
+  textarea {
+    font-size: 42px;
+    height: 340px !important;
+  }
+
+  .content-3 p {
+    font-size: 38px;
+  }
+
+  .content-3-without {
+    height: 450px !important;
+  }
+
+  .toMain {
+    width: 340px;
+    font-size: 45px !important;
+    border-radius: 16px
+  }
+}
+
+@media (min-width: 6200px) {
+  .content-1, .content-2, .content-3, .ans-cont {
+    width: 3400px;
+    border-radius: 34px
+  }
+
+  .content-1 {
+    padding: 40px;
+  }
+
+  .accountIcon {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .name {
+    font-size: 54px;
+  }
+
+  .dropdown-toggle {
+    font-size: 54px;
+  }
+
+  .dropdown-menu li {
+    font-size: 54px
+  }
+
+  .title h3 {
+    font-size: 86px;
+  }
+
+  .description p {
+    font-size: 58px
+  }
+
+  .about p {
+    font-size: 48px;
+  }
+
+  .answer-btn {
+    width: 460px;
+    height: 110px;
+    font-size: 56px;
+  }
+
+  h4 {
+    font-size: 64px
+  }
+
+  .description span {
+    font-size: 58px;
+    margin-left: 190px;
+  }
+
+  .comm-add {
+    font-size: 54px;
+  }
+
+
+
+  textarea {
+    font-size: 56px;
+    height: 410px !important;
+  }
+
+  .content-3 p {
+    font-size: 54px;
+  }
+
+  .content-3-without {
+    height: 550px !important;
+    border-radius: 34px;
+  }
+
+  .toMain {
+    width: 420px;
+    font-size: 56px !important;
+    border-radius: 16px;
+
+    margin-bottom: 450px;
   }
 }
 </style>
