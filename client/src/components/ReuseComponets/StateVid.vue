@@ -445,4 +445,146 @@ export default {
             width: 400px;
         }
     }
+
+    @media (min-width: 2100px) {
+        .main-container {
+            width: 950px !important;
+            
+        }
+
+        .account p {
+            font-size: 24px;
+        }
+
+        .text h5 {
+            font-size: 24px;
+        }
+
+        .info p {
+            font-size: 18px;
+        }
+
+        .ch {
+            font-size: 26px
+        }
+
+        .answ button {
+            width: 180px;
+            font-size: 24px;
+        }
+    }
+
+    @media (min-width: 3200px) {
+        .main-container {
+            width: 1200px !important;
+        }
+
+        .main-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 15px 10px 10px rgb(0, 0, 0, 0.5);
+        }
+
+        .account p {
+            font-size: 34px;
+        }
+
+        .text h5 {
+            font-size: 32px;
+        }
+
+        .info p {
+            font-size: 24px;
+        }
+
+        .ch {
+            font-size: 34px
+        }
+
+        .answ button {
+            width: 260px;
+            font-size: 34px;
+        }
+
+        .cont {
+            width: 850px;
+        }
+    }
+
+    @media (min-width: 4500px) {
+
+        .main-container {
+            border-radius: 30px;
+            min-width: 1600px !important;
+            height: 300px; 
+        }
+
+        .main-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 20px 15px 15px rgb(0, 0, 0, 0.5);
+        }
+
+        .account p {
+            font-size: 50px;
+        }
+
+        .text h5 {
+            font-size: 45px;
+        }
+
+        .info p {
+            font-size: 34px;
+        }
+
+        .ch {
+            font-size: 40px
+        }
+
+        .answ button {
+            border-radius: 20px;
+            width: 360px;
+            font-size: 50px;
+        }
+
+        .cont {
+            width: 850px;
+        }
+    }
+
+    @media (min-width: 5800px) {
+        .main-container {
+            min-width: 2300px !important;
+            padding: 30px;
+            border-radius: 30px;
+            height: 450px;
+        }
+
+        .main-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 25px 20px 20px rgb(0, 0, 0, 0.5);
+        }
+
+        .account p {
+            font-size: 65px;
+        }
+
+        .text h5 {
+            font-size: 68px;
+        }
+
+        .info p {
+            font-size: 50px;
+        }
+
+        .ch {
+            font-size: 56px
+        }
+
+        .answ button {
+            width: 450px;
+            font-size: 70px;
+            border-radius: 20px
+        }
+
+        
+    }
 </style>

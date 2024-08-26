@@ -191,7 +191,7 @@ export default {
 </script>
 
 <template>
-    <div class="container mb-4">
+    <div class="main-container mb-4">
         <div class="content-1">
             <div class="account justify-content-between">
                 <a class="creator-info d-flex flex-row align-items-center gap-3"
@@ -248,9 +248,6 @@ export default {
                 <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
             </div>
         </form>
-        <div class="container mt-3" v-if="this.answers.length != 0">
-            <h4>Комментарии:</h4>
-        </div>
         <div v-if="!this.loading && this.answers.length != 0">
             <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
             <div class="d-flex justify-content-center">
@@ -259,8 +256,11 @@ export default {
                 </div>
             </div>
         </div>
-
-        <div v-if="this.loading && this.answers.length != 0">
+        
+        <div v-if="this.loading && this.answers.length != 0" class="comments">
+            <div class="container mt-3" v-if="this.answers.length != 0">
+                <h4>Комментарии:</h4>
+            </div>
             <div class="content-2 mt-2" v-for="(answer, index) in answers">
                 <div v-if="this.answers.length != 0">
                     <div class="account">
@@ -290,6 +290,28 @@ export default {
 </template>
 
 <style scoped>
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: auto;
+}
+
+.container {
+    margin-left: 0;
+}
+
+h4 {
+    margin-bottom: 40px;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
 img {
     object-fit: cover;
 }
@@ -365,7 +387,7 @@ img {
 .content-1 {
     /* background-color: rgb(225, 225, 225); */
     margin-top: 50px;
-    width: 100%;
+    width: 1000px;
     height: auto;
 
     padding: 19px;
@@ -563,6 +585,7 @@ img {
 
 .content-3 {
     margin-top: 50px;
+    width: 1000px;
 }
 
 .content-3-without {
@@ -594,7 +617,7 @@ img {
 
 .comm-input {
     width: 100%;
-    height: 100px !important;
+    height: 100px;
 
     border: none;
     resize: none;
@@ -686,6 +709,327 @@ img {
         margin: 0;
 
     }
+}
+
+@media (min-width: 2300px) {
+    .accountIcon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .content-1, .content-2, .content-3, .ans-cont, .comments {
+        width: 1400px;
+    }
+
+    .name {
+        font-size: 22px;
+    }
+
+    .dropdown-toggle {
+        font-size: 22px;
+    }
+
+    .dropdown-menu li {
+        font-size: 22px
+    }
+
+    .title h3 {
+        font-size: 36px;
+    }
+
+    .description p {
+        font-size: 24px
+    }
+
+    .about p {
+        font-size: 18px;
+    }
+
+    h4 {
+        font-size: 30px
+    }
+
+    .description-text span {
+        font-size: 28px;
+    }
+
+    .description-text {
+        margin-left: 95px !important;
+    }
+
+    textarea {
+        font-size: 24px;
+    }
+
+    .content-3 p {
+        font-size: 24px;
+    }
+
+    .toMain {
+        font-size: 28px !important;
+        width: 230px;
+    }
+
+    .comments {
+        gap: 10px;
+    }
+}
+
+@media (min-width: 3100px) {
+  .accountIcon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .content-1, .content-2, .content-3, .ans-cont, .comments {
+    width: 1800px;
+  }
+  
+  .name {
+    font-size: 28px;
+  }
+
+  .dropdown-toggle {
+    font-size: 28px;
+  }
+
+  .dropdown-menu li {
+    font-size: 28px
+  }
+
+  .title h3 {
+    font-size: 46px;
+  }
+
+  .description p {
+    font-size: 30px
+  }
+
+  .about p {
+    font-size: 24px;
+  }
+
+  .answer-btn {
+    width: 280px;
+    height: 60px;
+    font-size: 32px;
+    border-radius: 22px
+  }
+
+  h4 {
+    font-size: 36px;
+  }
+
+  .description-text span {
+    font-size: 34px;
+  }
+
+  .description-text {
+    margin-left: 115px !important;
+  }
+
+  .comm-add {
+    font-size: 28px !important;
+  }
+
+  textarea {
+    font-size: 30px;
+    height: 200px !important;
+  }
+
+  .content-3-without {
+    height: 300px;
+  }
+
+  .content-3 p {
+    font-size: 28px;
+  }
+
+  .toMain {
+    font-size: 34px !important;
+    width: 260px;
+    border-radius: 14px
+  }
+}
+
+@media (min-width: 4600px) {
+  .content-1, .content-2, .content-3, .ans-cont, .comments {
+    width: 2600px;
+  }
+
+  .content-1 {
+    padding: 40px;
+  }
+
+  .accountIcon {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .name {
+    font-size: 38px;
+  }
+
+  .dropdown-toggle {
+    font-size: 42px;
+  }
+
+  .dropdown-menu li {
+    font-size: 42px
+  }
+
+  .title h3 {
+    font-size: 64px;
+  }
+
+  .description p {
+    font-size: 42px
+  }
+
+  .about p {
+    font-size: 34px;
+  }
+
+  .answer-btn {
+    width: 360px;
+    height: 80px;
+    font-size: 42px;
+    border-radius: 30px
+  }
+
+  h4 {
+    font-size: 54px
+  }
+
+  .description-text span {
+    font-size: 46px;
+  }
+
+  .description-text {
+    margin-left: 160px !important;
+  }
+
+  .comm-add {
+    font-size: 42px !important;
+  }
+
+
+
+  textarea {
+    font-size: 42px;
+    height: 340px !important;
+  }
+
+  .content-3 p {
+    font-size: 38px;
+  }
+
+  .content-3-without {
+    height: 450px !important;
+  }
+
+  .toMain {
+    width: 340px;
+    font-size: 45px !important;
+    border-radius: 16px
+  }
+
+  .comments {
+    gap: 25px;
+  }
+
+  .content-2 {
+    height: auto;
+  }
+}
+
+@media (min-width: 6200px) {
+  .content-1, .content-2, .content-3, .ans-cont, .comments {
+    width: 3400px;
+    border-radius: 45px;
+  }
+
+  .content-1 {
+    padding: 40px;
+  }
+
+  .accountIcon {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .name {
+    font-size: 54px;
+  }
+
+  .dropdown-toggle {
+    font-size: 54px;
+  }
+
+  .dropdown-menu li {
+    font-size: 54px
+  }
+
+  .title h3 {
+    font-size: 86px;
+  }
+
+  .description p {
+    font-size: 58px
+  }
+
+  .about p {
+    font-size: 48px;
+  }
+
+  .answer-btn {
+    width: 460px;
+    height: 110px;
+    font-size: 56px;
+  }
+
+  h4 {
+    font-size: 64px
+  }
+
+  .description-text span {
+    font-size: 58px;
+  }
+
+  .description-text {
+    margin-left: 190px !important;
+  }
+
+  .comm-add {
+    font-size: 54px !important;
+  }
+
+
+
+  textarea {
+    font-size: 56px;
+    height: 410px !important;
+  }
+
+  .content-3 p {
+    font-size: 54px;
+  }
+
+  .content-3-without {
+    height: 550px !important;
+    border-radius: 34px;
+  }
+
+  .toMain {
+    width: 420px;
+    font-size: 56px !important;
+    border-radius: 16px;
+  }
+
+  .content-2 {
+    padding: 30px;
+    height: auto;
+  }
 }
 </style>
 

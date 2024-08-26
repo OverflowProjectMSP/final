@@ -62,12 +62,16 @@ export default {
 </script>
 
 <template>
-<!-- Компонент поиска -->
-<h4 class="text">Поиск статьи</h4>
 
-<div class="content d-flex align-items-center">
-    <input v-model="title" type="search" class="form-control" placeholder="Название статьи" aria-label="First name">
-    <input v-model="author" type="search" class="form-control" placeholder="Автор" aria-label="Last name">
+<div class="content-cont d-flex align-items-center">
+    <!-- Компонент поиска -->
+    <div class="title-text">
+        <h4 class="text">Поиск статьи</h4>
+    </div>
+    <div class="all-inputs">
+        <input v-model="title" type="search" class="form-control" placeholder="Название статьи" aria-label="First name">
+        <input v-model="author" type="search" class="form-control" placeholder="Автор" aria-label="Last name">
+    </div>
     <!-- селект -->
     <div class="down-menu d-flex">
         <div class="dropdown-center">
@@ -112,6 +116,27 @@ export default {
 </template>
 
 <style scoped>
+
+.all-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.content-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    width: 100%;
+}
+
+.title-text {
+    display: flex;
+    justify-content: start;
+    width: 800px;
+}
+
 .find-btn{
     color: black;
 }
@@ -132,8 +157,8 @@ a {
     color: #000;
 }
 h4{
-    margin-left: 20.5%;
-    margin-top: 20px;
+    /* margin-left: 20.5%;
+    margin-top: 20px; */
     font-size: 40px;
     
 }
@@ -336,6 +361,216 @@ h4{
 
     .create-state {
         width: 250px;
+    }
+}
+
+@media (min-width: 2100px) {
+    h4 {
+        font-size: 50px
+    }
+
+    .all-inputs {
+        width: 1000px;
+    }
+
+    .title-text {
+        width: 1000px;
+    }
+
+    .form-control {
+        width: 1000px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .down-menu {
+        width: 1000px;
+    }
+
+    .form-select {
+        width: 326px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .find-btn {
+        width: 326px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .create-state {
+        width: 326px;
+        height: 50px;
+        font-size: 22px;
+    }
+
+    .conr {
+        height: 700px;
+    }
+}
+
+@media (min-width: 3200px) {
+    h4 {
+        font-size: 70px
+    }
+
+    .all-inputs {
+        width: 1400px;
+    }
+
+    .title-text {
+        width: 1400px;
+    }
+
+    .form-control {
+        border-radius: 12px;
+
+        width: 1400px;
+        height: 60px;
+        font-size: 26px;
+    }
+
+    .down-menu {
+        width: 1400px;
+    }
+
+    .form-select {
+        border-radius: 12px !important;
+        width: 460px;
+        height: 60px;
+        font-size: 26px;
+    }
+
+    .find-btn {
+        border-radius: 12px;
+        width: 460px;
+        height: 60px;
+        font-size: 26px;
+    }
+
+    .create-state {
+        border-radius: 12px;
+        width: 460px;
+        height: 60px;
+        font-size: 30px;
+    }
+
+    .conr {
+        height: 1200px;
+    }
+}
+
+@media (min-width: 4500px) {
+    h4 {
+        font-size: 100px
+    }
+
+    .all-inputs {
+        width: 1900px;
+    }
+
+    .title-text {
+        width: 1900px;
+    }
+
+    .form-control {
+        border-radius: 12px;
+
+        width: 1900px;
+        height: 90px;
+        font-size: 45px;
+    }
+
+    .down-menu {
+        width: 1900px;
+    }
+
+    .form-select {
+        border-radius: 12px !important;
+        width: 627px;
+        height: 90px;
+        font-size: 45px;
+    }
+
+    .find-btn {
+        border-radius: 12px;
+        width: 627px;
+        height: 90px;
+        font-size: 45px;
+    }
+
+    .create-state {
+        border-radius: 12px;
+        width: 627px;
+        height: 90px;
+        font-size: 50px;
+    }
+
+    .conr {
+        height: 1700px;
+        gap: 30px;
+    }
+
+    .content-cont {
+        margin-bottom: 60px;
+    }
+}
+
+
+@media (min-width: 5800px) {
+    h4 {
+        font-size: 160px
+    }
+
+    .all-inputs {
+        width: 2650px;
+    }
+
+    .title-text {
+        width: 2650px;
+    }
+
+    .form-control {
+        border-radius: 12px;
+
+        width: 2650px;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .down-menu {
+        width: 2650px;
+    }
+
+    .form-select {
+        border-radius: 12px !important;
+        width: 876px;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .find-btn {
+        border-radius: 12px;
+        width: 876px;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .create-state {
+        border-radius: 12px;
+        width: 876px;
+        height: 120px;
+        font-size: 65px;
+    }
+
+    .conr {
+        height: 2400px;
+        gap: 30px;
+    }
+
+    .content-cont {
+        margin-bottom: 60px;
     }
 }
 </style>

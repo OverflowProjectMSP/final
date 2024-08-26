@@ -503,8 +503,8 @@ h4 {
 
     .find-btn {
         width: 419px;
-        font-size: 26px;
         height: 60px;
+        font-size: 26px;
     }
 
     .create-quetion {
