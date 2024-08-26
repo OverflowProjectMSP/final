@@ -112,7 +112,7 @@ a {
   }
 }
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
   .link {
     width: 60px;
     height: 60px;

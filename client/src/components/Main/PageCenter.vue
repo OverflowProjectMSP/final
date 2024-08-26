@@ -480,7 +480,7 @@ hr {
   }
 }
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
   .center-desc {
     font-size: 34px;
   }
@@ -514,7 +514,7 @@ hr {
   }
 }
 
-@media (min-width: 2600px) {
+@media (min-width: 3400px) {
   .center-desc {
     font-size: 46px;
   }
@@ -534,7 +534,7 @@ hr {
   }
 }
 
-@media (min-width: 3800px) {
+@media (min-width: 4200px) {
   .center-desc {
     font-size: 56px;
   }

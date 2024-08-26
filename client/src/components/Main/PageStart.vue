@@ -120,7 +120,7 @@ body {
     }
 }
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
     .title {
         font-size: 60px;
     }
@@ -135,7 +135,7 @@ body {
     }
 }
 
-@media (min-width: 2600px) {
+@media (min-width: 3400px) {
     .title {
         font-size: 80px;
     }
@@ -154,7 +154,7 @@ body {
     }
 }
 
-@media (min-width: 3800px) {
+@media (min-width: 4200px) {
     .title {
         font-size: 110px;
     }

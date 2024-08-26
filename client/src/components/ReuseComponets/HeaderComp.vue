@@ -340,7 +340,7 @@ li {
 }
 
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
   .nav-link {
     font-size: 28px;
   }
@@ -362,7 +362,7 @@ li {
   }
 }
 
-@media (min-width: 2600px) {
+@media (min-width: 3400px) {
   .nav-link {
     font-size: 38px;
   }
@@ -378,7 +378,7 @@ li {
   }
 }
 
-@media (min-width: 3800px) {
+@media (min-width: 4200px) {
   .nav-link {
     font-size: 50px;
   }

@@ -416,6 +416,12 @@ h4 {
         width: 350px !important;
     }
 }
+
+@media (min-width: 1750px) {
+    .active-container h2 {
+        font-size: 70px;
+    }
+}
 </style>
 
 

@@ -151,7 +151,7 @@ a {
     } */
 }
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
     .pageend {
         margin-top: 90px;
     }
@@ -170,7 +170,7 @@ a {
     }
 }
 
-@media (min-width: 2600px) {
+@media (min-width: 3400px) {
     .pageend {
         margin-top: 200px;
     }
@@ -194,7 +194,7 @@ a {
     }
 }
 
-@media (min-width: 3800px) {
+@media (min-width: 4200px) {
     .pageend {
         margin-top: 400px
     }
