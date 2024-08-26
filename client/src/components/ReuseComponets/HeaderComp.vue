@@ -93,6 +93,9 @@ export default {
             <li class="nav-item mt-1" style="cursor: pointer;">
               <a class="nav-link text-white" aria-disabled="true" href="/ForumPage">Форум</a>
             </li>
+            <!-- <li class="nav-item mt-1" style="cursor: pointer;">
+              <a class="nav-link text-white" aria-disabled="true" href="https://t.me/lif0ltn">Новости IT</a>
+            </li> -->
           </ul>
           <div class="container-form">
 
@@ -105,7 +108,7 @@ export default {
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container" v-else>
-            <a :href="`/Profile/${this.id}`"> <img
+            <a :href="`/Profile?id=${this.id}`"> <img
                 :src="avatar"
                 alt="" class="ava"></a>
           </div>
@@ -336,61 +339,6 @@ li {
   .them {
     margin-left: 25%;
     margin-top: 5%;
-  }
-}
-
-
-@media (min-width: 2100px) {
-  .nav-link {
-    font-size: 28px;
-  }
-
-  .navbar-brand img {
-    width: 120px;
-    height: 70px;
-  }
-
-  .btn-login {
-    width: 180px;
-    height: 60px;
-    font-size: 28px;
-  }
-
-  .ava {
-    width: 80px;
-    height: 70px;
-  }
-}
-
-@media (min-width: 3400px) {
-  .nav-link {
-    font-size: 38px;
-  }
-
-  .navbar-brand img {
-    width: 150px;
-    height: 90px;
-  }
-
-  .ava {
-    width: 100px;
-    height: 90px;
-  }
-}
-
-@media (min-width: 4200px) {
-  .nav-link {
-    font-size: 50px;
-  }
-
-  .navbar-brand img {
-    width: 200px;
-    height: 130px;
-  }
-
-  .ava {
-    width: 180px;
-    height: 160px;
   }
 }
 </style>
