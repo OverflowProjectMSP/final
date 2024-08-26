@@ -275,7 +275,7 @@ export default {
   }
 }
 
-@media (min-width: 1750px) {
+@media (min-width: 2100px) {
   .develop {
     height: 600px;
   }
@@ -299,7 +299,7 @@ export default {
   
 }
 
-@media (min-width: 2600px) {
+@media (min-width: 3400px) {
   .develop {
     height: 700px;
   }
@@ -322,7 +322,7 @@ export default {
   }
 }
 
-@media (min-width: 3800px) {
+@media (min-width: 4200px) {
   .develop {
     height: 800px;
     position: relative;

@@ -123,7 +123,7 @@ img {
   }
 }
 
-@media (min-width: 2600px) {
+@media (min-width: 3400px) {
   img {
     max-width: 500px;
     max-height: 500px;
@@ -146,7 +146,7 @@ img {
   }
 }
 
-@media (min-width: 3800px) {
+@media (min-width: 4200px) {
   img {
     max-width: 600px;
     max-height: 600px;
