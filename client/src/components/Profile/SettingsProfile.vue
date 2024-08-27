@@ -88,7 +88,7 @@ export default {
       this.form.avatar = this.defaultAvatar;
     },
     async logout() {
-      this.$router.push("/");
+      this.$router.push("/Login");
       let res = await axios.get("/");
       this.$router.go(0);
     },
@@ -220,7 +220,7 @@ export default {
               Привязка Telegram <img src="../../assets/Footer/Telegram.png" class="tg-img"/>
             </button> 
           <button class="btn btn-danger logout" @click="logout">
-            Выйти из акканта</button
+            Выйти из аккаунта</button
           ><button class="btn btn-primary" @click="forgot">
             Забыли пароль?
           </button>

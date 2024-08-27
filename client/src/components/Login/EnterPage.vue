@@ -26,20 +26,20 @@ export default {
     };
   },
   methods: {
-    check() {
-      if (this.email === "") {
-        this.error = "*Вы не ввели Email*";
-      } else if (this.password === "") {
-        this.error = "*Вы не ввели пароль*";
-      } else {
-        this.error = "";
-        this.login();
-      }
+    // check() {
+    //   if (this.email === "") {
+    //     this.error = "*Вы не ввели Email*";
+    //   } else if (this.password === "") {
+    //     this.error = "*Вы не ввели пароль*";
+    //   } else {
+    //     this.error = "";
+    //     this.login();
+    //   }
 
-      // if (this.password !== this.exPassword) {
-      //     this.error = '*Пароли не совпадают'
-      // }
-    },
+    //   // if (this.password !== this.exPassword) {
+    //   //     this.error = '*Пароли не совпадают'
+    //   // }
+    // },
     toggleVisibility1() {
       this.isShowPassword = !this.isShowPassword;
       this.eyeOpen1 = !this.eyeOpen1;
@@ -87,6 +87,10 @@ export default {
         }
       }
     },
+    reg(){
+      window.location.href = '/SignUp';
+      console.log(0)
+    }
   },
 };
 </script>
@@ -126,7 +130,7 @@ export default {
           </div>
         </div>
         <div class="btn-container">
-          <button class="bt reg">Регистрация</button>
+          <button class="bt reg" @click="reg" type="button">Регистрация</button>
           <button
             :class="{ 'login': button, 'bt': true, 'grey': gre }"
             :disabled="gre"
@@ -137,10 +141,10 @@ export default {
         </div>
       </form>
       <div class="mail">
-        <a href=""><img src="/mail.svg" alt="" /></a>
+        <!-- <a href=""><img src="/mail.svg" alt="" /></a> -->
       </div>
       <div class="pass-err">
-        <a href="" class="a">Забыли пароль?</a>
+        <a href="" class="a">Забыли пароль?</a> 
         <div class="errors">
           <p class="err">{{ error }}</p>
         </div>
@@ -255,9 +259,7 @@ h6 {
   transform: translateX(-50px);
   transition: all 0.3s;
 }
-.head {
-  height: 50px;
-}
+
 .password {
   /* display: flex; */
   /* align-items: center; */
@@ -399,14 +401,24 @@ h1 {
   }
 }
 
+/* 
 @media (max-width: 1199px) {
   .mail img {
     position: absolute;
     top: 550px;
     cursor: pointer;
-    right: 30px;
+    right: 20px;
   }
-}
+  .login-container {
+    display: flex;
+    border-radius: 50px;
+    margin: 80px;
+    width: 1550px;
+    height: 600px;
+    background: #fff;
+    position: relative;
+  }
+} */
 
 @media (max-width: 1175px) {
   .img-container {
@@ -455,7 +467,7 @@ h1 {
   }
   .a {
     position: absolute;
-    left: 250px;
+    left: 220px;
   }
   .input {
     margin-bottom: 40px;
@@ -516,6 +528,13 @@ h1 {
     text-align: center;
     cursor: pointer;
   }
+  .img {
+  transform: translateX(-20px);
+  transition: all 0.3s;
+}
+.input {
+  margin-bottom: 30px;
+}
 }
 
 /* @media (max-width: 567px) {
@@ -568,9 +587,19 @@ h1 {
   }
 } */
 @media (max-width: 505px) {
+  .reg{
+    background-color: white;
+  }
+.input{
+  background: #ffffff;
+
+}  
   .all-container {
     background: #fff;
   }
+  .login-container {
+  background: #f4f4f4;
+}
   /* .login-container {
     -webkit-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);

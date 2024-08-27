@@ -6,8 +6,8 @@ export default {
             username: "HaBy",
             rank: "бывший дрочила",
             language: "JavaScript",
-            text: "text text text text text text text text text text text text text text text text text text text  text text text text text text text text text",
-            date: "45 недрочабря 3015",
+            text: "Я двойник Павла Дурова, у меня 3492784 детей, люблю мужчин по старше, обожаю францию и лягушек",
+            date: "9222 до н.э.",
             ansCount: 3,
         }
     }
