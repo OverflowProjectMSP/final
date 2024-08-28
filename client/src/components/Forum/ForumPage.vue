@@ -14,7 +14,8 @@ import axios from 'axios';
     <a href="/Forum/cpp"><button class="btn btn-outline-primary">C++</button></a>
     <a href="/Forum/kotlin"><button class="btn btn-outline-primary">Kotlin</button></a>
     <a href="/Forum/ruby"><button class="btn btn-outline-primary">Ruby</button></a>
-    <a href="/Forum/php" class="mb-3"><button class="btn btn-outline-primary">PHP</button></a>
+    <a href="/Forum/php"><button class="btn btn-outline-primary">PHP</button></a>
+    <a href="/Forum/design" class="mb-3"><button class="btn btn-outline-primary">Design</button></a>
 </div>  
 </template>
 
