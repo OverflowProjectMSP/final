@@ -306,23 +306,67 @@ h4{
 }
 
 .content, h4 {
-    margin-left: 100px;
-    margin-right: 100px;
+    font-size: 32px;
 }
 .dropdown-center{
     margin: 2px !important;
 }
 }
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .content, h4 {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
+    .title-text {
+        margin-left: 150px;
+    }
+
+    .form-control{
+        width: 650px;
+    }
+
+    .down-menu {
+        width: 650px;
+    }
+
     h4 {
         font-size: 30px;
     }
 }
+
+@media (max-width: 650px) {
+    .form-control {
+        width: 450px;
+    }
+
+    .down-menu {
+        width: 450px;
+    }
+
+    .title-text {
+        margin-left: 350px;
+    }
+
+    .form-select {
+        width: 200px;
+    }
+
+    .find-btn {
+        margin-top: 3px !important;
+        height: 35px;
+        width: 70px;
+    }
+
+    .create-state {
+        width: 200px;
+        font-size: 16px;
+        height: 35px;
+        margin-top: 3px;
+    }
+}
+
 @media (max-width: 635px) {
   .content .form-control{
     width: 400px;
@@ -336,12 +380,23 @@ h4{
         gap: 5px;
     }
 
+    .title-text {
+        margin-left: 400px;
+    }
+
+    .form-control {
+        width: 400px;
+    }
+
     .form-select {
         width: 400px;
-        margin-left: 8px;
     }
 
     .btn {
+        width: 400px;
+    }
+
+    .create-state {
         width: 400px;
     }
 }
@@ -361,6 +416,10 @@ h4{
 
     .create-state {
         width: 250px;
+    }
+
+    .title-text {
+        margin-left: 550px;
     }
 }
 
