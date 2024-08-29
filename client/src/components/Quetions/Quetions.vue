@@ -343,6 +343,7 @@ h4 {
 
     .button-select {
         flex-direction: column;
+        align-items: center;
     }
 
     .selects {
@@ -376,6 +377,16 @@ h4 {
         margin-left: -1px;
     }
 
+}
+
+@media (max-width: 870px) {
+    .active-container {
+        align-items: center;
+    }
+
+    .mar {
+        width: 300px;
+    }
 }
 
 @media(max-width: 600px) {
