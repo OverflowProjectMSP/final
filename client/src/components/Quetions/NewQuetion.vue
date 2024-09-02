@@ -34,8 +34,11 @@ export default {
                     form: this.form,
                 });
                 if (res.data.res == 'Вопрос добавлен') {
-                    this.error = ''
+                    this.error = '';
                     this.$router.push('/Quetions')
+                    return;
+                } else if(res.data.res.cd == true) {
+                    this.error = `Вы недавно создавали вопрос. Вы можете создать новый примерно через ${Math.ceil(res.data.res.time / 60)} минут`;
                     return;
                 }
                 this.error = 'Такой вопрос уже существует'
