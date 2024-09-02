@@ -28,35 +28,28 @@ export default {
     LoginPage() {
       this.$router.push('/Login');
     },
-    async loadAvatar() {
-      let res = await axios.get('/avatar');
-      this.avatar = res.data.link;
-      if (this.avatar == "No") {
-        this.avatar = "src/assets/Header/AvatarDef.svg";
-      } else {
-        this.avatar = this.avatar;
-      }
-    },
-    async loadLogin() {
-      let res = await axios.get(`/check-r`);
-      this.ShowLogin = res.data.all;
-      console.log(this.ShowLogin)
-      if (this.ShowLogin == "true") {
+
+    async getUserSession() {
+      let res = await axios.get(`/get-curent-avatar`);
+
+      if(res.data.all != null) {
         this.ShowLogin = false;
-        
-        this.getId()
-      } else if (this.ShowLogin == "false") {
+        this.id = res.data.all.id;
+
+        if (this.avatar == "No") {
+          this.avatar = "src/assets/Header/AvatarDef.svg";
+        } else {
+          this.avatar = res.data.all.avatar;
+        }
+
+      } else {
         this.ShowLogin = true;
       }
     },
-    async getId(){
-      let res = await axios.get(`/session`);
-      this.id = res.data.id
-    }
   },
+
   mounted() {
-    this.loadLogin();
-    this.loadAvatar()
+    this.getUserSession();
   }
 }
 
@@ -108,7 +101,7 @@ export default {
             <button type="button" class=" btn-login" @click="LoginPage">Войти</button>
           </div>
           <div class="ava-container" v-else>
-            <a :href="`/Profile?id=${this.id}`"> <img
+            <a :href="`/Profile/${this.id}`"> <img
                 :src="avatar"
                 alt="" class="ava"></a>
           </div>
