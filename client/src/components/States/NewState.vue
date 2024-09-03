@@ -28,6 +28,9 @@ export default {
                 this.error = ``;
                 this.$router.push('/States')
                 return;
+            } else if(res.data.res.cd == true) {
+                this.error = `Вы недавно создавали статью. Вы можете создать новую примерно через ${Math.ceil(res.data.res.time / 60)} минут`;
+                return;
             }
             console.log(this.error);
             this.error = res.data.res;
