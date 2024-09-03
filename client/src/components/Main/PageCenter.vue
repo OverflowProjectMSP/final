@@ -13,7 +13,8 @@ export default {
       index3: 3,
       index4: 4,
       index5: 5,
-      usersReg: 10
+      usersReg: 10,
+      answersCount: 0,
     }
   },
   methods: {
@@ -62,10 +63,15 @@ export default {
     async regUser() {
       let res = await axios.get(`/users-reg`)
       this.usersReg = res.data.regs
+    },
+    async getCountOfAnswers(){
+      let res = await axios.get("/get-answers")
+      this.answersCount = res.data.count
     }
   },
   mounted() {
-    this.regUser()
+    this.regUser(),
+    this.getCountOfAnswers()
   }
 }
 </script>
@@ -103,11 +109,11 @@ export default {
       <div class="wehave-items">
         <div class="wehave-item">
           <img src="../../assets/Main/user1.png" class="img-lox"style="width: 40px;" alt="">
-          <p class="wehave-item-desc">Зарегистрированно <br> {{ this.usersReg }} пользователей</p>
+          <p class="wehave-item-desc">{{ this.usersReg }} пользователей <br> зарегистрированно</p>
         </div>
         <div class="wehave-item">
-          <img src="../../assets/Main/expert.png" alt="">
-          <p class="wehave-item-desc">5 экспертов в сети <br> и помогают сейчас</p>
+          <img src="../../assets/Main/states.png" alt="">
+          <p class="wehave-item-desc">{{ this.answersCount }} ответов <br> оставлено</p>
         </div>
         <div class="wehave-item">
           <img src="../../assets/Main/users.png" alt="">
