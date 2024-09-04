@@ -10,6 +10,8 @@
         <a href="https://t.me/upfollowru" style="--i:7" class="footer-icon"><img class="link user-select-none" src="../../assets/Footer/Telegram.png" alt="telegram"></a>
         <a href="https://vk.com/club226123105" style="--i:8" class="footer-icon"><img class="link user-select-none" src="../../assets/Footer/Vk.png" alt="vk"></a>
         <a href="https://discord.gg/RmEbfBCs" style="--i:9" class="footer-icon"><img class="link user-select-none" src="../../assets/Footer/Discord.png" alt="discord"></a>
+        <a href="https://www.youtube.com/@UpFollow2024" style="--i:9" class="footer-icon"><img class="link user-select-none" src="../../assets/Main/pngwing.com.png" alt="youtube"></a>
+        <a href="https://www.tiktok.com/@upfollow_ru" style="--i:9" class="footer-icon"><img class="link user-select-none" src="../../assets/Main/output-onlinepngtools.png" alt="tiktok"></a>
       </div>
       <p class="text">Upfollow</p>
       <hr class="hr">
