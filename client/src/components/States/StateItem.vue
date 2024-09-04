@@ -26,7 +26,9 @@ export default {
 
             loading: false,
             a: '',
-            ShowAdd: true
+            ShowAdd: true,
+
+            isAllLoad: false,
         }
     },
 
@@ -34,6 +36,7 @@ export default {
         this.loadState();
         this.getNowUser();
         this.checkUser();
+        this.preloader();
     },
 
     methods: {
@@ -185,13 +188,19 @@ export default {
                 console.error(error)
             }
         },
+
+        async preloader() {
+            if (this.loadState && this.getNowUser && this.checkUser) {
+                this.isAllLoad = true;
+            }
+        }
     },
 }
 
 </script>
 
 <template>
-    <div class="main-container mb-4">
+    <div class="main-container mb-4" v-if='this.isAllLoad'>
         <div class="content-1">
             <div class="account justify-content-between">
                 <a class="creator-info d-flex flex-row align-items-center gap-3"
@@ -229,8 +238,7 @@ export default {
 
         <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
             <div class="account">
-                <a :href="`/Profile/${this.userNow.id}`"
-                    class="creator-info d-flex flex-row align-items-center gap-3">
+                <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
                     <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                     <div class="name-ring">
                         <div>
@@ -256,7 +264,7 @@ export default {
                 </div>
             </div>
         </div>
-        
+
         <div v-if="this.loading && this.answers.length != 0" class="comments">
             <div class="container mt-3" v-if="this.answers.length != 0">
                 <h4>Комментарии:</h4>
@@ -287,15 +295,23 @@ export default {
                 этой статьей!</h2>
         </div>
     </div>
+
+    <div class="co" v-else>
+        <div class="load-item item1"></div>
+        <div class="load-item item2"></div>
+        <div class="load-item item3"></div>
+        <div class="load-item item4"></div>
+        <div class="load-item item5"></div>
+    </div>
 </template>
 
 <style scoped>
 .main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  height: auto;
+    height: auto;
 }
 
 .container {
@@ -315,6 +331,7 @@ h4 {
 img {
     object-fit: cover;
 }
+
 .delete-btn {
     position: absolute;
     right: 10px;
@@ -717,7 +734,11 @@ img {
         height: 80px;
     }
 
-    .content-1, .content-2, .content-3, .ans-cont, .comments {
+    .content-1,
+    .content-2,
+    .content-3,
+    .ans-cont,
+    .comments {
         width: 1400px;
     }
 
@@ -776,260 +797,273 @@ img {
 }
 
 @media (min-width: 3100px) {
-  .accountIcon {
-    width: 100px;
-    height: 100px;
-  }
+    .accountIcon {
+        width: 100px;
+        height: 100px;
+    }
 
-  .content-1, .content-2, .content-3, .ans-cont, .comments {
-    width: 1800px;
-  }
-  
-  .name {
-    font-size: 28px;
-  }
+    .content-1,
+    .content-2,
+    .content-3,
+    .ans-cont,
+    .comments {
+        width: 1800px;
+    }
 
-  .dropdown-toggle {
-    font-size: 28px;
-  }
+    .name {
+        font-size: 28px;
+    }
 
-  .dropdown-menu li {
-    font-size: 28px
-  }
+    .dropdown-toggle {
+        font-size: 28px;
+    }
 
-  .title h3 {
-    font-size: 46px;
-  }
+    .dropdown-menu li {
+        font-size: 28px
+    }
 
-  .description p {
-    font-size: 30px
-  }
+    .title h3 {
+        font-size: 46px;
+    }
 
-  .about p {
-    font-size: 24px;
-  }
+    .description p {
+        font-size: 30px
+    }
 
-  .answer-btn {
-    width: 280px;
-    height: 60px;
-    font-size: 32px;
-    border-radius: 22px
-  }
+    .about p {
+        font-size: 24px;
+    }
 
-  h4 {
-    font-size: 36px;
-  }
+    .answer-btn {
+        width: 280px;
+        height: 60px;
+        font-size: 32px;
+        border-radius: 22px
+    }
 
-  .description-text span {
-    font-size: 34px;
-  }
+    h4 {
+        font-size: 36px;
+    }
 
-  .description-text {
-    margin-left: 115px !important;
-  }
+    .description-text span {
+        font-size: 34px;
+    }
 
-  .comm-add {
-    font-size: 28px !important;
-  }
+    .description-text {
+        margin-left: 115px !important;
+    }
 
-  textarea {
-    font-size: 30px;
-    height: 200px !important;
-  }
+    .comm-add {
+        font-size: 28px !important;
+    }
 
-  .content-3-without {
-    height: 300px;
-  }
+    textarea {
+        font-size: 30px;
+        height: 200px !important;
+    }
 
-  .content-3 p {
-    font-size: 28px;
-  }
+    .content-3-without {
+        height: 300px;
+    }
 
-  .toMain {
-    font-size: 34px !important;
-    width: 260px;
-    border-radius: 14px
-  }
+    .content-3 p {
+        font-size: 28px;
+    }
+
+    .toMain {
+        font-size: 34px !important;
+        width: 260px;
+        border-radius: 14px
+    }
 }
 
 @media (min-width: 4600px) {
-  .content-1, .content-2, .content-3, .ans-cont, .comments {
-    width: 2600px;
-  }
 
-  .content-1 {
-    padding: 40px;
-  }
+    .content-1,
+    .content-2,
+    .content-3,
+    .ans-cont,
+    .comments {
+        width: 2600px;
+    }
 
-  .accountIcon {
-    width: 140px;
-    height: 140px;
-  }
-  
-  .name {
-    font-size: 38px;
-  }
+    .content-1 {
+        padding: 40px;
+    }
 
-  .dropdown-toggle {
-    font-size: 42px;
-  }
+    .accountIcon {
+        width: 140px;
+        height: 140px;
+    }
 
-  .dropdown-menu li {
-    font-size: 42px
-  }
+    .name {
+        font-size: 38px;
+    }
 
-  .title h3 {
-    font-size: 64px;
-  }
+    .dropdown-toggle {
+        font-size: 42px;
+    }
 
-  .description p {
-    font-size: 42px
-  }
+    .dropdown-menu li {
+        font-size: 42px
+    }
 
-  .about p {
-    font-size: 34px;
-  }
+    .title h3 {
+        font-size: 64px;
+    }
 
-  .answer-btn {
-    width: 360px;
-    height: 80px;
-    font-size: 42px;
-    border-radius: 30px
-  }
+    .description p {
+        font-size: 42px
+    }
 
-  h4 {
-    font-size: 54px
-  }
+    .about p {
+        font-size: 34px;
+    }
 
-  .description-text span {
-    font-size: 46px;
-  }
+    .answer-btn {
+        width: 360px;
+        height: 80px;
+        font-size: 42px;
+        border-radius: 30px
+    }
 
-  .description-text {
-    margin-left: 160px !important;
-  }
+    h4 {
+        font-size: 54px
+    }
 
-  .comm-add {
-    font-size: 42px !important;
-  }
+    .description-text span {
+        font-size: 46px;
+    }
+
+    .description-text {
+        margin-left: 160px !important;
+    }
+
+    .comm-add {
+        font-size: 42px !important;
+    }
 
 
 
-  textarea {
-    font-size: 42px;
-    height: 340px !important;
-  }
+    textarea {
+        font-size: 42px;
+        height: 340px !important;
+    }
 
-  .content-3 p {
-    font-size: 38px;
-  }
+    .content-3 p {
+        font-size: 38px;
+    }
 
-  .content-3-without {
-    height: 450px !important;
-  }
+    .content-3-without {
+        height: 450px !important;
+    }
 
-  .toMain {
-    width: 340px;
-    font-size: 45px !important;
-    border-radius: 16px
-  }
+    .toMain {
+        width: 340px;
+        font-size: 45px !important;
+        border-radius: 16px
+    }
 
-  .comments {
-    gap: 25px;
-  }
+    .comments {
+        gap: 25px;
+    }
 
-  .content-2 {
-    height: auto;
-  }
+    .content-2 {
+        height: auto;
+    }
 }
 
 @media (min-width: 6200px) {
-  .content-1, .content-2, .content-3, .ans-cont, .comments {
-    width: 3400px;
-    border-radius: 45px;
-  }
 
-  .content-1 {
-    padding: 40px;
-  }
+    .content-1,
+    .content-2,
+    .content-3,
+    .ans-cont,
+    .comments {
+        width: 3400px;
+        border-radius: 45px;
+    }
 
-  .accountIcon {
-    width: 180px;
-    height: 180px;
-  }
-  
-  .name {
-    font-size: 54px;
-  }
+    .content-1 {
+        padding: 40px;
+    }
 
-  .dropdown-toggle {
-    font-size: 54px;
-  }
+    .accountIcon {
+        width: 180px;
+        height: 180px;
+    }
 
-  .dropdown-menu li {
-    font-size: 54px
-  }
+    .name {
+        font-size: 54px;
+    }
 
-  .title h3 {
-    font-size: 86px;
-  }
+    .dropdown-toggle {
+        font-size: 54px;
+    }
 
-  .description p {
-    font-size: 58px
-  }
+    .dropdown-menu li {
+        font-size: 54px
+    }
 
-  .about p {
-    font-size: 48px;
-  }
+    .title h3 {
+        font-size: 86px;
+    }
 
-  .answer-btn {
-    width: 460px;
-    height: 110px;
-    font-size: 56px;
-  }
+    .description p {
+        font-size: 58px
+    }
 
-  h4 {
-    font-size: 64px
-  }
+    .about p {
+        font-size: 48px;
+    }
 
-  .description-text span {
-    font-size: 58px;
-  }
+    .answer-btn {
+        width: 460px;
+        height: 110px;
+        font-size: 56px;
+    }
 
-  .description-text {
-    margin-left: 190px !important;
-  }
+    h4 {
+        font-size: 64px
+    }
 
-  .comm-add {
-    font-size: 54px !important;
-  }
+    .description-text span {
+        font-size: 58px;
+    }
+
+    .description-text {
+        margin-left: 190px !important;
+    }
+
+    .comm-add {
+        font-size: 54px !important;
+    }
 
 
 
-  textarea {
-    font-size: 56px;
-    height: 410px !important;
-  }
+    textarea {
+        font-size: 56px;
+        height: 410px !important;
+    }
 
-  .content-3 p {
-    font-size: 54px;
-  }
+    .content-3 p {
+        font-size: 54px;
+    }
 
-  .content-3-without {
-    height: 550px !important;
-    border-radius: 34px;
-  }
+    .content-3-without {
+        height: 550px !important;
+        border-radius: 34px;
+    }
 
-  .toMain {
-    width: 420px;
-    font-size: 56px !important;
-    border-radius: 16px;
-  }
+    .toMain {
+        width: 420px;
+        font-size: 56px !important;
+        border-radius: 16px;
+    }
 
-  .content-2 {
-    padding: 30px;
-    height: auto;
-  }
+    .content-2 {
+        padding: 30px;
+        height: auto;
+    }
 }
 </style>
-

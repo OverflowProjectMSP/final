@@ -55,3 +55,51 @@ select, select:hover {
         max-width: 100%;
     }
 }
+
+/* прелоудер */
+.co {
+    width: 90px;
+    height: 30px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.load-item {
+    width: 15px;
+    height: 15px;
+    background-color: #4200FF;
+}
+
+.item1 {
+    animation: expand 0.4s infinite alternate;
+}
+
+.item2 {
+    animation: expand 0.4s infinite alternate;
+}
+
+.item3 {
+    animation: expand 0.4s infinite alternate;
+}
+
+.item4 {
+    animation: expand 0.4s infinite alternate;
+}
+
+.item5 {
+    animation: expand 0.4s infinite alternate 200ms;
+}
+
+@keyframes expand {
+  0% {
+    height: 15px;
+  }
+  100% {
+    height: 40px;
+  }
+}

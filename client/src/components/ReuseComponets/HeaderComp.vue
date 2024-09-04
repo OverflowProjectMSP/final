@@ -17,7 +17,9 @@ export default {
       }],
       ShowLogin: true,
       avatar: 'src/assets/Header/AvatarDef.svg',
-      id: ''
+      id: '',
+
+      isAllLoad: false
     }
 
   },
@@ -45,7 +47,16 @@ export default {
       } else {
         this.ShowLogin = true;
       }
+
+      this.preloader();
     },
+
+    async preloader() {
+        if (this.avatar && this.id) {
+            this.isAllLoad = true;
+        }
+    },
+    
   },
 
   mounted() {
@@ -57,7 +68,7 @@ export default {
 <template>
 
 
-  <header id="1">
+  <header id="1" v-if='this.isAllLoad'>
     <nav class="navbar navbar-expand-xl  d-flex align-items-center rounded-0">
       <div class="container-fluid ">
         <a class="navbar-brand" href="/">
@@ -108,6 +119,15 @@ export default {
         </div>
       </div>
     </nav>
+  </header>
+  <header v-else>
+    <div class="co" v-if='!this.isAllLoad'>
+    <div class="load-item item1"></div>
+    <div class="load-item item2"></div>
+    <div class="load-item item3"></div>
+    <div class="load-item item4"></div>
+    <div class="load-item item5"></div>
+</div>
   </header>
 
 </template>

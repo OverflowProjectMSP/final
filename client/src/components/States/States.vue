@@ -17,7 +17,9 @@ export default {
 
             title: ``,
             author: ``,
-            cnt: 0
+            cnt: 0,
+
+            isAllLoad: false,
         }
     },
     methods: {
@@ -32,6 +34,7 @@ export default {
             this.states = res.data.all;
             this.cnt++
             // console.log(res.data)
+            this.preloader();
         },
 
         async searchStates() {
@@ -54,16 +57,22 @@ export default {
             });
             this.states = res.data.all;
         },
+
+        async preloader() {
+            if (this.states.length) {
+                this.isAllLoad = true;
+            }
+        },
     },
     mounted() {
-        this.loadStates()
+        this.loadStates();
     },
 }
 </script>
 
 <template>
 
-<div class="content-cont d-flex align-items-center">
+<div class="content-cont d-flex align-items-center" v-if='this.isAllLoad'>
     <!-- Компонент поиска -->
     <div class="title-text">
         <h4 class="text">Поиск статьи</h4>
@@ -98,7 +107,7 @@ export default {
     </div>
 </div>
 <!-- Див с виджетами -->
-<div class="conr">
+<div class="conr" v-if='this.isAllLoad'>
     <div class="con" v-for="item in states">
         <a :href="`/StateItem/` + item.id">
             <!-- <vid-comp :item="item" role="button" /> -->
@@ -106,11 +115,19 @@ export default {
         </a>
     </div>
 </div>
-<div class="content p-2" v-if="this.states.length == 0 && this.cnt == 1">
+<div class="content p-2" v-if="this.states.length == 0 && this.cnt == 1 && this.isAllLoad">
     <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
 </div>
 
 <model-wind v-if="Show" @CloseModal="CloseModal"/>
+
+<div class="co" v-if='!this.isAllLoad'>
+    <div class="load-item item1"></div>
+    <div class="load-item item2"></div>
+    <div class="load-item item3"></div>
+    <div class="load-item item4"></div>
+    <div class="load-item item5"></div>
+</div>
 
 
 </template>

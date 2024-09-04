@@ -11,7 +11,7 @@ export default {
         PageStart,
         PageEnd,
         ScrollBarComp,
-    }
+    },
 }
 </script>
 

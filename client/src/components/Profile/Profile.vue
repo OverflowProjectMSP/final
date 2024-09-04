@@ -15,7 +15,9 @@ export default {
 
             isCreator: false,
 
-            isQ: true
+            isQ: true,
+
+            isAllLoad: false,
         }
     },
     mounted() {
@@ -31,12 +33,14 @@ export default {
                     id: this.$route.params.id
                 }
             });
-            
-            if(this.isQ) {
+
+            if (this.isQ) {
                 this.questions = res.data.all.questions;
             } else {
                 this.states = res.data.all.states;
             }
+
+            this.preloader();
         },
         async loadUser() {
             let res = await axios.get(`/user-info`, {
@@ -53,88 +57,109 @@ export default {
                 }
             });
             this.isCreator = res.data.isEdit;
-        }
+        },
+
+        async preloader() {
+            if (this.questions || this.states && this.user) {
+                this.isAllLoad = true;
+            }
+        },
     },
 }
 
 </script>
 
 <template>
-    <div class="profile">
-        <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg" 
-            alt="Настройки" class="il"></a>
+    <div v-if='this.isAllLoad'>
+        <div class="profile">
+            <a v-if="this.isCreator == 'true'" href="/ProfileSettings"><img src="../../assets/Profile/sh.svg"
+                    alt="Настройки" class="il"></a>
             <div class="head object-fit-cover">
                 <div class="circle">
-                    <img :src="user.avatar" class='object-fit-cover'
-            </div>
-            <p class="nikname t-alig-c">@{{ user.username }}</p>
-            <div class="loc-tel">
-                <p class="location">{{ user.city }}</p>
-                <p class="telephone">{{ user.phonenumber }}</p>
-            </div>
-            <div class="table t-alig-c">
-                <div class="cell">
-                    <p class="num">{{ user.qcnt }}</p>
-                    <p class="info">Вопросов</p>
+                    <img :src="user.avatar" class='object-fit-cover' </div>
+                    <p class="nikname t-alig-c">@{{ user.username }}</p>
+                    <div class="loc-tel">
+                        <p class="location">{{ user.city }}</p>
+                        <p class="telephone">{{ user.phonenumber }}</p>
                     </div>
-                <div class="cell">
-                    <p class="num">{{ user.scnt }}</p>
-                    <p class="info">Статей</p>
+                    <div class="table t-alig-c">
+                        <div class="cell">
+                            <p class="num">{{ user.qcnt }}</p>
+                            <p class="info">Вопросов</p>
+                        </div>
+                        <div class="cell">
+                            <p class="num">{{ user.scnt }}</p>
+                            <p class="info">Статей</p>
+                        </div>
+                        <div class="cell dis-r">
+                            <p class="num">{{ user.acnt }}</p>
+                            <p class="info">Ответов</p>
+                        </div>
                     </div>
-                    <div class="cell dis-r">
-                        <p class="num">{{ user.acnt }}</p>
-                    <p class="info">Ответов</p>
+                    <p class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</p>
+                    <div class="about rounded-5">
+                        <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{
+                            user.username }} </p>
+                        <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
+                        <!-- <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p> -->
+                        <p
+                            v-if="this.user.telegram != '' || this.user.skype != '' || this.user.discord != '' || this.user.facebook != ''">
+                            <img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной
+                                связаться?</span></p>
+                        <ul class="fs-5">
+                            <li v-if="user.telegram">Мой Telegram: {{ user.telegram }}</li>
+                            <li v-if="user.skype">Мой Skype: {{ user.skype }}</li>
+                            <li v-if="user.discord">Мой Discord: {{ user.discord }}</li>
+                            <li v-if="user.facebook">Мой Facebook: {{ user.facebook }}</li>
+                            <li v-if="user.github">Мой GitHub: <a class='text-info' :href='user.github'
+                                    target="_blank">{{ user.github }}</a></li>
+                        </ul>
+                        <p v-if="this.user.about != ''" class="fs-5 abobus"><img
+                                src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
+                        <p v-if="this.user.interesting != ''"><span v-if="this.user.interestings != ''"
+                                class="fw-bold">Мои интересы: </span></p>
+                        <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
+                    </div>
                 </div>
             </div>
-            <p class="text-secondary il-2">Дата регистрации: {{ user.data_c }}</p>
-            <div class="about rounded-5">
-                <p v-if="this.user.name == ''"><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.username }} </p>
-                <p v-else><img src="../../assets/Profile/User.svg" alt="">Привет, я {{ user.name }}</p>
-                <!-- <p v-if="asd"><img src="../../assets/Profile/SVGRepo_iconCarrier.svg" alt="">Я интересуюсь {{ user.lang }}</p> -->
-                <p v-if="this.user.telegram != '' || this.user.skype != '' || this.user.discord != '' || this.user.facebook != ''"><img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной связаться?</span></p>
-                <ul class="fs-5">
-                    <li v-if="user.telegram">Мой Telegram: {{ user.telegram }}</li>
-                    <li v-if="user.skype">Мой Skype: {{ user.skype }}</li>
-                    <li v-if="user.discord">Мой Discord: {{ user.discord }}</li>
-                    <li v-if="user.facebook">Мой Facebook: {{ user.facebook }}</li>
-                    <li v-if="user.github">Мой GitHub: <a class='text-info' :href='user.github' target="_blank">{{ user.github }}</a></li>
-                </ul>
-                <p v-if="this.user.about != ''" class="fs-5 abobus"><img src="../../assets/Profile/ArrowDown.svg" alt="">{{ user.about }}</p>
-                <p v-if="this.user.interesting != ''"><span  v-if="this.user.interestings != ''" class="fw-bold">Мои интересы: </span></p>
-                <p class="fs-5 interes" v-if="this.user.interestings != ''">{{ user.interestings }}</p>
-            </div>
-        </div> 
-    </div>
 
-    <div class="container d-flex align-items-center flex-column">
-        <div class="q-user head-1 mb-3 mt-1 user-select-none">
-            <div class=" d-flex flex-row align-items-center gap-4">
-                <p role="button" class="q" :class="{'active-shose': isQ}" @click="allByHe(true)">Вопросы</p>/
-                <p role="button" class="q" :class="{'active-shose': !isQ}" @click="allByHe(false)">статьи</p>
-            </div>
-            <p class="vse" @click="Olezha">пользователя</p>
-            </div>
-        <div v-if='this.isQ && this.questions.length != 0'>
-            <div class="scroll">
-                <a :href="`/QuestionItem/${question.id}`" v-for="question in questions">
-                    <VidUserComp :item="question" :type="question"/> 
-                </a>
+            <div class="container d-flex align-items-center flex-column">
+                <div class="q-user head-1 mb-3 mt-1 user-select-none">
+                    <div class=" d-flex flex-row align-items-center gap-4">
+                        <p role="button" class="q" :class="{ 'active-shose': isQ }" @click="allByHe(true)">Вопросы</p>/
+                        <p role="button" class="q" :class="{ 'active-shose': !isQ }" @click="allByHe(false)">статьи</p>
+                    </div>
+                    <p class="vse" @click="Olezha">пользователя</p>
+                </div>
+                <div v-if='this.isQ && this.questions.length != 0'>
+                    <div class="scroll">
+                        <a :href="`/QuestionItem/${question.id}`" v-for="question in questions">
+                            <VidUserComp :item="question" :type="question" />
+                        </a>
+                    </div>
+                </div>
+                <div v-if="!this.isQ && this.states.length != 0">
+                    <div class="scroll">
+                        <a :href="`/StateItem/${state.id}`" v-for="state in states">
+                            <VidUserComp :item="state" :type="state" />
+                        </a>
+                    </div>
+                </div>
+                <div class="content p-2" v-if="this.states.length == 0 && !this.isQ">
+                    <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет статей</h2>
+                </div>
+                <div class="content p-2" v-if="this.questions.length == 0 && this.isQ">
+                    <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет вопросов</h2>
+                </div>
             </div>
         </div>
-        <div v-if="!this.isQ && this.states.length != 0">
-            <div class="scroll"> 
-                <a :href="`/StateItem/${state.id}`" v-for="state in states">
-                    <VidUserComp :item="state" :type="state"/>
-                </a>
-            </div>
+        <div class="co" v-else>
+            <div class="load-item item1"></div>
+            <div class="load-item item2"></div>
+            <div class="load-item item3"></div>
+            <div class="load-item item4"></div>
+            <div class="load-item item5"></div>
         </div>
-        <div class="content p-2" v-if="this.states.length == 0 && !this.isQ">
-            <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет статей</h2>
-        </div>
-        <div class="content p-2" v-if="this.questions.length == 0 && this.isQ">
-            <h2 class="d-flex justify-content-center my-5 user-select-none">У пользователя нет вопросов</h2>
-        </div>
-    </div>
 </template>
 <style scoped>
 @import url('https://fonts.cdnfonts.com/css/rubik');
@@ -203,6 +228,7 @@ body {
     width: 25px;
     cursor: pointer;
 }
+
 .il-2 {
     /* position: absolute; */
     text-align: center;
@@ -577,7 +603,7 @@ p .u {
     .nikname {
         font-size: 28px;
     }
-    
+
     .num {
         font-size: var(--size-22);
     }
@@ -618,5 +644,4 @@ p .u {
         padding-top: 13px;
     }
 }
-
 </style>
