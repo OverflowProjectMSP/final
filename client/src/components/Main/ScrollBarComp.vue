@@ -79,6 +79,8 @@ export default {
 
       isHide: false,
       indexOfDev: null,
+
+      isAllLoad: false,
     }
   },
   mounted() {
@@ -90,6 +92,7 @@ export default {
         this.names.push(this.devolepers[i].name);
         this.roles.push(this.devolepers[i].role);
         this.images.push(this.devolepers[i].imageProfileDS);
+        this.preloader();
       }
     },
     nextDev() {
@@ -130,65 +133,72 @@ export default {
     showDev(index) {
       this.isHide = !this.isHide;
       this.indexOfDev = index;
-    }
+    },
+
+    async preloader() {
+        if (this.images.length && this.names.length && this.roles.length) {
+          this.isAllLoad = true;
+        }
+    },
   }
 }
 </script>
 
 <template>
-  <hr class="hr-end">
-  <div class="develop d-flex gap-3 align-items-center gap-2 flex-column">
-    <h1>Команда разработчиков</h1>
-    <div class="dev-container d-flex flex-row">
-      <div @click="prevDev" role="button"
-           class="arrow arrow-left mx-5 d-flex justify-content-center align-items-center gap-2 fs-1 fw-bold user-select-none">
-        <
-      </div>
-      <div class="collaps-container d-flex justify-content-center flex-wrap gap-4">
-        <div class="dev-card d-flex flex-column gap-0 align-items-center" @click="showDev(this.index)">
-          <img class="rounded-2 user-select-none" :src="images[index]"
-               :alt="names[index]">
-          <!-- НЕ ТРОГАТЬ!!!!!!!!!!!!!! -->
-          <!-- <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kostya.jpg"> -->
-          <!-- <img class="rounded-2 user-select-none d-none" src="../../assets/Main/jenya.png">
-          <img class="rounded-2 user-select-none d-none" src="../../assets/Main/sanya.png">
-          <img class="rounded-2 user-select-none d-none" src="../../assets/Main/vanya.jpg">
-          <img class="rounded-2 user-select-none d-none" src="../../assets/Main/maksym.jpg">
-          <img class="rounded-2 user-select-none d-none" src="../../assets/Main/therisingdream.png">
-          <img class="rounded-2 user-select-none d-none" src="../../assets/Main/nekit.jpg">
-          <img class="rounded-2 user-select-none d-none" src="../../assets/Main/kenma.gif"> -->
-
-
-          <h4 class="mt-2 text-center">{{ names[index] }}</h4>
-          <span class="text-center">{{ roles[index] }}</span>
+  <div>
+    <hr class="hr-end">
+    <div class="develop d-flex gap-3 align-items-center gap-2 flex-column">
+      <h1>Команда разработчиков</h1>
+      <div class="dev-container d-flex flex-row">
+        <div @click="prevDev" role="button"
+             class="arrow arrow-left mx-5 d-flex justify-content-center align-items-center gap-2 fs-1 fw-bold user-select-none">
+          <
         </div>
-        <div class="dev-card dev-card-2 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index1)">
-          <img class="rounded-2 user-select-none" :src="images[index1]"
-               :alt="names[index1]">
-          <h4 class="mt-2 text-center">{{ names[index1] }}</h4>
-          <span class="text-center">{{ roles[index1] }}</span>
+        <div class="collaps-container d-flex justify-content-center flex-wrap gap-4" v-if='this.isAllLoad'>
+          <div class="dev-card d-flex flex-column gap-0 align-items-center" @click="showDev(this.index)">
+            <img class="rounded-2 user-select-none" :src="images[index]"
+                 :alt="names[index]">
+  
+            <h4 class="mt-2 text-center">{{ names[index] }}</h4>
+            <span class="text-center">{{ roles[index] }}</span>
+          </div>
+          <div class="dev-card dev-card-2 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index1)">
+            <img class="rounded-2 user-select-none" :src="images[index1]"
+                 :alt="names[index1]">
+            <h4 class="mt-2 text-center">{{ names[index1] }}</h4>
+            <span class="text-center">{{ roles[index1] }}</span>
+          </div>
+          <div class="dev-card dev-card-3 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index2)">
+            <img class="rounded-2 user-select-none" :src="images[index2]"
+                 :alt="names[index2]">
+            <h4 class="mt-2 text-center">{{ names[index2] }}</h4>
+            <span class="text-center">{{ roles[index2] }}</span>
+          </div>
+          <div class="dev-card dev-card-4 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index3)">
+            <img class="rounded-2 user-select-none" :src="images[index3]"
+                 :alt="names[index3]">
+            <h4 class="mt-2 text-center">{{ names[index3] }}</h4>
+            <span class="text-center">{{ roles[index3] }}</span>
+          </div>
         </div>
-        <div class="dev-card dev-card-3 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index2)">
-          <img class="rounded-2 user-select-none" :src="images[index2]"
-               :alt="names[index2]">
-          <h4 class="mt-2 text-center">{{ names[index2] }}</h4>
-          <span class="text-center">{{ roles[index2] }}</span>
+        <div @click="nextDev" role="button"
+             class="arrow arrow-right mx-5 d-flex justify-content-center align-items-center gap-2 fs-1 fw-bold user-select-none">
+          >
         </div>
-        <div class="dev-card dev-card-4 d-flex flex-column gap-0 align-items-center" @click="showDev(this.index3)">
-          <img class="rounded-2 user-select-none" :src="images[index3]"
-               :alt="names[index3]">
-          <h4 class="mt-2 text-center">{{ names[index3] }}</h4>
-          <span class="text-center">{{ roles[index3] }}</span>
-        </div>
-      </div>
-      <div @click="nextDev" role="button"
-           class="arrow arrow-right mx-5 d-flex justify-content-center align-items-center gap-2 fs-1 fw-bold user-select-none">
-        >
       </div>
     </div>
+  
+    <DeveloperProfile v-if="this.isHide" :developer="devolepers[indexOfDev]" @showDev="showDev"/>
   </div>
-
-  <DeveloperProfile v-if="this.isHide" :developer="devolepers[indexOfDev]" @showDev="showDev"/>
+  <div v-if='!this.isAllLoad'>
+    <div class="co">
+    <div class="load-item item1"></div>
+    <div class="load-item item2"></div>
+    <div class="load-item item3"></div>
+    <div class="load-item item4"></div>
+    <div class="load-item item5"></div>
+</div>
+  </div>
 
 </template>
 

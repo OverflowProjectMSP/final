@@ -31,7 +31,9 @@ export default {
 
       updQ: false,
       ShowAdd: true,
-      isAdmin: false
+      isAdmin: false,
+
+      isAllLoad: false,
     }
   },
 
@@ -48,6 +50,7 @@ export default {
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
       this.questionInfo.details = this.questionInfo.details.replaceAll(regex, '<br>')
       this.loadAnswerUser();
+      this.preloader();
     },
 
     async loadAnswerUser() {
@@ -216,6 +219,12 @@ export default {
       }
     },
 
+    async preloader() {
+      if (this.questionInfo && this.userCreater) {
+          this.isAllLoad = true;
+      }
+    },
+
   },
   mounted() {
     this.loadQuestion();
@@ -227,7 +236,7 @@ export default {
 </script>
 
 <template>
-  <div class="main-container mb-4">
+  <div class="main-container mb-4" v-if='this.isAllLoad'>
     <div class="content-1">
       <div class="account justify-content-between">
         <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile/${this.userCreater.id}`">
@@ -323,6 +332,13 @@ export default {
       </div>
     </form>
   </div>
+  <div class="co" v-else>
+    <div class="load-item item1"></div>
+    <div class="load-item item2"></div>
+    <div class="load-item item3"></div>
+    <div class="load-item item4"></div>
+    <div class="load-item item5"></div>
+</div>
 </template>
 
 <style scoped>

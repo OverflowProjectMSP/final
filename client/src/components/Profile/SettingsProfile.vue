@@ -23,6 +23,7 @@ export default {
       isUploading: true,
       percentCompleted: 0,
       isLoading: false,
+      isAllLoad: false,
     };
   },
 
@@ -83,6 +84,7 @@ export default {
         },
       });
       this.form = res.data.all;
+      this.preloader();
     },
     deleteAvatar() {
       this.form.avatar = this.defaultAvatar;
@@ -98,11 +100,17 @@ export default {
     des() {
       this.$router.push("/auth-tg-desription");
     },
+
+    async preloader() {
+      if (this.form) {
+        this.isAllLoad = true;
+      }
+    },
   },
 };
 </script>
 <template>
-  <form class="container mb-3" @submit.prevent="putInfo">
+  <form class="container mb-3" @submit.prevent="putInfo" v-if='this.isAllLoad'>
     <div class="row pt-5">
       <div class="col-3">
         <h3>Настройки профиля</h3>
@@ -353,6 +361,13 @@ export default {
         </div>
       </div>
     </div>
+  </form>
+  <form class="co" v-else>
+    <div class="load-item item1"></div>
+    <div class="load-item item2"></div>
+    <div class="load-item item3"></div>
+    <div class="load-item item4"></div>
+    <div class="load-item item5"></div>
   </form>
 </template>
 <style scoped>
