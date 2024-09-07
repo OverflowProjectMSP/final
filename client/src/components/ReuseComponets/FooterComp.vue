@@ -9,9 +9,9 @@
       <div class="d-flex flex-row">
         <a href="https://t.me/upfollowru" style="--i:7" class="footer-icon"><img class="link user-select-none" src="../../assets/Footer/Telegram.png" alt="telegram"></a>
         <a href="https://vk.com/club226123105" style="--i:8" class="footer-icon"><img class="link user-select-none" src="../../assets/Footer/Vk.png" alt="vk"></a>
-        <a href="https://discord.gg/RmEbfBCs" style="--i:9" class="footer-icon"><img class="link user-select-none" src="../../assets/Footer/Discord.png" alt="discord"></a>
-        <a href="https://www.youtube.com/@UpFollow2024" style="--i:9" class="footer-icon"><img class="link user-select-none" src="../../assets/Main/pngwing.com.png" alt="youtube"></a>
-        <a href="https://www.tiktok.com/@upfollow_ru" style="--i:9" class="footer-icon"><img class="link user-select-none" src="../../assets/Main/output-onlinepngtools.png" alt="tiktok"></a>
+        <a href="https://discord.gg/RmEbfBCs" style="--i:9" class="footer-icon"><img class="link disc user-select-none" src="../../assets/Footer/Discord.png" alt="discord"></a>
+        <a href="https://www.youtube.com/@UpFollow2024" style="--i:9" class="footer-icon"><img class="link ytub user-select-none" src="../../assets/Main/pngwing.com.png" alt="youtube"></a>
+        <a href="https://www.tiktok.com/@upfollow_ru" style="--i:9" class="footer-icon"><img class="link tikt user-select-none" src="../../assets/Main/output-onlinepngtools.png" alt="tiktok"></a>
       </div>
       <p class="text">Upfollow</p>
       <hr class="hr">
@@ -85,6 +85,30 @@ a {
 
 .footer-icon{
   transition:  all 300ms;
+}
+
+.link {
+  width: 40px;
+  height: 40px;
+}
+
+.disc {
+  width: 45px;
+  height: 45px;
+}
+
+.ytub {
+  width: 47px;
+  height: 47px;
+  margin-top: -2px;
+}
+
+.tikt {
+  width: 48px;
+  height: 48px;
+  margin-top: -2px;
+  margin-left: -2px;
+  margin-right: 0px;
 }
 
 @media (hover: hover) {
