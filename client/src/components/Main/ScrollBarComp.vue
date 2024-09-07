@@ -75,7 +75,7 @@ export default {
 
       names: [],
       roles: [],
-      images: [],
+      images: [kosty_py_img, kinestrik_img, sanya_img, vanya_img, maxim_img, egor_img, nekit_img],
 
       isHide: false,
       indexOfDev: null,
@@ -91,7 +91,6 @@ export default {
       for (let i = 0; i < this.devolepers.length; i++) {
         this.names.push(this.devolepers[i].name);
         this.roles.push(this.devolepers[i].role);
-        this.images.push(this.devolepers[i].imageProfileDS);
         this.preloader();
       }
     },

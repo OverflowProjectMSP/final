@@ -11,9 +11,15 @@ export default {
                 descriptions: ``,
                 details: ``,
                 tag: ``,
+                imageBase64: [],
+                links: [],
             },
 
             error: ``,
+
+            imagePast: '<img src=``>',
+
+            filename: ``,
         }
     },
 
@@ -38,6 +44,32 @@ export default {
             } else {
                 this.error = `Введите больше информации`;
             };
+        },
+
+        async convertFileAvatar(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            const filename = event.target.files[0].name;
+            this.filename = filename;
+            reader.onload = () => {
+                this.addToString();
+                this.form.imageBase64.push(reader.result);
+            };
+            reader.readAsDataURL(file);
+        },
+
+        async addToString() {
+            let linka = await this.sendImage();
+            this.form.links.push(linka);
+            this.imagePast = `<img src="${linka}">`
+            this.addTag(this.imagePast, linka.length);
+        },
+
+        async sendImage() {
+            let res = await axios.post('/add-img', {
+                name: this.filename
+            });
+            return res.data.link;
         },
 
         updateCursor(event) {

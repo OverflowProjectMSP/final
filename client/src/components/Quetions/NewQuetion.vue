@@ -17,6 +17,8 @@ export default {
                 details: ``,
                 dificulty: ``,
                 tag: ``,
+                imageBase64: [],
+                links: [],
             },
 
             file: '',
@@ -25,6 +27,7 @@ export default {
             imageLink: [],
 
             imagePast: '<img src=``>',
+
         }
     },
     methods: {
@@ -71,22 +74,22 @@ export default {
             const filename = event.target.files[0].name;
             this.filename = filename;
             reader.onload = () => {
-                this.avatar = reader.result;
                 this.addToString();
+                this.form.imageBase64.push(reader.result);
             };
             reader.readAsDataURL(file);
         },
 
         async addToString() {
             let linka = await this.sendImage();
+            this.form.links.push(linka);
             this.imagePast = `<img src="${linka}">`
             this.addTag(this.imagePast, linka.length);
         },
         
         async sendImage() {
             let res = await axios.post('/add-img', {
-                name: this.filename,
-                base: this.avatar,
+                name: this.filename
             });
             return res.data.link;
         }
