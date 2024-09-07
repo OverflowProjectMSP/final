@@ -326,3 +326,59 @@ def serve_file_(filename):
     #     return jsonify({'error': 'File not found'}), 404
 
     return send_from_directory(directory='media/', path=path)
+
+def get_news(id: str):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"SELECT * FROM news WHERE NOT {id} = ANY(ids_reviewed) AND time_end > NOW")
+
+        res = cursor.fetchall()
+
+        return_data = []
+        ids = ""
+
+        if len(res) == 0:
+            return_data = "Новостей нет"
+        else:
+            for row in res:
+                d = dict(row)
+                return_data.append(d)
+                if ids == "":
+                    ids += f"id = $${d[id]}$$"
+                else:
+                    ids += f" OR id = $${d["id"]}$$"
+
+        
+        cursor.execute(f"UPDATE news SET ids_reviewed = array_append(ids_reviewed, '{id}') WHERE {ids};")
+
+        pg.commit()
+
+    except (Exception, Error) as error:
+        logging.info(f"Ошибка получения данных: {error}")
+        return_data = 'Errro'
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+@app.route("/get-news", methods=["GET"])
+def get_news_r():
+    responce_object = {'status': 'success'}
+
+    if "id" in session:
+        responce_object['res'] = get_news(session.get("id"))
+    else:
+        responce_object["res"] = "Пользователь не в аккаунте"
+    return jsonify(responce_object)
