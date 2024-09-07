@@ -14,6 +14,7 @@
         <a href="https://www.tiktok.com/@upfollow_ru" style="--i:9" class="footer-icon"><img class="link tikt user-select-none" src="../../assets/Main/output-onlinepngtools.png" alt="tiktok"></a>
       </div>
       <p class="text">Upfollow</p>
+
       <hr class="hr">
       <p class="text_FAQ"><a href="/FAQ">FAQ</a></p>
       <a href="#"><img class="arrow user-select-none" alt="arrows" src="../../assets/Footer/arrows.png"></a>
