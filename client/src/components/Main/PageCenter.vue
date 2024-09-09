@@ -1,7 +1,9 @@
 <script>
 import axios from 'axios';
+import ModalNews from '../News/ModalNews.vue';
 
 export default {
+  components: {ModalNews},
   data() {
     return {
       langueges: ['TS', 'PHP', 'Python', 'JS', 'C#', 'Ruby', 'C++', 'Go', 'Java', 'Kotlin'],
@@ -15,6 +17,11 @@ export default {
       index5: 5,
       usersReg: 10,
       answersCount: 0,
+      isSession: false,
+
+      news: [],
+
+      isOpenNews: true,
     }
   },
   methods: {
@@ -67,16 +74,32 @@ export default {
     async getCountOfAnswers(){
       let res = await axios.get("/get-answers")
       this.answersCount = res.data.count
+    },
+
+    async loadNews() {
+			this.news = (await axios.get('get-news')).data.all;
+		},
+
+    async isInSession() {
+      let res = await axios.get('/check-r')
+      this.isSession = res.data.all;
+    },
+
+    closeNews() {
+      this.isOpenNews = !this.isOpenNews;
     }
   },
   mounted() {
-    this.regUser(),
-    this.getCountOfAnswers()
+    this.regUser();
+    this.getCountOfAnswers();
+		this.loadNews();
+    this.isInSession();
   }
 }
 </script>
 
 <template>
+  <ModalNews v-if='this.isSession && this.news.length && isOpenNews' :news='news' @closeNews='closeNews'/>
   <div class="pagecenter">
     <hr class="hr-start">
     <p class="center-desc">Здесь вы можете задать вопросы по таким языкам <br> программирования как</p>
