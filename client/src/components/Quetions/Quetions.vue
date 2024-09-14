@@ -20,7 +20,9 @@ export default {
 
             Show: false,
 
-            cnt: 0
+            cnt: 0,
+
+            isAllLoad: false,
         }
     },
     mounted() {
@@ -30,7 +32,8 @@ export default {
         async loadQuestions() {
             let res = await axios.get('/show-questions');
             this.quetions = res.data.all;
-            this.cnt++
+            this.cnt++;
+            this.preloader();
         },
         CloseModal(Show) {
             this.Show = false
@@ -53,73 +56,81 @@ export default {
         },
         Close(Show) {
             this.Show = !this.Show
-        }
+        },
+
+        async preloader() {
+            if (this.quetions.length) {
+                this.isAllLoad = true;
+            }
+        },
     },
 }
 </script>
 
 <template>
-    <div class="quest-menu mt-3">
-        <div class="active-container d-flex flex-column p-2">
-            <h2 class="mar">Активные вопросы</h2>
-            <p class="mar">В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
-            <div class="all-inputs">
-                <div class="inputs">
-                    <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос"
-                        aria-label="First name">
-                    <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса"
-                        aria-label="Last name">
-                </div>
-                <div class="button-select">
-                    <div class="selects">
-                        
-
-                        <select class="form-select form-2 me-2" v-model="tag">
-                            <option value="">Тема вопроса</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="ts">TS</option>
-                            <option value="python">Python</option>
-                            <option value="php">PHP</option>
-                            <option value="cpp">C++</option>
-                            <option value="java">Java</option>
-                            <option value="cs">C#</option>
-                            <option value="go">Golang</option>
-                            <option value="IB">ИБ</option>
-                        </select>
-
-                        <div class="img-select">
-                            <!-- <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level"> -->
-                            <select class="form-select form-1 " v-model="dificulty">
-                                <option value="">Степень сложности</option>
-                                <option value="Простой" selected>Лёгкие</option>
-                                <option value="Средний">Средние</option>
-                                <option value="Сложный">Сложные</option>
+    <div v-if='this.isAllLoad'>
+        <div class="quest-menu mt-3">
+            <div class="active-container d-flex flex-column p-2">
+                <h2 class="mar">Активные вопросы</h2>
+                <p class="mar">В данном разделе находятся вопросы, которые ждут именно <b>твоего</b> ответа!</p>
+                <div class="all-inputs">
+                    <div class="inputs">
+                        <input v-model="title" type="search" class="form-control w-25" placeholder="Вопрос"
+                            aria-label="First name">
+                        <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса"
+                            aria-label="Last name">
+                    </div>
+                    <div class="button-select">
+                        <div class="selects">
+                            
+    
+                            <select class="form-select form-2 me-2" v-model="tag">
+                                <option value="">Тема вопроса</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="ts">TS</option>
+                                <option value="python">Python</option>
+                                <option value="php">PHP</option>
+                                <option value="cpp">C++</option>
+                                <option value="java">Java</option>
+                                <option value="cs">C#</option>
+                                <option value="go">Golang</option>
+                                <option value="IB">ИБ</option>
                             </select>
+    
+                            <div class="img-select">
+                                <!-- <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level"> -->
+                                <select class="form-select form-1 " v-model="dificulty">
+                                    <option value="">Степень сложности</option>
+                                    <option value="Простой" selected>Лёгкие</option>
+                                    <option value="Средний">Средние</option>
+                                    <option value="Сложный">Сложные</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2"> -->
-                    <!-- </div> -->
-                    <div class="down-menu d-flex align-items-center">
-                        <div class="d-flex align-items-center">
-                            <!-- плюсик -->
-                            <!-- <div class="contain" @click="OpenModal">
-                                <img src="../../assets/States/add.png" class="add">
-                            </div> -->
-                            <button class="btn find-btn btn-outline-primary text-dark ms-4"
-                                @click="filtre">Найти</button>
+                        <!-- <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2"> -->
+                        <!-- </div> -->
+                        <div class="down-menu d-flex align-items-center">
+                            <div class="d-flex align-items-center">
+                                <!-- плюсик -->
+                                <!-- <div class="contain" @click="OpenModal">
+                                    <img src="../../assets/States/add.png" class="add">
+                                </div> -->
+                                <button class="btn find-btn btn-outline-primary text-dark ms-4"
+                                    @click="filtre">Найти</button>
+                            </div>
                         </div>
+                        <button class="create-quetion">Создать вопрос</button>
                     </div>
-                    <button class="create-quetion">Создать вопрос</button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="cont d-flex align-items-center">
-        <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
-        <model-wind v-if="Show" @CloseModal="CloseModal" />
-    </div>
-    <div class="content p-2" v-if="this.quetions.length == 0 && this.cnt==1">
-        <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
+        <div class="cont d-flex align-items-center">
+            <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
+            <model-wind v-if="Show" @CloseModal="CloseModal" />
+        </div>
+        <div class="content p-2" v-if="this.quetions.length == 0 && this.cnt==1">
+            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
+        </div>
     </div>
 </template>
 
@@ -343,6 +354,7 @@ h4 {
 
     .button-select {
         flex-direction: column;
+        align-items: center;
     }
 
     .selects {
@@ -376,6 +388,16 @@ h4 {
         margin-left: -1px;
     }
 
+}
+
+@media (max-width: 870px) {
+    .active-container {
+        align-items: center;
+    }
+
+    .mar {
+        width: 300px;
+    }
 }
 
 @media(max-width: 600px) {

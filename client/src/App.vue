@@ -30,16 +30,7 @@ export default {
 <template>
 <header-comp v-if=' this.$route.path != "/" ' />
 
-<div class="co" v-if="this.show">
-        <div class="load-item item1"></div>
-        <div class="load-item item2"></div>
-        <div class="load-item item3"></div>
-        <div class="load-item item4"></div>
-        <div class="load-item item5"></div>
-</div>
-
-
-  <div class="app" v-if="!this.show">
+  <div class="app">
   <RouterView class="RouterView"/>
   <footer-comp />
   </div>
@@ -67,15 +58,6 @@ template {
 .RouterView {
   min-height: 60.7vh !important;
 }
-
-
-
-
-
-
-
-
-
 
 /* прелоудер */
 .co {

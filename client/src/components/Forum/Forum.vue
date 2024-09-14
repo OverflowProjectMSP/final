@@ -20,6 +20,8 @@ export default {
 
             title: ``,
             dificulty: '',
+
+            isAllLoad: false,
         }
     },
     mounted() {
@@ -41,7 +43,8 @@ export default {
                 this.posts = res.data.all.states;
             }
             this.postUsers = []
-            this.loadAnswerUser()
+            this.loadAnswerUser();
+            this.preloader();
         },
 
         async filtre() {
@@ -70,7 +73,7 @@ export default {
 
         async loadAnswerUser() {
             this.postUsers = []
-            for (let i = 0; i < this.posts.length; i++) {       
+            for (let i = 0; i < this.posts.length; i++) {
                 let user = await this.loadUsers(this.posts[i]);
                 this.postUsers.push(user)
             };
@@ -145,87 +148,118 @@ export default {
                     this.titleLang = this.$route.params.lang;
                     break;
             }
-        }
+        },
+
+        async preloader() {
+            if (this.posts.length) {
+                this.isAllLoad = true;
+            } else {
+                this.isAllLoad = true;
+            }
+        },
     }
 }
 </script>
 
 <template>
-    <div class="contant-head mt-3">
-        <div class="container-one">
-            <div class="name-and-image">
-                <img class="forum-image" src="../../assets/Forum/js.jpg" alt="" v-if="this.$route.params.lang == 'javascript'">
-                <img class="forum-image" src="../../assets/Forum/cpp.jpg" alt="" v-if="this.$route.params.lang == 'cpp'">
-                <img class="forum-image" src="../../assets/Forum/cs.jpg" alt="" v-if="this.$route.params.lang == 'cs'">
-                <img class="forum-image" src="../../assets/Forum/golang.jpg" alt="" v-if="this.$route.params.lang == 'golang'">
-                <img class="forum-image" src="../../assets/Forum/php.jpg" alt="" v-if="this.$route.params.lang == 'php'">
-                <img class="forum-image" src="../../assets/Forum/python.jpg" alt="" v-if="this.$route.params.lang == 'python'">
-                <img class="forum-image" src="../../assets/Forum/kotlin.jpg" alt="" v-if="this.$route.params.lang == 'kotlin'">
-                <img class="forum-image" src="../../assets/Forum/ts.jpg" alt="" v-if="this.$route.params.lang == 'ts'">
-                <img class="forum-image" src="../../assets/Forum/ruby.jpg" alt="" v-if="this.$route.params.lang == 'ruby'">
+        <div class="contant-head mt-3">
+            <div class="container-one">
+                <div class="name-and-image">
+                    <img class="forum-image" src="../../assets/Forum/js.jpg" alt=""
+                        v-if="this.$route.params.lang == 'javascript'">
+                    <img class="forum-image" src="../../assets/Forum/cpp.jpg" alt=""
+                        v-if="this.$route.params.lang == 'cpp'">
+                    <img class="forum-image" src="../../assets/Forum/cs.jpg" alt=""
+                        v-if="this.$route.params.lang == 'cs'">
+                    <img class="forum-image" src="../../assets/Forum/golang.jpg" alt=""
+                        v-if="this.$route.params.lang == 'golang'">
+                    <img class="forum-image" src="../../assets/Forum/php.jpg" alt=""
+                        v-if="this.$route.params.lang == 'php'">
+                    <img class="forum-image" src="../../assets/Forum/python.jpg" alt=""
+                        v-if="this.$route.params.lang == 'python'">
+                    <img class="forum-image" src="../../assets/Forum/kotlin.jpg" alt=""
+                        v-if="this.$route.params.lang == 'kotlin'">
+                    <img class="forum-image" src="../../assets/Forum/ts.jpg" alt=""
+                        v-if="this.$route.params.lang == 'ts'">
+                    <img class="forum-image" src="../../assets/Forum/ruby.jpg" alt=""
+                        v-if="this.$route.params.lang == 'ruby'">
 
-                <p>{{ titleLang }}</p>
+                    <p>{{ titleLang }}</p>
+                </div>
+                <button class="create-post" v-if="this.isQuestion"><img class="plus-icon"
+                        src="../../assets/Forum/plus.svg"><a href="/NewQuetion">
+                        Создать вопрос</a></button>
+                <button class="create-post" v-else><img class="plus-icon" src="../../assets/Forum/plus.svg"><a
+                        href="/NewState">
+                        Создать статью</a></button>
             </div>
-            <button class="create-post" v-if="this.isQuestion"><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewQuetion">
-                    Создать вопрос</a></button>
-            <button class="create-post" v-else><img class="plus-icon" src="../../assets/Forum/plus.svg"><a href="/NewState">
-                    Создать статью</a></button>
         </div>
+        <div class="contant-post">
+            <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
+                <div class="sort-inside d-flex flex-row gap-3 align-items-center">
+                    <div class="cont-search">
+                        <img width="30" src="../../assets/Forum/search.svg" alt=""><input class="search" type="search"
+                            v-model="title">
+                    </div>
+                    <div class="d-flex filt" v-if='this.isQuestion'>
+                        <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
+                        <select class="form-select form-1 " v-model="dificulty">
+                            <option value="Простой">Лёгкие</option>
+                            <option value="Средний">Средние</option>
+                            <option value="Сложный">Сложные</option>
+                            <option value="" selected>Без фильтров</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary px-4" @click="filtre">Найти</button>
+            </div>
+            <!-- <div class="hr"></div> -->
+            <div class="ancet d-flex mb-3" style="display: flex; gap: 40px;">
+                <h5 role="button" class="mb-0" :class="{ 'border-bottom border-2 border-dark fw-semibold': isQuestion }"
+                    @click="loadForum">Вопросы</h5>
+                <h5 role="button" class="mb-0"
+                    :class="{ 'border-bottom border-2 border-dark fw-semibold': !isQuestion }" @click="loadForum">Статьи
+                </h5>
+            </div>
+
+            <div v-if='this.isAllLoad'>
+
+            <div class="post" v-for="post in posts">
+                <div class="account">
+                    <a :href="`/Profile/${post.id_u}`">
+                        <img class="account-img" :src="post.user.avatar" alt="">{{ post.user.username }}
+                    </a>
+                </div>
+                <div class="main-post-and-check">
+                    <div class="main-post">
+                        <h2 class="title">{{ post.title }}</h2>
+                        <p class="description">{{ post.descriptions }}</p>
+                    </div>
+                    <div class="decided" v-if="post.is_solved">
+                        <div class="decid"><img width="60" class="decided-img" src="../../assets/Forum/decided.svg"
+                                alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
+                    </div>
+                </div>
+                <div class="answer" v-if="this.isQuestion">
+                    <a :href="`/QuestionItem/` + post.id"><button><img :src="'src/assets/comments.svg'" alt=""><span>{{
+                                post.acnt }}</span> Ответов</button></a>
+                </div>
+                <div class="answer" v-else>
+                    <a :href="`/StateItem/` + post.id"><button><img :src="'src/assets/comments.svg'" alt=""><span>{{
+                                post.acnt }}</span> Комментариев </button></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="co" v-else>
+        <div class="load-item item1"></div>
+        <div class="load-item item2"></div>
+        <div class="load-item item3"></div>
+        <div class="load-item item4"></div>
+        <div class="load-item item5"></div>
     </div>
-    <div class="contant-post">
-        <div class="sort-and-search d-flex flex-row gap-2 align-items-center">
-            <div class="sort-inside d-flex flex-row gap-3 align-items-center">
-                <div class="cont-search">
-                    <img width="30" src="../../assets/Forum/search.svg" alt=""><input class="search" type="search"
-                        v-model="title">
-                </div>
-                <div class="d-flex filt" v-if='this.isQuestion'>
-                    <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level">
-                    <select class="form-select form-1 " v-model="dificulty">
-                        <option value="Простой">Лёгкие</option>
-                        <option value="Средний">Средние</option>
-                        <option value="Сложный">Сложные</option>
-                        <option value="" selected >Без фильтров</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn btn-outline-primary px-4" @click="filtre">Найти</button>
-        </div>
-        <!-- <div class="hr"></div> -->
-        <div class="ancet d-flex mb-3" style="display: flex; gap: 40px;">
-            <h5 role="button" class="mb-0" :class="{ 'border-bottom border-2 border-dark fw-semibold': isQuestion }"
-                @click="loadForum">Вопросы</h5>
-            <h5 role="button" class="mb-0" :class="{ 'border-bottom border-2 border-dark fw-semibold': !isQuestion }"
-                @click="loadForum">Статьи</h5>
-        </div>
-
-        <div class="post" v-for="post in posts">
-            <div class="account">
-                <a :href="`/Profile/${post.id_u}`">
-                    <img class="account-img" :src="post.user.avatar" alt="">{{ post.user.username }}
-                </a>
-            </div>
-            <div class="main-post-and-check">
-                <div class="main-post">
-                    <h2 class="title">{{ post.title }}</h2>
-                    <p class="description">{{ post.descriptions }}</p>
-                </div>
-                <div class="decided" v-if="post.is_solved">
-                    <div class="decid"><img width="60" class="decided-img" src="../../assets/Forum/decided.svg"
-                            alt="Решён"><span class="hover-hidden">Вопрос решён</span></div>
-                </div>
-            </div>
-            <div class="answer" v-if="this.isQuestion">
-                <a :href="`/QuestionItem/` + post.id"><button><img
-                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Ответов</button></a>
-            </div>
-            <div class="answer" v-else>
-                <a :href="`/StateItem/` + post.id"><button><img
-                    :src="'src/assets/comments.svg'" alt=""><span>{{ post.acnt }}</span> Комментариев </button></a>
-            </div>
-        </div>
-
     </div>
+    
 </template>
 
 <style scoped>
@@ -236,10 +270,10 @@ a {
 }
 
 .post {
-        padding-top: 10px;
-        transition: all 0.5s;
-    }
-    
+    padding-top: 10px;
+    transition: all 0.5s;
+}
+
 .post:hover {
     transform: translateY(-10px);
     box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);

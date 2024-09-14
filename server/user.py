@@ -504,7 +504,7 @@ def user_registration():
             session['password'] = post_data.get('password')
             session.modified = True
             response_object["res"] = "Ok"
-        else: response_object["res"] = "Хуйня почта"
+        else: response_object["res"] = "Некорректная почта"
         # logging.info(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
 
     return jsonify(response_object)
@@ -529,7 +529,7 @@ def reg_fhjfhf():
     if session["code"] == post_data.get("code"):
         logging.info(add_user_todb(session.get('name'), session.get('email'),session.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
         response_object["res"] = "Ok"
-    else: response_object["res"] = "Хуйня код"
+    else: response_object["res"] = "Некорректный код"
 
     return jsonify(response_object)
 # def refresh_data_tset(info, id):

@@ -17,7 +17,9 @@ export default {
       }],
       ShowLogin: true,
       avatar: 'src/assets/Header/AvatarDef.svg',
-      id: ''
+      id: '',
+
+      isAllLoad: false
     }
 
   },
@@ -28,35 +30,37 @@ export default {
     LoginPage() {
       this.$router.push('/Login');
     },
-    async loadAvatar() {
-      let res = await axios.get('/avatar');
-      this.avatar = res.data.link;
-      if (this.avatar == "No") {
-        this.avatar = "src/assets/Header/AvatarDef.svg";
-      } else {
-        this.avatar = this.avatar;
-      }
-    },
-    async loadLogin() {
-      let res = await axios.get(`/check-r`);
-      this.ShowLogin = res.data.all;
-      console.log(this.ShowLogin)
-      if (this.ShowLogin == "true") {
+
+    async getUserSession() {
+      let res = await axios.get(`/get-curent-avatar`);
+
+      if(res.data.all != null) {
         this.ShowLogin = false;
-        
-        this.getId()
-      } else if (this.ShowLogin == "false") {
+        this.id = res.data.all.id;
+
+        if (this.avatar == "No") {
+          this.avatar = "src/assets/Header/AvatarDef.svg";
+        } else {
+          this.avatar = res.data.all.avatar;
+        }
+
+      } else {
         this.ShowLogin = true;
       }
+
+      this.preloader();
     },
-    async getId(){
-      let res = await axios.get(`/session`);
-      this.id = res.data.id
-    }
+
+    async preloader() {
+        if (this.avatar && this.id) {
+            this.isAllLoad = true;
+        }
+    },
+    
   },
+
   mounted() {
-    this.loadLogin();
-    this.loadAvatar()
+    this.getUserSession();
   }
 }
 
@@ -64,7 +68,7 @@ export default {
 <template>
 
 
-  <header id="1">
+  <header id="1" v-if='this.isAllLoad'>
     <nav class="navbar navbar-expand-xl  d-flex align-items-center rounded-0">
       <div class="container-fluid ">
         <a class="navbar-brand" href="/">
@@ -115,6 +119,15 @@ export default {
         </div>
       </div>
     </nav>
+  </header>
+  <header v-else>
+    <div class="co" v-if='!this.isAllLoad'>
+    <div class="load-item item1"></div>
+    <div class="load-item item2"></div>
+    <div class="load-item item3"></div>
+    <div class="load-item item4"></div>
+    <div class="load-item item5"></div>
+</div>
   </header>
 
 </template>

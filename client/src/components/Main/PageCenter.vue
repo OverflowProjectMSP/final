@@ -1,7 +1,9 @@
 <script>
 import axios from 'axios';
+import ModalNews from '../News/ModalNews.vue';
 
 export default {
+  components: {ModalNews},
   data() {
     return {
       langueges: ['TS', 'PHP', 'Python', 'JS', 'C#', 'Ruby', 'C++', 'Go', 'Java', 'Kotlin'],
@@ -13,7 +15,13 @@ export default {
       index3: 3,
       index4: 4,
       index5: 5,
-      usersReg: 10
+      usersReg: 10,
+      answersCount: 0,
+      isSession: false,
+
+      news: [],
+
+      isOpenNews: true,
     }
   },
   methods: {
@@ -62,37 +70,58 @@ export default {
     async regUser() {
       let res = await axios.get(`/users-reg`)
       this.usersReg = res.data.regs
+    },
+    async getCountOfAnswers(){
+      let res = await axios.get("/get-answers")
+      this.answersCount = res.data.count
+    },
+
+    async loadNews() {
+			this.news = (await axios.get('get-news')).data.all;
+		},
+
+    async isInSession() {
+      let res = await axios.get('/check-r')
+      this.isSession = res.data.all;
+    },
+
+    closeNews() {
+      this.isOpenNews = !this.isOpenNews;
     }
   },
   mounted() {
-    this.regUser()
+    this.regUser();
+    this.getCountOfAnswers();
+		this.loadNews();
+    this.isInSession();
   }
 }
 </script>
 
 <template>
+  <ModalNews v-if='this.isSession && this.news.length && isOpenNews' :news='news' @closeNews='closeNews'/>
   <div class="pagecenter">
     <hr class="hr-start">
     <p class="center-desc">Здесь вы можете задать вопросы по таким языкам <br> программирования как</p>
     <div class="languages">
       <button @click="prevLang" class="btn-arrow leftarrow">&lt;</button>
       <div class="lang-items">
-        <a :href="`/Forum?lang=${links[index]}`">
+        <a :href="`/Forum/${links[index]}`">
           <div class="lang-item lang-item-col-1" :class="stylesLang[index]">{{ langueges[index] }}</div>
         </a>
-        <a :href="`/Forum?lang=${links[index1]}`">
+        <a :href="`/Forum/${links[index1]}`">
           <div class="lang-item lang-item-col-2" :class="stylesLang[index1]">{{ langueges[index1] }}</div>
         </a>
-        <a :href="`/Forum?lang=${links[index2]}`">
+        <a :href="`/Forum/${links[index2]}`">
           <div class="lang-item lang-item-col-3" :class="stylesLang[index2]">{{ langueges[index2] }}</div>
         </a>
-        <a :href="`/Forum?lang=${links[index3]}`">
+        <a :href="`/Forum/${links[index3]}`">
           <div class="lang-item lang-item-col-4" :class="stylesLang[index3]">{{ langueges[index3] }}</div>
         </a>
-        <a :href="`/Forum?lang=${links[index4]}`">
+        <a :href="`/Forum/${links[index4]}`">
           <div class="lang-item lang-item-col-5" :class="stylesLang[index4]">{{ langueges[index4] }}</div>
         </a>
-        <a :href="`/Forum?lang=${links[index5]}`">
+        <a :href="`/Forum/${links[index5]}`">
           <div class="lang-item lang-item-col-6" :class="stylesLang[index5]">{{ langueges[index5] }}</div>
         </a>
       </div>
@@ -103,11 +132,11 @@ export default {
       <div class="wehave-items">
         <div class="wehave-item">
           <img src="../../assets/Main/user1.png" class="img-lox"style="width: 40px;" alt="">
-          <p class="wehave-item-desc">Зарегистрированно <br> {{ this.usersReg }} пользователей</p>
+          <p class="wehave-item-desc">{{ this.usersReg }} пользователей <br> зарегистрированно</p>
         </div>
         <div class="wehave-item">
-          <img src="../../assets/Main/expert.png" alt="">
-          <p class="wehave-item-desc">5 экспертов в сети <br> и помогают сейчас</p>
+          <img src="../../assets/Main/states.png" alt="">
+          <p class="wehave-item-desc">{{ this.answersCount }} ответов <br> оставлено</p>
         </div>
         <div class="wehave-item">
           <img src="../../assets/Main/users.png" alt="">
