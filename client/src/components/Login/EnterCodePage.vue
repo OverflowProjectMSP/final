@@ -162,7 +162,7 @@ h6 {
   background-color: #ecedee;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
   width: 100%;
   position: relative;
 }
@@ -598,6 +598,10 @@ h1 {
 @media (max-width: 505px) {
   .all-container {
     background: #fff;
+  }
+
+  .login-container {
+    margin: 0;
   }
   /* .login-container {
     -webkit-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);
