@@ -133,6 +133,9 @@ export default {
         }
       }
     },
+    login() {
+      this.$router.push("/Login")
+    }
   },
 };
 </script>
@@ -203,7 +206,7 @@ export default {
             </div>
           </div>
           <div class="btn-container">
-            <button class="bt reg">Войти</button>
+            <button class="bt reg" @click="login">Войти</button>
             <button
               type="submit"
               :class="{ login: button, grey: gre }"
