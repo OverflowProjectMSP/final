@@ -467,8 +467,8 @@ h1 {
 
   .a {
     position: absolute;
-    left: 250px;
-    top: 350px
+    left: 55px;
+    top: 430px
   }
   .input {
     margin-bottom: 40px;
@@ -493,14 +493,6 @@ h1 {
     width: 300px;
   }
 
-  .bt {
-    border-radius: 15px;
-    width: 60px;
-    height: 60px;
-    border: none;
-    cursor: pointer;
-    z-index: 7000;
-  }
 
   .btn-container {
     top: 80px;
@@ -524,6 +516,16 @@ h1 {
     top: 7px;
     right: -280px;
   }
+
+  .bt {
+    border-radius: 15px;
+    width: 300px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    z-index: 7000;
+  }
+
   .reg {
     font-family: var(--font-family);
     margin-left: -70px;
@@ -569,14 +571,7 @@ h1 {
     top: 7px;
     right: -250px;
   }
-  .bt {
-    border-radius: 15px;
-    width: 135px;
-    height: 60px;
-    border: none;
-    cursor: pointer;
-    z-index: 7000;
-  }
+  
   .login {
     font-family: var(--font-family);
     font-weight: 700;
@@ -592,6 +587,10 @@ h1 {
   .reg {
     font-family: var(--font-family);
     font-weight: 700;
+    font-size: 18px;
+  }
+
+  .a {
     font-size: 18px;
   }
 }
