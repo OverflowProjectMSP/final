@@ -142,6 +142,7 @@ export default {
 
 <template>
   <div class="window">
+    <h6>UF 2.0</h6>
     <div class="main-cont">
       <div class="image">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
@@ -226,6 +227,16 @@ export default {
 </template>
 
 <style>
+h6 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #3b82f6;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: block;
+}
 .err {
   font-family: var(--font-family);
   font-weight: 700;
