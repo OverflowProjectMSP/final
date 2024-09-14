@@ -15,7 +15,7 @@ export default {
       isShowPassword: false,
       showPassword: 'password',
       isShowExPassword: false,
-      showExPassword: 'password',
+      showExPassword: 'password', 
       src: 'src/assets/Login/23.png',
       inputNumber: '',
       button: true,
