@@ -39,6 +39,10 @@ export default createRouter({
       component: () => import("../components/Login/EnterCodePage.vue"),
     },
     {
+      path: "/EnterCode",
+      component: () => import("../components/Login/EnterCodePage1.vue"),
+    },
+    {
       path: "/EnterNewPassword",
       component: () => import("../components/Login/EnterNewPassword.vue"),
     },

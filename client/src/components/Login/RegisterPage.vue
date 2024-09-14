@@ -58,8 +58,10 @@ export default {
         });
           if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
           this.error = 'Пользователь с таким именем или почтой уже существует!'
+          } else if ("Некорректная почта") {
+            this.error = 'Почта невалидна.'
           } else if("Ok"){
-            this.$router.push("/Login");
+            this.$router.push("/EnterCode");
         }
       } catch(err) {
           console.error(err)
