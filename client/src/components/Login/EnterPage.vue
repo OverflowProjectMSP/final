@@ -465,23 +465,49 @@ h1 {
     cursor: pointer;
     right: 50px;
   }
+
+  h6 {
+    z-index: 100;
+  }
+
+  .all-container {
+    overflow-x: hidden;
+  }
+
+  h1{
+    font-size: 50px;
+  }
+
   .a {
     position: absolute;
-    left: 220px;
+    left: 150px;
+    top: 420px;
+
   }
   .input {
     margin-bottom: 40px;
     border-radius: 15px;
-    width: 330px;
-    height: 60px;
+    width: 280px;
+    height: 50px;
     background: #eae9e9;
     border: none;
     padding: 20px;
     font-family: var(--font-family);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     color: #000000;
   }
+
+
+  .div-nickname span {
+    font-size: 18px;
+  }
+
+  .password span {
+    font-size: 18px;
+  }
+
+
   .bt {
     border-radius: 15px;
     width: 150px;
@@ -494,40 +520,52 @@ h1 {
     display: flex;
     border-radius: 50px;
     margin: 80px;
-    width: 430px;
-    height: 600px;
+    width: 360px;
+    height: 500px;
     background: #fff;
     position: relative;
   }
   .eye {
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     z-index: 100;
     cursor: pointer;
-    top: 7px;
-    right: -280px;
+    top: 10px;
+    right: -240px;
   }
   .reg {
     font-family: var(--font-family);
     margin-left: -70px;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     color: #5b5a5a;
     background: #eae9e9;
     cursor: pointer;
   }
   .login {
+    width: 120px;
     font-family: var(--font-family);
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     color: #fff;
     background: #3b82f6;
     text-align: center;
     cursor: pointer;
   }
+  
+  .input-container {
+    margin-top: 180px;
+    margin-left: -170px;
+  }
+
+  .btn-container {
+    margin-left: -220px;
+    gap: 10px;
+  }
+
   .img {
   transform: translateX(-20px);
   transition: all 0.3s;
@@ -594,11 +632,8 @@ h1 {
   background: #ffffff;
 
 }  
-  .all-container {
-    background: #fff;
-  }
   .login-container {
-  background: #f4f4f4;
+  background: #ecedee;
 }
   /* .login-container {
     -webkit-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);
