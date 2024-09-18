@@ -116,6 +116,10 @@ export default createRouter({
     {
       path: "/edit",
       component: () => import('../components/Edit/NewqueVid.vue')
+    },
+    {
+      path: "/editNewNav",
+      component: () => import('../components/Edit/NewnavBar.vue')
     }
   ],
 });
