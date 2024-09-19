@@ -87,76 +87,100 @@ h2 {
     opacity: 0.8 !important;
 }
 
-.enter button{
-    width: 120px;
-    border-radius: 5px;
-    color: #000;   
-    background-color: #fff;
+
+.enter button {
+  width: 120px;
+  border-radius: 5px;
+  color: #000;   
+  background-color: #fff;
   line-height: 42px;
   padding: 0;
   border: none;
   position: relative;
   font-weight: 500;
+  overflow: hidden; /* предотвращаем выход элементов за границы */
   transition: background-color 300ms ease;
 }
+
 .enter button span {
   position: relative;
   display: block;
   width: 100%;
   height: 100%;
 }
+
+/* Вертикальная линия (слева) */
 .enter button:before,
 .enter button:after {
   position: absolute;
   content: "";
-  right: 0;
-  bottom: 0;
   background-color: #fff;
- 
   transition: all 300ms ease;
 }
-.enter button:before{
-   height: 0%;
-   width: 2px;
+
+/* Левая вертикальная линия */
+.enter button:before {
+  right: 0;
+  bottom: 0;
+  height: 0%;
+  width: 3px;
 }
+
+/* Нижняя горизонтальная линия */
 .enter button:after {
+  right: 0;
+  bottom: 0;
   width: 0%;
   height: 2px;
 }
-.enter button:hover{
+
+.enter button:hover {
   color: #fff;
   background-color: #3d72d3;
 }
+
 .enter button:hover:before {
   height: 100%;
-
 }
+
 .enter button:hover:after {
   width: 100%;
 }
+
+/* Левые и верхние границы */
 .enter button span:before,
 .enter button span:after {
   position: absolute;
   content: "";
-  left: 0;
-  top: 0;
   background-color: #fff;
   transition: all 300ms ease;
 }
+
+/* Верхняя вертикальная линия */
 .enter button span:before {
-  width: 2px;
+  left: 0;
+  top: 0;
   height: 0%;
+  width: 2px;
 }
+
+/* Левая горизонтальная линия */
 .enter button span:after {
-  height: 2px;
+  left: 0;
+  top: 0;
   width: 0%;
+  height: 2px;
 }
-.enter button span:hover:before {
+
+/* Анимация появления верхней и левой линий при наведении на кнопку */
+.enter button:hover span:before {
   height: 100%;
 }
-.enter button span:hover:after {
+
+.enter button:hover span:after {
   width: 100%;
 }
+
 
 
 .enter img {
@@ -167,6 +191,50 @@ h2 {
 
 .enter img:hover {
     filter: brightness(85%);
+}
+
+@media (max-width: 950px) {
+  .navbar {
+  }
+
+  .items {
+    gap: 30px;
+  }
+
+  .items a {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 830px) {
+  .navbar {
+    padding: 0 10px 0 10px;
+  }
+
+  .items img {
+    width: 40px;
+  }
+
+  .icon-img {
+    padding-right: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .items a {
+    font-size: 15px;
+  }
+
+  .enter button {
+    width: 100px;
+    height: 40px;
+  }
+
+  .enter button span {
+    font-size: 17px;
+  }
 }
 
 </style>
