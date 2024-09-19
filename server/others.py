@@ -355,7 +355,7 @@ def get_news(id: str):
                 if ids == "":
                     ids += f"id = $${d[id]}$$"
                 else:
-                    ids += f" OR id = $${d["id"]}$$"
+                    ids += f' OR id = $${d["id"]}$$'
 
         
         cursor.execute(f"UPDATE news SET ids_reviewed = array_append(ids_reviewed, '{id}') WHERE {ids};")

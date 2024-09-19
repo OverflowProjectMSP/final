@@ -2,6 +2,9 @@ from app import *
 from tg import *
 from others import *
 from datetime import timedelta, datetime, timezone
+import time
+import locale
+locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
 
 load_dotenv()
 
@@ -55,7 +58,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# Отображение всех вапросов на frontend
+# Отображение всех вопросов на frontend
 def render_questions():
     try:
         pg = psycopg2.connect(f"""
@@ -80,7 +83,45 @@ def render_questions():
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             return_data.append(a)
+
+        ids_creators = []
+
+        for row in return_data:
+            ids_creators.append(row["id_u"])
+        
+        # logging.info(ids_creators)
+       
+        text = ""
+
+        for i in ids_creators:
+            if text == "":
+                text += f"id = $${i}$$"
+                continue
+            text += f" OR id = $${i}$$"
+
+        # logging.info(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        cursor.execute(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        result_info = cursor.fetchall()
+
+        reslt_info = {}
+
+        for row in result_info:
+            reslt_info[dict(row)["id"]] = dict(row)
+
+        # logging.info(reslt_info)
+
+        print(len(return_data), len(reslt_info), len(ids_creators), text)
+        
+        return_last_data = []
+
+        for i in return_data:
+            i["user"] = reslt_info[i["id_u"]]
+            return_last_data.append(i)
+
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -151,6 +192,7 @@ def show_all_by_user(id):
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             q.append(a)
 
         s = []
@@ -158,6 +200,7 @@ def show_all_by_user(id):
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             s.append(a)
 
 
@@ -379,7 +422,6 @@ def show_forum(filtre):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# Отображение всех статей на frontend
 def render_states():
     try:
         pg = psycopg2.connect(f"""
@@ -401,7 +443,50 @@ def render_states():
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             return_data.append(a)
+
+        ids_creators = []
+
+        for row in return_data:
+            ids_creators.append(row["id_u"])
+
+        
+        # logging.info(ids_creators)
+       
+        text = ""
+
+        for i in ids_creators:
+            if text == "":
+                text += f"id = $${i}$$"
+                continue
+            text += f" OR id = $${i}$$"
+
+        # logging.info(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        cursor.execute(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        result_info = cursor.fetchall()
+
+        reslt_info = {}
+
+        for row in result_info:
+            reslt_info[dict(row)["id"]] = dict(row)
+
+        # logging.info(reslt_info)
+        lst = [len(return_data), len(reslt_info), len(ids_creators), text]
+        
+        for i in lst:
+            logging.info(i)
+        
+        
+        return_last_data = []
+
+        logging.info(reslt_info)
+
+        for i in return_data:
+            i["user"] = reslt_info[i["id_u"]]
+            return_last_data.append(i)
 
         logging.info('все статьи отображены')
     except (Exception, Error) as error:
@@ -436,6 +521,7 @@ def show_one(id, isQ):
             all_q["details"] = all_q["details"].replace('\n', '<br>')
             all_q['descriptions'] = unescape_quotes(all_q['descriptions'])
             all_q['details'] = unescape_quotes(all_q['details'])
+            all_q['data'] = datetime.strftime(all_q['data'], '%d %B %Y года, %H:%m')
 
             all_asw = show_answers(True, id)
 
@@ -476,6 +562,8 @@ def show_one(id, isQ):
         all_states['descriptions'] = unescape_quotes(all_states['descriptions'])
         all_states['details'] = unescape_quotes(all_states['details'])
         all_states["details"] = all_states["details"].replace('\n', '<br>')
+        all_states['data'] = datetime.strftime(all_states['data'], '%d %B %Y года, %H:%m')
+        
         return_data = {
             'state': all_states,
             'answers': all_asw

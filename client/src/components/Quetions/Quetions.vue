@@ -119,7 +119,7 @@ export default {
                                     @click="filtre">Найти</button>
                             </div>
                         </div>
-                        <button class="create-quetion">Создать вопрос</button>
+                        <a href="/NewQuetion"><button class="create-quetion">Создать вопрос</button></a>
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@ export default {
 <style scoped>
 
 .mar {
-    margin-left: 30px;
+    margin-left: 55px;
 }
 
 .cont {
@@ -229,6 +229,7 @@ a {
     /* margin: 0 20% 15px 20%; */
     /* min-height: 57.5vh; Изменить на 52 */
 }
+
 
 @media(max-width: 500px) {
     /* .quest-menu {
@@ -346,6 +347,14 @@ h4 {
     .all-inputs {
         flex-direction: column !important;
         align-items: center;
+    }
+
+    .active-container {
+        text-align: center;
+    }
+
+    .mar {
+        margin: 0;
     }
 
     .form-control {

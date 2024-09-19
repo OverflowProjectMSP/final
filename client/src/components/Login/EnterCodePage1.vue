@@ -1,99 +1,83 @@
 <script>
-import axios from "axios";
-import eye_img from "@/assets/Login/eye-open.svg";
+import axios from 'axios';
+import eye_img from "@/assets/Login/eye-open.svg"
 
 export default {
   data() {
     return {
-      form: {
-        email: "",
-        password: "",
-      },
+      CIFRY: "",
 
-      error: "",
+      error: '',
       eyeOpen1: true,
       eyeOpen2: true,
       eyeImg1: eye_img,
       eyeImg2: eye_img,
       isShowPassword: false,
-      showPassword: "password",
+      showPassword: 'password',
       isShowExPassword: false,
-      showExPassword: "password",
-      a: "",
+      showExPassword: 'password', 
+      src: 'src/assets/Login/23.png',
+      inputNumber: '',
       button: true,
       gre: false,
       disabled: false,
-    };
+
+    }
   },
   methods: {
-    // check() {
-    //   if (this.email === "") {
-    //     this.error = "*Вы не ввели Email*";
-    //   } else if (this.password === "") {
-    //     this.error = "*Вы не ввели пароль*";
-    //   } else {
-    //     this.error = "";
-    //     this.login();
-    //   }
-
-    //   // if (this.password !== this.exPassword) {
-    //   //     this.error = '*Пароли не совпадают'
-    //   // }
-    // },
-    toggleVisibility1() {
-      this.isShowPassword = !this.isShowPassword;
-      this.eyeOpen1 = !this.eyeOpen1;
-
-      if (this.isShowPassword) {
-        this.showPassword = "text";
-        this.eyeImg1 = "/src/assets/Login/eye-close.svg";
-      } else {
-        this.showPassword = "password";
-        this.eyeImg1 = eye_img;
-      }
+    check() {
+      this.checkCode();
     },
-
-    async login() {
+    async checkCode() {
       try {
-        let res = await axios.post("/login", {
-          email: this.form.email,
-          password: this.form.password,
+        let res = await axios.post('/reg-code-send', {
+          emailCode: this.CIFRY,
         });
-        if (res.data.message == "ok") {
-          this.$router.push("/");
-        } else if (res.data.message == "wrong!") {
-          this.error = "Пароль и почта не совпадают!";
+        if(res.data.res == 'Error') {
+          this.error = 'Ошибка отправки.';
+        } else if(res.data.res == 'True') {
+          this.$router.push('/Login');
+        } else if(res.data.res == 'Некорректный код') {
+            this.error = 'Неверный код.';
         } else {
-          this.error = "Неизвестная ошибка.";
-        }   
+          this.error = 'Ошибка';
+        }
       } catch (err) {
-        this.error = "Ошибка сервера."
+        this.error = "Ошибка сервера"
         console.error(err)
       }
     },
-
-    passwordValidation($event) {
-      this.button = false;
-      this.gre = true;
+    validateInput($event) {
+      this.button = false
+      this.gre = true
       if ($event) {
-        if (this.form.password.length == 0) {
-          this.error = "Поле не должно быть пустым!";
-          this.button = false;
-          this.gre = true;
-        } else {
+
+        if (this.CIFRY.length > 4) {
+          this.error = "Не больше 4-х символов."
+          this.button = false
+          this.gre = true
+          this.src = 'src/assets/Login/arrow_forward.png'
+        } else if (this.CIFRY.length == 4) {
           this.error = null;
-          this.button = true;
-          this.gre = false;
+          this.button = true
+          this.gre = false
+          this.src = 'src/assets/Login/23.png'
+        } else if (this.CIFRY.length <= 4) {
+          this.error = null;
+          this.button = false
+          this.gre = true
+          this.src = 'src/assets/Login/arrow_forward.png'
         }
       }
     },
-    reg(){
-      window.location.href = '/SignUp';
-      console.log(0)
-    }
-  },
-};
+    pushtoFAQ() {
+      this.$router.push("/FAQ")
+    },
+  }
+}
+
 </script>
+
 
 <template>
   <div class="all-container">
@@ -102,52 +86,27 @@ export default {
       <div class="img-container">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
       </div>
-      <div class="head">
-        <h1>Войти</h1>
+      <div class="head mt-4">
+        <h1>Код подтверждения</h1>
+        <p>На вашу почту был направлен код подтверждения</p>
       </div>
-      <form @submit.prevent="login()">
-        <div class="input-container">
-          <div class="div-nickname">
-            <input
-              type="text"
-              v-model="form.email"
-              class="input"
-              autofocus
-              required
-            />
-            <span сlass="nick">Почта</span>
-          </div>
-          <div class="password">
-            <input
-              :type="showPassword"
-              v-model="form.password"
-              class="input"
-              required
-              @input="passwordValidation($event)"
-            />
-            <span>Пароль</span>
-            <img :src="eyeImg1" alt="" class="eye" @click="toggleVisibility1" />
-          </div>
+      <form @submit.prevent="checkCode">
+      <div class="input-container">
+        <div class="div-nickname">
+          <input type="text" v-model="CIFRY" class="input" autofocus required @input="validateInput($event)"/>
+          <span сlass="nick">Код</span>
         </div>
         <div class="btn-container">
-          <button class="bt reg" @click="reg" type="button">Регистрация</button>
-          <button
-            :class="{ 'login': button, 'bt': true, 'grey': gre }"
-            :disabled="gre"
-            type="submit"
-          >
-            Войти
-          </button>
+          <button :class="{'login': button, 'bt': true, 'grey': gre} " :disabled="gre" type="submit" ><img :src="src" alt="" class="str"></button>
         </div>
-      </form>
-      <div class="mail">
-        <!-- <a href=""><img src="/mail.svg" alt="" /></a> -->
+      </div>
+    </form>
+      <div class="mail" @click="pushtoFAQ">
+        <img src="/mail.svg" alt="" />
       </div>
       <div class="pass-err">
-        <a href="/EnterCodePage" class="a">Забыли пароль?</a> 
-        <div class="errors">
-          <p class="err">{{ error }}</p>
-        </div>
+        <a href="" class="a mt-3">Не приходит код?</a>
+        <div class="errors" v-if="error"><p class="err">{{error}}</p></div>
       </div>
     </div>
   </div>
@@ -155,44 +114,8 @@ export default {
 
 <style scoped>
 :root {
-  --font-family: "Rubik", sans-serif;
-  --second-family: "Inter", sans-serif;
-}
-.login {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 25px;
-  text-align: center;
-  color: #fff;
-  background: #3b82f6;
-  text-align: center;
-  cursor: pointer;
-  cursor: pointer;
-    border-radius: 15px;
-  width: 200px;
-  height: 60px;
-
-  border: none;
-  cursor: pointer;
-  z-index: 7000;
-}
-.grey {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 25px;
-  text-align: center;
-  color: #5b5a5a;
-  background: #eae9e9;
-  text-align: center;
-  cursor: pointer;
-  cursor: pointer;
-    border-radius: 15px;
-  width: 200px;
-  height: 60px;
-
-  border: none;
-  cursor: pointer;
-  z-index: 7000;
+  --font-family: 'Rubik', sans-serif;
+  --second-family: 'Inter', sans-serif;
 }
 .err {
   font-family: var(--font-family);
@@ -205,7 +128,7 @@ export default {
 }
 .a {
   position: absolute;
-  top: 500px;
+  top: 350px;
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 20px;
@@ -234,14 +157,14 @@ h6 {
   position: absolute;
   top: 550px;
   cursor: pointer;
-  right: -130px;
+  right: 10px;
 }
 .all-container {
   display: flex;
   background-color: #ecedee;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
   width: 100%;
   position: relative;
 }
@@ -259,7 +182,20 @@ h6 {
   transform: translateX(-50px);
   transition: all 0.3s;
 }
-
+.head {
+  height: 50px;
+}
+.head h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+.head p {
+    font-size: 30px;
+    font-weight: bold;
+    color: #5B5A5A;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
 .password {
   /* display: flex; */
   /* align-items: center; */
@@ -288,7 +224,9 @@ h1 {
 .input-container {
   display: flex; /* Добавляем flexbox */
   flex-direction: column; /* Устанавливаем вертикальное направление */
-  margin: 230px 0px 0px -250px; /* Меняем отступ */
+  margin: 290px 0px 0px;/* Меняем отступ */
+  position: absolute;
+  left: 525px;
   width: 400px; /* Добавляем ширину для блока инпутов */
   z-index: 300;
 }
@@ -307,13 +245,25 @@ h1 {
   color: #000000;
 }
 .btn-container {
+  position: absolute;
+  top: 0;
+  left: 450px;
   display: flex;
   justify-content: center; /* Выравниваем кнопки по центру */
-  margin-top: -10px; /*  Вертикальный отступ */
+  /* margin-top: -10px;  */
   gap: 30px;
-  margin-left: -250px;
+  /* margin-left: -250px; */
 }
 
+.bt {
+  border-radius: 15px;
+  width: 60px;
+  height: 60px;
+  background: blue;
+  border: none;
+  cursor: pointer;
+  z-index: 7000;
+}
 .reg {
   font-family: var(--font-family);
   font-weight: 700;
@@ -322,15 +272,31 @@ h1 {
   color: #5b5a5a;
   background: #eae9e9;
   cursor: pointer;
-    border-radius: 15px;
-  width: 200px;
-  height: 60px;
-
-  border: none;
-  cursor: pointer;
-  z-index: 7000;
 }
 
+.login {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  text-align: center;
+  color: #fff;
+  background: #3b82f6;
+  text-align: center;
+  cursor: pointer;
+}
+.grey {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  text-align: center;
+  color: #fff;
+  background: #EAE9E9;
+  text-align: center;
+  cursor: pointer;
+}
+.str {
+  width: 30px;
+}
 .eye {
   position: absolute;
   width: 50px;
@@ -385,54 +351,71 @@ h1 {
   border-radius: 15px;
 }
 @media (max-width: 1260px) {
-  .mail img {
+  /* .mail img {
     position: absolute;
     top: 550px;
     cursor: pointer;
     right: -110px;
+  } */
+
+  .btn-container {
+    position: absolute;
+    top: 80px;
+    left: 0;
   }
+
+  .a {
+    top: 420px;
+  }
+
+  
 }
 @media (max-width: 1235px) {
-  .mail img {
+  /* .mail img {
     position: absolute;
     top: 550px;
     cursor: pointer;
     right: -70px;
-  }
+  } */
 }
 
-/* 
 @media (max-width: 1199px) {
   .mail img {
     position: absolute;
     top: 550px;
     cursor: pointer;
-    right: 20px;
+    right: 30px;
   }
-  .login-container {
-    display: flex;
-    border-radius: 50px;
-    margin: 80px;
-    width: 1550px;
-    height: 600px;
-    background: #fff;
-    position: relative;
+
+  .input {
+    width: 360px;
   }
-} */
+
+}
 
 @media (max-width: 1175px) {
   .img-container {
     display: none;
   }
+
+  .head h1 {
+    font-size: 30px;
+  }
+
+  .head p {
+    font-size: 30px;
+  }
+
   .a {
     position: absolute;
+    top: 370px;
     left: 50px;
   }
   .mail img {
     position: absolute;
     top: 550px;
     cursor: pointer;
-    right: -30px;
+    right: 10px;
   }
   .login-container {
     display: flex;
@@ -447,16 +430,26 @@ h1 {
     width: 1000px;
     position: absolute;
     top: 550px;
-    margin-left: -479px;
+    margin-left: -479px
+  }
+  
+  .input-container {
+    top: 0px;
+    left: 50px;
+  }
+
+  .btn-container {
+    top: 0;
+    left: 400px;
   }
 }
 @media (max-width: 705px) {
-  .mail img {
+  /* .mail img {
     position: absolute;
     top: 550px;
     cursor: pointer;
-    right: -40px;
-  }
+    right: 20px;
+  } */
 }
 @media (max-width: 685px) {
   .mail img {
@@ -465,117 +458,99 @@ h1 {
     cursor: pointer;
     right: 50px;
   }
-
-  h6 {
-    z-index: 100;
+  
+  .head h1 {
+    font-size: 25px;
   }
 
-  .all-container {
-    overflow-x: hidden;
-  }
-
-  h1{
-    font-size: 50px;
+  .head p {
+    font-size: 25px;
   }
 
   .a {
     position: absolute;
-    left: 150px;
-    top: 420px;
-
+    left: 55px;
+    top: 430px
   }
   .input {
     margin-bottom: 40px;
     border-radius: 15px;
-    width: 280px;
-    height: 50px;
+    width: 330px;
+    height: 60px;
     background: #eae9e9;
     border: none;
     padding: 20px;
     font-family: var(--font-family);
     font-weight: 500;
-    font-size: 18px;
+    font-size: 20px;
     color: #000000;
   }
 
-
-  .div-nickname span {
-    font-size: 18px;
+  .input-container {
+    top: 0px;
+    
   }
 
-  .password span {
-    font-size: 18px;
+  .input {
+    width: 300px;
   }
 
 
-  .bt {
-    border-radius: 15px;
-    width: 150px;
-    height: 60px;
-    border: none;
-    cursor: pointer;
-    z-index: 7000;
+  .btn-container {
+    top: 80px;
+    left: 0;
   }
   .login-container {
     display: flex;
     border-radius: 50px;
     margin: 80px;
-    width: 360px;
-    height: 500px;
+    width: 430px;
+    height: 600px;
     background: #fff;
     position: relative;
   }
   .eye {
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     z-index: 100;
     cursor: pointer;
-    top: 10px;
-    right: -240px;
+    top: 7px;
+    right: -280px;
   }
+
+  .bt {
+    border-radius: 15px;
+    width: 300px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    z-index: 7000;
+  }
+
   .reg {
     font-family: var(--font-family);
     margin-left: -70px;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     color: #5b5a5a;
     background: #eae9e9;
     cursor: pointer;
   }
   .login {
-    width: 120px;
     font-family: var(--font-family);
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     color: #fff;
     background: #3b82f6;
     text-align: center;
     cursor: pointer;
   }
-  
-  .input-container {
-    margin-top: 180px;
-    margin-left: -170px;
-  }
-
-  .btn-container {
-    margin-left: -220px;
-    gap: 10px;
-  }
-
-  .img {
-  transform: translateX(-20px);
-  transition: all 0.3s;
-}
-.input {
-  margin-bottom: 30px;
-}
 }
 
-/* @media (max-width: 567px) {
+@media (max-width: 567px) {
   .input {
     margin-bottom: 40px;
     border-radius: 15px;
@@ -598,14 +573,7 @@ h1 {
     top: 7px;
     right: -250px;
   }
-  .bt {
-    border-radius: 15px;
-    width: 135px;
-    height: 60px;
-    border: none;
-    cursor: pointer;
-    z-index: 7000;
-  }
+  
   .login {
     font-family: var(--font-family);
     font-weight: 700;
@@ -623,27 +591,19 @@ h1 {
     font-weight: 700;
     font-size: 18px;
   }
-} */
-@media (max-width: 505px) {
-  .reg{
-    background-color: white;
+
+  .a {
+    font-size: 18px;
   }
-
-  .login-container {
-    margin-top: -90px;
-    margin-bottom: 10px;
-  }
-
-  h1 {
-  }
-
-.input{
-  background: #ffffff;
-
-}  
-  .login-container {
-  background: #ecedee;
 }
+@media (max-width: 505px) {
+  .all-container {
+    background: #fff;
+  }
+
+  .login-container {
+    margin: 0;
+  }
   /* .login-container {
     -webkit-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);

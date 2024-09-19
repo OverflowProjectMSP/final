@@ -39,6 +39,10 @@ export default createRouter({
       component: () => import("../components/Login/EnterCodePage.vue"),
     },
     {
+      path: "/EnterCode",
+      component: () => import("../components/Login/EnterCodePage1.vue"),
+    },
+    {
       path: "/EnterNewPassword",
       component: () => import("../components/Login/EnterNewPassword.vue"),
     },
@@ -112,6 +116,14 @@ export default createRouter({
     {
       path: "/edit",
       component: () => import('../components/Edit/NewqueVid.vue')
+    },
+    {
+      path: "/editNewNav",
+      component: () => import('../components/Edit/NewnavBar.vue')
+    },
+    {
+      path: "/uftwo",
+      component: () => import('../components/Edit/UfTwo.vue')
     }
   ],
 });

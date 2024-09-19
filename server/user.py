@@ -335,6 +335,9 @@ def show_user_info(id, isAll):
         for key in all_states:
             if key != "password":
                 return_data[key] = all_states[key]
+
+        return_data['data_c'] = datetime.strftime(return_data['data_c'], '%d %B %Y')
+
         if not isAll:
             # счетчик статей
             cursor.execute(f"SELECT COUNT(*) from states WHERE id_u=$${id}$$")

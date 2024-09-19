@@ -190,8 +190,9 @@ export default {
   font-size: 25px;
   text-align: center;
   color: #5b5a5a;
-  background: #eae9e9;
+  background: #efefef;
   cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
 .login {
@@ -203,6 +204,7 @@ export default {
   background: #3b82f6;
   text-align: center;
   cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 .grey {
   font-family: var(--font-family);
@@ -213,6 +215,7 @@ export default {
   background: #eae9e9;
   text-align: center;
   cursor: pointer;
+  transition: background-color 0.3s ease; 
 }
 
 h6 {
@@ -367,10 +370,13 @@ h6 {
   font-size: 25px;
   font-weight: bold;
 }
-.reg,
+.reg:hover {
+  background: #e4e3e3;
+  /* transition: all 0.3s; */
+}
 .grey:hover {
   background: #d7d5d5;
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
 }
 
 /* .btn-enter, .reg, .grey:active {
@@ -384,7 +390,7 @@ h6 {
 
 .login:hover {
   background: #2d6fda;
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
 }
 .login:active {
   background-color: #164691;

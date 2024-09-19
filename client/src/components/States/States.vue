@@ -103,7 +103,7 @@ export default {
       </div> -->
         <button class="btn find-btn btn-outline-primary  ms-4" @click="filtre">Найти</button>
 
-        <button class="create-state">Создать статью</button>
+        <a href="/NewState"><button class="create-state">Создать статью</button></a>
     </div>
 </div>
 <!-- Див с виджетами -->

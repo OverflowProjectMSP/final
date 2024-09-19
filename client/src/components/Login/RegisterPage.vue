@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       form: {
-        username: "",
+        nickname: "",
         email: "",
         password: "",
         exPassword: "",
@@ -25,59 +25,49 @@ export default {
       button: true,
       gre: false,
       disabled: false,
+      button: true,
+      gre: false,
+      disabled: false,
     };
   },
   methods: {
     check() {
       if (this.form.username === "") {
-        this.error = "* Вы не ввели Никнейм *"
+        this.error = "Вы не ввели Никнейм!";
       } else if (this.form.email === "") {
-        this.error = "* Вы не ввели Email *"
+        this.error = "Вы не ввели Email!";
       } else if (this.form.password === "") {
-        this.error = "* Вы не ввели Пароль *"
+        this.error = "Вы не ввели Пароль!";
       } else if (this.form.exPassword === "") {
-        this.error = "* Вы не Повторили Пароль *"
+        this.error = "Вы не Повторили Пароль!";
       } else if (this.form.password != this.form.exPassword) {
-        this.error = "* Повторно введенный пароль неверный *"
-      } else if (!this.form.password.includes('~') &&
-          !this.form.password.includes('`') &&
-          !this.form.password.includes('!') &&
-          !this.form.password.includes('@') &&
-          !this.form.password.includes('#') &&
-          !this.form.password.includes('$') &&
-          !this.form.password.includes('%') &&
-          !this.form.password.includes('^') &&
-          !this.form.password.includes('&') &&
-          !this.form.password.includes('*') &&
-          !this.form.password.includes('(') &&
-          !this.form.password.includes(')') &&
-          !this.form.password.includes('-') &&
-          !this.form.password.includes('_') &&
-          !this.form.password.includes('=') &&
-          !this.form.password.includes('+') &&
-          !this.form.password.includes('[') &&
-          !this.form.password.includes(']') &&
-          !this.form.password.includes('{') &&
-
-          !this.form.password.includes('}') &&
-          !this.form.password.includes('\\') &&
-          !this.form.password.includes('|') &&
-          !this.form.password.includes(';') &&
-          !this.form.password.includes(':') &&
-          !this.form.password.includes('"') &&
-          !this.form.password.includes(',') &&
-          !this.form.password.includes('<') &&
-          !this.form.password.includes('.') &&
-          !this.form.password.includes('>') &&
-          !this.form.password.includes('/') &&
-          !this.form.password.includes('?')) {
-            this.error = "* Пароль должен включать спец символ *"
-      } else if (this.password.length < 8) {
-        this.error = "* Пароль должен включать 8 символов *"
+        this.error = "Повторно введенный пароль неверный!";
+      } else if (this.password< 5) {
+        this.error = "* Пароль должен включать 5 символов *";
       } else {
-        this.error = ""
+        this.error = "";
+        this.register()
       }
     },
+    async register() {
+        try{
+      const res =  await axios.post("/registration", {
+          name: this.form.nickname,
+          email: this.form.email,
+          password: this.form.password,
+        });
+          if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
+          this.error = 'Пользователь с таким именем или почтой уже существует!'
+          } else if ("Некорректная почта") {
+            this.error = 'Почта невалидна.'
+          } else if("Ok"){
+            this.$router.push("/EnterCode");
+        }
+      } catch(err) {
+          console.error(err)
+          this.error = "Ошибка сервера"
+      }
+      },
     toggleVisibility1() {
       this.isShowPassword = !this.isShowPassword;
       this.eyeOpen1 = !this.eyeOpen1;
@@ -102,83 +92,132 @@ export default {
         this.showExPassword = "password";
         this.eyeImg2 = eye_img;
       }
+    },
+
+    //   async login() {
+    //     try {
+    //       let res = await axios.post("/login", {
+    //         email: this.form.email,
+    //         password: this.form.password,
+    //       });
+    //       if (res.data.message == "ok") {
+    //         this.$router.push("/");
+    //       } else if (res.data.message == "wrong!") {
+    //         this.error = "Пароль и почта не совпадают!";
+    //       } else {
+    //         this.error = "Неизвестная ошибка.";
+    //       }
+    //     } catch (err) {
+    //       this.error = "Ошибка сервера."
+    //       console.error(err)
+    //     }
+    //   },
+
+    passwordValidation($event) {
+      this.button = false;
+      this.gre = true;
+      if ($event) {
+        if (!this.form.email.includes("@") && !this.form.email.includes(".")) {
+          this.error = "Некорректный Email!";
+          this.button = false;
+          this.gre = true;
+        } else if (this.form.password.length < 5) {
+          this.error = "Пароль должен включать минимум 5 символов!";
+          this.button = false;
+          this.gre = true;
+        } else if (this.form.password !== this.form.exPassword) {
+          this.error = "Пароли не совпадают!";
+          this.button = false;
+          this.gre = true;
+          this.error = null;
+          this.button = true;
+          this.gre = false;
+        }
+      }
+    },
+    login() {
+      this.$router.push("/Login")
     }
-
-  //   async login() {
-  //     try {
-  //       let res = await axios.post("/login", {
-  //         email: this.form.email,
-  //         password: this.form.password,
-  //       });
-  //       if (res.data.message == "ok") {
-  //         this.$router.push("/");
-  //       } else if (res.data.message == "wrong!") {
-  //         this.error = "Пароль и почта не совпадают!";
-  //       } else {
-  //         this.error = "Неизвестная ошибка.";
-  //       }   
-  //     } catch (err) {
-  //       this.error = "Ошибка сервера."
-  //       console.error(err)
-  //     }
-  //   },
-
-  //   passwordValidation($event) {
-  //     this.button = false;
-  //     this.gre = true;
-  //     if ($event) {
-  //       if (this.form.password.length == 0) {
-  //         this.error = "Поле не должно быть пустым!";
-  //         this.button = false;
-  //         this.gre = true;
-  //       } else {
-  //         this.error = null;
-  //         this.button = true;
-  //         this.gre = false;
-  //       }
-  //     }
-  //   },
   },
-}
+};
 </script>
 
 <template>
   <div class="window">
+    <h6>UF 2.0</h6>
     <div class="main-cont">
       <div class="image">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
       </div>
       <div class="main-content">
         <div class="main-ccc">
-
           <h1>Регистрация</h1>
           <div class="inputs-cont">
-  
             <div class="div-username">
-              <input type="text" v-model="form.username" class="input" autofocus required/>
+              <input
+                type="text"
+                v-model="form.nickname"
+                class="input"
+                autofocus
+                required
+              />
               <span сlass="nick">Никнейм</span>
             </div>
-  
+
             <div class="div-nickname">
-              <input type="text" class="input" v-model="form.email" autofocus required/>
+              <input
+                type="text"
+                class="input"
+                v-model="form.email"
+                autofocus
+                required
+              />
               <span сlass="nick">Почта</span>
             </div>
-  
+
             <div class="password">
-              <input :type="showPassword" v-model="form.password" class="input" required/>
+              <input
+                :type="showPassword"
+                v-model="form.password"
+                class="input"
+                required
+                @input="passwordValidation($event)"
+              />
               <span>Пароль</span>
-              <img :src="eyeImg1" alt="" class="eye" @click="toggleVisibility1"/>
+              <img
+                :src="eyeImg1"
+                alt=""
+                class="eye"
+                @click="toggleVisibility1"
+              />
             </div>
-  
+
             <div class="rep-password">
-              <input :type="showExPassword" v-model="form.exPassword" class="input" required/>
-              <span>Повторите Пароль</span>
-              <img :src="eyeImg2" alt="" class="eye" @click="toggleVisibility2"/>
+              <input
+                :type="showExPassword"
+                v-model="form.exPassword"
+                class="input"
+                required
+              />
+              <span>Повторите пароль</span>
+              <img
+                :src="eyeImg2"
+                alt=""
+                class="eye"
+                @click="toggleVisibility2"
+              />
             </div>
           </div>
           <div class="btn-container">
-            <button class="bt reg">Войти</button>
-            <button class="login" type="submit" @click="check">Регистрация</button>
+            <button class="bt reg" @click="login">Войти</button>
+            <button
+              type="submit"
+              :class="{ login: button, grey: gre }"
+              @click="check"
+              :disabled="gre"
+            >
+              Зарегистрироваться
+            </button>
           </div>
           <div class="errors">
             <p class="err">{{ error }}</p>
@@ -190,10 +229,28 @@ export default {
 </template>
 
 <style>
+h6 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #3b82f6;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: block;
+}
+.err {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 17px;
+  color: #f00;
+}
 .window {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 
   background-color: #ecedee;
 
@@ -204,7 +261,7 @@ export default {
 h1 {
   text-align: center;
   font-weight: 700;
-  font-size: 80px;
+  font-size: 79px;
   color: #000;
   width: 100%;
 }
@@ -232,14 +289,13 @@ h1 {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .inputs-cont {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-
+  gap: 32px;
 }
 
 .input {
@@ -347,7 +403,7 @@ input:focus {
 .login {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 22px;
   color: #fff;
   background: #3b82f6;
   cursor: pointer;
@@ -357,7 +413,29 @@ input:focus {
   border: none;
   z-index: 7000;
 }
-
+.login:disabled {
+  color: #5b5a5a;
+  background: #eae9e9;
+  border-radius: 15px;
+  width: 250px;
+  height: 60px;
+  border: none;
+  z-index: 7000;
+  font-family: var(--font-family);
+  font-weight: 700;
+}
+.grey {
+  color: #5b5a5a;
+  background: #eae9e9;
+  border-radius: 15px;
+  width: 250px;
+  height: 60px;
+  border: none;
+  z-index: 7000;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 22px;
+}
 .login:hover {
   color: #fff;
   background: #2e77ed;
@@ -378,8 +456,8 @@ input:focus {
 .btn-container {
   width: 480px;
   display: flex;
-  justify-content: center; 
-  margin-top: 10px; 
+  justify-content: center;
+  margin-top: 10px;
   /* gap: 30px; */
   justify-content: space-between;
 }
@@ -392,7 +470,7 @@ input:focus {
   color: #5b5a5a;
   background: #eae9e9;
   cursor: pointer;
-    border-radius: 15px;
+  border-radius: 15px;
   width: 200px;
   height: 60px;
 
@@ -403,15 +481,13 @@ input:focus {
 
 .err {
   color: #f00;
-  font-size: 20px;
+  font-size: 17px;
 }
 
-
-
-
-
-
 @media (max-width: 1230px) {
+  .login {
+    font-size: 18px;
+  }
   .image {
     display: none;
   }
@@ -440,7 +516,11 @@ input:focus {
   .login {
     width: 210px;
   }
+  .grey {
+    font-size: 18px;
 
+    width: 210px;
+  }
   .main-cont {
     display: flex;
     border-radius: 50px;
@@ -452,7 +532,14 @@ input:focus {
   }
 
   h1 {
+    margin-top: 30px;
+    margin-bottom: 10px;
     font-size: 42px;
+  }
+}
+@media (max-width: 670px) {
+  .window {
+    background: #fff;
   }
 }
 
@@ -460,8 +547,6 @@ input:focus {
   h1 {
     font-size: 34px;
   }
-
-  
 
   .input {
     width: 340px;
@@ -473,14 +558,18 @@ input:focus {
   }
 
   span {
-    font-size: 22px !important;
+    font-size: 18px !important;
   }
 
   .btn-container {
     width: 340px;
     gap: 20px;
   }
-
+  .grey {
+    font-size: 13px;
+    height: 50px;
+    width: 150px;
+  }
   .reg {
     font-size: 22px;
     height: 50px;
@@ -488,11 +577,13 @@ input:focus {
   }
 
   .login {
-    font-size: 22px;
+    font-size: 16px;
     height: 50px;
   }
+  .window {
+    background: #fff;
+  }
 }
-
 
 @media (max-width: 505px) {
   .window {

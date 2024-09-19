@@ -19,7 +19,7 @@ export default {
       avatar: 'src/assets/Header/AvatarDef.svg',
       id: '',
 
-      isAllLoad: false
+      isAllLoad: true
     }
 
   },
