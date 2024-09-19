@@ -628,6 +628,15 @@ h1 {
   .reg{
     background-color: white;
   }
+
+  .login-container {
+    margin-top: -90px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+  }
+
 .input{
   background: #ffffff;
 
