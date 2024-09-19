@@ -123,7 +123,7 @@ h2 {
   right: 0;
   bottom: 0;
   height: 0%;
-  width: 2px;
+  width: 3px;
 }
 
 /* Нижняя горизонтальная линия */
