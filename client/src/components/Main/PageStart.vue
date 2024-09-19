@@ -31,11 +31,16 @@ export default {
 <template>
     <div class="pagestart">
         <div class="greetings">
-            <NewHeader class="NewHeader" />
-            <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
-            <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
-            <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
-            <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
+            <div class="headernew">
+                <NewHeader class="NewHeader" />
+            </div>
+            <div class="greeting-text">
+                <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
+                <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
+                <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
+                <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
+            </div>
+            
         </div>
     </div>
 </template>
@@ -56,16 +61,28 @@ body {
     margin: 5px;
 }
 
+.headernew {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.greeting-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
 .NewHeader {
-    margin-top: -280px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .greetings {
     display: flex;
     width: 100%;
     height: 80vh;
-
-    justify-content: center;
 
     border-radius: 0px;
     color: #fff;
