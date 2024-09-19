@@ -97,7 +97,7 @@ h2 {
   border: none;
   position: relative;
   font-weight: 500;
-  transition: background-color 300ms ease;
+  transition: background-color 200ms ease;
 }
 .enter button span {
   position: relative;
