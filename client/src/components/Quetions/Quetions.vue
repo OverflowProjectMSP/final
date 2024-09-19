@@ -119,7 +119,7 @@ export default {
                                     @click="filtre">Найти</button>
                             </div>
                         </div>
-                        <button class="create-quetion">Создать вопрос</button>
+                        <a href="/NewQuetion"><button class="create-quetion">Создать вопрос</button></a>
                     </div>
                 </div>
             </div>

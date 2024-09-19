@@ -27,7 +27,7 @@ export default {
 <template>
     <div class="pagestart">
         <div class="greetings">
-            <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
+            <h1 class="title">Форум по <a href="https://upfollow.ru/StateItem?id=16340d03-241c-462e-83c6-7ca12326b1d3&q=false"><span style="color: #2D72D9;">программированию</span></a></h1>
             <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
             <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
             <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
