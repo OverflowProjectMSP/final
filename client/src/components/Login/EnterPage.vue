@@ -241,7 +241,7 @@ h6 {
   background-color: #ecedee;
   align-items: center;
   justify-content: center;
-  height: 110vh;
+  height: 100vh;
   width: 100%;
   position: relative;
 }

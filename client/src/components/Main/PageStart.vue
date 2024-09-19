@@ -1,7 +1,11 @@
 <script>
 import axios from 'axios';
+import NewHeader from '../Edit/NewnavBar.vue'
 
 export default {
+    components: {
+        NewHeader,
+    },
     data() {
         return {
             isL: true
@@ -27,7 +31,8 @@ export default {
 <template>
     <div class="pagestart">
         <div class="greetings">
-            <h1 class="title">Форум по <a href="https://upfollow.ru/StateItem?id=16340d03-241c-462e-83c6-7ca12326b1d3&q=false"><span style="color: #2D72D9;">программированию</span></a></h1>
+            <NewHeader class="NewHeader" />
+            <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
             <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
             <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
             <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
@@ -51,10 +56,14 @@ body {
     margin: 5px;
 }
 
+.NewHeader {
+    margin-top: -280px;
+}
+
 .greetings {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 80vh;
 
     justify-content: center;
 
@@ -63,7 +72,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 600px;
     background-image: url(../../assets/Main/mountainsjpeg.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
