@@ -3,6 +3,7 @@
 </script>
 
 <template>
+<div class="window">
     <div class="wind">
         <button>
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,6 +36,7 @@
             <h2>Всем привет от нашей дружной команды ;)</h2>
         </div>
     </div>
+</div>
 </template>
 
 <style>
@@ -44,8 +46,14 @@ h1, h2, h3, h4, h5, p {
     margin: 0;
 }
 
+.window {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .wind {
-    margin: 20px 0 20px 20px;
+    margin: 20px 0 20px 0;
 
 
     width: 500px;
@@ -150,6 +158,29 @@ h5 {
 
 h2 {
     font-size: 20px;
+}
+
+@media (max-width: 530px) {
+    .wind {
+        width: 450px;
+        height: 750px;
+    }
+}
+
+@media (max-width: 460px) {
+    .wind {
+        width: 350px;
+        height: 800px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-top: 20px;
+    }
+
+    .uf {
+        width: 200px;
+    }
 }
 
 </style>
