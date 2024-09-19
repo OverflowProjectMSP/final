@@ -144,7 +144,7 @@ export default {
         <!-- <a href=""><img src="/mail.svg" alt="" /></a> -->
       </div>
       <div class="pass-err">
-        <a href="/EnterCodePage" class="a">Забыли пароль?</a> 
+        <a href="/RecoveryPassPage" class="a">Забыли пароль?</a> 
         <div class="errors">
           <p class="err">{{ error }}</p>
         </div>
