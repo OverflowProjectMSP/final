@@ -2,6 +2,9 @@ from app import *
 from tg import *
 from others import *
 from datetime import timedelta, datetime, timezone
+import time
+import locale
+locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
 
 load_dotenv()
 
@@ -80,6 +83,7 @@ def render_questions():
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             return_data.append(a)
 
         ids_creators = []
@@ -188,6 +192,7 @@ def show_all_by_user(id):
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             q.append(a)
 
         s = []
@@ -195,6 +200,7 @@ def show_all_by_user(id):
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             s.append(a)
 
 
@@ -437,12 +443,14 @@ def render_states():
             a = dict(row)
             cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
+            a['data'] = datetime.strftime(a['data'], '%d %B %Y года')
             return_data.append(a)
 
         ids_creators = []
 
         for row in return_data:
             ids_creators.append(row["id_u"])
+
         
         # logging.info(ids_creators)
        
@@ -513,6 +521,7 @@ def show_one(id, isQ):
             all_q["details"] = all_q["details"].replace('\n', '<br>')
             all_q['descriptions'] = unescape_quotes(all_q['descriptions'])
             all_q['details'] = unescape_quotes(all_q['details'])
+            all_q['data'] = datetime.strftime(all_q['data'], '%d %B %Y года, %H:%m')
 
             all_asw = show_answers(True, id)
 
@@ -553,6 +562,8 @@ def show_one(id, isQ):
         all_states['descriptions'] = unescape_quotes(all_states['descriptions'])
         all_states['details'] = unescape_quotes(all_states['details'])
         all_states["details"] = all_states["details"].replace('\n', '<br>')
+        all_states['data'] = datetime.strftime(all_states['data'], '%d %B %Y года, %H:%m')
+        
         return_data = {
             'state': all_states,
             'answers': all_asw
