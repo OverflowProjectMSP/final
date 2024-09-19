@@ -55,7 +55,7 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# Отображение всех вапросов на frontend
+# Отображение всех вопросов на frontend
 def render_questions():
     try:
         pg = psycopg2.connect(f"""
@@ -81,6 +81,43 @@ def render_questions():
             cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
             return_data.append(a)
+
+        ids_creators = []
+
+        for row in return_data:
+            ids_creators.append(row["id_u"])
+        
+        # logging.info(ids_creators)
+       
+        text = ""
+
+        for i in ids_creators:
+            if text == "":
+                text += f"id = $${i}$$"
+                continue
+            text += f" OR id = $${i}$$"
+
+        # logging.info(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        cursor.execute(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        result_info = cursor.fetchall()
+
+        reslt_info = {}
+
+        for row in result_info:
+            reslt_info[dict(row)["id"]] = dict(row)
+
+        # logging.info(reslt_info)
+
+        print(len(return_data), len(reslt_info), len(ids_creators), text)
+        
+        return_last_data = []
+
+        for i in return_data:
+            i["user"] = reslt_info[i["id_u"]]
+            return_last_data.append(i)
+
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
@@ -379,7 +416,6 @@ def show_forum(filtre):
             logging.info("Соединение с PostgreSQL закрыто")
             return return_data
 
-# Отображение всех статей на frontend
 def render_states():
     try:
         pg = psycopg2.connect(f"""
@@ -402,6 +438,47 @@ def render_states():
             cursor.execute(f"SELECT COUNT(*) from comments WHERE id_s=$${a['id']}$$")
             a['acnt'] = cursor.fetchone()[0]
             return_data.append(a)
+
+        ids_creators = []
+
+        for row in return_data:
+            ids_creators.append(row["id_u"])
+        
+        # logging.info(ids_creators)
+       
+        text = ""
+
+        for i in ids_creators:
+            if text == "":
+                text += f"id = $${i}$$"
+                continue
+            text += f" OR id = $${i}$$"
+
+        # logging.info(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        cursor.execute(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        result_info = cursor.fetchall()
+
+        reslt_info = {}
+
+        for row in result_info:
+            reslt_info[dict(row)["id"]] = dict(row)
+
+        # logging.info(reslt_info)
+        lst = [len(return_data), len(reslt_info), len(ids_creators), text]
+        
+        for i in lst:
+            logging.info(i)
+        
+        
+        return_last_data = []
+
+        logging.info(reslt_info)
+
+        for i in return_data:
+            i["user"] = reslt_info[i["id_u"]]
+            return_last_data.append(i)
 
         logging.info('все статьи отображены')
     except (Exception, Error) as error:
