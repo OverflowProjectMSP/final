@@ -250,6 +250,8 @@ h6 {
   justify-content: center;
   align-items: center;
 
+  position: relative;
+
   background-color: #ecedee;
 
   width: 100%;
