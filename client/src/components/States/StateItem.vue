@@ -200,112 +200,164 @@ export default {
 </script>
 
 <template>
-    <div class="main-container mb-4" v-if='this.isAllLoad'>
-        <div class="content-1">
-            <div class="account justify-content-between">
-                <a class="creator-info d-flex flex-row align-items-center gap-3"
-                    :href="`/Profile/${this.userCreater.id}`">
-                    <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
-                    <div class="name-ring">
-                        <div>
-                            <a :href="`/Profile/${this.userCreater.id}`"><span class="name">{{ userCreater.username
-                                    }}</span></a>
-                        </div>
-                    </div>
-                </a>
-                <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">Дейсвие</button>
-                        <ul class="dropdown-menu">
-                            <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
-                                    :href="`/UpdateState/${this.$route.params.id}`">Редактировать</a></li>
-                            <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="title">
-                <h3 v-html="fixN(this.states.descriptions)"></h3>
-            </div>
-            <div class="description uy">
-                <p v-html="fixN(this.states.details)"></p>
-            </div>
-            <div class="about">
-                <p v-html="fixN(this.states.data)"></p>
-            </div>
-        </div>
-
-        <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
-            <div class="account">
-                <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
-                    <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
-                    <div class="name-ring">
-                        <div>
-                            <span class="name">{{ userNow.username }}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="content-3-without mb-3">
-                <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-                    placeholder="Оставь свой комментарий:"></textarea>
-                <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
-            </div>
-            <div class="send-ans d-flex justify-content-end">
-                <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
-            </div>
-        </form>
-        <div v-if="!this.loading && this.answers.length != 0">
-            <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden text-center z-10">Loading...</span>
-                </div>
-            </div>
-        </div>
-
-        <div v-if="this.loading && this.answers.length != 0" class="comments">
-            <div class="container mt-3" v-if="this.answers.length != 0">
-                <h4>Комментарии:</h4>
-            </div>
-            <div class="content-2 mt-2" v-for="(answer, index) in answers">
-                <div v-if="this.answers.length != 0">
-                    <div class="account">
-                        <a :href="`/Profile/${answer.user.id}`"
-                            class="creator-info d-flex flex-row align-items-center gap-3">
-                            <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
-                            <div class="name-ring">
-                                <span class="name" role="button">{{ answer.user.username }}</span>
+    <div v-if='this.states'>
+        <div class="main-container mb-4" v-if='this.isAllLoad'>
+            <div class="content-1">
+                <div class="account justify-content-between">
+                    <a class="creator-info d-flex flex-row align-items-center gap-3"
+                        :href="`/Profile/${this.userCreater.id}`">
+                        <img class="accountIcon" :src="userCreater.avatar" :alt="userCreater.username" width="70px">
+                        <div class="name-ring">
+                            <div>
+                                <a :href="`/Profile/${this.userCreater.id}`"><span class="name">{{ userCreater.username
+                                        }}</span></a>
                             </div>
-                        </a>
+                        </div>
+                    </a>
+                    <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Действие</button>
+                            <ul class="dropdown-menu">
+                                <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
+                                        :href="`/UpdateState/${this.$route.params.id}`">Редактировать</a></li>
+                                <li><a class="dropdown-item" href="#" @click="deleteState">Удалить</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="description-text mt-1">
-                        <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
-                    </div>
-                    <div class="delete-btn" @click='deleteAnswer(answer.id, index)'
-                        v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
-                        <button class="comm-add btgr">X</button>
+                </div>
+                <div class="title">
+                    <h3 v-html="fixN(this.states.descriptions)"></h3>
+                </div>
+                <div class="description uy">
+                    <p v-html="fixN(this.states.details)"></p>
+                </div>
+                <div class="about">
+                    <p v-html="fixN(this.states.data)"></p>
+                </div>
+            </div>
+            <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
+                <div class="account">
+                    <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                        <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+                        <div class="name-ring">
+                            <div>
+                                <span class="name">{{ userNow.username }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="content-3-without mb-3">
+                    <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
+                        placeholder="Оставь свой комментарий:"></textarea>
+                    <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
+                </div>
+                <div class="send-ans d-flex justify-content-end">
+                    <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
+                </div>
+            </form>
+            <div v-if="!this.loading && this.answers.length != 0">
+                <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden text-center z-10">Loading...</span>
                     </div>
                 </div>
             </div>
+            <div v-if="this.loading && this.answers.length != 0" class="comments">
+                <div class="container mt-3" v-if="this.answers.length != 0">
+                    <h4>Комментарии:</h4>
+                </div>
+                <div class="content-2 mt-2" v-for="(answer, index) in answers">
+                    <div v-if="this.answers.length != 0">
+                        <div class="account">
+                            <a :href="`/Profile/${answer.user.id}`"
+                                class="creator-info d-flex flex-row align-items-center gap-3">
+                                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                                <div class="name-ring">
+                                    <span class="name" role="button">{{ answer.user.username }}</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="description-text mt-1">
+                            <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
+                        </div>
+                        <div class="delete-btn" @click='deleteAnswer(answer.id, index)'
+                            v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
+                            <button class="comm-add btgr">X</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content p-2" v-if="this.answers.length == 0">
+                <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под
+                    этой статьей!</h2>
+            </div>
         </div>
-        <div class="content p-2" v-if="this.answers.length == 0">
-            <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто оставит комментарий под
-                этой статьей!</h2>
+        <div class="co" v-else>
+            <div class="load-item item1"></div>
+            <div class="load-item item2"></div>
+            <div class="load-item item3"></div>
+            <div class="load-item item4"></div>
+            <div class="load-item item5"></div>
         </div>
     </div>
-
-    <div class="co" v-else>
-        <div class="load-item item1"></div>
-        <div class="load-item item2"></div>
-        <div class="load-item item3"></div>
-        <div class="load-item item4"></div>
-        <div class="load-item item5"></div>
+    <div v-else class='w-100 h-100 d-flex justify-content-center align-items-center'>
+        <div class="bg-black"></div>
+        <div class="modal-cenel d-flex flex-column align-items-center">
+        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+        <h6>Данной страницы не существует, либо статья была удалёна( </h6>
+        <button @click='this.$router.push("/Quetions")'>Назад</button>
+        </div>
     </div>
 </template>
 
 <style scoped>
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+.modal-cenel {
+  opacity: 1 !important;
+  position: fixed;
+  z-index: 52 !important;
+  background: rgba(59, 130, 246, 0.65);
+  padding: 24px;
+  border-radius: 10px;
+  color: #fff;
+  gap: 20px;
+}
+
+.modal-cenel button {
+  border-radius: 10px;
+  border: 1px solid#fff;
+  padding: 4px 24px;
+  background: none;
+  color: #fff;
+  opacity: 1 !important;
+}
+
+.modal-cenel h6 {
+  opacity: 1 !important;
+}
+
+.modal-cenel img {
+  border-radius: 0% !important;
+  width: 150px;
+  opacity: 1 !important;
+}
+
+.bg-black {
+  background: #000;
+  opacity: 0.5;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;

@@ -27,12 +27,14 @@ export default {
             imageLink: [],
 
             imagePast: '<img src=``>',
+            isUserInSession: false,
 
         }
     },
     methods: {
         async addQuestion() {
-            if (this.form.tag != ``) {
+            this.isUserSession();
+            if (this.form.tag != `` && this.isUserInSession) {
                 let res = await axios.post('/new-question', {
                     form: this.form,
                 });
@@ -92,8 +94,13 @@ export default {
                 name: this.filename
             });
             return res.data.link;
+        },
+
+        async isUserSession() {
+            let res = await axios.get('/check-r');
+            this.isUserInSession = res.data.all;
         }
-    }
+    },
 }
 
 </script>
@@ -207,8 +214,59 @@ export default {
         </form>
 
     </main>
+
+    <div v-if='this.isUserInSession' class='w-100 h-100 d-flex justify-content-center align-items-center'>
+    <div class="bg-black"></div>
+    <div class="modal-cenel d-flex flex-column align-items-center">
+      <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+      <h6>Ввойдите в аккаунт, чтобы продолжить действие</h6>
+      <button @click='this.$router.push("/Login")'>Войти</button>
+    </div>
+  </div>
 </template>
 <style scoped>
+.modal-cenel {
+  opacity: 1 !important;
+  position: fixed;
+  top: calc(50% - 260px);
+  z-index: 52 !important;
+  background: rgba(59, 130, 246, 0.65);
+  padding: 24px;
+  border-radius: 10px;
+  color: #fff;
+  gap: 20px;
+}
+
+.modal-cenel button {
+  border-radius: 10px;
+  border: 1px solid#fff;
+  padding: 4px 24px;
+  background: none;
+  color: #fff;
+  opacity: 1 !important;
+}
+
+.modal-cenel h6 {
+  opacity: 1 !important;
+}
+
+.modal-cenel img {
+  border-radius: 0% !important;
+  width: 150px;
+  opacity: 1 !important;
+}
+
+.bg-black {
+  background: #000;
+  opacity: 0.5;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .btn-public {
     background-color: rgb(255, 255, 255);
     color: #7ac97a;
