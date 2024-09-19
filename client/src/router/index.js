@@ -120,6 +120,10 @@ export default createRouter({
     {
       path: "/editNewNav",
       component: () => import('../components/Edit/NewnavBar.vue')
+    },
+    {
+      path: "/uftwo",
+      component: () => import('../components/Edit/UfTwo.vue')
     }
   ],
 });
