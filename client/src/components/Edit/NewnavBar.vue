@@ -32,7 +32,7 @@
     padding: 0 30px 0 30px;
 
     border-radius: 20px;
-    width: 95%;
+    width: 97%;
     min-height: 80px !important;
 
     background-color: rgba(59, 130, 246, 0.8)
