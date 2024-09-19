@@ -31,9 +31,9 @@
 
     padding: 0 30px 0 30px;
 
-    border-radius: 20px;
+    border-radius: 14px;
     width: 97%;
-    min-height: 80px !important;
+    min-height: 70px !important;
 
     background-color: rgba(59, 130, 246, 0.8)
 
@@ -48,14 +48,14 @@
 }
 
 .items img {
-    width: 70px;
+    width: 50px;
     margin-bottom: 8px;
 
 }
 
 .items a {
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     transition: 200ms;
 
@@ -68,6 +68,7 @@
 h2 {
     margin: 0;
     color: #fff;
+    font-size: 24px;
     font-weight: 600;
 }
 
@@ -87,7 +88,7 @@ h2 {
 }
 
 .enter button{
-    width: 130px;
+    width: 120px;
     border-radius: 5px;
     
   background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%);
