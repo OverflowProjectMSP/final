@@ -90,19 +90,20 @@ h2 {
 .enter button{
     width: 120px;
     border-radius: 5px;
-    
-  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 100%);
+    color: #000;   
+    background-color: #fff;
   line-height: 42px;
   padding: 0;
   border: none;
   position: relative;
+  font-weight: 500;
+  transition: background-color 300ms ease;
 }
 .enter button span {
   position: relative;
   display: block;
   width: 100%;
   height: 100%;
-  font-weight: 500;
 }
 .enter button:before,
 .enter button:after {
@@ -110,9 +111,9 @@ h2 {
   content: "";
   right: 0;
   bottom: 0;
-  background: rgba(255,255,255,1);
+  background-color: #fff;
  
-  transition: all 400ms ease;
+  transition: all 300ms ease;
 }
 .enter button:before{
    height: 0%;
@@ -123,9 +124,8 @@ h2 {
   height: 2px;
 }
 .enter button:hover{
-  color: rgba(255,255,255,1);
-  background: transparent;
-  font-weight: 500;
+  color: #fff;
+  background-color: #3d72d3;
 }
 .enter button:hover:before {
   height: 100%;
@@ -140,8 +140,8 @@ h2 {
   content: "";
   left: 0;
   top: 0;
-  background: rgba(255,255,255,1);
-  transition: all 400ms ease;
+  background-color: #fff;
+  transition: all 300ms ease;
 }
 .enter button span:before {
   width: 2px;
