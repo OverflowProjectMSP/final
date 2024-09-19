@@ -96,7 +96,6 @@ h2 {
   padding: 0;
   border: none;
   position: relative;
-  transition: all 300ms;
 }
 .enter button span {
   position: relative;
@@ -113,7 +112,7 @@ h2 {
   bottom: 0;
   background: rgba(255,255,255,1);
  
-  transition: all 0.3s ease;
+  transition: all 300ms ease;
 }
 .enter button:before{
    height: 0%;
@@ -130,6 +129,7 @@ h2 {
 }
 .enter button:hover:before {
   height: 100%;
+
 }
 .enter button:hover:after {
   width: 100%;
@@ -141,7 +141,7 @@ h2 {
   left: 0;
   top: 0;
   background: rgba(255,255,255,1);
-  transition: all 0.3s ease;
+  transition: all 300ms ease;
 }
 .enter button span:before {
   width: 2px;
