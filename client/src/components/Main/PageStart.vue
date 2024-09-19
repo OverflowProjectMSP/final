@@ -82,7 +82,7 @@ body {
 .greetings {
     display: flex;
     width: 100%;
-    height: 80vh;
+    height: 600px;
 
     border-radius: 0px;
     color: #fff;

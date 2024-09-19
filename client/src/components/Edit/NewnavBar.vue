@@ -193,6 +193,50 @@ h2 {
     filter: brightness(85%);
 }
 
+@media (max-width: 950px) {
+  .navbar {
+  }
+
+  .items {
+    gap: 30px;
+  }
+
+  .items a {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 830px) {
+  .navbar {
+    padding: 0 10px 0 10px;
+  }
+
+  .items img {
+    width: 40px;
+  }
+
+  .icon-img {
+    padding-right: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .items a {
+    font-size: 15px;
+  }
+
+  .enter button {
+    width: 100px;
+    height: 40px;
+  }
+
+  .enter button span {
+    font-size: 17px;
+  }
+}
+
 </style>
 
 
