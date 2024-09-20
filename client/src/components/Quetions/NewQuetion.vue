@@ -216,13 +216,13 @@ export default {
     </main>
 
     <div v-if='this.isUserInSession' class='w-100 h-100 d-flex justify-content-center align-items-center'>
-    <div class="bg-black"></div>
-    <div class="modal-cenel d-flex flex-column align-items-center">
-      <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
-      <h6>Ввойдите в аккаунт, чтобы продолжить действие</h6>
-      <button @click='this.$router.push("/Login")'>Войти</button>
+        <div class="bg-black"></div>
+        <div class="modal-cenel d-flex flex-column align-items-center">
+        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+        <h6>Ввойдите в аккаунт, чтобы продолжить действие</h6>
+        <button @click='this.$router.push("/Login")'>Войти</button>
+        </div>
     </div>
-  </div>
 </template>
 <style scoped>
 .modal-cenel {

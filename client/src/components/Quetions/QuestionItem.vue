@@ -34,6 +34,8 @@ export default {
       isAdmin: false,
 
       isAllLoad: false,
+
+      isOpenDeleteAnswer: false,
     }
   },
 
@@ -58,6 +60,7 @@ export default {
       this.CheckUserIsEdit()
       for (let i = 0; i < this.answers.length; i++) {
         let user = await this.loadUsers(this.answers[i]);
+        this.answers[i].isOpenRemoved = false;
         this.answerUser.push(user)
       };
       this.v_For1();
@@ -221,7 +224,7 @@ export default {
 
     async preloader() {
       if (this.questionInfo && this.userCreater) {
-          this.isAllLoad = true;
+        this.isAllLoad = true;
       }
     },
 
@@ -255,7 +258,8 @@ export default {
               <ul class="dropdown-menu">
                 <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item"
                     @click="solveQuestion(false)">Вопрос решён!</a></li>
-                <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не
+                <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё
+                    не
                     решён!</a></li>
                 <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
                     :href="`/UpdateQuestion/${this.$route.params.id}`">Редактировать</a></li>
@@ -280,7 +284,7 @@ export default {
           <h4>Ответы:</h4>
         </div>
         <div class="answers-all" v-if="this.answers.length != 0">
-          <div class="content-2" v-for="answer in answers">
+          <div class="content-2" v-for="(answer, index) in answers">
             <div class="account">
               <a :href="`/Profile/${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
                 <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
@@ -292,8 +296,20 @@ export default {
             <div class="description my-1">
               <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
             </div>
-            <div class="delete-btn" @click='deleteAnswer(answer.id)' v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
-                <button class="comm-add btgr">X</button>
+            <div class="delete-btn" @click='answer.isOpenRemoved = true'
+              v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
+              <button class="comm-add btgr">X</button>
+            </div>
+            <div v-if='answer.isOpenRemoved' class='w-100 h-100 d-flex justify-content-center align-items-center'>
+              <div class="bg-black"></div>
+              <div class="modal-cenel d-flex flex-column align-items-center">
+                <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+                <h6>Вы действительно хотите удалить комментарий?</h6>
+                <div class="d-flex gap-2">
+                  <button @click='deleteAnswer(answer.id, index)'>Да</button>
+                  <button class='no-button' @click='answer.isOpenRemoved = false'>Нет</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -309,7 +325,7 @@ export default {
           </div>
         </div>
       </div>
-  
+
       <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
         <div class="account">
           <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
@@ -349,12 +365,19 @@ export default {
       <button @click='this.$router.push("/Quetions")'>Назад</button>
     </div>
   </div>
+
 </template>
 
 <style scoped>
+.no-button {
+  background-color: #D20000 !important;
+  border-color: #D20000;
+}
+
 .modal-cenel {
   opacity: 1 !important;
   position: fixed;
+  top: calc(50% - 260px);
   z-index: 52 !important;
   background: rgba(59, 130, 246, 0.65);
   padding: 24px;
@@ -824,7 +847,10 @@ img {
     height: 80px;
   }
 
-  .content-1, .content-2, .content-3, .ans-cont {
+  .content-1,
+  .content-2,
+  .content-3,
+  .ans-cont {
     width: 1400px;
   }
 
@@ -887,10 +913,13 @@ img {
     height: 100px;
   }
 
-  .content-1, .content-2, .content-3, .ans-cont {
+  .content-1,
+  .content-2,
+  .content-3,
+  .ans-cont {
     width: 1800px;
   }
-  
+
   .name {
     font-size: 28px;
   }
@@ -950,7 +979,11 @@ img {
 }
 
 @media (min-width: 4600px) {
-  .content-1, .content-2, .content-3, .ans-cont {
+
+  .content-1,
+  .content-2,
+  .content-3,
+  .ans-cont {
     width: 2600px;
   }
 
@@ -958,7 +991,7 @@ img {
     width: 140px;
     height: 140px;
   }
-  
+
   .name {
     font-size: 38px;
   }
@@ -1025,7 +1058,11 @@ img {
 }
 
 @media (min-width: 6200px) {
-  .content-1, .content-2, .content-3, .ans-cont {
+
+  .content-1,
+  .content-2,
+  .content-3,
+  .ans-cont {
     width: 3400px;
     border-radius: 34px
   }
@@ -1038,7 +1075,7 @@ img {
     width: 180px;
     height: 180px;
   }
-  
+
   .name {
     font-size: 54px;
   }

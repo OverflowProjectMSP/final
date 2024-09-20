@@ -62,7 +62,8 @@ export default {
             if (this.answers.length != 0) {
                 for (let i = 0; i < this.answers.length; i++) {
                     let user = await this.loadUsers(this.answers[i]);
-                    this.commentUser.push(user)
+                    this.answers[i].isOpenRemoved = false;
+                    this.commentUser.push(user);
                 };
                 this.v_For1();
             }
@@ -238,7 +239,8 @@ export default {
             </div>
             <form @submit.prevent="addComment" class="content-3" v-if="this.ShowAdd">
                 <div class="account">
-                    <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                    <a :href="`/Profile/${this.userNow.id}`"
+                        class="creator-info d-flex flex-row align-items-center gap-3">
                         <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
                         <div class="name-ring">
                             <div>
@@ -273,7 +275,8 @@ export default {
                         <div class="account">
                             <a :href="`/Profile/${answer.user.id}`"
                                 class="creator-info d-flex flex-row align-items-center gap-3">
-                                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+                                <img class="accountIcon" :src="answer.user.avatar" width="70px"
+                                    :alt="answer.user.username">
                                 <div class="name-ring">
                                     <span class="name" role="button">{{ answer.user.username }}</span>
                                 </div>
@@ -282,9 +285,21 @@ export default {
                         <div class="description-text mt-1">
                             <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
                         </div>
-                        <div class="delete-btn" @click='deleteAnswer(answer.id, index)'
+                        <div class="delete-btn" @click='answer.isOpenRemoved = true'
                             v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
                             <button class="comm-add btgr">X</button>
+                        </div>
+                        <div v-if='answer.isOpenRemoved'
+                            class='w-100 h-100 d-flex justify-content-center align-items-center'>
+                            <div class="bg-black"></div>
+                            <div class="modal-cenel d-flex flex-column align-items-center">
+                                <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+                                <h6>Вы действительно хотите удалить комментарий?</h6>
+                                <div class="d-flex gap-2">
+                                    <button @click='deleteAnswer(answer.id, index)'>Да</button>
+                                    <button class='no-button' @click='answer.isOpenRemoved = false'>Нет</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -305,21 +320,27 @@ export default {
     <div v-else class='w-100 h-100 d-flex justify-content-center align-items-center'>
         <div class="bg-black"></div>
         <div class="modal-cenel d-flex flex-column align-items-center">
-        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
-        <h6>Данной страницы не существует, либо статья была удалёна( </h6>
-        <button @click='this.$router.push("/Quetions")'>Назад</button>
+            <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+            <h6>Данной страницы не существует, либо статья была удалёна( </h6>
+            <button @click='this.$router.push("/Quetions")'>Назад</button>
         </div>
     </div>
 </template>
 
 <style scoped>
 .opacity-100 {
-  opacity: 1 !important;
+    opacity: 1 !important;
+}
+
+.no-button {
+  background-color: #D20000 !important;
+  border-color: #D20000;
 }
 
 .modal-cenel {
   opacity: 1 !important;
   position: fixed;
+  top: calc(50% - 260px);
   z-index: 52 !important;
   background: rgba(59, 130, 246, 0.65);
   padding: 24px;
@@ -329,33 +350,33 @@ export default {
 }
 
 .modal-cenel button {
-  border-radius: 10px;
-  border: 1px solid#fff;
-  padding: 4px 24px;
-  background: none;
-  color: #fff;
-  opacity: 1 !important;
+    border-radius: 10px;
+    border: 1px solid#fff;
+    padding: 4px 24px;
+    background: none;
+    color: #fff;
+    opacity: 1 !important;
 }
 
 .modal-cenel h6 {
-  opacity: 1 !important;
+    opacity: 1 !important;
 }
 
 .modal-cenel img {
-  border-radius: 0% !important;
-  width: 150px;
-  opacity: 1 !important;
+    border-radius: 0% !important;
+    width: 150px;
+    opacity: 1 !important;
 }
 
 .bg-black {
-  background: #000;
-  opacity: 0.5;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+    background: #000;
+    opacity: 0.5;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .main-container {
