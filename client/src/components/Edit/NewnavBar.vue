@@ -6,17 +6,17 @@
     <div class="navbar">
         <div class="items">
             <div class="icon-img">
-                <a href=""><img src="../../assets/Main/uflogo.svg" alt=""></a>
-                <a href=""><h2>UpFollow</h2></a>
+                <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
+                <a href="/"><h2>UpFollow</h2></a>
             </div>
-            <a href="">Вопросы</a>
-            <a href="">Статьи</a>
-            <a href="">Форум</a>
+            <a href="/Quetions">Вопросы</a>
+            <a href="/States">Статьи</a>
+            <a href="/ForumPage">Форум</a>
             <a href="">Новости IT</a>
         </div>
         <div class="enter">           
-            <button class=""><span>Войти</span></button>
-            <a class="d-none" href=""><img src="../../assets/Main/hebber.png" alt=""></a>
+            <a href="/Login"><button class="" href=""><span>Войти</span></button></a>
+            <a class="d-none" href="`/Profile/${this.id}`"><img src="../../assets/Main/hebber.png" alt=""></a>
         </div>
     </div>
 </template>
