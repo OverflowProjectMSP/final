@@ -9,7 +9,7 @@
                 <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
                 <a href="/"><h2>UpFollow</h2></a>
             </div>
-            <a href="/Quetions">Вопросы</a>
+            <a href="/Questions">Вопросы</a>
             <a href="/States">Статьи</a>
             <a href="/ForumPage">Форум</a>
             <a href="">Новости IT</a>

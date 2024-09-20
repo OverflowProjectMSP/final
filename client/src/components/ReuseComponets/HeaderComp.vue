@@ -86,7 +86,7 @@ export default {
           </h4>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 mb-2">
             <li class="nav-item mt-1" style="cursor: pointer;">
-              <a class="nav-link text-white" href="/Quetions">Вопросы</a>
+              <a class="nav-link text-white" href="/Questions">Вопросы</a>
             </li>
             <li class="nav-item dropdown mt-1">
               <a class="nav-link  text-white" href="/States">
