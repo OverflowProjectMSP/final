@@ -40,6 +40,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 60vh;
+    margin-left: 40px;
 }
 
 .load-item {

@@ -1,11 +1,10 @@
 <script>
-
-import UpdateQuestion from './UpdateQuestion.vue';
-
-import axios from 'axios';
+import UpdateQuestion from "./UpdateQuestion.vue";
+import Preloader from "../Preloader2.vue";
+import axios from "axios";
 
 export default {
-  components: { UpdateQuestion },
+  components: { UpdateQuestion,Preloader },
   data() {
     return {
       questionInfo: {}, //главная возня
@@ -16,7 +15,7 @@ export default {
 
       user: {},
 
-      text: '',
+      text: "",
       symbols: 0,
       symbCount: false,
       isBold: false,
@@ -36,7 +35,7 @@ export default {
       isAllLoad: false,
 
       isOpenDeleteAnswer: false,
-    }
+    };
   },
 
   methods: {
@@ -45,33 +44,37 @@ export default {
         params: {
           id: this.$route.params.id,
           q: true,
-        }
+        },
       });
       this.questionInfo = responce.data.all.question;
       this.answers = responce.data.all.answers;
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-      this.questionInfo.details = this.questionInfo.details.replaceAll(regex, '<br>')
-      this.loadAnswerUser();
+      this.questionInfo.details = this.questionInfo.details.replaceAll(
+        regex,
+        "<br>"
+      );
       this.preloader();
+      this.loadAnswerUser();
+      
+     
     },
 
     async loadAnswerUser() {
       this.userCreater = await this.loadUsers(this.questionInfo);
-      this.CheckUserIsEdit()
+      this.CheckUserIsEdit();
       for (let i = 0; i < this.answers.length; i++) {
         let user = await this.loadUsers(this.answers[i]);
         this.answers[i].isOpenRemoved = false;
-        this.answerUser.push(user)
-      };
+        this.answerUser.push(user);
+      }
       this.v_For1();
     },
 
-
     async loadUsers(item) {
-      let res = await axios.get('/user-not-all', {
+      let res = await axios.get("/user-not-all", {
         params: {
           id: item.id_u,
-        }
+        },
       });
       return res.data.all;
     },
@@ -89,27 +92,27 @@ export default {
       if (this.text.length >= 3) {
         await axios.post(`/answers`, {
           id: this.$route.params.id,
-          q: 'true',
+          q: "true",
           text: this.text,
         });
         this.answers.push({
           id_u: this.userNow.id,
           text: this.text,
-          user: this.userNow
+          user: this.userNow,
         });
 
         this.text = ``;
-        this.v_For1()
+        this.v_For1();
       }
     },
     async deleteQuestion() {
-      await axios.delete('/delete', {
+      await axios.delete("/delete", {
         params: {
           id: this.$route.params.id,
           q: true,
-        }
+        },
       });
-      this.$router.push(`/Quetions`)
+      this.$router.push(`/Quetions`);
     },
     // async checkUser() {
     //     let res = await axios.get('/check', {
@@ -120,7 +123,7 @@ export default {
     //     this.isCheck = res.data.isEdit;
     // },
     async getNowUser() {
-      let res = await axios.get('/session');
+      let res = await axios.get("/session");
       this.loadNowUser(res.data.id);
     },
 
@@ -129,7 +132,7 @@ export default {
         for (let i = 0; i < this.answerUser.length; i++) {
           this.answers[i].user = this.answerUser[i];
           const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-          this.answers[i].text = this.answers[i].text.replaceAll(regex, '<br>')
+          this.answers[i].text = this.answers[i].text.replaceAll(regex, "<br>");
         }
         if (this.answers[this.answers.length - 1].user.avatar != ``) {
           this.loading = true;
@@ -142,11 +145,10 @@ export default {
     },
 
     async loadNowUser(id) {
-
-      let res = await axios.get('/user-not-all', {
+      let res = await axios.get("/user-not-all", {
         params: {
           id: id,
-        }
+        },
       });
       this.userNow = res.data.all;
     },
@@ -159,111 +161,147 @@ export default {
     },
 
     async CheckUserIsEdit() {
-      let res = await axios.get('/check', {
+      let res = await axios.get("/check", {
         params: {
           id: this.userCreater.id,
-        }
+        },
       });
 
-      this.isCheck = res.data.isEdit
+      this.isCheck = res.data.isEdit;
 
-      this.checkIsAdmin()
+      this.checkIsAdmin();
     },
 
     fixN(text) {
-      return text
+      return text;
     },
 
     async checkUser() {
       let res = await axios.get(`/check-r`);
       this.ShowAdd = res.data.all;
       if (this.ShowAdd == "true") {
-        this.ShowAdd = true
-        return
-
+        this.ShowAdd = true;
+        return;
       }
-      this.ShowAdd = false
+      this.ShowAdd = false;
     },
 
     async checkIsAdmin() {
-      let res = await axios.get("check-for-admin")
-      this.isAdmin = res.data.res
+      let res = await axios.get("check-for-admin");
+      this.isAdmin = res.data.res;
     },
 
     processHtml(text) {
       const parser = new DOMParser();
-      const doc = parser.parseFromString(text, 'text/html');
-      const images = document.querySelectorAll('.description p img');
+      const doc = parser.parseFromString(text, "text/html");
+      const images = document.querySelectorAll(".description p img");
 
-      images.forEach(img => {
-        img.style.maxWidth = '100%'
-        img.style.borderRadius = '10px'
-        img.style.marginBottom = '20px'
+      images.forEach((img) => {
+        img.style.maxWidth = "100%";
+        img.style.borderRadius = "10px";
+        img.style.marginBottom = "20px";
       });
 
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
 
       // doc.body.innerHTML = text.replace(regex, '<br>');
 
-      return doc.body.innerHTML.replaceAll(regex, '<br>');
+      return doc.body.innerHTML.replaceAll(regex, "<br>");
     },
 
     async deleteAnswer(id, index) {
       try {
-        await axios.delete('/delete-ans', {
+        await axios.delete("/delete-ans", {
           params: {
             id: id,
-            isQ: 'true',
-          }
+            isQ: "true",
+          },
         });
         this.answers.splice(index, 1);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
 
     async preloader() {
       if (this.questionInfo && this.userCreater) {
-        this.isAllLoad = true;
+        setTimeout(() => {
+          this.isAllLoad = true;
+       }, 1000)
       }
     },
-
   },
   mounted() {
     this.loadQuestion();
     this.checkUser();
     this.getNowUser();
+     document.title = 'Костя Лох'
   },
-}
-
+};
 </script>
 
 <template>
-  <div v-if='this.questionInfo && this.userCreater'>
-    <div class="main-container mb-4" v-if='this.isAllLoad'>
+  <div v-if="this.questionInfo && this.userCreater">
+    <div class="main-container mb-4" v-if="this.isAllLoad">
       <div class="content-1">
         <div class="account justify-content-between">
-          <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile/${this.userCreater.id}`">
-            <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="">
+          <a
+            class="creator-info d-flex flex-row align-items-center gap-3"
+            :href="`/Profile/${this.userCreater.id}`"
+          >
+            <img
+              class="accountIcon"
+              :src="userCreater.avatar"
+              width="70px"
+              alt=""
+            />
             <div class="name-ring">
               <div>
                 <span class="name">{{ userCreater.username }}</span>
               </div>
             </div>
           </a>
-          <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
+          <div
+            class="action-select"
+            v-if="this.isCheck == 'true' || this.isAdmin == true"
+          >
             <div class="dropdown">
-              <button class="btn dropdown-toggle border" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">Действие</button>
+              <button
+                class="btn dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Действие
+              </button>
               <ul class="dropdown-menu">
-                <li v-if="this.questionInfo.is_solved == true && this.isCheck == 'true'"><a class="dropdown-item"
-                    @click="solveQuestion(false)">Вопрос решён!</a></li>
-                <li v-else-if="this.isCheck == 'true'"><a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё
-                    не
-                    решён!</a></li>
-                <li v-if="this.isCheck == 'true' || this.isAdmin == true"><a class="dropdown-item"
-                    :href="`/UpdateQuestion/${this.$route.params.id}`">Редактировать</a></li>
-                <li><a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a></li>
+                <li
+                  v-if="
+                    this.questionInfo.is_solved == true &&
+                    this.isCheck == 'true'
+                  "
+                >
+                  <a class="dropdown-item" @click="solveQuestion(false)"
+                    >Вопрос решён!</a
+                  >
+                </li>
+                <li v-else-if="this.isCheck == 'true'">
+                  <a class="dropdown-item" @click="solveQuestion(true)"
+                    >Вопрос ещё не решён!</a
+                  >
+                </li>
+                <li v-if="this.isCheck == 'true' || this.isAdmin == true">
+                  <a
+                    class="dropdown-item"
+                    :href="`/UpdateQuestion/${this.$route.params.id}`"
+                    >Редактировать</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" @click="deleteQuestion"
+                    >Удалить</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -277,59 +315,104 @@ export default {
         <div class="about">
           <p>{{ questionInfo.data }}</p>
         </div>
-        <button class="answer-btn answer-a user-select-none">Ответов: {{ answers.length }}</button>
+        <button class="answer-btn answer-a user-select-none">
+          Ответов: {{ answers.length }}
+        </button>
       </div>
-      <div v-if="this.loading" class="ans-cont">
+      <div v-if="this.loading" class="ans-cont" style="margin-top: 20px">
         <div class="container mt-5">
           <h4>Ответы:</h4>
         </div>
         <div class="answers-all" v-if="this.answers.length != 0">
           <div class="content-2" v-for="(answer, index) in answers">
             <div class="account">
-              <a :href="`/Profile/${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
-                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username">
+              <a
+                :href="`/Profile/${answer.user.id}`"
+                class="creator-info d-flex flex-row align-items-center gap-3"
+              >
+                <img
+                  class="accountIcon"
+                  :src="answer.user.avatar"
+                  width="70px"
+                  :alt="answer.user.username"
+                />
                 <div class="name-ring">
-                  <p><span class="name" role="button">{{ answer.user.username }}</span></p>
+                  <p>
+                    <span class="name" role="button">{{
+                      answer.user.username
+                    }}</span>
+                  </p>
                 </div>
               </a>
             </div>
             <div class="description my-1">
-              <span style="word-break: break-all;" v-html="fixN(answer.text)"></span>
+              <span
+                style="word-break: break-all"
+                v-html="fixN(answer.text)"
+              ></span>
             </div>
-            <div class="delete-btn" @click='answer.isOpenRemoved = true'
-              v-if='(userNow.id == answer.id_u || isAdmin) && this.ShowAdd'>
+            <div
+              class="delete-btn"
+              @click="answer.isOpenRemoved = true"
+              v-if="(userNow.id == answer.id_u || isAdmin) && this.ShowAdd"
+            >
               <button class="comm-add btgr">X</button>
             </div>
-            <div v-if='answer.isOpenRemoved' class='w-100 h-100 d-flex justify-content-center align-items-center'>
+            <div
+              v-if="answer.isOpenRemoved"
+              class="w-100 h-100 d-flex justify-content-center align-items-center"
+            >
               <div class="bg-black"></div>
               <div class="modal-cenel d-flex flex-column align-items-center">
-                <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+                <img src="../../assets/Lending/bookModal.png" alt="Грусть(" />
                 <h6>Вы действительно хотите удалить комментарий?</h6>
                 <div class="d-flex gap-2">
-                  <button @click='deleteAnswer(answer.id, index)'>Да</button>
-                  <button class='no-button' @click='answer.isOpenRemoved = false'>Нет</button>
+                  <button @click="deleteAnswer(answer.id, index)">Да</button>
+                  <button
+                    class="no-button"
+                    @click="answer.isOpenRemoved = false"
+                  >
+                    Нет
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="content p-2" v-if="this.answers.length == 0">
-          <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!
+          <h2 class="d-flex justify-content-center my-5 user-select-none">
+            Будь первым, кто даст ответ на этот вопрос!
           </h2>
         </div>
       </div>
       <div v-else>
-        <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
-          <div class="spinner-border text-primary" role="status">
+        <div
+          class="d-flex justify-content-center"
+          v-if="this.answers.length != 0"
+        >
+          <div class="spinner-border text-primary mt-5" role="status">
             <span class="visually-hidden text-center">Loading...</span>
           </div>
         </div>
       </div>
 
-      <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
+      <form
+        v-if="this.ShowAdd"
+        class="content-3"
+        @submit.prevent="addComment"
+        id="iii"
+      >
         <div class="account">
-          <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
-            <img class="accountIcon" :src="userNow.avatar" width="70px" alt="">
+          <a
+            :href="`/Profile/${this.userNow.id}`"
+            class="creator-info d-flex flex-row align-items-center gap-3"
+          >
+            <img
+              class="accountIcon"
+              :src="userNow.avatar"
+              width="70px"
+              alt=""
+            />
             <div class="name-ring">
               <div>
                 <span class="name">{{ userNow.username }}</span>
@@ -339,39 +422,51 @@ export default {
         </div>
         <div class="mb-3">
           <div class="content-3-without mb-3">
-            <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
-              placeholder="Оставь свой комментарий:"></textarea>
+            <textarea
+              v-model="text"
+              @input="symbolsCount"
+              maxlength="2000"
+              class="comm-input border-0"
+              placeholder="Оставь свой комментарий:"
+            ></textarea>
             <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
           </div>
         </div>
         <div class="send-ans d-flex justify-content-end">
-          <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
+          <button type="submit" class="toMain btn btn-primary p-2 fs-5">
+            Отправить!
+          </button>
         </div>
       </form>
     </div>
-    <div class="co" v-else>
-      <div class="load-item item1"></div>
-      <div class="load-item item2"></div>
-      <div class="load-item item3"></div>
-      <div class="load-item item4"></div>
-      <div class="load-item item5"></div>
+    <div  v-else>
+      <preloader/>
     </div>
   </div>
-  <div v-else class='w-100 h-100 d-flex justify-content-center align-items-center'>
+  <div
+    v-else
+    class="w-100 h-100 d-flex justify-content-center align-items-center"
+  >
     <div class="bg-black"></div>
     <div class="modal-cenel d-flex flex-column align-items-center">
-      <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
-      <h6>Данной страницы не существует, либо вопрос был удалён( </h6>
-      <button @click='this.$router.push("/Quetions")'>Назад</button>
+      <img src="../../assets/Lending/bookModal.png" alt="Грусть(" />
+      <h6>Данной страницы не существует, либо вопрос был удалён(</h6>
+      <button @click="this.$router.push('/Quetions')">Назад</button>
     </div>
   </div>
-
 </template>
 
 <style scoped>
+.dropdown{
+  border-radius: 20px;
+  border: none;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+}
 .no-button {
-  background-color: #D20000 !important;
-  border-color: #D20000;
+  background-color: #d20000 !important;
+  border-color: #d20000;
 }
 
 .modal-cenel {
@@ -434,12 +529,12 @@ export default {
 .delete-btn {
   position: absolute;
   right: 10px;
-  bottom: 10px
+  bottom: 10px;
 }
 
 .link {
   font-size: 20px;
-  color: #3B82F6;
+  color: #3b82f6;
   position: absolute;
   right: 140px;
 }
@@ -449,9 +544,7 @@ img {
   border-radius: 100% !important;
   object-fit: cover !important;
   width: 50px;
-  
 }
-
 
 .description span {
   margin-left: 75px;
@@ -507,7 +600,6 @@ img {
   -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
-
 }
 
 .account {
@@ -525,10 +617,9 @@ img {
 
 .name {
   font-weight: 700;
-  color: #8355E3;
+  color: #8355e3;
   margin-right: 10px;
 }
-
 
 .name-ring {
   display: flex;
@@ -545,14 +636,12 @@ img {
 }
 
 .more {
-  color: #3B82F6;
+  color: #3b82f6;
 }
-
-
 
 .difficult {
   margin-left: 5px;
-  color: #1E7200;
+  color: #1e7200;
 }
 
 .title {
@@ -572,7 +661,6 @@ img {
 
 img {
   max-width: 300px !important;
-
 }
 
 .imageinp {
@@ -580,11 +668,10 @@ img {
   border-radius: 100%;
 }
 
-
 .answer-btn {
   width: 180px;
   height: 40px;
-  background-color: #3B82F6;
+  background-color: #3b82f6;
   border: none;
   border-radius: 16px;
   color: #fff;
@@ -596,8 +683,6 @@ img {
   transition: all 200ms;
 }
 
-
-
 .about {
   margin-top: 20px;
 
@@ -607,9 +692,9 @@ img {
 }
 
 .about p {
-  border-right: 2px solid #3B82F6;
+  border-right: 2px solid #3b82f6;
   padding-right: 16px;
-  color: #3B82F6;
+  color: #3b82f6;
 }
 
 .about p:last-child {
@@ -620,19 +705,24 @@ img {
 
 .content-2 {
   position: relative;
-  margin-top: 50px;
+  margin-top: 30px;
   width: 1000px;
   height: auto;
-
   padding: 19px;
-
-  border: 1px solid #000;
   border-radius: 25px;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  padding-top: 10px;
+  transition: all 0.5s;
 }
-
+.content-2:hover {
+        transform: translateY(-10px);
+        box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
+    }
 .difficult-ans {
   margin-left: 5px;
-  color: #E65C00;
+  color: #e65c00;
 }
 
 .btn-group {
@@ -640,7 +730,7 @@ img {
   align-items: center;
   gap: 21px;
 
-  justify-content: space-between
+  justify-content: space-between;
 }
 
 .btn-group:last-child {
@@ -650,15 +740,14 @@ img {
 .btn-group p {
   margin-bottom: 0;
   font-size: 18px;
-
 }
 
 .like-count {
-  color: #299F00;
+  color: #299f00;
 }
 
 .dislike-count {
-  color: #D20000;
+  color: #d20000;
 }
 
 .like {
@@ -678,12 +767,10 @@ img {
   transition: all 200ms;
 }
 
-
-
 .left {
   display: flex;
   gap: 21px;
-  align-items: center
+  align-items: center;
 }
 
 .bc {
@@ -697,9 +784,7 @@ img {
   height: 51px;
 
   padding: 0;
-
 }
-
 
 /* CONTENT-3 */
 
@@ -707,7 +792,6 @@ img {
   width: 1000px;
   margin-top: 50px;
   margin-bottom: 50px;
-
 }
 
 .content-3-without {
@@ -717,10 +801,10 @@ img {
   height: 250px;
 
   padding: 19px;
-
-  border: 1px solid #000;
   border-radius: 25px;
-
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
   position: relative;
 }
 
@@ -738,7 +822,7 @@ img {
 }
 
 .red-text {
-  color: #D20000 !important;
+  color: #d20000 !important;
 }
 
 .comm-input {
@@ -754,11 +838,11 @@ img {
 
 @media (hover: hover) {
   .btgr:hover {
-    background-color: #20498b
+    background-color: #20498b;
   }
 
   .answer-btn:hover {
-    background-color: #20498b
+    background-color: #20498b;
   }
 
   .more:hover {
@@ -768,7 +852,6 @@ img {
   .name:hover {
     color: #6140a7;
   }
-
 }
 
 @media (min-width: 1000px) {
@@ -818,10 +901,7 @@ img {
   .content-3-without {
     height: 410px;
   }
-
-
 }
-
 
 @media (max-width: 460px) {
   .answer-btn {
@@ -840,10 +920,9 @@ img {
 
   .about p {
     border-right: none;
-    border-bottom: 2px solid #3B82F6;
+    border-bottom: 2px solid #3b82f6;
     padding: 0 0 16px 0;
     margin: 0;
-
   }
 }
 
@@ -869,7 +948,7 @@ img {
   }
 
   .dropdown-menu li {
-    font-size: 22px
+    font-size: 22px;
   }
 
   .title h3 {
@@ -877,7 +956,7 @@ img {
   }
 
   .description p {
-    font-size: 24px
+    font-size: 24px;
   }
 
   .about p {
@@ -891,7 +970,7 @@ img {
   }
 
   h4 {
-    font-size: 30px
+    font-size: 30px;
   }
 
   .description span {
@@ -910,7 +989,6 @@ img {
     font-size: 28px !important;
     width: 230px;
   }
-
 }
 
 @media (min-width: 3100px) {
@@ -935,7 +1013,7 @@ img {
   }
 
   .dropdown-menu li {
-    font-size: 28px
+    font-size: 28px;
   }
 
   .title h3 {
@@ -943,7 +1021,7 @@ img {
   }
 
   .description p {
-    font-size: 30px
+    font-size: 30px;
   }
 
   .about p {
@@ -954,7 +1032,7 @@ img {
     width: 280px;
     height: 60px;
     font-size: 32px;
-    border-radius: 22px
+    border-radius: 22px;
   }
 
   h4 {
@@ -980,12 +1058,11 @@ img {
   .toMain {
     font-size: 34px !important;
     width: 260px;
-    border-radius: 14px
+    border-radius: 14px;
   }
 }
 
 @media (min-width: 4600px) {
-
   .content-1,
   .content-2,
   .content-3,
@@ -1007,7 +1084,7 @@ img {
   }
 
   .dropdown-menu li {
-    font-size: 42px
+    font-size: 42px;
   }
 
   .title h3 {
@@ -1015,7 +1092,7 @@ img {
   }
 
   .description p {
-    font-size: 42px
+    font-size: 42px;
   }
 
   .about p {
@@ -1026,11 +1103,11 @@ img {
     width: 360px;
     height: 80px;
     font-size: 42px;
-    border-radius: 30px
+    border-radius: 30px;
   }
 
   h4 {
-    font-size: 54px
+    font-size: 54px;
   }
 
   .description span {
@@ -1040,8 +1117,6 @@ img {
   .comm-add {
     font-size: 42px;
   }
-
-
 
   textarea {
     font-size: 42px;
@@ -1059,18 +1134,17 @@ img {
   .toMain {
     width: 340px;
     font-size: 45px !important;
-    border-radius: 16px
+    border-radius: 16px;
   }
 }
 
 @media (min-width: 6200px) {
-
   .content-1,
   .content-2,
   .content-3,
   .ans-cont {
     width: 3400px;
-    border-radius: 34px
+    border-radius: 34px;
   }
 
   .content-1 {
@@ -1091,7 +1165,7 @@ img {
   }
 
   .dropdown-menu li {
-    font-size: 54px
+    font-size: 54px;
   }
 
   .title h3 {
@@ -1099,7 +1173,7 @@ img {
   }
 
   .description p {
-    font-size: 58px
+    font-size: 58px;
   }
 
   .about p {
@@ -1113,7 +1187,7 @@ img {
   }
 
   h4 {
-    font-size: 64px
+    font-size: 64px;
   }
 
   .description span {
@@ -1124,8 +1198,6 @@ img {
   .comm-add {
     font-size: 54px;
   }
-
-
 
   textarea {
     font-size: 56px;
