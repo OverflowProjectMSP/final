@@ -21,7 +21,7 @@ export default {
             <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
             <a href="/States" @click="goto(`/States`)">Статьи</a>
             <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
-            <a href="https://t.me/lif0ltn">Новости IT</a>
+            <a href="https://t.me/lif0ltn" target="_blank">Новости IT</a>
         </div>
         <div class="enter">           
             <button class="" @click="goto(`/Login`)"><span>Войти</span></button>

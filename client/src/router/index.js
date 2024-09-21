@@ -128,6 +128,10 @@ export default createRouter({
     {
       path: "/abouterror",
       component: () => import('../components/Other/AbouterrorComp.vue')
+    },
+    {
+      path: "/pre",
+      component: () => import('../components/Preloader2.vue')
     }
   ],
 });

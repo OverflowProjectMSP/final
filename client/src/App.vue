@@ -42,10 +42,10 @@ export default {
 <template>
   <preloader-comp v-if="load"></preloader-comp>
   <div v-if="onload">
-    <div class="headernew">
+    <div class="headernew" style="margin-bottom: 80px">
       <header-comp class="header" />
     </div>
-    <div class="app" style="display: flex; flex-direction: column">
+    <div class="f" style="display: flex; flex-direction: column">
       <RouterView class="RouterView" style="margin-top: 45px; flex-grow: 1" />
       <footer-comp v-if="onload" />
     </div>

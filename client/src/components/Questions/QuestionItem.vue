@@ -449,6 +449,7 @@ img {
   border-radius: 100% !important;
   object-fit: cover !important;
   width: 50px;
+  
 }
 
 
@@ -460,7 +461,9 @@ img {
   width: 60px;
   height: 60px;
   border-radius: 50px;
-  border: 3px solid #1d1d1d;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
 /* CONTENT-1 */
@@ -499,11 +502,12 @@ img {
   margin-top: 50px;
   width: 1000px;
   height: auto;
-
   padding: 19px;
-
-  border: 1px solid #000;
   border-radius: 25px;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
 }
 
 .account {
@@ -513,8 +517,10 @@ img {
 }
 
 .accountIcon {
-  border-radius: 50px;
-  border: 2px solid #1d1d1d;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
 .name {
