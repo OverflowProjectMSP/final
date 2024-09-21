@@ -145,7 +145,7 @@ export default {
                 </div>
                 <div class="row pt-5 block">
                     <div class="col-6">
-                        <button id="save" type="submit"><b>Изменить</b></button>
+                        <button class="btn btn-public" type="submit"><b>Изменить</b></button>
                     </div>
                 </div>
                 <p class="error" :class="color">{{ error }}</p>
@@ -166,15 +166,7 @@ main {
     width: 100%;
     min-height: 90vh;
 }
-#save {
-    background-color: rgb(255, 255, 255);
-    color: #7ac97a;
-    border-color: #90EE90;
-    border-radius: 5px;
-    padding: 5px 15px;
-    text-align: center;
-    transition: all 300ms;
-}
+
 
 #preview {
     background-color: rgb(255, 255, 255);
@@ -195,6 +187,28 @@ main {
 .text-area {
     padding: 10px;
 
+}
+
+
+.btn-public {
+    background-color: rgb(255, 255, 255);
+    color: #7ac97a;
+    border: 2px solid #7ac97a;
+    border-radius: 5px;
+    width: 175px;
+    height: 50px;
+    padding: 5px 15px;
+    text-align: center;
+    transition: all 200ms;
+}
+
+.btn-public:hover {
+    background-color: #7ac97a;
+    color: #ffffff;
+}
+
+.btn-public:active {
+        background-color: #5ba35b !important;
 }
 
 /* стили лейбла */
@@ -340,10 +354,8 @@ div.vid {
         color: #2c2c2c;
     }
 
-    #save:hover {
-        background-color: #90EE90 !important;
-        color: #000;
-    }
+   
+    
 }
 
 @media(max-width: 1200px) {
