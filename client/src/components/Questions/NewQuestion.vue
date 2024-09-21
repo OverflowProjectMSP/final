@@ -148,17 +148,25 @@ export default {
                 </div>
             </div>
             <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
-                <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
-                <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
-                <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary"><span>Вставить код</span></button>
+                <div class="btns1">
+                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0 0 8px"><b>B</b></button>
+                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0"><i>i</i></button>
+                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord"><u>U</u></button>
+                </div>
+                <div class="btns2">
+                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode"><span>Вставить код</span></button>
 
-                <label class="input-file">
-                    <input @change="convertFileAvatar" type="file"
-                        name="file">
-                    <span>Выберите файл</span>
-                </label>
-            </div>
+                    <label class="input-file">
+                        <input @change="convertFileAvatar" type="file"
+                            name="file">
+                        <span>Выберите файл</span>
+                    </label>
+
+                </div>
+                    
+                </div>
+                
+           
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
@@ -177,7 +185,7 @@ export default {
                     <h4>Сложность вопроса</h4>
                 </div>
                 <div class="col-6">
-                    <h4>Ваш язык программирования</h4>
+                    <h4 class="your">Ваш язык программирования</h4>
                 </div>
 
                 <div class="row pt-1">
@@ -235,6 +243,14 @@ export default {
   border-radius: 10px;
   color: #fff;
   gap: 20px;
+}
+
+.bord {
+    border-radius: 0px;
+}
+
+.bordCode {
+    border-radius: 0px;
 }
 
 .modal-cenel button {
@@ -593,5 +609,66 @@ div.vid {
 /* Disabled */
 .input-file input[type=file]:disabled+span {
     background-color: #eee;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-file span {
+    height: 38px;
+}
+
+textarea {
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .btn-group {
+        flex-direction: column;
+        align-items: start;
+        gap: 5px;
+    }
+
+    .btn-primary {
+        width: 50px;
+    }
+
+    .btns1 {
+    }
+
+    .bord {
+        border-radius: 0 8px 8px 0 !important;
+    }
+    
+    .btns2 {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btns2 button {
+        width: 150px;
+    }
+
+    .bordCode {
+        border-radius: 8px;
+    }
+
+    .btns2 span {
+        width: 150px;
+        border-radius: 8px !important;
+    }
+}
+
+@media (max-width: 770px) {
+    h4 {
+        font-size: 16px !important;
+    }
+
+    .your {
+        margin-left: -10px;
+    }
 }
 </style>
