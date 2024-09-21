@@ -126,8 +126,13 @@ export default createRouter({
       component: () => import('../components/Edit/UfTwo.vue')
     },
     {
+<<<<<<< HEAD
       path: "/pre",
       component: () => import('../PreloaderComp.vue')
+=======
+      path: "/abouterror",
+      component: () => import('../components/Other/AbouterrorComp.vue')
+>>>>>>> ba3efa1 (Создан Abouterror)
     }
   ],
 });
