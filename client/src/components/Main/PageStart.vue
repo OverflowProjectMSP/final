@@ -35,12 +35,13 @@ export default {
                 <!-- <NewHeader class="NewHeader" /> -->
             </div>
             <div class="greeting-text">
-                <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
-                <p class="title-desc">Здесь вы можете задать свой вопрос и вам обязательно <br> на него ответят!</p>
+                <h1 class="title">Форум по <span style="color: #3b82f6;">программированию</span></h1>
                 <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
                 <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
             </div>
-            
+            <div class="description">
+                <p>Здесь вы можете задать свой вопрос и вам обязательно на него ответят!</p>
+            </div>
         </div>
     </div>
 </template>
@@ -59,6 +60,11 @@ body {
 
 body {
     margin: 5px;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
 }
 
 .headernew {
@@ -81,24 +87,42 @@ body {
 
 .greetings {
     display: flex;
-    width: 100%;
-    height: 600px;
-
-    border-radius: 0px;
-    color: #fff;
-    display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(../../assets/Main/mountainsjpeg.jpeg);
+    gap: 150px;
+    width: 100%;
+    height: 800px;
+
+    color: #fff;
+    background-image: url(../../assets/Main/background20.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-position: -90px -20px;
 }
+
+
+.description {
+    margin-top: 50px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 12px 70px;
+    border-radius: 20px; 
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.description p {
+    margin: 0;
+}
+
+
 
 .title {
     font-size: 40px;
-    font-weight: 400;
+    font-weight: 500;
     margin-top: 150px;
+    text-shadow: 0px 1px 2px #707070;
+    margin-bottom: 80px;
 }
 
 .title-desc {
@@ -107,26 +131,24 @@ body {
 }
 
 .btn-join {
-    font-weight: 600;
-    background-color: #166AA7;
+    width: 400px;
+    height: 80px;
+    font-size: 30px;
+    font-weight: 500;
+    border: 2px solid #fff;
+    border-radius: 16px;
+    background: none;
     color: #fff;
-    box-shadow: 0px 0px 20px #166AA7;
-    border: none;
-    margin-top: 25px;
-    padding: 30px 70px;
-    border-radius: 15px;
-    font-size: 24px;
     transition: all 200ms;
-    cursor: pointer;
+
 }
 
 
 
 @media (hover: hover) {
     .btn-join:hover {
-        background-color: #145482;
-        box-shadow: 0px 0px 40px #145482;
-        transform: scale(1.2);
+        background-color: #fff;
+        color: #3b82f6;
     }
 }
 

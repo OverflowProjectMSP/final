@@ -89,7 +89,7 @@ export default {
     </div>
     <div class="ques">
       <h2>Хотите сообщить об ошибке?</h2>
-      <button>Сообщить</button>
+      <a href="/abouterror"><button>Сообщить</button></a>
     </div>
   </div>
   <!-- <Form v-if="this.Show"/> -->
