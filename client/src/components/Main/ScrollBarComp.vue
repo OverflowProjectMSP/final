@@ -206,12 +206,17 @@ export default {
   display: none;
 }
 
+.arrow {
+  margin-top: -90px;
+}
+
 .develop {
   height: 500px;
   margin-bottom: 0;
   justify-content: start !important;
   /* margin-bottom: 30px; */
 }
+
 
 .dev-card {
   max-width: 250px;
@@ -262,7 +267,8 @@ export default {
   }
 
   .arrow {
-    margin: 0 20px !important;
+    margin-left: 30px !important;
+    margin-right: 30px !important;
   }
 }
 
