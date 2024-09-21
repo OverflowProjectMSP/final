@@ -119,15 +119,20 @@ export default {
             <h4>Текст статьи</h4>
             <p class="transparent mb-2">Делайте что хотите, в ваших руках все инструменты!</p>
             <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
-                <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
-                <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
-                <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary"><span>Вставить код</span></button>
-                <label class="input-file">
-                    <input @change="convertFileAvatar" type="file"
-                        name="file">
-                    <span>Выберите файл</span>
-                </label>
+                <div class="btns1">
+                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0px 0px 8px"><b>B</b></button>
+                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0px"><i>i</i></button>
+                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord" style="border-radius: 0px"><u>U</u></button>
+                </div>
+                <div class="btns2">
+                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode" style="border-radius: 0px"><span>Вставить код</span></button>
+                    <label class="input-file">
+                        <input @change="convertFileAvatar" type="file"
+                            name="file">
+                        <span>Выберите файл</span>
+                    </label>
+                </div>
+                
             </div>
             
             <div class="form-floating">
@@ -708,4 +713,43 @@ hr {
         }
 
     } */
+
+@media (max-width: 500px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .btns1 {
+        display: flex;
+    }
+
+    .bord {
+        border-radius: 0px 8px 8px 0px !important;
+    }
+
+    .bordCode {
+        border-radius: 8px !important;
+        width: 150px;
+    }
+
+    .btns2 {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .input-file span {
+        border-radius: 8px !important;
+    }
+
+    .input-file span {
+        width: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    .form-control {
+    }
+}
 </style>
