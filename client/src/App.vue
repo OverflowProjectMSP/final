@@ -26,7 +26,7 @@ export default {
   },
   mounted() {
     this.setShow();
-    window.onload = () => {
+    window.onload = () => { 
       // Используем стрелочную функцию
       setTimeout(() => {
         console.log("Страница полностью загружена!");
