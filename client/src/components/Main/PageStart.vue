@@ -67,6 +67,10 @@ body {
     border-radius: 25px;
 }
 
+.enter button:hover {
+    background-color: #281249;
+}
+
 .bg-bottom {
     background-color: #3b82f6;
     opacity: 1 !important;
