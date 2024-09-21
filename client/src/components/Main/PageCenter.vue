@@ -76,9 +76,9 @@ export default {
       this.answersCount = res.data.count
     },
 
-    async loadNews() {
-			this.news = (await axios.get('get-news')).data.all;
-		},
+    // async loadNews() {
+		// 	this.news = (await axios.get('get-news')).data.all;
+		// },
 
     async isInSession() {
       let res = await axios.get('/check-r')
@@ -92,7 +92,7 @@ export default {
   mounted() {
     this.regUser();
     this.getCountOfAnswers();
-		this.loadNews();
+		// this.loadNews();
     this.isInSession();
   }
 }

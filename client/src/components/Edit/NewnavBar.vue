@@ -9,13 +9,13 @@
                 <a href=""><img src="../../assets/Main/uflogo.svg" alt=""></a>
                 <a href=""><h2>UpFollow</h2></a>
             </div>
-            <a href="">Вопросы</a>
-            <a href="">Статьи</a>
-            <a href="">Форум</a>
-            <a href="">Новости IT</a>
+            <a href="/Quetions" @click="goto(`/Quetions`)">Вопросы</a>
+            <a href="/States" @click="goto(`/States`)">Статьи</a>
+            <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
+            <a href="https://t.me/lif0ltn">Новости IT</a>
         </div>
         <div class="enter">           
-            <button class=""><span>Войти</span></button>
+            <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
             <a class="d-none" href=""><img src="../../assets/Main/hebber.png" alt=""></a>
         </div>
     </div>
@@ -35,7 +35,8 @@
     width: 97%;
     min-height: 70px !important;
 
-    background-color: rgba(59, 130, 246, 0.8)
+    background-color: rgba(59, 130, 246, 0.8
+    )
 
     
 }

@@ -76,7 +76,7 @@ export default {
 </script>
 
 <template>
-    <div class="containera d-flex flex-column border border-dark rounded-top-4 px-0 pb-0 my-4">
+    <div class="containera d-flex flex-column border border-dark rounded-top-4 px-0 pb-0 my-4" >
         <h2 class="w-100 bg-primary text-white p-3 rounded-top-4 text-center">Таблица лидеров</h2>
         <ol class="ps-0 my-0">
             <li class="p-2 border-bottom border-dark d-flex justify-content-between flex-row align-items-center gap-2 w-100"

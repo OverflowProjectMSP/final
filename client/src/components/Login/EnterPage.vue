@@ -65,10 +65,10 @@ export default {
           this.error = "Пароль и почта не совпадают!";
         } else {
           this.error = "Неизвестная ошибка.";
-        }   
+        }
       } catch (err) {
-        this.error = "Ошибка сервера."
-        console.error(err)
+        this.error = "Ошибка сервера.";
+        console.error(err);
       }
     },
 
@@ -87,17 +87,19 @@ export default {
         }
       }
     },
-    reg(){
-      window.location.href = '/SignUp';
-      console.log(0)
-    }
+    reg() {
+      window.location.href = "/SignUp";
+      console.log(0);
+    },
   },
+  mounted() {
+    document.title = 'UF | Вход'
+  }
 };
 </script>
 
 <template>
   <div class="all-container">
-    <h6>UF 2.0</h6>
     <div class="login-container container">
       <div class="img-container">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
@@ -132,7 +134,7 @@ export default {
         <div class="btn-container">
           <button class="bt reg" @click="reg" type="button">Регистрация</button>
           <button
-            :class="{ 'login': button, 'bt': true, 'grey': gre }"
+            :class="{ login: button, bt: true, grey: gre }"
             :disabled="gre"
             type="submit"
           >
@@ -144,7 +146,7 @@ export default {
         <!-- <a href=""><img src="/mail.svg" alt="" /></a> -->
       </div>
       <div class="pass-err">
-        <a href="/EnterCodePage" class="a">Забыли пароль?</a> 
+        <a href="/EnterCodePage" class="a">Забыли пароль?</a>
         <div class="errors">
           <p class="err">{{ error }}</p>
         </div>
@@ -168,7 +170,7 @@ export default {
   text-align: center;
   cursor: pointer;
   cursor: pointer;
-    border-radius: 15px;
+  border-radius: 15px;
   width: 200px;
   height: 60px;
 
@@ -186,7 +188,7 @@ export default {
   text-align: center;
   cursor: pointer;
   cursor: pointer;
-    border-radius: 15px;
+  border-radius: 15px;
   width: 200px;
   height: 60px;
 
@@ -238,7 +240,7 @@ h6 {
 }
 .all-container {
   display: flex;
-  background-color: #ecedee;
+  background-color: #fff;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -253,6 +255,9 @@ h6 {
   height: 620px;
   background: #fff;
   position: relative;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 .img {
   height: 620px;
@@ -322,7 +327,7 @@ h1 {
   color: #5b5a5a;
   background: #eae9e9;
   cursor: pointer;
-    border-radius: 15px;
+  border-radius: 15px;
   width: 200px;
   height: 60px;
 
@@ -474,7 +479,7 @@ h1 {
     overflow-x: hidden;
   }
 
-  h1{
+  h1 {
     font-size: 50px;
   }
 
@@ -482,7 +487,6 @@ h1 {
     position: absolute;
     left: 150px;
     top: 420px;
-
   }
   .input {
     margin-bottom: 40px;
@@ -498,7 +502,6 @@ h1 {
     color: #000000;
   }
 
-
   .div-nickname span {
     font-size: 18px;
   }
@@ -506,7 +509,6 @@ h1 {
   .password span {
     font-size: 18px;
   }
-
 
   .bt {
     border-radius: 15px;
@@ -555,7 +557,7 @@ h1 {
     text-align: center;
     cursor: pointer;
   }
-  
+
   .input-container {
     margin-top: 180px;
     margin-left: -170px;
@@ -567,12 +569,12 @@ h1 {
   }
 
   .img {
-  transform: translateX(-20px);
-  transition: all 0.3s;
-}
-.input {
-  margin-bottom: 30px;
-}
+    transform: translateX(-20px);
+    transition: all 0.3s;
+  }
+  .input {
+    margin-bottom: 30px;
+  }
 }
 
 /* @media (max-width: 567px) {
@@ -625,16 +627,12 @@ h1 {
   }
 } */
 @media (max-width: 505px) {
-  .reg{
-    background-color: white;
+  .input {
+    background: #eae9e9;
   }
-.input{
-  background: #ffffff;
-
-}  
   .login-container {
-  background: #ecedee;
-}
+    background: #fff;
+  }
   /* .login-container {
     -webkit-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);

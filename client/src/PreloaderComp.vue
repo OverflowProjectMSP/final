@@ -20,25 +20,26 @@ export default {
 </script>
 
 <template>
-    <div class="container" v-if="this.show">
+    <!-- <div class="container" v-if="false">
         <div class="load-item item1"></div>
         <div class="load-item item2"></div>
         <div class="load-item item3"></div>
         <div class="load-item item4"></div>
         <div class="load-item item5"></div>
-</div>
+    </div> -->
+    
+            <div class="container"><img src="./assets/preloader.svg" alt="" class="img"></div> 
 </template>
 
 <style scoped>
-
+.img{
+    width: 150px;
+    height: 150px;
+}
 .container {
-    width: 90px;
-    height: 30px;
-    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
 }
 
 .load-item {

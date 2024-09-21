@@ -1,7 +1,9 @@
 <script>
 import FooterComp from "./components/ReuseComponets/FooterComp.vue";
-import HeaderComp from "./components/ReuseComponets/HeaderComp.vue";
+// import HeaderComp from "./components/ReuseComponets/HeaderComp.vue";
+import HeaderComp from "./components/Edit/NewnavBar.vue";
 import PreloaderComp from "./PreloaderComp.vue";
+
 export default {
   components: {
     HeaderComp,
@@ -9,33 +11,45 @@ export default {
     PreloaderComp,
   },
   data() {
-        return {
-            show: true,
-        }
+    return {
+      show: true,
+      load: true,
+      onload: false,
+    };
+  },
+  methods: {
+    setShow() {
+      setTimeout(() => {
+        this.show = false;
+      }, 1000);
     },
-    methods: {
-        setShow() {
-            setTimeout(() => {
-                this.show = false
-            }, 1000)
-        }
-    },
-    mounted() {
-        this.setShow();
-        // setInterval(()=> {this.$emit('setShow', this.show)}, 1000)
-    }
+  },
+  mounted() {
+    this.setShow();
+    window.onload = () => {
+      // Используем стрелочную функцию
+      setTimeout(() => {
+        console.log("Страница полностью загружена!");
+        this.load = false;
+        this.onload = true;
+        console.log(this.load);
+      }, 1000);
+    };
+  },
 };
 </script>
 
 <template>
-<header-comp v-if=' this.$route.path != "/" ' />
-
-  <div class="app">
-  <RouterView class="RouterView"/>
-  <footer-comp />
+  <preloader-comp v-if="load"></preloader-comp>
+  <div v-if="onload">
+    <div class="headernew">
+      <header-comp class="header" />
+    </div>
+    <div class="app" style="display: flex; flex-direction: column">
+      <RouterView class="RouterView" style="margin-top: 45px; flex-grow: 1" />
+      <footer-comp v-if="onload" />
+    </div>
   </div>
-
- 
 </template>
 
 <style scoped>
@@ -56,46 +70,56 @@ template {
 }
 
 .RouterView {
-  min-height: 60.7vh !important;
+  min-height: 10 0vh !important;
 }
 
 /* прелоудер */
 .co {
-    width: 90px;
-    height: 30px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    margin-left: auto;
-    margin-right: auto;
+  width: 90px;
+  height: 30px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .load-item {
-    width: 15px;
-    height: 15px;
-    background-color: #4200FF;
+  width: 15px;
+  height: 15px;
+  background-color: #4200ff;
 }
 
 .item1 {
-    animation: expand 0.4s infinite alternate;
+  animation: expand 0.4s infinite alternate;
 }
 
 .item2 {
-    animation: expand 0.4s infinite alternate;
+  animation: expand 0.4s infinite alternate;
 }
 
 .item3 {
-    animation: expand 0.4s infinite alternate;
+  animation: expand 0.4s infinite alternate;
 }
 
 .item4 {
-    animation: expand 0.4s infinite alternate;
+  animation: expand 0.4s infinite alternate;
 }
 
 .item5 {
-    animation: expand 0.4s infinite alternate 200ms;
+  animation: expand 0.4s infinite alternate 200ms;
+}
+.header {
+  position: fixed;
+  top: 10px;
+  z-index: 15000;
+}
+.headernew {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 @keyframes expand {

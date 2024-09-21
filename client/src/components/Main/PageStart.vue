@@ -32,7 +32,7 @@ export default {
     <div class="pagestart">
         <div class="greetings">
             <div class="headernew">
-                <NewHeader class="NewHeader" />
+                <!-- <NewHeader class="NewHeader" /> -->
             </div>
             <div class="greeting-text">
                 <h1 class="title">Форум по <span style="color: #2D72D9;">программированию</span></h1>
