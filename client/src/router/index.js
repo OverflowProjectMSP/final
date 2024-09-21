@@ -132,6 +132,10 @@ export default createRouter({
     {
       path: "/pre",
       component: () => import('../components/Preloader2.vue')
+    },
+    {
+      path: "/newsetting",
+      component: () => import('../components/Edit/NewsettingComp.vue')
     }
   ],
 });
