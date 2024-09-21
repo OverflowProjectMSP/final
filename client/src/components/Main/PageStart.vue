@@ -172,61 +172,13 @@ body {
         font-size: 16px;
     }
 
+}
+
+@media (max-width: 450px) {
     .btn-join {
-        padding: 20px 40px;
+        width: 300px;
+        font-size: 24px;
     }
 }
 
-@media (min-width: 2100px) {
-    .title {
-        font-size: 60px;
-    }
-
-    .title-desc {
-        font-size: 26px;
-    }
-
-    .btn-join {
-        padding: 40px 85px;
-        font-size: 32px;
-    }
-}
-
-@media (min-width: 3400px) {
-    .title {
-        font-size: 80px;
-    }
-
-    .title-desc {
-        font-size: 36px;
-    }
-
-    .btn-join {
-        padding: 50px 100px;
-        font-size: 38px;
-    }
-
-    .greetings {
-        height: 800px;
-    }
-}
-
-@media (min-width: 4200px) {
-    .title {
-        font-size: 110px;
-    }
-
-    .title-desc {
-        font-size: 48px;
-    }
-
-    .btn-join {
-        padding: 70px 170px;
-        font-size: 55px;
-    }
-
-    .greetings {
-        height: 1600px;
-    }
-}
 </style>
