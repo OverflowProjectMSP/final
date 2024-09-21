@@ -9,7 +9,7 @@
                 <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
                 <a href="/"><h2>UpFollow</h2></a>
             </div>
-            <a href="/Quetions" @click="goto(`/Quetions`)">Вопросы</a>
+            <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
             <a href="/States" @click="goto(`/States`)">Статьи</a>
             <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
             <a href="https://t.me/lif0ltn">Новости IT</a>
