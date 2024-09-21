@@ -312,7 +312,7 @@ h1 {
   pointer-events: none;
   transition: 0.3s ease;
   border-radius: 15px;
-  width: 195px;
+  width: 395px;
 
 }
 
@@ -332,7 +332,7 @@ h1 {
   pointer-events: none;
   transition: 0.3s ease;
   border-radius: 15px;
-  width: 115px;
+  width: 375px;
 }
 
 input:focus {
