@@ -66,14 +66,14 @@ export default createRouter({
       path: "/QuestionItem/:id",
       component: () => import("../components/Questions/QuestionItem.vue"),
     },
-    // {
-    //   path: "/Forum/:lang",
-    //   component: () => import("../components/Forum/Forum.vue"),
-    // },
-    // {
-    //   path: "/ForumPage",
-    //   component: () => import("../components/Forum/ForumPage.vue"),
-    // },
+    {
+      path: "/Forum/:lang",
+      component: () => import("../components/Forum/Forum.vue"),
+    },
+    {
+      path: "/ForumPage",
+      component: () => import("../components/Forum/ForumPage.vue"),
+    },
     {
       path: "/ProfileSettings",
       component: () => import("../components/Profile/SettingsProfile.vue"),
@@ -126,8 +126,8 @@ export default createRouter({
       component: () => import('../components/Edit/UfTwo.vue')
     },
     {
-      path: "/pre",
-      component: () => import('../PreloaderComp.vue')
+      path: "/abouterror",
+      component: () => import('../components/Other/AbouterrorComp.vue')
     }
   ],
 });

@@ -12,24 +12,22 @@ export default {
 </script>
 
 <template>
-  <div class="navbar">
-    <div class="items">
-      <div class="icon-img">
-        <a href="/"><img src="../../assets/Main/uflogo.svg" alt="" /></a>
-        <a href="/"><h2>UpFollow</h2></a>
-      </div>
-      <a @click="goto(`/Quetions`)">Вопросы</a>
-      <a @click="goto(`/States`)">Статьи</a>
-      <a @click="goto(`/leaders`)">Лидеры</a>
-      <a href="https://t.me/lif0ltn">Новости IT</a>
+    <div class="navbar">
+        <div class="items">
+            <div class="icon-img">
+                <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
+                <a href="/"><h2>UpFollow</h2></a>
+            </div>
+            <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
+            <a href="/States" @click="goto(`/States`)">Статьи</a>
+            <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
+            <a href="https://t.me/lif0ltn">Новости IT</a>
+        </div>
+        <div class="enter">           
+            <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
+            <a class="d-none" href=""><img src="../../assets/Main/hebber.png" alt=""></a>
+        </div>
     </div>
-    <div class="enter">
-      <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
-      <a class="d-none" href=""
-        ><img src="../../assets/Main/hebber.png" alt=""
-      /></a>
-    </div>
-  </div>
 </template>
 
 <style>

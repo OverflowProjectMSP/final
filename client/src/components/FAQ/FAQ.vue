@@ -87,13 +87,48 @@ export default {
         {{ faq.answer }}
       </p>
     </div>
+    <div class="ques">
+      <h2>Хотите сообщить об ошибке?</h2>
+      <button>Сообщить</button>
+    </div>
   </div>
-  <Form v-if="this.Show"/>
+  <!-- <Form v-if="this.Show"/> -->
 </template>
 
 <style scoped>
 .faq-container {
   margin: 50px 200px 20px 200px;
+}
+
+.ques {
+  margin-top: 50px;
+  display: flex;
+  width: 71%;
+  justify-content: space-between;
+}
+
+.ques h2 {
+  color: #5B5A5A;
+  font-size: 24px;
+  user-select: none;
+}
+
+.ques button {
+  color: #fff;
+  background-color: #5B5A5A;
+  border: none;
+  border-radius: 15px;
+  font-size: 24px;
+  font-weight: 500;
+  padding: 5px 43px;
+}
+
+.ques button:hover {
+  background-color: #515050;
+}
+
+.ques button:active {
+  background-color: #3e3d3d;
 }
 
 .faq {
