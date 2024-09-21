@@ -71,6 +71,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-bottom: 0px !important;
 }
 
 .greeting-text {
