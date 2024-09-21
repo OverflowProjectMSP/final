@@ -42,7 +42,7 @@ export default {
   width: 97%;
   min-height: 70px !important;
 
-  background-color: rgba(59, 130, 246, 0.8);
+  background-color: #629bf7;
 }
 
 .items {

@@ -31,7 +31,7 @@ export default {
 <template>
     <div class="pagestart">
         <div class="greetings">
-            <div class="headernew">
+            <div class="headernew bg-bottom">
                 <!-- <NewHeader class="NewHeader" /> -->
             </div>
             <div class="greeting-text">
@@ -65,6 +65,11 @@ body {
 .navbar {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 25px;
+}
+
+.bg-bottom {
+    background-color: #3b82f6;
+    opacity: 1 !important;
 }
 
 .headernew {
