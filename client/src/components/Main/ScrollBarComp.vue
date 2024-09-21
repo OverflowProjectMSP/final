@@ -222,6 +222,10 @@ export default {
   /* margin-bottom: 30px; */
 }
 
+h1 {
+  user-select: none;
+}
+
 
 .dev-card {
   max-width: 250px;
