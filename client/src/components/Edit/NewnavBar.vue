@@ -1,98 +1,99 @@
 <script>
-
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    goto(name) {
+      this.$router.push(name);
+    },
+  },
+};
 </script>
 
 <template>
-    <div class="navbar">
-        <div class="items">
-            <div class="icon-img">
-                <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
-                <a href="/"><h2>UpFollow</h2></a>
-            </div>
-            <a href="/Quetions" @click="goto(`/Quetions`)">Вопросы</a>
-            <a href="/States" @click="goto(`/States`)">Статьи</a>
-            <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
-            <a href="https://t.me/lif0ltn">Новости IT</a>
-        </div>
-        <div class="enter">           
-            <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
-            <a class="d-none" href=""><img src="../../assets/Main/hebber.png" alt=""></a>
-        </div>
+  <div class="navbar">
+    <div class="items">
+      <div class="icon-img">
+        <a href="/"><img src="../../assets/Main/uflogo.svg" alt="" /></a>
+        <a href="/"><h2>UpFollow</h2></a>
+      </div>
+      <a @click="goto(`/Quetions`)">Вопросы</a>
+      <a @click="goto(`/States`)">Статьи</a>
+      <a @click="goto(`/leaders`)">Лидеры</a>
+      <a href="https://t.me/lif0ltn">Новости IT</a>
     </div>
+    <div class="enter">
+      <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
+      <a class="d-none" href=""
+        ><img src="../../assets/Main/hebber.png" alt=""
+      /></a>
+    </div>
+  </div>
 </template>
 
 <style>
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 0 30px 0 30px;
 
+  border-radius: 14px;
+  width: 97%;
+  min-height: 70px !important;
 
-    padding: 0 30px 0 30px;
-
-    border-radius: 14px;
-    width: 97%;
-    min-height: 70px !important;
-
-    background-color: rgba(59, 130, 246, 0.8
-    )
-
-    
+  background-color: rgba(59, 130, 246, 0.8);
 }
 
-
 .items {
-    display: flex;
-    align-items: center;
-    gap: 50px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
 }
 
 .items img {
-    width: 50px;
-    margin-bottom: 8px;
-
+  width: 50px;
+  margin-bottom: 8px;
 }
 
 .items a {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    transition: 200ms;
-
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 200ms;
 }
 
 .items a:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 
 h2 {
-    margin: 0;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 600;
+  margin: 0;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .icon-img {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 
+  border-right: 2px solid #fff;
 
-    border-right: 2px solid #fff;
-    
-    padding-right: 30px;
+  padding-right: 30px;
 }
 
 .icon-img a:hover {
-    opacity: 0.8 !important;
+  opacity: 0.8 !important;
 }
-
 
 .enter button {
   width: 120px;
   border-radius: 5px;
-  color: #000;   
+  color: #000;
   background-color: #fff;
   line-height: 42px;
   padding: 0;
@@ -182,16 +183,14 @@ h2 {
   width: 100%;
 }
 
-
-
 .enter img {
-    width: 60px;
-    border-radius: 10px;
-    transition: 200ms;
+  width: 60px;
+  border-radius: 10px;
+  transition: 200ms;
 }
 
 .enter img:hover {
-    filter: brightness(85%);
+  filter: brightness(85%);
 }
 
 @media (max-width: 950px) {
@@ -237,21 +236,4 @@ h2 {
     font-size: 17px;
   }
 }
-
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
