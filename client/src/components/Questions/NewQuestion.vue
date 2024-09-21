@@ -27,12 +27,14 @@ export default {
             imageLink: [],
 
             imagePast: '<img src=``>',
+            isUserInSession: false,
 
         }
     },
     methods: {
         async addQuestion() {
-            if (this.form.tag != ``) {
+            this.isUserSession();
+            if (this.form.tag != `` && this.isUserInSession) {
                 let res = await axios.post('/new-question', {
                     form: this.form,
                 });
@@ -92,8 +94,13 @@ export default {
                 name: this.filename
             });
             return res.data.link;
+        },
+
+        async isUserSession() {
+            let res = await axios.get('/check-r');
+            this.isUserInSession = res.data.all;
         }
-    }
+    },
 }
 
 </script>
@@ -141,17 +148,25 @@ export default {
                 </div>
             </div>
             <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
-                <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
-                <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
-                <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary"><span>Вставить код</span></button>
+                <div class="btns1">
+                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0 0 8px"><b>B</b></button>
+                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0"><i>i</i></button>
+                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord"><u>U</u></button>
+                </div>
+                <div class="btns2">
+                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode"><span>Вставить код</span></button>
 
-                <label class="input-file">
-                    <input @change="convertFileAvatar" type="file"
-                        name="file">
-                    <span>Выберите файл</span>
-                </label>
-            </div>
+                    <label class="input-file">
+                        <input @change="convertFileAvatar" type="file"
+                            name="file">
+                        <span>Выберите файл</span>
+                    </label>
+
+                </div>
+                    
+                </div>
+                
+           
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
@@ -170,7 +185,7 @@ export default {
                     <h4>Сложность вопроса</h4>
                 </div>
                 <div class="col-6">
-                    <h4>Ваш язык программирования</h4>
+                    <h4 class="your">Ваш язык программирования</h4>
                 </div>
 
                 <div class="row pt-1">
@@ -207,8 +222,67 @@ export default {
         </form>
 
     </main>
+
+    <div v-if='this.isUserInSession' class='w-100 h-100 d-flex justify-content-center align-items-center'>
+        <div class="bg-black"></div>
+        <div class="modal-cenel d-flex flex-column align-items-center">
+        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+        <h6>Ввойдите в аккаунт, чтобы продолжить действие</h6>
+        <button @click='this.$router.push("/Login")'>Войти</button>
+        </div>
+    </div>
 </template>
 <style scoped>
+.modal-cenel {
+  opacity: 1 !important;
+  position: fixed;
+  top: calc(50% - 260px);
+  z-index: 52 !important;
+  background: rgba(59, 130, 246, 0.65);
+  padding: 24px;
+  border-radius: 10px;
+  color: #fff;
+  gap: 20px;
+}
+
+.bord {
+    border-radius: 0px;
+}
+
+.bordCode {
+    border-radius: 0px;
+}
+
+.modal-cenel button {
+  border-radius: 10px;
+  border: 1px solid#fff;
+  padding: 4px 24px;
+  background: none;
+  color: #fff;
+  opacity: 1 !important;
+}
+
+.modal-cenel h6 {
+  opacity: 1 !important;
+}
+
+.modal-cenel img {
+  border-radius: 0% !important;
+  width: 150px;
+  opacity: 1 !important;
+}
+
+.bg-black {
+  background: #000;
+  opacity: 0.5;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .btn-public {
     background-color: rgb(255, 255, 255);
     color: #7ac97a;
@@ -535,5 +609,66 @@ div.vid {
 /* Disabled */
 .input-file input[type=file]:disabled+span {
     background-color: #eee;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-file span {
+    height: 38px;
+}
+
+textarea {
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .btn-group {
+        flex-direction: column;
+        align-items: start;
+        gap: 5px;
+    }
+
+    .btn-primary {
+        width: 50px;
+    }
+
+    .btns1 {
+    }
+
+    .bord {
+        border-radius: 0 8px 8px 0 !important;
+    }
+    
+    .btns2 {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btns2 button {
+        width: 150px;
+    }
+
+    .bordCode {
+        border-radius: 8px;
+    }
+
+    .btns2 span {
+        width: 150px;
+        border-radius: 8px !important;
+    }
+}
+
+@media (max-width: 770px) {
+    h4 {
+        font-size: 16px !important;
+    }
+
+    .your {
+        margin-left: -10px;
+    }
 }
 </style>

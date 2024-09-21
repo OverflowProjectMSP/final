@@ -250,6 +250,8 @@ h6 {
   justify-content: center;
   align-items: center;
 
+  position: relative;
+
   background-color: #ecedee;
 
   width: 100%;
@@ -259,7 +261,7 @@ h6 {
 h1 {
   text-align: center;
   font-weight: 700;
-  font-size: 79px;
+  font-size: 59px;
   color: #000;
   width: 100%;
 }
@@ -268,7 +270,7 @@ h1 {
   display: flex;
 
   width: 1200px;
-  height: 670px;
+  height: 630px;
   background-color: #fff;
   border-radius: 50px;
 }
@@ -280,7 +282,7 @@ h1 {
 }
 
 .img {
-  height: 670px;
+  height: 630px;
 }
 
 .main-content {
@@ -299,7 +301,7 @@ h1 {
 .input {
   border-radius: 15px;
   width: 480px;
-  height: 60px;
+  height: 55px;
   background: #eae9e9;
   border: none;
   padding: 20px;
@@ -317,7 +319,7 @@ h1 {
   position: absolute;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 22px;
   color: #5b5a5a;
   top: 14px;
   left: 18px;
@@ -336,7 +338,7 @@ h1 {
   position: absolute;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 22px;
   color: #5b5a5a;
   top: 14px;
   left: 18px;
@@ -361,7 +363,7 @@ input:focus {
   position: absolute;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 22px;
   color: #5b5a5a;
   top: 14px;
   left: 18px;
@@ -372,12 +374,12 @@ input:focus {
 
 .eye {
   position: absolute;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   z-index: 400;
   cursor: pointer;
   top: 7px;
-  right: 60px;
+  right: 22px;
 }
 
 .rep-password {
@@ -388,7 +390,7 @@ input:focus {
   position: absolute;
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 22px;
   color: #5b5a5a;
   top: 14px;
   left: 18px;
@@ -401,7 +403,7 @@ input:focus {
 .login {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
   color: #fff;
   background: #3b82f6;
   cursor: pointer;
@@ -463,7 +465,7 @@ input:focus {
 .reg {
   font-family: var(--font-family);
   font-weight: 700;
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
   color: #5b5a5a;
   background: #eae9e9;

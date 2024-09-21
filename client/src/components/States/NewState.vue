@@ -72,6 +72,8 @@ export default {
             return res.data.link;
         },
 
+       
+
         updateCursor(event) {
             this.cursorPosition = event.target.selectionStart;
         },
@@ -88,8 +90,17 @@ export default {
                 this.updateCursor({ target: this.$refs.textArea });
             });
         },
-    }
-}
+        limitText() {
+                if (this.form.details.length > 20000) {
+                    this.form.details - this.form.details.substring(0, 20000);
+                }
+        },
+         multimethod() {
+            this.updateCursor(event);
+            this.limitText();
+        }
+     }
+ }
 </script>
 
 <template>
@@ -108,23 +119,28 @@ export default {
             <h4>Текст статьи</h4>
             <p class="transparent mb-2">Делайте что хотите, в ваших руках все инструменты!</p>
             <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary"><b>B</b></button>
-                <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary"><i>i</i></button>
-                <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary"><u>U</u></button>
-                <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary"><span>Вставить код</span></button>
-                <label class="input-file">
-                    <input @change="convertFileAvatar" type="file"
-                        name="file">
-                    <span>Выберите файл</span>
-                </label>
+                <div class="btns1">
+                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0px 0px 8px"><b>B</b></button>
+                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0px"><i>i</i></button>
+                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord" style="border-radius: 0px"><u>U</u></button>
+                </div>
+                <div class="btns2">
+                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode" style="border-radius: 0px"><span>Вставить код</span></button>
+                    <label class="input-file">
+                        <input @change="convertFileAvatar" type="file"
+                            name="file">
+                        <span>Выберите файл</span>
+                    </label>
+                </div>
+                
             </div>
             
             <div class="form-floating">
-                <textarea ref="textArea" @input="updateCursor" @click="updateCursor"
+                <textarea ref="textArea" @input="multimethod" @click="updateCursor" 
                     class="text-area text-box multi-line yy form-control formchik" data-val="true"
-                    data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
+                    data-val-length="Maximum = 20000 characters" data-val-length-max="10000" id="info"
                     name="info" cols="200" rows="7" style="border-color: #D3D3D3; border-radius: 5px;"
-                    v-model="form.details"></textarea>
+                    v-model="form.details" :maxlength="20000"></textarea>
             </div>
             <div class="mb-3">
             </div>
@@ -200,6 +216,10 @@ export default {
 
 .block {
     margin-bottom: 10px;
+}
+
+.input-file span {
+    line-height: 29px !important;
 }
 
 
@@ -693,4 +713,43 @@ hr {
         }
 
     } */
+
+@media (max-width: 500px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .btns1 {
+        display: flex;
+    }
+
+    .bord {
+        border-radius: 0px 8px 8px 0px !important;
+    }
+
+    .bordCode {
+        border-radius: 8px !important;
+        width: 150px;
+    }
+
+    .btns2 {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .input-file span {
+        border-radius: 8px !important;
+    }
+
+    .input-file span {
+        width: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    .form-control {
+    }
+}
 </style>

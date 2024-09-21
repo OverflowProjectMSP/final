@@ -6,8 +6,8 @@
     <div class="navbar">
         <div class="items">
             <div class="icon-img">
-                <a href=""><img src="../../assets/Main/uflogo.svg" alt=""></a>
-                <a href=""><h2>UpFollow</h2></a>
+                <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
+                <a href="/"><h2>UpFollow</h2></a>
             </div>
             <a href="/Quetions" @click="goto(`/Quetions`)">Вопросы</a>
             <a href="/States" @click="goto(`/States`)">Статьи</a>

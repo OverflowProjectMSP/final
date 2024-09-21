@@ -151,8 +151,9 @@ export default {
       <div class="dev-container d-flex flex-row">
         <div @click="prevDev" role="button"
              class="arrow arrow-left mx-5 d-flex justify-content-center align-items-center gap-2 fs-1 fw-bold user-select-none">
-          <
+          <img src="../../assets/Main/arrow-prev.svg" alt="">
         </div>
+
         <div class="collaps-container d-flex justify-content-center flex-wrap gap-4" v-if='this.isAllLoad'>
           <div class="dev-card d-flex flex-column gap-0 align-items-center" @click="showDev(this.index)">
             <img class="rounded-2 user-select-none" :src="images[index]"
@@ -182,7 +183,7 @@ export default {
         </div>
         <div @click="nextDev" role="button"
              class="arrow arrow-right mx-5 d-flex justify-content-center align-items-center gap-2 fs-1 fw-bold user-select-none">
-          >
+          <img src="../../assets/Main/arrow-next.svg" alt="">
         </div>
       </div>
     </div>
@@ -206,12 +207,25 @@ export default {
   display: none;
 }
 
+.arrow {
+  margin-top: -90px;
+}
+
+.arrow img {
+  width: 60px;
+}
+
 .develop {
   height: 500px;
   margin-bottom: 0;
   justify-content: start !important;
   /* margin-bottom: 30px; */
 }
+
+h1 {
+  user-select: none;
+}
+
 
 .dev-card {
   max-width: 250px;
@@ -244,6 +258,10 @@ export default {
   .dev-card-4 {
     display: none !important;
   }
+
+  .arrow img {
+    width: 50px;
+  }
 }
 
 @media (max-width: 880px) {
@@ -262,7 +280,12 @@ export default {
   }
 
   .arrow {
-    margin: 0 20px !important;
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+  }
+
+  .arrow img {
+    width: 40px;
   }
 }
 
@@ -276,11 +299,18 @@ export default {
   hr {
     margin-top: 150px;
   }
+
+
 }
 
 @media (max-width: 453px) {
   hr {
     margin-top: 200px;
+  }
+
+  .arrow {
+    margin-left: 10px !important;
+    margin-right: 10px !important;
   }
 }
 

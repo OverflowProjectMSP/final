@@ -146,7 +146,7 @@ export default {
         <!-- <a href=""><img src="/mail.svg" alt="" /></a> -->
       </div>
       <div class="pass-err">
-        <a href="/EnterCodePage" class="a">Забыли пароль?</a>
+        <a href="/EnterCodePage" class="a">Забыли пароль?</a> 
         <div class="errors">
           <p class="err">{{ error }}</p>
         </div>
@@ -627,9 +627,13 @@ h1 {
   }
 } */
 @media (max-width: 505px) {
-  .input {
-    background: #eae9e9;
+  .reg{
+    background-color: white;
   }
+.input{
+  background: #ffffff;
+
+}  
   .login-container {
     background: #fff;
   }

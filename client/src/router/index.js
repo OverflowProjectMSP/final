@@ -51,12 +51,12 @@ export default createRouter({
       component: () => import("../components/FAQ/FAQ.vue"),
     },
     {
-      path: "/Quetions",
-      component: () => import("../components/Quetions/Quetions.vue"),
+      path: "/Questions",
+      component: () => import("../components/Questions/Questions.vue"),
     },
     {
-      path: "/NewQuetion",
-      component: () => import("../components/Quetions/NewQuetion.vue"),
+      path: "/NewQuestion",
+      component: () => import("../components/Questions/NewQuestion.vue"),
     },
     {
       path: "/Profile/:id",
@@ -64,7 +64,7 @@ export default createRouter({
     },
     {
       path: "/QuestionItem/:id",
-      component: () => import("../components/Quetions/QuestionItem.vue"),
+      component: () => import("../components/Questions/QuestionItem.vue"),
     },
     // {
     //   path: "/Forum/:lang",
@@ -84,7 +84,7 @@ export default createRouter({
     },
     {
       path: "/UpdateQuestion/:id",
-      component: () => import("../components/Quetions/UpdateQuestion.vue"),
+      component: () => import("../components/Questions/UpdateQuestion.vue"),
     },
     {
       path: "/UpdateState/:id",
@@ -120,6 +120,10 @@ export default createRouter({
     {
       path: "/editNewNav",
       component: () => import('../components/Edit/NewnavBar.vue')
+    },
+    {
+      path: "/uftwo",
+      component: () => import('../components/Edit/UfTwo.vue')
     },
     {
       path: "/pre",
