@@ -21,6 +21,13 @@ export default {
             isCheck: false,
         }
     },
+    computed: {
+        limit() {
+            return 20000 - this.form.details.length;
+        }
+    },
+
+
     mounted() {
         this.loadQuestion();
         this.checkUser();
@@ -54,6 +61,12 @@ export default {
             });
             this.isCheck = Boolean(res.data.isEdit);
         },
+
+        limitText() {
+            if (this.form.details.length > 20000) {
+                this.form.details - this.form.details.substring(0, 20000);
+            }
+        }
     }
 }
 
@@ -77,10 +90,10 @@ export default {
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
-                        <textarea class="text-area text-box multi-line" data-val="true"
+                        <textarea class="text-area text-box multi-line" data-val="true" 
                             data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="texting"
                             name="info" cols="200" rows="3" style="border-color: #D3D3D3; border-radius: 5px;"
-                            v-model="form.descriptions" maxlength="35"></textarea>
+                            v-model="form.descriptions" maxlength="2045"></textarea>
 
                     </div>
                 </div>
@@ -94,10 +107,10 @@ export default {
             <div class="row">
                 <div class="col-12">
                     <div class="input-group mb-3">
-                        <textarea class="text-area text-box multi-line yy" data-val="true"
-                            data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
+                        <textarea class="text-area text-box multi-line yy" data-val="true" @input="limitText"
+                            data-val-length="Maximum = 20000 characters" data-val-length-max="10000" id="info"
                             name="info" cols="200" rows="3"
-                            style="border-color: #D3D3D3; border-radius: 5px; height: 210px;" v-model="form.details"></textarea>
+                            style="border-color: #D3D3D3; border-radius: 5px; height: 210px;" v-model="form.details" maxlength="20000"></textarea>
                     </div>
                 </div>
             </div>
@@ -163,6 +176,11 @@ main {
 }
 
 
+textarea {
+    width: 100%;
+}
+
+
 .btn-public {
     background-color: rgb(255, 255, 255);
     color: #7ac97a;
@@ -173,7 +191,6 @@ main {
     text-align: center;
     transition: all 200ms;
 
-    margin-left: 30px;
 }
 
 .btn-public:hover {
@@ -189,6 +206,10 @@ main {
 
 .block {
     margin-bottom: 50px;
+}
+
+.form-select {
+    width: 350px;
 }
 
 .text-area {
