@@ -165,60 +165,52 @@ export default {
                 </div>
                     
                 </div>
-                
+
+                <div class="sel-block">
+                    <div class="diff-que">
+                            <select class="form-select" v-model="form.dificulty">
+                                <option value="">Сложность вопроса</option>
+                                <option value="Простой">Простой</option>
+                                <option value="Средний">Средний</option>
+                                <option value="Сложный">Сложный</option>
+                            </select>
+                    </div>
+                    <div class="yourlang">
+                            <select class="form-select" v-model="form.tag">
+                                <option value="">Ваш язык программирования</option>
+                                <option value="javascript">JavaScript</option>
+                                <option value="ts">TS</option>
+                                <option value="python">Python</option>
+                                <option value="php">PHP</option>
+                                <option value="cpp">C++</option>
+                                <option value="java">Java</option>
+                                <option value="cs">C#</option>
+                                <option value="go">Golang</option>
+                                <option value="IB">ИБ</option>
+                            </select>
+                    </div>
+                </div>
            
-            <div class="row">
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <textarea ref="textArea" @input="updateCursor" @click="updateCursor"
-                            class="text-area text-box multi-line yy" data-val="true"
-                            data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
-                            name="info" cols="200" rows="7" style="border-color: #D3D3D3; border-radius: 5px;"
-                            v-model="form.details"></textarea>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <textarea ref="textArea" @input="updateCursor" @click="updateCursor"
+                                class="text-area text-box multi-line yy" data-val="true"
+                                data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
+                                name="info" cols="200" rows="7" style="border-color: #D3D3D3; border-radius: 5px;"
+                                v-model="form.details"></textarea>
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row pt-4">
-                <div class="col-6">
-                    <h4>Сложность вопроса</h4>
-                </div>
-                <div class="col-6">
-                    <h4 class="your">Ваш язык программирования</h4>
-                </div>
-
-                <div class="row pt-1">
-                    <div class="col-6">
-                        <select class="form-select" v-model="form.dificulty">
-                            <option value="Простой">Простой</option>
-                            <option value="Средний">Средний</option>
-                            <option value="Сложный">Сложный</option>
-                        </select>
-
-                    </div>
-                    <div class="col-6">
-                        <select class="form-select" v-model="form.tag">
-                            <option value="javascript">JavaScript</option>
-                            <option value="ts">TS</option>
-                            <option value="python">Python</option>
-                            <option value="php">PHP</option>
-                            <option value="cpp">C++</option>
-                            <option value="java">Java</option>
-                            <option value="cs">C#</option>
-                            <option value="go">Golang</option>
-                            <option value="IB">ИБ</option>
-                        </select>
-
-                    </div>
-                </div>
+            
                 <div class="row pt-5 block">
                     <div class="col-6 btn-error">
                         <button class="btn btn-public"type="submit"><b>Опубликовать</b></button>
                         <p v-if='error' class="error" :class="color">{{ error }}</p>
                     </div>
                 </div>
-            </div>
         </form>
 
     </main>
@@ -266,6 +258,7 @@ export default {
   opacity: 1 !important;
 }
 
+
 .modal-cenel img {
   border-radius: 0% !important;
   width: 150px;
@@ -294,6 +287,24 @@ export default {
     text-align: center;
     transition: all 200ms;
 }
+
+.selects {
+    margin-bottom: 30px;
+}
+
+.form-select {
+    width: 500px;
+}
+
+
+.sel-block {
+    display: flex;
+    gap: 22%;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
 
 .btn-public:hover {
     background-color: #7ac97a;
@@ -484,9 +495,23 @@ div.vid {
     }
 }
 
+@media (max-width: 1400px) {
+    .sel-block {
+        gap: 10%;
+    }
+}
+
 @media(max-width: 1200px) {
     .q {
         font-size: var(--size-20);
+    }
+
+    .sel-block {
+        gap: 5%;
+    }
+
+    .form-select {
+        width: 445px;
     }
 }
 
@@ -501,6 +526,16 @@ div.vid {
 
     .mid-1 p {
         font-size: 24px;
+    }
+
+    .form-select {
+        width: 330px;
+    }
+
+    .sel-block {
+        h4 {
+            font-size: 20px;
+        }
     }
 
 }
@@ -555,6 +590,12 @@ div.vid {
     .imp-1 {
         padding-top: 13px;
     }
+
+    .sel-block {
+        flex-direction: column;
+        gap: 20px;
+    }
+
 }
 
 .input-file {

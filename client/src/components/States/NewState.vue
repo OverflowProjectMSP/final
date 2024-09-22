@@ -134,7 +134,20 @@ export default {
                 </div>
                 
             </div>
-            
+            <div class="change-lang">
+                <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
+                    <option selected value="">Выберите язык</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="ts">TS</option>
+                    <option value="python">Python</option>
+                    <option value="php">PHP</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="cs">C#</option>
+                    <option value="go">Golang</option>
+                    <option value="IB">ИБ</option>
+                </select>
+            </div>
             <div class="form-floating">
                 <textarea ref="textArea" @input="multimethod" @click="updateCursor" 
                     class="text-area text-box multi-line yy form-control formchik" data-val="true"
@@ -148,18 +161,7 @@ export default {
     
         <div class="row  block">
             <div class="change-public">
-                <select class="form-select" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                    <option selected value="">Выберите язык</option>
-                    <option value="javascript">JavaScript</option>
-                    <option value="ts">TS</option>
-                    <option value="python">Python</option>
-                    <option value="php">PHP</option>
-                    <option value="cpp">C++</option>
-                    <option value="java">Java</option>
-                    <option value="cs">C#</option>
-                    <option value="go">Golang</option>
-                    <option value="IB">ИБ</option>
-                </select>
+                
                 <div class="btn-error">
                     <button class="btn btn-public" @click="addState"><b>Опубликовать</b></button>
                     <span class="text-danger" v-if="this.error">{{ error }}</span>
@@ -173,6 +175,10 @@ export default {
 /* стили кнопок */
 .a52 {
     overflow: hidden !important;
+}
+
+.title h2 {
+    color: #000;
 }
 
 .btn-public {
@@ -269,6 +275,7 @@ hr {
 
 .form-select {
     margin-left: 30px;
+    width: 200px;
 }
 
 .transparent {
