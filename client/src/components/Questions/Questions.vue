@@ -79,48 +79,50 @@ export default {
                             aria-label="First name">
                         <input v-model="author" type="search" class="form-control w-25" placeholder="Автор вопроса"
                             aria-label="Last name">
-                    </div>
-                    <div class="button-select">
-                        <div class="selects">
-                            
-    
-                            <select class="form-select form-2 me-2" v-model="tag">
-                                <option value="">Тема вопроса</option>
-                                <option value="javascript">JavaScript</option>
-                                <option value="ts">TS</option>
-                                <option value="python">Python</option>
-                                <option value="php">PHP</option>
-                                <option value="cpp">C++</option>
-                                <option value="java">Java</option>
-                                <option value="cs">C#</option>
-                                <option value="go">Golang</option>
-                                <option value="IB">ИБ</option>
-                            </select>
-    
-                            <div class="img-select">
-                                <!-- <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level"> -->
-                                <select class="form-select form-1 " v-model="dificulty">
-                                    <option value="">Степень сложности</option>
-                                    <option value="Простой" selected>Лёгкие</option>
-                                    <option value="Средний">Средние</option>
-                                    <option value="Сложный">Сложные</option>
+                        <div class="button-select">
+                            <div class="selects">
+                                
+        
+                                <select class="form-select form-2 me-2" v-model="tag">
+                                    <option value="">Тема вопроса</option>
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="ts">TS</option>
+                                    <option value="python">Python</option>
+                                    <option value="php">PHP</option>
+                                    <option value="cpp">C++</option>
+                                    <option value="java">Java</option>
+                                    <option value="cs">C#</option>
+                                    <option value="go">Golang</option>
+                                    <option value="IB">ИБ</option>
                                 </select>
+        
+                                <div class="img-select">
+                                    <!-- <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level"> -->
+                                    <select class="form-select form-1 " v-model="dificulty">
+                                        <option value="">Степень сложности</option>
+                                        <option value="Простой" selected>Лёгкие</option>
+                                        <option value="Средний">Средние</option>
+                                        <option value="Сложный">Сложные</option>
+                                    </select>
+                                </div>
+                                    <button class="btn find-btn btn-outline-primary text-dark ms-4"
+                                        @click="filtre">Найти</button>
                             </div>
-                        </div>
-                        <!-- <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2"> -->
-                        <!-- </div> -->
-                        <div class="down-menu d-flex align-items-center">
-                            <div class="d-flex align-items-center">
-                                <!-- плюсик -->
-                                <!-- <div class="contain" @click="OpenModal">
-                                    <img src="../../assets/States/add.png" class="add">
-                                </div> -->
-                                <button class="btn find-btn btn-outline-primary text-dark ms-4"
-                                    @click="filtre">Найти</button>
+                            <!-- <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2"> -->
+                            <!-- </div> -->
+                            <div class="down-menu d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <!-- плюсик -->
+                                    <!-- <div class="contain" @click="OpenModal">
+                                        <img src="../../assets/States/add.png" class="add">
+                                    </div> -->
+                                    
+                                </div>
                             </div>
+                            <a href="/NewQuestion"><button class="create-quetion">Создать вопрос</button></a>
                         </div>
-                        <a href="/NewQuestion"><button class="create-quetion">Создать вопрос</button></a>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -137,7 +139,18 @@ export default {
 <style scoped>
 
 .mar {
-    margin-left: 55px;
+    margin-left: 5px;
+    color: #000;
+}
+
+.active-container h2 {
+    font-size: 30px !important;
+}
+
+
+
+.find-btn {
+    margin-left: 10px !important;
 }
 
 .cont {
@@ -163,6 +176,14 @@ a {
 
 }
 
+.headernew {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0px !important;
+    padding: 0 10px !important;
+}
+
 .form-select {
     width: 280px !important;
 }
@@ -179,11 +200,12 @@ a {
 
 .button-select {
     display: flex;
+    flex-direction: column;
     /* justify-content: center; */
     flex-wrap: wrap;
-    width: 802px;
-    /* margin-left: 5px;
-    margin-right: 5px; */
+    width: 100%;
+    margin-left: 5px;
+    /* margin-right: 5px; */
 }
 
 .create-quetion {
@@ -213,7 +235,7 @@ a {
 }
 
 .all-inputs {
-    width: 900px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -366,10 +388,12 @@ h4 {
         align-items: center;
     }
 
+    
+
     .selects {
         display: flex;
         gap: 20px;
-        margin-left: 6px;
+        margin-left: -4px;
     }
 
     .selects {
@@ -385,7 +409,7 @@ h4 {
     .btn {
         margin-top: 2px;
         width: 501px;
-        margin-left: 6px !important;
+        margin-left: 0px !important;
     }
 
     .form-2 {
@@ -394,7 +418,7 @@ h4 {
 
     .create-quetion {
         width: 501px;
-        margin-left: -1px;
+        margin-left: -10px;
     }
 
 }
@@ -420,7 +444,7 @@ h4 {
     }
 
     .form-1 {
-        margin-left: -4px;
+        margin-left: -9px;
     }
 
     .form-2 {
@@ -433,11 +457,11 @@ h4 {
 
     .btn {
         width: 350px;
+        margin-left: -10px !important;
     }
 
     .create-quetion {
         width: 350px;
-        margin-left: 5px;
     }
 
     .selects img {

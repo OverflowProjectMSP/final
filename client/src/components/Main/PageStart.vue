@@ -68,8 +68,15 @@ body {
 }
 
 .enter button:hover {
-    background-color: #281249;
+    background-color: rgba(0, 0, 0, 0);
 }
+
+.lin-phone a {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+
 
 .bg-bottom {
     background-color: #3b82f6;
@@ -178,6 +185,12 @@ body {
     .btn-join {
         width: 300px;
         font-size: 24px;
+    }
+}
+
+@media (max-width: 700px) {
+    .lin-phone {
+        background-color: rgba(0, 0, 0, 0.3);
     }
 }
 
