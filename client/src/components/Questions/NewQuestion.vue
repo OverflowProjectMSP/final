@@ -105,175 +105,104 @@ export default {
 
 </script>
 <template>
-    <HeaderComp />
-    <main>
-        <form class="container" @submit.prevent="addQuestion">
-            <div class="row pt-4">
-                <div class="col-12">
-                    <h3>Новый вопрос</h3>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <h4>Суть вопроса</h4>
-                </div>
-            </div>
-            <div class="row" style="display: flex; gap: 40px;">
-                <div class="col-12">
-                    <h5 style="color: gray; font-weight: 400;">Сформулируйте вопрос так, чтобы сразу было понятно, о чём
-                        речь.</h5>
-                </div>
-            </div>
+    <div class="a52">
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <input class="text-area text-box multi-line w-100" data-val="true"
-                            data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="texting"
-                            name="info" cols="200" rows="3" style="border-color: #D3D3D3; border-radius: 5px;"
-                            v-model="form.descriptions" maxlength="100">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <h4>Детали вопроса</h4>
-                </div>
-            </div>
-            <div class="row" style="display: flex; gap: 40px;">
-                <div class="col-12">
-                    <h5 style="color: gray; font-weight: 400;">Опишите в подробностях свой вопрос, чтобы получить более
-                        точный ответ.</h5>
-                </div>
-            </div>
+        <div class="title">
+            <h2>Новый вопрос</h2>
+        </div>
+        <hr>
+        <div class="name">
+            <h4>Суть вопроса</h4>
+            <p class="transparent mb-0">Сформулируйте вопрос так, чтобы сразу было понятно, о чём речь.</p>
+            <input type="text" class="form-control" id="inputlg" v-model="form.descriptions">
+        </div>
+        <div class="text">
+            <h4>Детали вопроса</h4>
+            <p class="transparent mb-2">Опишите в подробностях свой вопрос, чтобы получить более точный ответ.</p>
             <div class="btn-group mb-3" role="group" aria-label="Basic example">
                 <div class="btns1">
-                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0 0 8px"><b>B</b></button>
-                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0"><i>i</i></button>
-                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord"><u>U</u></button>
+                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0px 0px 8px"><b>B</b></button>
+                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0px"><i>i</i></button>
+                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord" style="border-radius: 0px"><u>U</u></button>
                 </div>
                 <div class="btns2">
-                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode"><span>Вставить код</span></button>
-
+                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode" style="border-radius: 0px"><span>Вставить код</span></button>
                     <label class="input-file">
                         <input @change="convertFileAvatar" type="file"
                             name="file">
                         <span>Выберите файл</span>
                     </label>
-
                 </div>
-                    
+                
+            </div>
+            <div class="change-lang">
+                <select class="form-select one" v-model="form.dificulty">
+                    <option value="">Сложность вопроса</option>
+                    <option value="Простой">Простой</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Сложный">Сложный</option>
+                </select>
+                <select class="form-select two" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
+                    <option selected value="">Выберите язык</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="ts">TS</option>
+                    <option value="python">Python</option>
+                    <option value="php">PHP</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="cs">C#</option>
+                    <option value="go">Golang</option>
+                    <option value="IB">ИБ</option>
+                </select>
+            </div>
+            <div class="form-floating">
+                <textarea ref="textArea" @input="multimethod" @click="updateCursor" 
+                    class="text-area text-box multi-line yy form-control formchik" data-val="true"
+                    data-val-length="Maximum = 20000 characters" data-val-length-max="10000" id="info"
+                    name="info" cols="200" rows="7" style="border-color: #D3D3D3; border-radius: 5px;"
+                    v-model="form.details" :maxlength="20000"></textarea>
+            </div>
+            <div class="mb-3">
+            </div>
+        </div>
+    
+        <div class="row  block">
+            <div class="change-public">
+                
+                <div class="btn-error">
+                    <button class="btn btn-public" @click="addQuestion"><b>Опубликовать</b></button>
+                    <span class="text-danger" v-if="this.error">{{ error }}</span>
                 </div>
-
-                <div class="sel-block">
-                    <div class="diff-que">
-                            <select class="form-select" v-model="form.dificulty">
-                                <option value="">Сложность вопроса</option>
-                                <option value="Простой">Простой</option>
-                                <option value="Средний">Средний</option>
-                                <option value="Сложный">Сложный</option>
-                            </select>
-                    </div>
-                    <div class="yourlang">
-                            <select class="form-select" v-model="form.tag">
-                                <option value="">Ваш язык программирования</option>
-                                <option value="javascript">JavaScript</option>
-                                <option value="ts">TS</option>
-                                <option value="python">Python</option>
-                                <option value="php">PHP</option>
-                                <option value="cpp">C++</option>
-                                <option value="java">Java</option>
-                                <option value="cs">C#</option>
-                                <option value="go">Golang</option>
-                                <option value="IB">ИБ</option>
-                            </select>
-                    </div>
-                </div>
-           
-                <div class="row">
-                    <div class="col-12">
-                        <div class="input-group mb-3">
-                            <textarea ref="textArea" @input="updateCursor" @click="updateCursor"
-                                class="text-area text-box multi-line yy" data-val="true"
-                                data-val-length="Maximum = 2045 characters" data-val-length-max="10000" id="info"
-                                name="info" cols="200" rows="7" style="border-color: #D3D3D3; border-radius: 5px;"
-                                v-model="form.details"></textarea>
-
-                        </div>
-                    </div>
-                </div>
-
-            
-                <div class="row pt-5 block">
-                    <div class="col-6 btn-error">
-                        <button class="btn btn-public"type="submit"><b>Опубликовать</b></button>
-                        <p v-if='error' class="error" :class="color">{{ error }}</p>
-                    </div>
-                </div>
-        </form>
-
-    </main>
-
-    <div v-if='this.isUserInSession' class='w-100 h-100 d-flex justify-content-center align-items-center'>
-        <div class="bg-black"></div>
-        <div class="modal-cenel d-flex flex-column align-items-center">
-        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
-        <h6>Ввойдите в аккаунт, чтобы продолжить действие</h6>
-        <button @click='this.$router.push("/Login")'>Войти</button>
+            </div>
         </div>
     </div>
 </template>
+
 <style scoped>
-.modal-cenel {
-  opacity: 1 !important;
-  position: fixed;
-  top: calc(50% - 260px);
-  z-index: 52 !important;
-  background: rgba(59, 130, 246, 0.65);
-  padding: 24px;
-  border-radius: 10px;
-  color: #fff;
-  gap: 20px;
+/* стили кнопок */
+.a52 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
 }
 
-.bord {
-    border-radius: 0px;
+.title h2 {
+    color: #000;
 }
 
-.bordCode {
-    border-radius: 0px;
+.change-lang {
+    display: flex;
+    gap: 60px;
+    margin-left: 35px;
 }
 
-.modal-cenel button {
-  border-radius: 10px;
-  border: 1px solid#fff;
-  padding: 4px 24px;
-  background: none;
-  color: #fff;
-  opacity: 1 !important;
+.form-select {
+    margin: 0 !important;
 }
 
-.modal-cenel h6 {
-  opacity: 1 !important;
-}
-
-
-.modal-cenel img {
-  border-radius: 0% !important;
-  width: 150px;
-  opacity: 1 !important;
-}
-
-.bg-black {
-  background: #000;
-  opacity: 0.5;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+.one {
+    width: 230px !important;
 }
 
 .btn-public {
@@ -282,29 +211,17 @@ export default {
     border: 2px solid #7ac97a;
     border-radius: 5px;
     width: 175px;
-    height: 50px;
     padding: 5px 15px;
     text-align: center;
     transition: all 200ms;
-}
 
-.selects {
-    margin-bottom: 30px;
-}
-
-.form-select {
-    width: 500px;
+    margin-left: 30px;
 }
 
 
-.sel-block {
-    display: flex;
-    gap: 22%;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
+.title h2 {
+    font-size: 30px !important;
 }
-
 
 .btn-public:hover {
     background-color: #7ac97a;
@@ -316,13 +233,10 @@ export default {
 }
 
 .btn-error {
+    width: 700px;
     display: flex;
     align-items: center;
     gap: 20px;
-}
-
-.error {
-    margin: 0px;
 }
 
 #preview {
@@ -330,273 +244,444 @@ export default {
     color: #7ac97a;
     border-color: #90EE90;
     border-radius: 5px;
-    padding: 5px 15px;
+    padding-right: 15px;
+    padding-left: 15px;
     text-align: center;
-    transition: all 300ms;
 }
-
-
 
 .block {
-    margin-bottom: 50px;
-}
-
-.text-area {
-    padding: 10px;
-
-}
-
-/* стили лейбла */
-
-.green {
-    color: green;
-}
-
-.red {
-    color: red;
-}
-
-
-/* тут стили виджета */
-
-:root {
-    --size-20: 20px;
-    --size-26: 26px;
-    --size-22: 22px;
-    --size-18: 18px;
-}
-
-.t-alig-c {
-    text-align: center;
-}
-
-/* виджет с вопросами */
-.vid {
-    background-color: #EEF1F4;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 15px;
-    margin-bottom: 50px;
-
-}
-
-/* общее расположение элементов */
-
-.right {
-    display: flex;
-    align-items: center;
-}
-
-.right-in {
-    display: flexbox;
-}
-
-.right p {
-    margin: 0;
-    margin: 0;
-    color: #AEB8BC;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-
-/* расцветовка */
-.light {
-    color: #488D57
-}
-
-.middle {
-    color: #D8A326;
-}
-
-.hard {
-    color: #D9382E;
-}
-
-/* левая чать виджета */
-
-/* Верх */
-.top-1 {
-    display: flex;
-    gap: 20px;
     margin-bottom: 10px;
 }
 
-.top-1 p {
+.input-file span {
+    line-height: 29px !important;
+}
+
+
+
+/* 1. Стили для шрифта и общего оформления страницы */
+@import url('https://fonts.cdnfonts.com/css/rubik');
+
+html {
     margin: 0;
+    background-color: #EEF1F4;
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
-.t {
-    vertical-align: middle;
-    width: 10px;
-    height: 10px;
+main {
+    margin: 10px;
 }
 
-/* серидина */
-.mid-1 {
-    font-size: 28px;
+body {
+    font-family: Rubik !important;
 }
 
-.mid-1 p {
-    margin: 0;
+
+/* 2. Стили для заголовка, разделителя и текста */
+.title {
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 37px;
 }
 
-/* низ */
-.bottom-1 {
+hr {
+    width: 95%;
+    margin: 20px 35px 0 25px;
+}
+
+.name h4 {
+    margin: 20px 35px 0px;
+}
+
+.change-public {
+    width: 200px;
     display: flex;
-    font-size: 15px;
-    color: #AEB8BC;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.el {
-    border-right: 1px solid #AEB8BC;
-    padding: 7px;
+.form-select {
+    margin-left: 30px;
+    width: 200px;
 }
 
-.el-d {
-    border-right: none;
-    padding: 7px;
+.transparent {
+    color: #B3B3B3;
+    margin: 7px 36px 0px;
+    margin-bottom: 40px;
 }
 
-.-d {
-    border-right: none;
+.input-file span {
+    height: 46px !important;
 }
 
-.el p {
-    margin: 0;
+.btn-group {
+    margin-left: 35px;
+}
+
+/* 3. Стили для ввода имени, текста и кнопок */
+.name input {
+    margin: 12px 35px 0px;
+    width: 1850px;
+    border-radius: 7px;
+    border-color: #B3B3B3;
+    width: calc(100% - 70px);
+}
+
+.text h4 {
+    margin: 20px 35px 0px;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: black;
+    margin-left: 35px;
+    padding: 10px;
+}
+
+textarea {
+    resize: none;
 }
 
 
-/* анимация */
-div.vid {
-    transition: all 0.5s;
+/* 4. Стили для форм и кнопок */
+.forms {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    margin-left: 35px;
+}
+
+.main {
+    color: green;
+}
+
+.first {
+    color: orange;
+}
+
+.second {
+    color: red;
+}
+
+/* 5. Дополнительные стили для кнопочек и блока формы */
+#inputlg {
+    width: 80%;
+}
+
+.formchik {
+    margin: 20px 35px 0px;
+    border-radius: 7px;
+    height: 400px;
+}
+
+.btn-wrapper button {
+    font-size: 25px;
+    margin: 20px 35px 0px;
+    border-radius: 10px;
+    display: flex;
+}
+
+.btn-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-dark {
+    border-color: #B3B3B3;
+    color: #B3B3B3;
+    background-color: white;
+}
+
+.btn-dark:hover {
+    border-color: #B3B3B3;
+    color: white;
+    background-color: gray;
+    transition: 0.2s;
+}
+
+.btn-dark:active {
+    border-color: #B3B3B3;
+    color: white;
+    background-color: #565656;
+}
+
+.btn-success:active {
+    color: white;
+    background-color: #074B2A;
+    border-color: #188755;
+}
+
+
+/* 6. Дополнительные стили для кнопочки и для форм*/
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-control {
+    width: 95%;
+}
+
+.form1,
+.form2 {
+    width: 75%;
+    margin-right: 40px;
 }
 
 
 
-/* Адаптивка */
-
-@media (hover: hover) {
-    div.vid:hover {
-        transform: translateY(-10px);
-        box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
+/* 8. Адаптивка */
+@media only screen and (max-width:659px) {
+    #inputlg {
+        width: 85%;
     }
 
-    #preview:hover {
-        background-color: #90EE90 !important;
-        color: #2c2c2c;
+    .forms {
+        gap: 1px;
+        margin-left: 12%;
+        margin-top: 15px;
+        width: 80%;
     }
 
-    #save:hover {
-        background-color: #90EE90 !important;
-        color: #000;
-    }
-}
-
-@media (max-width: 1400px) {
-    .sel-block {
-        gap: 10%;
-    }
-}
-
-@media(max-width: 1200px) {
-    .q {
-        font-size: var(--size-20);
+    .form-control {
+        width: 85%;
     }
 
-    .sel-block {
-        gap: 5%;
+    /* .btn-group .btn {
+        margin-left: 30px;
+        padding: 1% 6%;
+        font-size: 10px;
+    } */
+
+    hr {
+        width: 85%;
     }
 
-    .form-select {
-        width: 445px;
-    }
-}
-
-@media(max-width: 992px) {
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: 24px;
-    }
-
-    .form-select {
-        width: 330px;
-    }
-
-    .sel-block {
-        h4 {
-            font-size: 20px;
-        }
-    }
-
-}
-
-@media(max-width: 576px) {
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: var(--size-20);
-    }
-
-    .bottom-1 {
-        font-size: 13px;
-    }
-
-    .right p {
-        font-size: var(--size-18);
-    }
-
-    .imp-1 {
-        padding-top: 13px;
-    }
-}
-
-@media(max-width: 768px) {
-    .q {
-        font-size: var(--size-18);
-    }
-
-    .quest {
-        margin: 0 15%;
-    }
-
-    .mid-1 p {
-        font-size: var(--size-20);
-    }
-
-    .bottom-1 {
-        font-size: 13px;
-    }
-
-    .right p {
-        font-size: var(--size-18);
-    }
-
-    .imp-1 {
-        padding-top: 13px;
-    }
-
-    .sel-block {
+    .btn-wrapper {
         flex-direction: column;
-        gap: 20px;
     }
 
+    .btn-success {
+        width: 200px;
+        padding-left: 14px;
+    }
+
+    .btn-dark {
+        width: 200px;
+        padding-left: 10px;
+    }
 }
+
+@media only screen and (min-width: 250px) {
+    /* .btn-group .btn {
+        margin-left: 35px;
+        padding: 1% 2%;
+        font-size: 11px;
+    } */
+
+    .forms {
+        width: 95%;
+        margin-left: 14%
+    }
+}
+
+
+@media only screen and (min-width: 310px) {
+    /* .btn-group .btn {
+        margin-left: 35px;
+        padding: 1% 3.75%;
+        font-size: 10px;
+    } */
+
+    .form-control {
+        width: 80%;
+    }
+
+    .forms {
+        width: 87%;
+        margin-left: 12%;
+    }
+}
+
+@media only screen and (min-width: 350px) {
+    /* .btn-group .btn {
+        margin-left: 35px;
+        padding: 1% 4.5%;
+        font-size: 10px;
+    } */
+
+    .form-control {
+        width: 80%;
+    }
+
+    .forms {
+        width: 87%;
+        margin-left: 12%;
+    }
+}
+
+@media only screen and (min-width: 380px) {
+    .forms {
+        width: 75%;
+        margin-left: 15%;
+    }
+
+    /* .btn-group .btn {
+        margin-left: 30px;
+        padding: 1% 5.5%;
+        font-size: 10px;
+    } */
+}
+
+@media only screen and (min-width: 540px) {
+    /* .btn-group .btn {
+        margin-left: 30px;
+        padding: 1% 9%;
+        font-size: 10px;
+    } */
+}
+
+
+@media only screen and (min-width: 660px) {
+    hr {
+        width: 95%;
+    }
+
+    #inputlg {
+        width: 90%;
+    }
+
+    .form-control {
+        width: 90%;
+    }
+
+
+    /* .btn-group .btn {
+        margin-left: 40px;
+        font-size: 15px;
+        padding: 10px 4%;
+    } */
+
+    .forms {
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 70%;
+        margin-top: -85px;
+        width: 30%;
+    }
+
+
+}
+
+
+@media only screen and (min-width: 800px) {
+    hr {
+        width: 95%;
+    }
+
+    #inputlg {
+        width: 90%;
+    }
+
+    /* .btn-group .btn {
+        margin-left: 40px;
+        font-size: 15px;
+        padding: 7px 6%;
+    } */
+
+    .forms {
+        margin-top: -81.5px;
+        gap: 5px;
+        margin-left: 70%;
+        width: 28%;
+    }
+}
+
+
+@media only screen and (min-width: 1050px) {
+    hr {
+        width: 95%;
+    }
+
+    #inputlg {
+        width: 90%;
+    }
+
+    /* .btn-group .btn {
+        margin-left: 40px;
+        font-size: 16px;
+        padding: 10px 30px;
+    } */
+
+    .forms {
+        margin-top: -70px;
+        gap: 10px;
+        margin-left: 77%;
+        width: 20%;
+    }
+}
+
+
+@media only screen and (min-width: 1200px) {
+    hr {
+        width: 95%;
+    }
+
+    #inputlg {
+        width: 90%;
+    }
+
+    /* .btn-group .btn {
+        margin-bottom: 4%;
+        margin-left: 35px;
+        font-size: 16px;
+        padding: 10px 20px;
+    } */
+
+    .forms {
+        gap: 1px;
+        flex-direction: row;
+        margin-left: 65%;
+        width: 30%;
+    }
+
+    .forms .form-select {
+        height: 45px;
+    }
+}
+
+
+@media only screen and (min-width: 1400px) {
+    hr {
+        width: 95%;
+    }
+
+    #inputlg {
+        width: 90%;
+    }
+
+    .forms {
+        gap: 1px;
+        flex-direction: row;
+        margin-left: 73%;
+        width: 20%;
+    }
+
+    /* .btn-group .btn {
+        margin-bottom: 2.5%;
+        margin-left: 35px;
+        font-size: 16px;
+        padding: 10px 40px;
+    } */
+}
+
 
 .input-file {
     position: relative;
@@ -652,64 +737,81 @@ div.vid {
     background-color: #eee;
 }
 
-.btn-group {
-    display: flex;
-    align-items: center;
+/* @media only screen and (max-width: 768px) {
+        .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    } */
+/* @media only screen and (max-width: 1850px) {
+        .forms {
+            flex-direction: column;
+            gap: 20px;
+            margin-left: 0;
+            margin-top: 40px;
+            margin-left: -68%;
+        }
+
+    } */
+
+@media (max-width: 700px) {
+    .a52 {
+        margin-top: -40px;
+    }
 }
 
-.input-file span {
-    height: 38px;
+@media (max-width: 615px) {
+    .change-lang {
+        gap: 10px;
+    }
 }
 
-textarea {
-    width: 100%;
+@media (max-width: 550px) {
+    .change-lang {
+        flex-direction: column;
+    }
+
+    .two {
+        width: 230px !important;
+    }
 }
 
 @media (max-width: 500px) {
     .btn-group {
+        display: flex;
         flex-direction: column;
-        align-items: start;
         gap: 5px;
     }
-
-    .btn-primary {
-        width: 50px;
-    }
-
     .btns1 {
+        display: flex;
     }
 
     .bord {
-        border-radius: 0 8px 8px 0 !important;
+        border-radius: 0px 8px 8px 0px !important;
     }
-    
+
+    .bordCode {
+        border-radius: 8px !important;
+        width: 150px;
+    }
+
     .btns2 {
         display: flex;
         flex-direction: column;
         gap: 5px;
     }
 
-    .btns2 button {
-        width: 150px;
-    }
-
-    .bordCode {
-        border-radius: 8px;
-    }
-
-    .btns2 span {
-        width: 150px;
+    .input-file span {
         border-radius: 8px !important;
+    }
+
+    .input-file span {
+        width: 150px;
     }
 }
 
-@media (max-width: 770px) {
-    h4 {
-        font-size: 16px !important;
-    }
-
-    .your {
-        margin-left: -10px;
+@media (max-width: 350px) {
+    .form-control {
     }
 }
 </style>
