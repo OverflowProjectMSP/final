@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 import base64
 import logging
 import asyncio
+import random
 
 import requests as req
 
@@ -140,7 +141,8 @@ def add_user_todb(name, email, pas):
         send_user.append(cursor.fetchone())
         # Проверка существует ли такой пользователь
         if send_user[0][0] == 0 and send_user[1][0] == 0:
-            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', 'https://api.upfollow.ru/avatar/AvatarDef.png', False, datetime.now().isoformat())
+            rand_avatar = random.randint(1, 12)
+            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', f'http://api.upfollow.ru/avatar/default_avatar_{rand_avatar}', False, datetime.now().isoformat())
 
             cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c) VALUES {user_to_write}""")
 
