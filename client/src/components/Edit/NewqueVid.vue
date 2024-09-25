@@ -24,10 +24,10 @@ export default {
             <div class="info">
                 <div class="avatar-name-rank">
                     <div class="avatar">
-                        <img v-if='this.data.user.avatar' :src="data.user.avatar" alt="">
+                        <img :src="data.user.avatar" alt="">
                     </div>
-                    <div class="name-rank" >
-                        <h5 v-if='this.data.user.username' class="user-name">{{ data.user.username }}</h5>
+                    <div class="name-rank">
+                        <h5 class="user-name">{{ data.user.username }}</h5>
                         <p>Звание: {{ data.rang }}</p>
                     </div>
                 </div>
@@ -46,14 +46,14 @@ export default {
                     <p class="count">{{ data.acnt }}</p>
                     <p class="ans">Ответа (ов)</p>
                 </div>
-                
+
                 <button>Ответить</button>
             </div>
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 p {
     margin: 0;
 }
@@ -78,7 +78,7 @@ p {
 .vid-block {
     display: flex;
     justify-content: space-between;
-    
+
     margin: 0 10px;
 
     width: 900px;
@@ -217,7 +217,7 @@ p {
         height: 150px;
         display: flex;
         flex-direction: row;
-        
+
         position: absolute;
         top: 130px;
         left: 100px;
@@ -253,7 +253,7 @@ p {
         overflow: hidden;
         white-space: wrap;
         width: 26ch;
-        
+
     }
 
     .name-rank p {
@@ -281,7 +281,7 @@ p {
         margin-left: -70px;
         width: 150px;
     }
-    
+
     .answers p {
         font-size: 16px;
     }
