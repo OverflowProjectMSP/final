@@ -14,6 +14,7 @@ export default {
 
     props: {
         data: Object,
+        user: Object,
     }
 }
 </script>
@@ -24,10 +25,10 @@ export default {
             <div class="info">
                 <div class="avatar-name-rank">
                     <div class="avatar">
-                        <img v-if='this.data.user.avatar' :src="data.user.avatar" alt="">
+                        <img :src="user.avatar" alt="">
                     </div>
                     <div class="name-rank" >
-                        <h5 v-if='this.data.user.username' class="user-name">{{ data.user.username }}</h5>
+                        <h5 class="user-name">{{ user.username }}</h5>
                         <p>Звание: {{ data.rang }}</p>
                     </div>
                 </div>

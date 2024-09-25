@@ -1,10 +1,14 @@
 <script>
+import NewProfileVid from '../Edit/NewProfileVid.vue';
+import NewqueVid from '../Edit/NewqueVid.vue';
 import VidUserComp from './VidUserComp.vue';
 import axios from 'axios';
 
 export default {
     components: {
-        VidUserComp
+        VidUserComp,
+        NewqueVid,
+        NewProfileVid
     },
     data() {
         return {
@@ -105,7 +109,8 @@ export default {
                         <p
                             v-if="this.user.telegram != '' || this.user.skype != '' || this.user.discord != '' || this.user.facebook != ''">
                             <img src="../../assets/Profile/Frame.svg"><span class="fw-bold">Как со мной
-                                связаться?</span></p>
+                                связаться?</span>
+                        </p>
                         <ul class="fs-5">
                             <li v-if="user.telegram">Мой Telegram: {{ user.telegram }}</li>
                             <li v-if="user.skype">Мой Skype: {{ user.skype }}</li>
@@ -131,18 +136,22 @@ export default {
                     </div>
                     <p class="vse" @click="Olezha">пользователя</p>
                 </div>
-                <div v-if='this.isQ && this.questions.length != 0'>
+                <div v-if='this.isQ && this.questions.length && this.user'>
                     <div class="scroll">
-                        <a :href="`/QuestionItem/${question.id}`" v-for="question in questions">
-                            <VidUserComp :item="question" :type="question" />
-                        </a>
+                        <div class="con" v-for="item in questions">
+                            <a :href="`/QuestionItem/` + item.id">
+                                <NewProfileVid :data="item" :user='user' />
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div v-if="!this.isQ && this.states.length != 0">
+                <div v-if="!this.isQ && this.states.length && this.user">
                     <div class="scroll">
-                        <a :href="`/StateItem/${state.id}`" v-for="state in states">
-                            <VidUserComp :item="state" :type="state" />
-                        </a>
+                        <div class="con" v-for="item in states">
+                            <a :href="`/StateItem/` + item.id">
+                                <NewProfileVid :data="item" :user='user' />
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="content p-2" v-if="this.states.length == 0 && !this.isQ">

@@ -3,11 +3,13 @@ import axios from 'axios';
 // import VidComp from './components/MainComponents/VidComp.vue'
 import ModelWind from '../ReuseComponets/ModelWind.vue';
 import VidjetComp from '../ReuseComponets/StateVid.vue';
+import NewqueVid from '../Edit/NewqueVid.vue';
 export default {
     components: {
     // VidComp,
         ModelWind,
-        VidjetComp  
+        VidjetComp,
+        NewqueVid
     },
     data() {
         return {
@@ -110,8 +112,7 @@ export default {
 <div class="conr" v-if='this.isAllLoad'>
     <div class="con" v-for="item in states">
         <a :href="`/StateItem/` + item.id">
-            <!-- <vid-comp :item="item" role="button" /> -->
-            <vidjet-comp :item="item"    />
+            <NewqueVid :data="item" :user='{}' />
         </a>
     </div>
 </div>
@@ -165,6 +166,8 @@ export default {
     overflow-x: hidden;
     height: 555px;
     padding-top: 10px;
+    gap: 20px;
+    margin-top: 20px;
     /* width: auto;
     margin-left: auto;
     margin-right: auto; */

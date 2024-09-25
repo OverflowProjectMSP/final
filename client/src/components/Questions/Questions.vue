@@ -2,11 +2,13 @@
 import axios from 'axios';
 import VidQuetions from '../ReuseComponets/QuetionVid.vue';
 import ModelWind from '../ReuseComponets/ModelWind.vue';
+import NewqueVid from '../Edit/NewqueVid.vue';
 
 export default {
     components: {
         VidQuetions,
-        ModelWind
+        ModelWind,
+        NewqueVid
     },
 
     data() {
@@ -125,10 +127,14 @@ export default {
             </div>
         </div>
         <div class="cont d-flex align-items-center">
-            <vid-quetions :quetion="quetion" role="button" v-for="quetion in quetions"></vid-quetions>
+            <div class="con" v-for="item in quetions">
+                <a :href="`/QuestionItem/` + item.id">
+                    <NewqueVid :data="item" :user='{}' />
+                </a>
+            </div>
             <model-wind v-if="Show" @CloseModal="CloseModal" />
         </div>
-        <div class="content p-2" v-if="this.quetions.length == 0 && this.cnt==1">
+        <div class="content p-2" v-if="this.quetions.length == 0 && this.cnt == 1">
             <h2 class="d-flex justify-content-center my-5 user-select-none">Будь первым, кто даст ответ на этот вопрос!</h2>
         </div>
     </div>
@@ -208,7 +214,6 @@ a {
 }
 
 .form-2 {
-
     border-radius: 10px;
 }
 
