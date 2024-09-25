@@ -39,7 +39,7 @@ export default {
                 all: this.form,
                 q: 'false'
             });
-            this.$router.push(`/StateItem/${this.$route.query.id}`);
+            this.$router.push(`/StateItem/${this.$route.params.id}`);
         },
 
         async loadQuestion() {

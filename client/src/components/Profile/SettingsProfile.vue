@@ -52,7 +52,7 @@ export default {
           }
         );
         this.isUploading = true; // Выключаем индикатор загрузки
-        // this.$router.push(`/Profile?id=${this.id}`);
+        this.$router.push(`/Profile/${this.id}`)
       } catch (error) {
         console.error("Ошибка при отправке данных:", error);
         this.isUploading = false; // Выключаем индикатор загрузки

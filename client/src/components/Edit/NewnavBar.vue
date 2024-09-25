@@ -1,20 +1,54 @@
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       burg: true,
+      avatar: 'src/assets/Header/AvatarDef.svg',
+      id: '',
     };
   },
   methods: {
     goto(name) {
       this.$router.push(name);
     },
+
     burgmenu() {
       this.burg = !this.burg;
       
       console.log(5);
-    }
+    },
+
+    Open() {
+      this.Show = !this.Show;
+    },
+    LoginPage() {
+      this.$router.push('/Login');
+    },
+
+    async getUserSession() {
+      let res = await axios.get(`/get-curent-avatar`);
+
+      if(res.data.all != null) {
+        this.ShowLogin = false;
+        this.id = res.data.all.id;
+
+        if (this.avatar == "No") {
+          this.avatar = "src/assets/Header/AvatarDef.svg";
+        } else {
+          this.avatar = res.data.all.avatar;
+        }
+
+      } else {
+        this.ShowLogin = true;
+      }
+    },
   },
+
+  mounted() {
+    this.getUserSession();
+  }
 };
 </script>
 
@@ -45,8 +79,8 @@ export default {
         </div>
         <div class="enter">           
             <img class="burgmenu" src="../../assets/Main/burgmenu.svg" alt="" @click="burgmenu">
-            <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
-            <a class="d-none" href=""><img src="../../assets/Main/hebber.png" alt=""></a>
+            <button v-if='!this.id' @click="goto(`/Login`)"><span>Войти</span></button>
+            <a v-if='this.avatar && this.id' :href="`/Profile/` + this.id"><img :src="this.avatar" alt="Аватар"></a>
         </div>
     </div>
 </template>
@@ -255,8 +289,10 @@ h2 {
 }
 
 .enter img {
-  width: 60px;
-  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 15px;
   transition: 200ms;
 }
 
@@ -265,8 +301,6 @@ h2 {
 }
 
 @media (max-width: 970px) {
-  .navbar {
-  }
 
   .items {
     gap: 30px;

@@ -7,7 +7,8 @@ export default {
             newPassword: ``,
             exPassword: ``,
             error: '',
-            id:''
+            id:'',
+            isInSession: false,
         }
     },
 
@@ -71,8 +72,11 @@ export default {
         },
         async getId(){
             let res = await axios.get(`/session`);
-            this.id = res.data.id
+            this.id = res.data.id;
+            if(!this.id) {
+                this.$router.push('/Login')
             }
+        }
     },
     mounted(){
         this.getId()
@@ -80,7 +84,7 @@ export default {
 }
 </script>
 <template>
-    <form class="container mb-3" @submit.prevent="check">
+    <form class="container mb-3" @submit.prevent="check" v-if='this.id'>
         <div class="row pt-5">
             <div class="col-3">
                 <h3>Настройки профиля</h3>

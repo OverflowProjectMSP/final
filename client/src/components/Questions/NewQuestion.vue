@@ -40,7 +40,7 @@ export default {
                 });
                 if (res.data.res == 'Вопрос добавлен') {
                     this.error = '';
-                    this.$router.push('/Quetions')
+                    this.$router.push('/Questions')
                     return;
                 } else if(res.data.res.cd == true) {
                     this.error = `Вы недавно создавали вопрос. Вы можете создать новый примерно через ${Math.ceil(res.data.res.time / 60)} минут`;
@@ -119,42 +119,44 @@ export default {
         <div class="text">
             <h4>Детали вопроса</h4>
             <p class="transparent mb-2">Опишите в подробностях свой вопрос, чтобы получить более точный ответ.</p>
-            <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                <div class="btns1">
-                    <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0px 0px 8px"><b>B</b></button>
-                    <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0px"><i>i</i></button>
-                    <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord" style="border-radius: 0px"><u>U</u></button>
+            <!-- <div class="d-flex justify-content-between align-items-center"> -->
+                <div class="btn-group mb-3" role="group" aria-label="Basic example">
+                    <div class="btns1">
+                        <button @click="addTag('<b></b>', 3)" type="button" class="btn btn-primary" style="border-radius: 8px 0px 0px 8px"><b>B</b></button>
+                        <button @click="addTag('<i></i>', 3)" type="button" class="btn btn-primary" style="border-radius: 0px"><i>i</i></button>
+                        <button @click="addTag('<u></u>', 3)" type="button" class="btn btn-primary bord" style="border-radius: 0px"><u>U</u></button>
+                    </div>
+                    <div class="btns2">
+                        <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode" style="border-radius: 0px"><span>Вставить код</span></button>
+                        <label class="input-file">
+                            <input @change="convertFileAvatar" type="file"
+                                name="file">
+                            <span>Выберите файл</span>
+                        </label>
+                    </div>
+                    
                 </div>
-                <div class="btns2">
-                    <button @click="addTag(`<pre class='format-code'></pre>`, 25)" type="button" class="btn btn-primary bordCode" style="border-radius: 0px"><span>Вставить код</span></button>
-                    <label class="input-file">
-                        <input @change="convertFileAvatar" type="file"
-                            name="file">
-                        <span>Выберите файл</span>
-                    </label>
+                <div class="change-lang me-5 pe-5">
+                    <select class="form-select one" v-model="form.dificulty">
+                        <option value="">Сложность вопроса</option>
+                        <option value="Простой">Простой</option>
+                        <option value="Средний">Средний</option>
+                        <option value="Сложный">Сложный</option>
+                    </select>
+                    <select class="form-select two" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
+                        <option selected value="">Выберите язык</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="ts">TS</option>
+                        <option value="python">Python</option>
+                        <option value="php">PHP</option>
+                        <option value="cpp">C++</option>
+                        <option value="java">Java</option>
+                        <option value="cs">C#</option>
+                        <option value="go">Golang</option>
+                        <option value="IB">ИБ</option>
+                    </select>
                 </div>
-                
-            </div>
-            <div class="change-lang">
-                <select class="form-select one" v-model="form.dificulty">
-                    <option value="">Сложность вопроса</option>
-                    <option value="Простой">Простой</option>
-                    <option value="Средний">Средний</option>
-                    <option value="Сложный">Сложный</option>
-                </select>
-                <select class="form-select two" style="border-color: #B3B3  3;" aria-label="Default select example" v-model="form.tag">
-                    <option selected value="">Выберите язык</option>
-                    <option value="javascript">JavaScript</option>
-                    <option value="ts">TS</option>
-                    <option value="python">Python</option>
-                    <option value="php">PHP</option>
-                    <option value="cpp">C++</option>
-                    <option value="java">Java</option>
-                    <option value="cs">C#</option>
-                    <option value="go">Golang</option>
-                    <option value="IB">ИБ</option>
-                </select>
-            </div>
+            <!-- </div> -->
             <div class="form-floating">
                 <textarea ref="textArea" @input="multimethod" @click="updateCursor" 
                     class="text-area text-box multi-line yy form-control formchik" data-val="true"

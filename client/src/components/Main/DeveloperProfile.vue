@@ -15,7 +15,7 @@ export default {
   <div name="modal-fade" class="d-flex justify-content-center align-items-center">
     <div class="modal-backdrop" role="button" @click="$emit('showDev')"></div>
     <div class="window">
-      <span class="close opacity-50 fs-2" @click="$emit('showDev')">x</span>
+      <span class="close opacity-50 fs-2" @click="$emit('showDev')"><img src="../../assets/FAQ/close.svg" alt="Close"></span>
       <div class="info-block d-flex gap-5 align-items-center">
         <img class="rounded-5 user-select-none max-h-50" :src="developer.imageProfileDS"
              :alt="developer.name">
@@ -36,6 +36,7 @@ export default {
             <li v-if="developer.dsProfile">Дискорд: @{{ developer.dsProfile }}</li>
             <li v-if="developer.tgProfile">Телеграм: @{{ developer.tgProfile }}</li>
             <li v-if="developer.vkProfile">ВК: @{{ developer.vkProfile }}</li>
+            <li v-if="developer.upFollow">Аккаунт UpFollow: <a class='upf-link' :href="`/Profile/${developer.upFollow}`">Клик</a></li>
           </ul>
         </div>
       </div>
@@ -48,6 +49,10 @@ export default {
 a {
   text-decoration: none;
   color: #fff;
+}
+
+.upf-link {
+  color: #000;
 }
 
 .close {

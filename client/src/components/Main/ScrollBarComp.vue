@@ -18,13 +18,15 @@ export default {
           name: `Суров Константин`,
           role: `Тимлид/Старший Бэкенд разработчик`,
           imageProfileDS: kosty_py_img,
-          dsProfile: `kosty_py`
+          dsProfile: `kosty_py`,
+          upFollow: `3e08f7ab-d569-4bd4-bc67-a7450896ac32`
         },
         {
           name: `Шадловский Евгений`,
           role: `Заместитель тимлида/Старший Фронтенд разработчик`,
           imageProfileDS: kinestrik_img,
-          dsProfile: `kinestrik`
+          dsProfile: `kinestrik`,
+          upFollow: `f9287bdf-3a6b-4a13-a336-453378c9a0ca`
         },
         {
           name: `Корецкий Александр`,
@@ -33,6 +35,7 @@ export default {
           dsProfile: `febolo`,
           tgProfile: `febolo`,
           vkProfile: `febolo`,
+          upFollow: `59699ecf-00ac-436d-819e-d11f4b4266d6`
         },
         {
           name: `Горбенко Иван`,
@@ -40,6 +43,7 @@ export default {
           imageProfileDS: vanya_img,
           dsProfile: `garleenn`,
           tgProfile: `Garleen`,
+          upFollow: `ddfc7dc7-2895-4677-9633-98c6e2645dd9`
         },
         {
           name: `Сары Максим`,
@@ -47,18 +51,20 @@ export default {
           imageProfileDS: maxim_img,
           dsProfile: `habbock`,
           tgProfile: `HaBBeRL`,
+          upFollow: `d88d0e43-8784-4f5f-8e14-83fd4eadb35e`
         },
         {
           name: `Лазутин Егор`,
           role: `Фронтенд разработчик`,
           imageProfileDS: egor_img,
-          dsProfile: `therisingdream`
+          dsProfile: `therisingdream`,
         },
         {
           name: `Маврин Никита`,
           role: `Главный дизайнер`,
           imageProfileDS: nekit_img,
-          dsProfile: `nikit0_17`
+          dsProfile: `nikit0_17`,
+          upFollow: `caf8b3cf-1900-44e1-8cad-d646d02f08a4`
         },
         // {
         //     name: `Беднин Арсений`,
