@@ -858,6 +858,8 @@ img {
   .description img {
     width: 700px;
   }
+
+  
 }
 
 @media (max-width: 1000px) {
@@ -881,6 +883,26 @@ img {
   .content-3-without {
     height: 310px;
   }
+
+  .content-1 {
+    width: 95%;
+  }
+
+  .ans-cont {
+    width: 95%;
+  }
+
+  .answers-all {
+    width: 95%;
+  }
+
+  .content-2 {
+    width: 105%;
+  }
+
+  .container {
+    margin-right: 0 !important;
+  }
 }
 
 @media (max-width: 770px) {
@@ -900,6 +922,12 @@ img {
 
   .content-3-without {
     height: 410px;
+  }
+}
+
+@media (max-width: 700px) {
+  .main-container {
+    margin-top: -50px;
   }
 }
 
@@ -926,299 +954,5 @@ img {
   }
 }
 
-@media (min-width: 2300px) {
-  .accountIcon {
-    width: 80px;
-    height: 80px;
-  }
 
-  .content-1,
-  .content-2,
-  .content-3,
-  .ans-cont {
-    width: 1400px;
-  }
-
-  .name {
-    font-size: 22px;
-  }
-
-  .dropdown-toggle {
-    font-size: 22px;
-  }
-
-  .dropdown-menu li {
-    font-size: 22px;
-  }
-
-  .title h3 {
-    font-size: 36px;
-  }
-
-  .description p {
-    font-size: 24px;
-  }
-
-  .about p {
-    font-size: 18px;
-  }
-
-  .answer-btn {
-    width: 220px;
-    font-size: 26px;
-    height: 50px;
-  }
-
-  h4 {
-    font-size: 30px;
-  }
-
-  .description span {
-    font-size: 28px;
-  }
-
-  textarea {
-    font-size: 24px;
-  }
-
-  .content-3 p {
-    font-size: 24px;
-  }
-
-  .toMain {
-    font-size: 28px !important;
-    width: 230px;
-  }
-}
-
-@media (min-width: 3100px) {
-  .accountIcon {
-    width: 100px;
-    height: 100px;
-  }
-
-  .content-1,
-  .content-2,
-  .content-3,
-  .ans-cont {
-    width: 1800px;
-  }
-
-  .name {
-    font-size: 28px;
-  }
-
-  .dropdown-toggle {
-    font-size: 28px;
-  }
-
-  .dropdown-menu li {
-    font-size: 28px;
-  }
-
-  .title h3 {
-    font-size: 46px;
-  }
-
-  .description p {
-    font-size: 30px;
-  }
-
-  .about p {
-    font-size: 24px;
-  }
-
-  .answer-btn {
-    width: 280px;
-    height: 60px;
-    font-size: 32px;
-    border-radius: 22px;
-  }
-
-  h4 {
-    font-size: 36px;
-  }
-
-  .description span {
-    font-size: 34px;
-  }
-
-  .comm-add {
-    font-size: 28px;
-  }
-
-  textarea {
-    font-size: 30px;
-  }
-
-  .content-3 p {
-    font-size: 28px;
-  }
-
-  .toMain {
-    font-size: 34px !important;
-    width: 260px;
-    border-radius: 14px;
-  }
-}
-
-@media (min-width: 4600px) {
-  .content-1,
-  .content-2,
-  .content-3,
-  .ans-cont {
-    width: 2600px;
-  }
-
-  .accountIcon {
-    width: 140px;
-    height: 140px;
-  }
-
-  .name {
-    font-size: 38px;
-  }
-
-  .dropdown-toggle {
-    font-size: 42px;
-  }
-
-  .dropdown-menu li {
-    font-size: 42px;
-  }
-
-  .title h3 {
-    font-size: 64px;
-  }
-
-  .description p {
-    font-size: 42px;
-  }
-
-  .about p {
-    font-size: 34px;
-  }
-
-  .answer-btn {
-    width: 360px;
-    height: 80px;
-    font-size: 42px;
-    border-radius: 30px;
-  }
-
-  h4 {
-    font-size: 54px;
-  }
-
-  .description span {
-    font-size: 46px;
-  }
-
-  .comm-add {
-    font-size: 42px;
-  }
-
-  textarea {
-    font-size: 42px;
-    height: 340px !important;
-  }
-
-  .content-3 p {
-    font-size: 38px;
-  }
-
-  .content-3-without {
-    height: 450px !important;
-  }
-
-  .toMain {
-    width: 340px;
-    font-size: 45px !important;
-    border-radius: 16px;
-  }
-}
-
-@media (min-width: 6200px) {
-  .content-1,
-  .content-2,
-  .content-3,
-  .ans-cont {
-    width: 3400px;
-    border-radius: 34px;
-  }
-
-  .content-1 {
-    padding: 40px;
-  }
-
-  .accountIcon {
-    width: 180px;
-    height: 180px;
-  }
-
-  .name {
-    font-size: 54px;
-  }
-
-  .dropdown-toggle {
-    font-size: 54px;
-  }
-
-  .dropdown-menu li {
-    font-size: 54px;
-  }
-
-  .title h3 {
-    font-size: 86px;
-  }
-
-  .description p {
-    font-size: 58px;
-  }
-
-  .about p {
-    font-size: 48px;
-  }
-
-  .answer-btn {
-    width: 460px;
-    height: 110px;
-    font-size: 56px;
-  }
-
-  h4 {
-    font-size: 64px;
-  }
-
-  .description span {
-    font-size: 58px;
-    margin-left: 190px;
-  }
-
-  .comm-add {
-    font-size: 54px;
-  }
-
-  textarea {
-    font-size: 56px;
-    height: 410px !important;
-  }
-
-  .content-3 p {
-    font-size: 54px;
-  }
-
-  .content-3-without {
-    height: 550px !important;
-    border-radius: 34px;
-  }
-
-  .toMain {
-    width: 420px;
-    font-size: 56px !important;
-    border-radius: 16px;
-
-    margin-bottom: 450px;
-  }
-}
 </style>
