@@ -1,12 +1,19 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      burg: true,
+    };
   },
   methods: {
     goto(name) {
       this.$router.push(name);
     },
+    burgmenu() {
+      this.burg = !this.burg;
+      
+      console.log(5);
+    }
   },
 };
 </script>
@@ -18,12 +25,26 @@ export default {
                 <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
                 <a href="/"><h2>UpFollow</h2></a>
             </div>
-            <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
-            <a href="/States" @click="goto(`/States`)">Статьи</a>
-            <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
-            <a href="https://t.me/lif0ltn" target="_blank">Новости IT</a>
+            <div class="lin">
+              <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
+              <a href="/States" @click="goto(`/States`)">Статьи</a>
+              <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
+              <a href="https://t.me/lif0ltn" target="_blank">Новости IT</a>
+            </div>
+            <div class="lin-phone" :class="{ linPhoneHide: burg}">
+              <div class="mainlin">
+                <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
+                <a href="/States" @click="goto(`/States`)">Статьи</a>
+                <a href="/leaders" @click="goto(`/leaders`)">Лидеры</a>
+              </div>
+              <div class="otherlin">
+                <a href="https://t.me/lif0ltn" target="_blank">Новости IT</a>
+              </div>
+            </div>
+            
         </div>
         <div class="enter">           
+            <img class="burgmenu" src="../../assets/Main/burgmenu.svg" alt="" @click="burgmenu">
             <button class="" @click="goto(`/Login`)"><span>Войти</span></button>
             <a class="d-none" href=""><img src="../../assets/Main/hebber.png" alt=""></a>
         </div>
@@ -32,6 +53,8 @@ export default {
 
 <style>
 .navbar {
+
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,6 +68,7 @@ export default {
   background-color: #629bf7;
 }
 
+
 .items {
   display: flex;
   align-items: center;
@@ -54,6 +78,55 @@ export default {
 .items img {
   width: 50px;
   margin-bottom: 8px;
+}
+
+.lin {
+  display: flex;
+  gap: 40px;
+}
+
+.lin-phone {
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 30px;
+  padding: 15px 5px;
+  
+  width: 400px;
+  border-radius: 12px;
+  top: 80px;
+  right: 10px;
+  background-color: rgba(59,130,246,0.8);
+}
+
+
+.burgmenu {
+  width: 40px !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  margin: 0 20px 0 0 !important;
+}
+
+.mainlin {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lin-phone a {
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 30px !important;
+  background-color: #3d72d3;
+  font-size: 20px !important;
+  transition: all 200ms;
+  border-radius: 5px;
+}
+
+
+.mainlin a:hover {
+  opacity: 0.8;
 }
 
 .items a {
@@ -191,7 +264,7 @@ h2 {
   filter: brightness(85%);
 }
 
-@media (max-width: 950px) {
+@media (max-width: 970px) {
   .navbar {
   }
 
@@ -204,9 +277,9 @@ h2 {
   }
 }
 
-@media (max-width: 830px) {
+@media (max-width: 900px) {
   .navbar {
-    padding: 0 10px 0 10px;
+    padding: 0 20px;
   }
 
   .items img {
@@ -232,6 +305,81 @@ h2 {
 
   .enter button span {
     font-size: 17px;
+  }
+}
+
+@media (max-width: 760px) {
+  .lin {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  .lin-phone {
+    display: none;
+  }
+  
+  .burgmenu {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .lin {
+    display: none;
+  }
+
+  .linPhoneHide {
+    display: none;
+  }
+
+  .navbar {
+    min-height: 50px !important;
+  }
+
+  .enter button {
+    width: 100px !important;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .items img {
+    width: 35px;
+  }
+
+  h2 {
+    font-size: 16px !important;
+  }
+
+  
+}
+
+@media (max-width: 480px) {
+  .lin-phone {
+    width: 350px;
+  }
+
+  .enter button {
+    width: 70px !important;
+  }
+
+  .enter span {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 395px) {
+  .lin-phone {
+    width: 310px;
+  }
+
+  .lin-phone {
+    gap: 5px;
+  }
+
+  .lin-phone a {
+    font-size: 16px !important;
+    width: 130px;
   }
 }
 </style>

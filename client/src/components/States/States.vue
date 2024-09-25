@@ -76,10 +76,11 @@ export default {
 
 <div class="content-cont d-flex align-items-center" v-if='this.isAllLoad'>
     <!-- Компонент поиска -->
-    <div class="title-text">
-        <h4 class="text">Поиск статьи</h4>
-    </div>
+    
     <div class="all-inputs">
+        <div class="title-text">
+            <h4 class="text">Поиск статьи</h4>
+        </div>
         <input v-model="title" type="search" class="form-control" placeholder="Название статьи" aria-label="First name">
         <input v-model="author" type="search" class="form-control" placeholder="Автор" aria-label="Last name">
     </div>
@@ -145,6 +146,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    margin-top: 30px;
 
     width: 100%;
 }
@@ -152,7 +154,7 @@ export default {
 .title-text {
     display: flex;
     justify-content: start;
-    width: 800px;
+    width: 100%;
 }
 
 .find-btn{
@@ -297,40 +299,40 @@ h4{
 
 @media (max-width: 900px){
 
-.content input{
-    width: 400px;
-}
+    .content input{
+        width: 400px;
+    }
 
-.form-select {
-    width: 255px;
-}
+    .form-select {
+        width: 255px;
+    }
 
-.btn {
-    width: 140px;
-    font-size: 14px;
-    margin: 0 !important;
-}
+    .btn {
+        width: 140px;
+        font-size: 14px;
+        margin: 0 !important;
+    }
 
-.down-menu {
-    display: flex;
-    justify-content: center;
-}
+    .down-menu {
+        display: flex;
+        justify-content: center;
+    }
 
-.create {
-    display: flex;
-    justify-content: center;
-}
+    .create {
+        display: flex;
+        justify-content: center;
+    }
 
-.create-state {
-    width: 400px;
-}
+    .create-state {
+        width: 232px;
+    }
 
-.content, h4 {
-    font-size: 32px;
-}
-.dropdown-center{
-    margin: 2px !important;
-}
+    .content, h4 {
+        font-size: 32px;
+    }
+    .dropdown-center{
+        margin: 2px !important;
+    }
 }
 @media (max-width: 900px) {
     .content, h4 {
@@ -339,16 +341,16 @@ h4{
         align-items: center;
     }
 
-    .title-text {
-        margin-left: 150px;
-    }
-
     .form-control{
         width: 650px;
     }
 
+    .dropdown-center {
+        margin-left: -2px !important;
+    }
+
     .down-menu {
-        width: 650px;
+        width: 100%;
     }
 
     h4 {
@@ -356,53 +358,53 @@ h4{
     }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 670px) {
+    .all-inputs {
+        width: 450px;
+    }
+    
     .form-control {
         width: 450px;
     }
-
-    .down-menu {
-        width: 450px;
-    }
-
-    .title-text {
-        margin-left: 350px;
-    }
-
+    
     .form-select {
         width: 200px;
     }
-
+   
     .find-btn {
         margin-top: 3px !important;
         height: 35px;
         width: 70px;
     }
-
+    
     .create-state {
-        width: 200px;
+        width: 160px;
         font-size: 16px;
         height: 35px;
         margin-top: 3px;
     }
+    
 }
 
 @media (max-width: 635px) {
-  .content .form-control{
-    width: 400px;
-   }
+  
 }
 
 @media (max-width: 500px) {
+    .all-inputs {
+        align-items: center;
+    }
     .down-menu {
         flex-direction: column;
         align-items: center;
         gap: 5px;
-    }
+    }   
 
     .title-text {
-        margin-left: 400px;
+        justify-content: center;
     }
+
+    
 
     .form-control {
         width: 400px;
@@ -426,6 +428,10 @@ h4{
         width: 250px !important;
     }
 
+    .all-inputs {
+        width: 250px;
+    }
+
     .form-select {
         width: 250px;
     }
@@ -438,9 +444,6 @@ h4{
         width: 250px;
     }
 
-    .title-text {
-        margin-left: 550px;
-    }
 }
 
 @media (min-width: 2100px) {

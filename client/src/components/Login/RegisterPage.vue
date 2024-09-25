@@ -275,6 +275,10 @@ h1 {
   border-radius: 50px;
 }
 
+.headernew {
+  background-color: #000 !important;
+}
+
 .main-ccc {
   display: flex;
   flex-direction: column;

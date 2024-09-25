@@ -46,7 +46,7 @@ export default {
       <header-comp class="header" />
     </div>
     <div class="f" style="display: flex; flex-direction: column">
-      <RouterView class="RouterView" style="margin-top: 45px; flex-grow: 1" />
+      <RouterView class="RouterView" style="padding-top: 45px; flex-grow: 1" />
       <footer-comp v-if="onload" />
     </div>
   </div>
@@ -67,6 +67,10 @@ main {
 template {
   font-family: Rubik !important;
   margin: 0;
+}
+
+.f {
+  display: flex;
 }
 
 .RouterView {

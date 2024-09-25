@@ -178,6 +178,11 @@ export default {
   cursor: pointer;
   z-index: 7000;
 }
+
+.navbar {
+  background-color: #000 !important;
+}
+
 .grey {
   font-family: var(--font-family);
   font-weight: 700;
@@ -313,7 +318,7 @@ h1 {
 }
 .btn-container {
   display: flex;
-  justify-content: center; /* Выравниваем кнопки по центру */
+  justify-content: start; /* Выравниваем кнопки по центру */
   margin-top: -10px; /*  Вертикальный отступ */
   gap: 30px;
   margin-left: -250px;
@@ -538,7 +543,6 @@ h1 {
   }
   .reg {
     font-family: var(--font-family);
-    margin-left: -70px;
     font-weight: 700;
     font-size: 18px;
     text-align: center;
@@ -564,7 +568,7 @@ h1 {
   }
 
   .btn-container {
-    margin-left: -220px;
+    margin-left: -170px;
     gap: 10px;
   }
 
@@ -640,5 +644,12 @@ h1 {
 
     margin-left: 50px;
   } */
+}
+
+@media (max-width: 400px) {
+  .login-container {
+    box-shadow: none;
+    margin-top: -100px;
+  }
 }
 </style>

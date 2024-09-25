@@ -1,11 +1,33 @@
 <script>
-
+export default {
+  data() {
+    return {
+      count: 0,
+      isHidden: true, // Управляем показом/скрытием блока
+    };
+  },
+  methods: {
+    clickpas() {
+      this.count++;
+      
+      if (this.count === 10) {
+        this.isHidden = !this.isHidden;
+        this.count = 0; // Сбрасываем счетчик
+      }
+    }
+  }
+};
 </script>
 
 <template>
     <div class="background">
-        <h1>404</h1>
+        <h1 @click="clickpas">404</h1>
         <a href="/"><button>На главную</button></a>
+        <div class="pashal"  :class="{ 'hide': isHidden }">
+          <img src="../../assets/Main/arrow-top.svg" alt="">
+          <h3>Дурак? Сюда кликать надо</h3>
+        </div>
+        
     </div>
 </template>
 
@@ -21,6 +43,21 @@
     gap: 70px;
 
     user-select: none;
+}
+
+.hide {
+    display: none !important;
+}
+
+.pashal {
+    margin-top: -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    width: 70px;
 }
 
 h1 {
