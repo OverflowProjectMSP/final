@@ -264,7 +264,7 @@ h2 {
   filter: brightness(85%);
 }
 
-@media (max-width: 950px) {
+@media (max-width: 970px) {
   .navbar {
   }
 
@@ -277,7 +277,7 @@ h2 {
   }
 }
 
-@media (max-width: 865px) {
+@media (max-width: 900px) {
   .navbar {
     padding: 0 20px;
   }
@@ -308,7 +308,7 @@ h2 {
   }
 }
 
-@media (max-width: 740px) {
+@media (max-width: 760px) {
   .lin {
     gap: 20px;
   }
@@ -324,7 +324,7 @@ h2 {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
   .lin {
     display: none;
   }
@@ -354,7 +354,7 @@ h2 {
   
 }
 
-@media (max-width: 460px) {
+@media (max-width: 480px) {
   .lin-phone {
     width: 350px;
   }
@@ -368,7 +368,7 @@ h2 {
   }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 395px) {
   .lin-phone {
     width: 310px;
   }
