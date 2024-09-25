@@ -235,7 +235,7 @@ export default {
     this.loadQuestion();
     this.checkUser();
     this.getNowUser();
-     document.title = 'Костя Лох'
+     document.title = 'UpFollow'
   },
 };
 </script>
