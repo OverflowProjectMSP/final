@@ -149,7 +149,7 @@ export default {
                     <div class="scroll">
                         <div class="con" v-for="item in states">
                             <a :href="`/StateItem/` + item.id">
-                                <NewProfileVid :data="item" :user='user' />
+                                <NewProfileVid :data="item" :user='user' class="NewProf" />
                             </a>
                         </div>
                     </div>
@@ -202,6 +202,12 @@ body {
 /*популярные классы */
 .t-alig-c {
     text-align: center;
+}
+
+
+.con {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .scroll {
