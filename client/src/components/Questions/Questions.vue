@@ -155,6 +155,8 @@ export default {
 
 
 
+
+
 .find-btn {
     margin-left: 10px !important;
 }
@@ -165,6 +167,7 @@ export default {
     width: auto;
     margin-left: auto;
     margin-right: auto;
+    padding-top: 10px;
 }
 
 a {

@@ -42,8 +42,11 @@ export default {
                 </div>
             </div>
             <div class="answers">
-                <p class="count">{{ data.acnt }}</p>
-                <p class="ans">Ответа (ов)</p>
+                <div class="count-ans">
+                    <p class="count">{{ data.acnt }}</p>
+                    <p class="ans">Ответа (ов)</p>
+                </div>
+                
                 <button>Ответить</button>
             </div>
         </div>
@@ -62,6 +65,14 @@ p {
 
     width: 100%;
     height: 100%;
+
+    margin-left: 0px;
+}
+
+.count-ans {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .vid-block {
@@ -90,6 +101,11 @@ p {
     gap: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.name-rank p {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .avatar img {
@@ -188,7 +204,7 @@ p {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
     .vid-block {
         flex-direction: column;
         width: 400px;
@@ -199,10 +215,25 @@ p {
     .answers {
         width: 150px;
         height: 150px;
+        display: flex;
+        flex-direction: row;
         
         position: absolute;
-        top: 70px;
-        right: 0;
+        top: 130px;
+        left: 100px;
+        gap: 40px;
+    }
+
+    .count-ans {
+        align-items: center;
+    }
+
+    .count-ans .count {
+        margin-left: 80px;
+    }
+
+    .answers p {
+        width: 120px;
     }
 
     .text {
@@ -221,7 +252,7 @@ p {
         -webkit-box-orient: vertical;
         overflow: hidden;
         white-space: wrap;
-        width: 16ch;
+        width: 26ch;
         
     }
 
@@ -237,11 +268,18 @@ p {
 
     .text p {
         font-size: 20px;
-        width: 10ch;
+        width: 20ch;
     }
 
     .answers {
-        top: 70px;
+        top: 140px;
+        gap: 5px;
+
+    }
+
+    .count-ans {
+        margin-left: -70px;
+        width: 150px;
     }
     
     .answers p {
