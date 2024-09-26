@@ -102,7 +102,9 @@ def add_tables():
                         github text,
                         avatar text,
                         admin bool,
-                        data_c timestamp
+                        data_c timestamp,
+                        c_active int,
+                        rang text
                     )""")
         cursor.execute(f"""CREATE TABLE IF NOT EXISTS questions(
                     id uuid,

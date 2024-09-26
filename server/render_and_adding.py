@@ -980,7 +980,80 @@ def filtre_question(fil):
                 return return_data
     else: return render_questions()
 
+def c_active(count: int, id_u: str):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
 
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(f"""UPDATE user
+                    SET c_active = c_active + {count}
+                    WHERE id = $${id_u}$$
+                    RETURNING c_active;
+                """)
+        
+        total = cursor.fetchone()[0]
+
+        return_data = total
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+        
+def get_rang(score):
+    grade_dict = {
+        (0, 5): "Новочиок",
+        (10, 5): "Первый опыт",
+        (11, 50): "Опытный",
+        (51, 100): "Знаток"
+    }
+
+    for range_tuple, grade in grade_dict.items():
+        if range_tuple[0] <= score < range_tuple[1]:
+            return grade
+
+def add_rang(rang: str, id_u: str):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        return_data = "ok"
+        cursor.execute(f"""UPDATE user
+                    SET rang = $${rang}$$
+                    WHERE id = $${id_u}$$
+                """)
+
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1013,6 +1086,9 @@ def create_state():
     if session.get("last_s") == None or datetime.now().replace(tzinfo=None) - timedelta(minutes=10) > session.get("last_s").replace(tzinfo=None):
         responce_object['res'] = add_states(post_data.get('descriptions'), post_data.get('details'), session.get('id'), post_data.get('tag')) #Вызов и debug функции добавления вопроса в бд
         session['last_s'] = datetime.now().replace(tzinfo=None)
+        res = c_active(10, session.get('id'))
+        new_rang = get_rang(res)
+        add_rang(new_rang, session.get('id'))
     else:
         responce_object['res'] = {
             "cd": True,
@@ -1150,6 +1226,9 @@ def add_a():
 
     if post_data.get('q') == 'true':
         response_object['all'] =  add_ans(text, True, post_data.get('id'), session.get('id'))
+        res = c_active(10, session.get('id'))
+        new_rang = get_rang(res)
+        add_rang(new_rang, session.get('id'))
         return jsonify(response_object)
     response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
     return jsonify(response_object)
