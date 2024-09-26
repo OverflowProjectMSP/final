@@ -60,7 +60,7 @@ export default createRouter({
     },
     {
       path: "/Profile/:id",
-      component: () => import("../components/Profile/Profile.vue"),
+      component: () => import("../components/Profile/NewProfileComp.vue"),
     },
     {
       path: "/QuestionItem/:id",
@@ -136,6 +136,10 @@ export default createRouter({
     {
       path: "/newsetting",
       component: () => import('../components/Edit/NewsettingComp.vue')
+    },
+    {
+      path: "/NewProfile",
+      component: () => import('../components/Profile/NewProfileComp.vue')
     }
   ],
 });
