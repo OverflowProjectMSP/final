@@ -70,6 +70,10 @@ p {
     margin-left: 0px;
 }
 
+.info p {
+    border: none;
+}
+
 .count-ans {
     display: flex;
     flex-direction: column;

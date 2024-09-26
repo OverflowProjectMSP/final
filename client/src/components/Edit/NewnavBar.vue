@@ -136,6 +136,7 @@ export default {
 
 .burgmenu {
   width: 40px !important;
+  height: 25px !important;
   border-radius: 0 !important;
   cursor: pointer;
   margin: 0 20px 0 0 !important;
