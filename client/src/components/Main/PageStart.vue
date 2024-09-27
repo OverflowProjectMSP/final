@@ -67,15 +67,14 @@ body {
     border-radius: 25px;
 }
 
-.enter button:hover {
-    background-color: rgba(0, 0, 0, 0);
-}
 
 .lin-phone a {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-
+.enter button:hover {
+    color: #211750;
+}
 
 
 .bg-bottom {

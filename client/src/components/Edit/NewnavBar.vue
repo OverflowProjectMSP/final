@@ -199,17 +199,28 @@ export default {
 .enter button {
   width: 120px;
   border-radius: 5px;
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0);
   line-height: 42px;
   padding: 0;
-  border: none;
+  border: 2px solid #fff;
   position: relative;
   font-weight: 500;
-  overflow: hidden; /* предотвращаем выход элементов за границы */
-  transition: background-color 300ms ease;
+  transition: all 200ms;
 }
 
+
+.enter button:hover {
+  background-color: #fff !important;
+  color: #619bf7;
+}
+
+.enter button span {
+  font-weight: 500;
+}
+
+
+/*
 .enter button span {
   position: relative;
   display: block;
@@ -217,7 +228,6 @@ export default {
   height: 100%;
 }
 
-/* Вертикальная линия (слева) */
 .enter button:before,
 .enter button:after {
   position: absolute;
@@ -226,7 +236,6 @@ export default {
   transition: all 300ms ease;
 }
 
-/* Левая вертикальная линия */
 .enter button:before {
   right: 0;
   bottom: 0;
@@ -234,7 +243,6 @@ export default {
   width: 3px;
 }
 
-/* Нижняя горизонтальная линия */
 .enter button:after {
   right: 0;
   bottom: 0;
@@ -255,7 +263,6 @@ export default {
   width: 100%;
 }
 
-/* Левые и верхние границы */
 .enter button span:before,
 .enter button span:after {
   position: absolute;
@@ -264,7 +271,6 @@ export default {
   transition: all 300ms ease;
 }
 
-/* Верхняя вертикальная линия */
 .enter button span:before {
   left: 0;
   top: 0;
@@ -272,7 +278,6 @@ export default {
   width: 2px;
 }
 
-/* Левая горизонтальная линия */
 .enter button span:after {
   left: 0;
   top: 0;
@@ -280,7 +285,6 @@ export default {
   height: 2px;
 }
 
-/* Анимация появления верхней и левой линий при наведении на кнопку */
 .enter button:hover span:before {
   height: 100%;
 }
@@ -300,6 +304,8 @@ export default {
 .enter img:hover {
   filter: brightness(85%);
 }
+
+*/
 
 @media (max-width: 970px) {
 
