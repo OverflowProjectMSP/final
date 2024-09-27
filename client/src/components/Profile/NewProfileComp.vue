@@ -3,12 +3,14 @@ import NewProfileVid from '../Edit/NewProfileVid.vue';
 import NewqueVid from '../Edit/NewqueVid.vue';
 import VidUserComp from './VidUserComp.vue';
 import axios from 'axios';
+import NewnavBar from '../Edit/NewnavBar.vue'
 
 export default {
     components: {
         VidUserComp,
         NewqueVid,
-        NewProfileVid
+        NewProfileVid,
+        NewnavBar,
     },
     data() {
         return {
@@ -77,7 +79,9 @@ export default {
 <div v-if='this.isAllLoad'>
     <div class="window">
         <div class="prof-banner">
-            <img :src="user.avatar" alt="">
+            <div class="prof">
+                <img class="ava" :src="user.avatar" alt="">
+            </div>
             <div class="main-info">
                 <h3>{{user.username}}</h3>
                 <h5>Работяга</h5>
@@ -187,12 +191,13 @@ p {
     align-items: center;
     gap: 50px;
 
-    width: 80%;
-    height: 500px;
+    width: 64%;
+    height: 400px;
     
     border-radius: 30px;
 
     background-image: url(../../assets/Profile/profbag.png);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -205,10 +210,39 @@ p {
     margin-right: auto;
 }
 
-.prof-banner img {
-    width: 220px;
-    height: 220px;
+.prof {
+    position: relative;
+}
+
+.ava {
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
+    display: block;
+    overflow: visible;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.prof::after{
+    display: block;
+    content: '';
+    width: 180px;
+    height: 180px;
+    border: 2px dashed #fff;
+    border-radius: 50%; /* для закругленных углов */
+    z-index: 30; /* Псевдоэлемент за картинкой */
+    animation: rotate-outline 40s linear infinite;
+}
+
+@keyframes rotate-outline {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .main-info {
@@ -221,14 +255,14 @@ p {
     padding: 0 20px;
 
     width: 70%;
-    height: 220px;
+    height: 200px;
     border-radius: 15px;
     background-color: rgba(233, 233, 233, 0.5);
 }
 
 .main-info h3 {
     font-size: 34px;
-    color: #000;
+    color: #212121;
     margin-bottom: 0;
 }
 
@@ -239,7 +273,7 @@ p {
 }
 
 .main-info p {
-    color: #000;
+    color: #212121;
     font-size: 34px;
     font-weight: 500;
     margin-bottom: 0;
@@ -267,7 +301,7 @@ p {
 }
 
 .count-all p {
-    font-size: 32px;
+    font-size: 27px;
     font-weight: 500;
     color: #757575;
     margin-bottom: 0;
@@ -295,7 +329,7 @@ p {
 }
 
 .links-info p {
-    font-size: 36px;
+    font-size: 27px;
     font-weight: 500;
     color: #757575;
     text-align: center;
@@ -321,11 +355,21 @@ p {
 }
 
 
+@media (max-width: 1400px) {
+    .prof-banner {
+        width: 70%;
+    }
+}
 
 @media (max-width: 1200px) {
     .prof-banner img {
-        width: 180px;
-        height: 180px;
+        width: 160px;
+        height: 160px;
+    }
+
+    .prof-banner {
+        gap: 20px;
+        width: 70%;
     }
 
     .main-info {
@@ -369,13 +413,22 @@ p {
 @media (max-width: 1000px) {
     .prof-banner {
         flex-direction: column;
-        height: auto;
-        padding: 50px 0;
+        padding: 120px 0 0 0;
+        width: 100%;
+        border-radius: 0 0 50px 50px;
+        margin-top: -140px;
+        height: 700px;
+
+        gap: 70px;
+
     }
 
     .prof-banner img {
-        width: 140px;
-        height: 140px;
+        width: 160px;
+        height: 160px;
+    }
+
+    .RouterView {
     }
 
     /*.main-info {
@@ -426,6 +479,12 @@ p {
 @media (max-width: 730px) {
     .li-block {
         width: 40ch;
+    }
+}
+
+@media (max-width: 720px) {
+    .prof-banner {
+        padding-top: 30px;
     }
 }
 
