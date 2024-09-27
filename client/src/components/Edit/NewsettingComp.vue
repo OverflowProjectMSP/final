@@ -106,7 +106,7 @@ export default {
 }
 
 .comp {
-  width: 90%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -137,6 +137,7 @@ export default {
 .main-info {
   width: 100%;
   display: flex;
+  justify-content: center;
   padding-top: 50px;
   gap: 15%;
   padding-bottom: 40px;
@@ -190,7 +191,7 @@ export default {
 }
 
 .username input {
-  width: 450px;
+  width: 350px;
   height: 50px;
   border: 2px solid #000;
   border-radius: 8px;
@@ -216,7 +217,7 @@ export default {
 }
 
 .surename input {
-  width: 450px;
+  width: 350px;
   height: 50px;
   border: 2px solid #000;
   border-radius: 8px;
@@ -241,7 +242,7 @@ export default {
 }
 
 .interests textarea{
-  width: 950px;
+  width: 750px;
   height: 200px;
   border: 2px solid #000;
   border-radius: 8px;
@@ -283,7 +284,7 @@ export default {
 
 .btns-act {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .btns-act button {
@@ -291,9 +292,9 @@ export default {
   color: #fff;
   border: none;
   border-radius: 14px;
-  width: 400px;
-  height: 60px;
-  font-size: 26px;
+  width: 300px;
+  height: 56px;
+  font-size: 22px;
 }
 
 .aboutme {
@@ -322,12 +323,12 @@ export default {
 .aboutme span {
   position: absolute;
   left: 40px;
-  top: 60px;
+  top: 75px;
 
   background-color: #3b82f6;
   color: #fff;
-  font-size: 28px;
-  padding: 5px 30px;
+  font-size: 20px;
+  padding: 5px 25px;
   border-radius: 12px;
 }
 
@@ -347,6 +348,8 @@ button:active {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+
   gap: 40px;
 }
 
@@ -358,19 +361,20 @@ button:active {
 .bl h3 {
   display: grid;
   place-items: center;
-  width: 400px;
-  height: 60px;
+  width: 260px !important;
+  height: 50px;
   border: 2px solid #3b82f6;
   border-radius: 8px;
+  font-size: 22px;
   font-weight: 550;
   margin: 0;
 }
 
 .bl input {
-  width: 70%;
+  width: 800px;
   border: 2px solid #000;
   border-radius: 8px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   padding: 0 10px;
 }
@@ -397,12 +401,15 @@ input[type="number"] {
 }
 
 @media (max-width: 1400px) {
+  .main-info {
+    gap: 15%;
+  }
   .name-sure {
     flex-direction: column;
   }
 
   .interests textarea {
-    width: 450px;
+    width: 350px;
   }
   
 }
@@ -415,6 +422,18 @@ input[type="number"] {
   .btns-act {
     gap: 10px;
   }
+
+  .bl input {
+    width: 550px;
+  }
+
+  .bl {
+    gap: 5%;
+  }
+
+  .bl h3 {
+    width: 250px !important;
+  }
 }
 
 @media (max-width: 1120px) {
@@ -423,9 +442,27 @@ input[type="number"] {
   }
 }
 
+@media (max-width: 1000px) {
+  .bl input {
+    width: 350px;
+  }
+
+  .bl h3 {
+    width: 200px !important;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 970px) {
+  .main-info {
+    gap: 5%;
+  }
+}
+
 @media (max-width: 860px) {
   .btns-act {
     flex-direction: column;
+    align-items: center;
   }
 
   .action h2 {
@@ -434,7 +471,7 @@ input[type="number"] {
   }
 
   .btns-act button {
-    width: 100%;
+    width: 65%;
     gap: 20px;
   }
 
@@ -451,11 +488,46 @@ input[type="number"] {
 @media (max-width: 730px) {
   .main-info {
     flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: start;
+  }
+
+  h1 {
+    font-size: 26px !important;
+  }
+
+  .action h2 {
+    font-size: 26px !important;
+  }
+
+  .links p {
+    font-size: 18px;
+  }
+
+  .username input {
+    width: 600px;
+  }
+
+  .surename input {
+    width: 600px;
+  }
+
+  .interests textarea {
+    width: 600px;
   }
 
   .avatar img {
     width: 300px;
     height: 300px;
+  }
+
+  .btns-act {
+    align-items: center;
+  }
+
+  .btns-act button {
+    width: 80%;
   }
 }
 
@@ -466,18 +538,37 @@ input[type="number"] {
   }
 
   .bl h3 {
-    width: 450px;
+    width: 350px !important;
   }
 
   .bl input {
-    width: 450px;
-    height: 60px;
+    width: 350px;
+    height: 50px;
   }
+
+  .username input {
+    width: 400px;
+  }
+
+  .surename input {
+    width: 400px;
+  }
+
+  .interests textarea {
+    width: 400px;
+  }
+
 }
 
 @media (max-width: 450px) {
   .bl h3 {
-    width: 330px;
+    width: 330px !important;
+  }
+
+  .btns-act button {
+    width: 90%;
+    font-size: 20px;
+
   }
 
   .bl input {
