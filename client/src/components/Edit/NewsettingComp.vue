@@ -300,14 +300,18 @@ export default {
 .aboutme {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   padding-top: 100px;
   padding-bottom: 100px;
-  position: relative;
 }
 
 .about-comp {
+  width: 85%;
   padding-bottom: 80px;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .aboutme textarea {
@@ -322,8 +326,8 @@ export default {
 
 .aboutme span {
   position: absolute;
-  left: 40px;
-  top: 75px;
+  left: 50px;
+  top: -25px;
 
   background-color: #3b82f6;
   color: #fff;
@@ -482,6 +486,10 @@ input[type="number"] {
 
   .btns button {
     width: 95px;
+  }
+
+  .about-comp {
+    width: 100%;
   }
 }
 
