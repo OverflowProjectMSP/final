@@ -101,7 +101,6 @@ export default {
 <template>
   <ModalNews v-if='this.isSession && this.news.length && isOpenNews' :news='news' @closeNews='closeNews'/>
   <div class="pagecenter">
-    <hr class="hr-start">
     <p class="center-desc">Здесь вы можете задать вопросы по таким языкам <br> программирования как</p>
     <div class="languages">
       <button @click="prevLang" class="btn-arrow leftarrow">&lt;</button>
@@ -163,8 +162,8 @@ body {
   margin: 5px;
 }
 
-hr {
-  margin-top: 20px;
+.pagecenter {
+  margin-top: 70px;
 }
 
 .pagecenter {
