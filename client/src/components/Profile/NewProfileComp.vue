@@ -257,7 +257,7 @@ p {
     border: 2px dashed #fff;
     border-radius: 50%; /* для закругленных углов */
     z-index: 30; /* Псевдоэлемент за картинкой */
-    animation: rotate-outline 40s linear infinite;
+    animation: rotate-outline 45s linear infinite;
 }
 
 @keyframes rotate-outline {
