@@ -104,7 +104,8 @@ export default {
 }
 
 .containera {
-		margin: 20px 300px !important;
+		margin: 50px 300px !important;
+    padding-top: 0 !important;
 	}
 
 ol li:nth-child(1) {
