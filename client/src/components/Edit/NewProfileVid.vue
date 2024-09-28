@@ -64,6 +64,8 @@ p {
     justify-content: center;
     align-items: center;
 
+    padding: 20px;
+
     width: 100%;
     height: 100%;
 
@@ -88,15 +90,16 @@ p {
 
     width: 900px;
     height: auto;
-    border: 2px solid #000;
+    border: 1px solid #000;
     border-radius: 20px;
 
     transition: all 300ms;
 }
 
 .vid-block:hover {
-    transform: translateY(-10px);
-    box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
+    transform: scale(1.03);
+    box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
 }
 
 .info {

@@ -108,7 +108,7 @@ export default {
         
         <div class="container d-flex align-items-center flex-column">
             <div class="q-user head-1 mb-3 mt-1 user-select-none">
-                <div class=" d-flex flex-row align-items-center gap-4">
+                <div class="swit d-flex flex-row align-items-center gap-4">
                     <p role="button" class="q" :class="{ 'active-shose': isQ }" @click="allByHe(true)">Вопросы</p>/
                     <p role="button" class="q" :class="{ 'active-shose': !isQ }" @click="allByHe(false)">статьи</p>
                 </div>
@@ -173,6 +173,9 @@ p {
 }
 
 
+.swit {
+    color: #2b2b2b;
+}
 
 
 .head-1 {
@@ -327,7 +330,7 @@ p {
     color: #757575;
     margin-bottom: 0;
     padding-right: 80px;
-    border-right: 4px solid #757575;
+    border-right: 2px solid #757575;
 }
 
 .count-all p:last-child {
@@ -342,7 +345,7 @@ p {
     align-items: center;
     margin-top: 50px;
 
-    border: 4px solid #757575;
+    border: 2px solid #757575;
     border-radius: 15px;
 
     width: 900px;

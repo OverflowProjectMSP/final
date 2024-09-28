@@ -96,7 +96,7 @@ p {
 }
 
 .vid-block:hover {
-    transform: translateY(-10px);
+    transform: scale(1.03);
     box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
