@@ -270,7 +270,7 @@ export default {
 .action {
   display: flex;
   flex-direction: column;
-  gap: 90px;
+  gap: 60px;
   width: 100%;
   padding-top: 50px;
   padding-bottom: 80px;

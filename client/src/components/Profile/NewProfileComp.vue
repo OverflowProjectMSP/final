@@ -78,7 +78,11 @@ export default {
 <template>
 <div v-if='this.isAllLoad'>
     <div class="window">
+        
         <div class="prof-banner">
+            <a v-if="this.isCreator == 'true'" class="set-link"  href="/NewSetting"><img src="../../assets/Profile/sh.svg"
+                    alt="Настройки" class="il"></a>
+
             <div class="prof">
                 <img class="ava" :src="user.avatar" alt="">
             </div>
@@ -149,6 +153,8 @@ p {
     margin-bottom: 0;
 }
 
+
+
 .active-shose {
     text-decoration: underline;
     font-weight: 600;
@@ -165,6 +171,9 @@ p {
     width: 100%;
     height: auto;
 }
+
+
+
 
 .head-1 {
     justify-content: space-around;
@@ -193,6 +202,7 @@ p {
 
     width: 64%;
     height: 400px;
+    position: relative;
     
     border-radius: 30px;
 
@@ -200,6 +210,17 @@ p {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+
+.set-link {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.set-link img {
+    width: 50px;
 }
 
 .scroll {
@@ -367,6 +388,14 @@ p {
         height: 160px;
     }
 
+    .set-link {
+        top: -40px;
+    }
+
+    .set-link img {
+        width: 50px;
+    }
+
     .prof-banner {
         gap: 20px;
         width: 70%;
@@ -421,6 +450,16 @@ p {
 
         gap: 70px;
 
+    }
+
+    .set-link {
+        top: 65px;
+        right: 30px;
+        
+    }
+
+    .set-link img {
+        width: 50px !important;
     }
 
     .prof-banner img {
@@ -486,6 +525,11 @@ p {
     .prof-banner {
         padding-top: 30px;
     }
+
+    .set-link {
+        top: 40px;
+        right: 30px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -509,6 +553,15 @@ p {
 @media (max-width: 500px) {
     .li-block {
         width: 30ch;
+    }
+
+    .set-link {
+        top: 30px;
+        right: 15px;
+    }
+
+    .set-link img {
+        width: 45px !important;
     }
 
     .date {

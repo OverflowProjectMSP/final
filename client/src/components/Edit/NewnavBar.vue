@@ -293,9 +293,13 @@ export default {
   width: 100%;
 }
 
+
+
+*/
+
 .enter img {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   object-fit: cover;
   border-radius: 15px;
   transition: 200ms;
@@ -304,8 +308,6 @@ export default {
 .enter img:hover {
   filter: brightness(85%);
 }
-
-*/
 
 @media (max-width: 970px) {
 
@@ -355,7 +357,7 @@ export default {
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 720px) {
   .lin-phone {
     display: none;
   }
@@ -382,6 +384,11 @@ export default {
     width: 100px !important;
     height: 30px;
     line-height: 30px;
+  }
+
+  .enter img {
+    width: 40px;
+    height: 40px;
   }
 
   .items img {
