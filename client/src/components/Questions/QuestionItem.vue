@@ -627,6 +627,13 @@ img {
   gap: 5px;
 }
 
+.toMain {
+  background-color: #3b82f6;
+  padding: 10px 20px !important;
+  border: none;
+}
+
+
 .name-ring p {
   margin: 0;
 }
@@ -834,6 +841,8 @@ img {
   outline: none;
 }
 
+
+
 /* АДАПТИВКА */
 
 @media (hover: hover) {
@@ -841,9 +850,19 @@ img {
     background-color: #20498b;
   }
 
+  .toMain:hover {
+    background-color: #2e6cd2;
+  }
+
+  .toMain:active {
+    background-color: #20498b;
+  }
+
   .answer-btn:hover {
     background-color: #20498b;
   }
+
+  
 
   .more:hover {
     color: #20498b;
@@ -860,6 +879,12 @@ img {
   }
 
   
+}
+
+@media (max-width: 1020px) {
+  .content-3 {
+    width: 93% !important;
+  }
 }
 
 @media (max-width: 1000px) {

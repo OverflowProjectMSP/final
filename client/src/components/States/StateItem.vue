@@ -746,6 +746,10 @@ img {
     .comments {
         width: 95%;
     }
+
+    .content-3 {
+        width: 95%;
+    }
 }
 
 @media (min-width: 1000px) {

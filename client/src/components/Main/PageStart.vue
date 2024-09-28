@@ -180,6 +180,23 @@ body {
 
 }
 
+@media (max-width: 720px) {
+    .title {
+        margin-top: 30px;
+    }
+
+    .description {
+        width: 95%;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    .hr-end {
+        margin-top: 10px !important;
+    }
+}
+
 @media (max-width: 450px) {
     .btn-join {
         width: 300px;
