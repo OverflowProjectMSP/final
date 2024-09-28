@@ -238,6 +238,7 @@ h6 {
   top: 10px;
   left: 10px;
   display: block;
+  z-index: 6;
 }
 .err {
   font-family: var(--font-family);
@@ -252,7 +253,7 @@ h6 {
 
   position: relative;
 
-  background-color: #ecedee;
+  background-color: #fff;
 
   width: 100%;
   height: 100vh;
@@ -271,8 +272,13 @@ h1 {
 
   width: 1200px;
   height: 630px;
+  margin-top: -100px !important;
   background-color: #fff;
   border-radius: 50px;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
 }
 
 .headernew {
@@ -540,10 +546,38 @@ input:focus {
     margin-bottom: 10px;
     font-size: 42px;
   }
+
+  .window {
+    height: 900px;
+  }
 }
+
+@media (max-width: 810px) {
+
+}
+
 @media (max-width: 670px) {
   .window {
     background: #fff;
+  }
+
+  .main-ccc {
+    width: 100% !important;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .inputs-cont div {
+    width: 90%;
+  }
+
+  .btn-container {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 25px;
   }
 }
 
@@ -553,9 +587,9 @@ input:focus {
   }
 
   .input {
-    width: 340px;
-    height: 55px;
+
   }
+
 
   input {
     font-size: 22px !important;
@@ -565,17 +599,14 @@ input:focus {
     font-size: 18px !important;
   }
 
-  .btn-container {
-    width: 340px;
-    gap: 20px;
-  }
+  
   .grey {
     font-size: 13px;
     height: 50px;
     width: 150px;
   }
   .reg {
-    font-size: 22px;
+    font-size: 16px;
     height: 50px;
     width: 150px;
   }
@@ -592,6 +623,20 @@ input:focus {
 @media (max-width: 505px) {
   .window {
     background: #fff;
+  }
+}
+
+@media (max-width: 450px) {
+
+  .window {
+    height: 600px;
+  }
+  .main-cont {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    
+    width: 380px;
+    margin-top: 30px !important;
   }
 }
 </style>

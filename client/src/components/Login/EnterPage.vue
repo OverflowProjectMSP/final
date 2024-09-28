@@ -100,6 +100,7 @@ export default {
 
 <template>
   <div class="all-container">
+    <h6>UF 2.0</h6>
     <div class="login-container container">
       <div class="img-container">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
@@ -233,6 +234,7 @@ h6 {
   top: 10px;
   left: 10px;
   display: block;
+  z-index: 6;
 }
 .img-container {
   display: block;
@@ -256,6 +258,7 @@ h6 {
   display: flex;
   border-radius: 50px;
   margin: 80px;
+  margin-top: -50px !important;
   width: 1100px;
   height: 620px;
   background: #fff;
@@ -468,7 +471,7 @@ h1 {
     right: -40px;
   }
 }
-@media (max-width: 685px) {
+@media (max-width: 720px) {
   .mail img {
     position: absolute;
     top: 550px;
@@ -527,6 +530,7 @@ h1 {
     display: flex;
     border-radius: 50px;
     margin: 80px;
+    margin-top: -130px !important;
     width: 360px;
     height: 500px;
     background: #fff;
@@ -634,6 +638,15 @@ h1 {
   .input {
     background: #eae9e9;
   }
+
+  .all-container {
+    height: 680px;
+  }
+
+  .login-container {
+    margin-bottom: 0;
+  }
+
   .login-container {
     background: #fff;
   }
@@ -649,7 +662,8 @@ h1 {
 @media (max-width: 400px) {
   .login-container {
     box-shadow: none;
-    margin-top: -100px;
+    margin-top: -220px !important;
+
   }
 }
 </style>

@@ -100,7 +100,6 @@ export default {
       </div>
     </form>
       <div class="mail" @click="pushtoFAQ">
-        <img src="/mail.svg" alt="" />
       </div>
       <div class="pass-err">
         <a href="" class="a mt-3">Не приходит код?</a>
@@ -147,7 +146,9 @@ h6 {
   top: 10px;
   left: 10px;
   display: block;
+  z-index: 6;
 }
+
 .img-container {
   display: block;
 }
@@ -159,10 +160,10 @@ h6 {
 }
 .all-container {
   display: flex;
-  background-color: #ecedee;
+  background-color: #fff;
   align-items: center;
   justify-content: center;
-  height: auto;
+  height: 100vh;
   width: 100%;
   position: relative;
 }
@@ -170,10 +171,14 @@ h6 {
   display: flex;
   border-radius: 50px;
   margin: 80px;
+  margin-top: -80px;
   width: 1100px;
   height: 620px;
   background: #fff;
   position: relative;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 .img {
   height: 620px;
@@ -369,12 +374,12 @@ h1 {
   
 }
 @media (max-width: 1235px) {
-  /* .mail img {
-    position: absolute;
-    top: 550px;
-    cursor: pointer;
-    right: -70px;
-  } */
+  .login-container {
+    margin-top: -50px !important;
+  }
+
+  .all-container {
+  }
 }
 
 @media (max-width: 1199px) {
@@ -439,6 +444,10 @@ h1 {
   .btn-container {
     top: 0;
     left: 400px;
+  }
+
+  .all-container {
+    height: 800px;
   }
 }
 @media (max-width: 705px) {
@@ -552,7 +561,7 @@ h1 {
   .input {
     margin-bottom: 40px;
     border-radius: 15px;
-    width: 300px;
+    width: 100%;
     height: 60px;
     background: #eae9e9;
     border: none;
@@ -561,6 +570,21 @@ h1 {
     font-weight: 500;
     font-size: 17px;
     color: #000000;
+  }
+  .input-container {
+    width: 80% !important;
+  }
+  .div-nickname {
+    width: 95%;
+  }
+
+  .btn-container {
+    width: 95%;
+  }
+
+  .login {
+    width: 100%;
+    margin: 0 !important;
   }
   .eye {
     position: absolute;
@@ -597,10 +621,14 @@ h1 {
 @media (max-width: 505px) {
   .all-container {
     background: #fff;
+    height: 600px;
   }
 
   .login-container {
-    margin: 0;
+    margin-top: -50px !important;
+
+    -webkit-box-shadow: none;
+    box-shadow: none;
   }
   /* .login-container {
     -webkit-box-shadow: 4px 4px 100px 0px rgba(34, 60, 80, 0.2);
@@ -609,5 +637,22 @@ h1 {
 
     margin-left: 50px;
   } */
+}
+
+@media (max-width: 450px) {
+  .login-container {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+    margin-top: -140px;
+  }
+
+  .head h1 {
+    width: 300px;
+  }
+
+  .head p {
+    width: 300px;
+  }
 }
 </style>

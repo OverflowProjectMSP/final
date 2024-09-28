@@ -227,11 +227,12 @@ h6 {
   top: 10px;
   left: 10px;
   display: block;
+  z-index: 6;
 }
 
 .all-container {
   display: flex;
-  background-color: #ecedee;
+  background-color: #fff;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -243,11 +244,14 @@ h6 {
   display: flex;
   gap: 40px;
   border-radius: 50px;
-  margin: 80px 80px 80px 80px;
+  margin: -60px 80px 80px 80px;
   width: 1100px;
   height: 620px;
   background: #fff;
   position: relative;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
 .cont-repass {
@@ -404,94 +408,336 @@ h6 {
 
 /* АДАПТИВКА */
 
-@media (max-width: 1140px) {
+@media (max-width: 1260px) {
+  
+  
+
+  .a {
+    top: 420px;
+  }
+
+  
+}
+@media (max-width: 1235px) {
+  /* .mail img {
+    position: absolute;
+    top: 550px;
+    cursor: pointer;
+    right: -70px;
+  } */
+}
+
+@media (max-width: 1199px) {
+  
+
+ 
+  
+
+  .cont-repass {
+    padding: 0 40px;
+    margin: 0;
+  }
+
+
+
+  .input {
+    width: 100%;
+  }
+
+  .eye {
+    right: 10px;
+  }
+
+
+
+  .pass {
+    font-size: 18px;
+  }
+
+  .bt {
+    font-size: 20px;
+  }
+  
+  .login {
+    padding: 0 30px;
+  }
+
+
+}
+
+@media (max-width: 1175px) {
+  .img-container {
+    display: none;
+  }
+
+  .head h1 {
+    font-size: 30px;
+  }
+
   .mount {
     display: none;
   }
 
   .login-container {
-    width: 700px;
-    padding-left: 30px;
+    height: 550px !important;
+    margin-top: -50px !important;
+  }
+
+  .head p {
+    font-size: 30px;
+  }
+
+  .a {
+    position: absolute;
+    top: 370px;
+    left: 50px;
+  }
+  .mail img {
+    position: absolute;
+    top: 550px;
+    cursor: pointer;
+    right: 10px;
+  }
+  .login-container {
+    display: flex;
+    border-radius: 50px;
+    margin: 80px;
+    width: 550px;
+    height: 600px;
+    background: #fff;
+    position: relative;
+  }
+  .err {
+    width: 1000px;
+    position: absolute;
+    top: 550px;
+    margin-left: -479px
+  }
+  
+  .input-container {
+    top: 0px;
+    left: 50px;
+  }
+
+  .btn-container {
+    top: 0;
+    left: 400px;
+  }
+}
+@media (max-width: 705px) {
+  /* .mail img {
+    position: absolute;
+    top: 550px;
+    cursor: pointer;
+    right: 20px;
+  } */
+}
+@media (max-width: 685px) {
+  .mail img {
+    position: absolute;
+    top: 550px;
+    cursor: pointer;
+    right: 50px;
+  }
+  
+  .head h1 {
+    font-size: 25px;
+  }
+
+  .head p {
+    font-size: 25px;
+  }
+
+  .a {
+    position: absolute;
+    left: 55px;
+    top: 430px
+  }
+  .input {
+    margin-bottom: 40px;
+    border-radius: 15px;
+    width: 100%;
+    height: 60px;
+    background: #eae9e9;
+    border: none;
+    padding: 20px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 20px;
+    color: #000000;
+  }
+
+  .input-container {
+    top: 0px;
+    
+  }
+
+  .cont-repass {
+    padding: 0 20px;
   }
 
   .cont-repass h3 {
-    font-size: 70px;
-    text-align: center;
+    font-size: 38px;
   }
 
   .input {
-    height: 80px;
-  }
-
-  .pass {
-    margin-top: 8px;
-    font-size: 30px;
-  }
-
-  .eye {
-    top: 20px;
-  }
-
-  .butt {
-    font-size: 30px;
-  }
-}
-
-@media (max-width: 635px) {
-  .reg {
-    font-size: 20px;
-    vertical-align: center;
-  }
-
-  .login {
-    font-size: 20px;
-    vertical-align: center;
-  }
-  .grey {
-    font-size: 20px;
-    vertical-align: center;
-  }
-  .bt {
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    width: 200px;
-    height: 70px;
-    padding: 20px;
-  }
-  .butt {
     width: 100%;
   }
 
-  .all-container {
-    background-color: #fff;
+
+  .btn-container {
+    top: 80px;
+    left: 0;
+  }
+  .login-container {
+    display: flex;
+    border-radius: 50px;
+    margin: 80px;
+    margin-top: -170px !important;
+    width: 430px;
+    height: 600px;
+    background: #fff;
+    position: relative;
+  }
+  .eye {
+    
+  }
+
+  .bt {
+    border-radius: 15px;
+    width: 300px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    z-index: 7000;
+  }
+
+  .reg {
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    color: #5b5a5a;
+    background: #eae9e9;
+    cursor: pointer;
+  }
+  .login {
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+    background: #3b82f6;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 567px) {
+  .input {
+    margin-bottom: 40px;
+    border-radius: 15px;
+    height: 60px;
+    background: #eae9e9;
+    border: none;
+    padding: 20px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 17px;
+    color: #000000;
+  }
+
+  .reg {
+    width: 200px;
+  }
+
+  .cont-repass {
+    align-items: center;
+  }
+
+  form {
+    width: 100%;
+  }
+
+
+
+  .eye {
+
+  }
+
+  .login-container {
+    margin-top: -290px !important;
+  }
+  
+  .login {
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .mail img {
+    right: 20px;
+  }
+  h6 {
+    display: none;
+  }
+  .reg {
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .a {
+    font-size: 18px;
+  }
+}
+@media (max-width: 505px) {
+  .reg {
+    width: 40%;
+  }
+
+  .bt {
+    font-size: 16px;
+  }
+
+  .cont-repass {
+    margin: 0 !important;
+    padding: 0px;
+  }
+
+  .cont-repass h3 {
+    width: 90%;
+  }
+
+  .login-container {
+    width: 100%;
+  }
+
+  .input-container {
+    width: 90%;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login {
+    width: 60%;
+  }
+
+  .btn-container {
+    width: 90%;
+  }
+
+  .pass {
+    width: 200px !important;
   }
 
   .login-container {
     margin: 0;
-    padding-left: 10px;
-    border-radius: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
   }
-
-  .mail {
-    right: 20px;
-  }
-
-  .cont-repass {
-    margin: 0;
-    padding-right: 10px;
-  }
-
-  .cont-repass h3 {
-    font-size: 50px;
-  }
-
-  .pass {
-    font-size: 22px;
-  }
-
-  .butt {
-    font-size: 22px;
-  }
-}
-</style>
+ }</style>

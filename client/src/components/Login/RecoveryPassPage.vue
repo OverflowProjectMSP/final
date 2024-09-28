@@ -40,6 +40,7 @@ export default {
 
 <template>
   <div class="window">
+    <h6>UF 2.0</h6>
     <div class="main-cont">
       <div class="image">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
@@ -86,10 +87,12 @@ export default {
   justify-content: center;
   align-items: center;
 
-  background-color: #ecedee;
+  background-color: #fff;
 
   width: 100%;
   height: 100vh;
+
+  position: relative;
 }
 
 h1 {
@@ -100,13 +103,29 @@ h1 {
   width: 100%;
 }
 
+h6 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #3b82f6;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: block;
+  z-index: 6;
+}
+
 .main-cont {
   display: flex;
 
   width: 1200px;
   height: 670px;
+  margin-top: -50px;
   background-color: #fff;
   border-radius: 50px;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
 .main-ccc {
@@ -361,15 +380,20 @@ input:focus {
   }
   .grey {
     font-size: 18px;
-
     width: 210px;
   }
+
+  .window {
+    height: 600px;
+  }
+  
   .main-cont {
     display: flex;
     border-radius: 50px;
     margin: 80px;
+    margin-top: -20px;
     width: 550px;
-    height: 600px;
+    height: 400px;
     background: #fff;
     position: relative;
   }
@@ -428,9 +452,50 @@ input:focus {
   }
 }
 
+@media (max-width: 530px) {
+  .main-ccc {
+    width: 100%;
+    align-items: center;
+  }
+
+  .main-ccc h1 {
+    margin-top: 0;
+  }
+
+  .btn-container {
+    width: 90%;
+  }
+
+  .div-username {
+  }
+}
+
 @media (max-width: 505px) {
   .window {
     background: #fff;
   }
+}
+
+@media (max-width: 420px) {
+  .main-cont {
+    margin-top: -170px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 90%;
+  }
+
+  .div-username {
+    display: flex;
+    justify-content: center;
+  }
+
+  .div-username span {
+    left: 30px;
+  }
+
+  .input {
+    width: 90%;
+  }
+  
 }
 </style>

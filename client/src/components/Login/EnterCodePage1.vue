@@ -149,6 +149,7 @@ h6 {
   top: 10px;
   left: 10px;
   display: block;
+  z-index: 6;
 }
 .img-container {
   display: block;
@@ -161,10 +162,10 @@ h6 {
 }
 .all-container {
   display: flex;
-  background-color: #ecedee;
+  background-color: #fff;
   align-items: center;
   justify-content: center;
-  height: auto;
+  height: 100vh;
   width: 100%;
   position: relative;
 }
@@ -172,10 +173,14 @@ h6 {
   display: flex;
   border-radius: 50px;
   margin: 80px;
+  margin-top: -80px;
   width: 1100px;
   height: 620px;
   background: #fff;
   position: relative;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 .img {
   height: 620px;
