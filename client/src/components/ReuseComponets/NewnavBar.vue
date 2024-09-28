@@ -58,6 +58,7 @@ export default {
             <div class="icon-img">
                 <a href="/"><img src="../../assets/Main/uflogo.svg" alt=""></a>
                 <a href="/"><h2 class="title-logo">UpFollow</h2></a>
+                <p>2.0</p>
             </div>
             <div class="lin">
               <a href="/Questions" @click="goto(`/Quetions`)">Вопросы</a>
@@ -130,7 +131,7 @@ export default {
   border-radius: 12px;
   top: 80px;
   right: 10px;
-  background-color: rgba(59,130,246,0.8);
+  background-color: rgba(98,155,247,0.9);
 }
 
 
@@ -189,7 +190,20 @@ export default {
 
   border-right: 2px solid #fff;
 
-  padding-right: 30px;
+  padding-right: 50px;
+
+  position: relative;
+
+}
+
+.icon-img p {
+  position: absolute;
+  top: 0;
+  right: 13px;
+
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .icon-img a:hover {
@@ -330,7 +344,12 @@ export default {
   }
 
   .icon-img {
-    padding-right: 20px;
+    padding-right: 40px;
+  }
+
+  .icon-img p {
+    right: 7px;
+    top: -7px;
   }
 
   h2 {
@@ -376,8 +395,20 @@ export default {
     display: none;
   }
 
+  .icon-img p {
+    font-size: 15px;
+    top: -4px;
+    right: 10px;
+  }
+
+  .header {
+    top: 0 !important;
+  }
+
   .navbar {
-    min-height: 50px !important;
+    min-height: 60px !important;
+    width: 100%;
+    border-radius: 0 0 20px 20px !important;
   }
 
   .enter button {
@@ -387,8 +418,8 @@ export default {
   }
 
   .enter img {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
   }
 
   .items img {

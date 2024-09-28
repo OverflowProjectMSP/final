@@ -67,6 +67,9 @@ body {
     border-radius: 25px;
 }
 
+.lin-phone {
+    background-color: rgba(0, 0, 0, 0.3)
+}
 
 .lin-phone a {
     background-color: rgba(0, 0, 0, 0.3);
