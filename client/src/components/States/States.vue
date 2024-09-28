@@ -166,9 +166,9 @@ export default {
     align-items: center;
     overflow: scroll; 
     overflow-x: hidden;
-    height: 555px;
+    height: 680px;
     padding-top: 10px;
-    gap: 20px;
+    gap: 5px;
     margin-top: 20px;
     /* width: auto;
     margin-left: auto;

@@ -163,11 +163,13 @@ export default {
 
 .cont {
     overflow: scroll;
-    height: 555px;
+    height: 680px;
     width: auto;
     margin-left: auto;
     margin-right: auto;
     padding-top: 10px;
+
+    gap: 5px;
 }
 
 a {

@@ -4,7 +4,7 @@ import PageCenter from './PageCenter.vue';
 import PageEnd from './PageEnd.vue';
 import ScrollBarComp from './ScrollBarComp.vue';
 import HeaderComp from '../ReuseComponets/HeaderComp.vue';
-import NewHeader from '../Edit/NewnavBar.vue'
+import NewHeader from '../ReuseComponets/NewnavBar.vue'
 export default {
     components: {
         HeaderComp,

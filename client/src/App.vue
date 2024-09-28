@@ -1,7 +1,7 @@
 <script>
 import FooterComp from "./components/ReuseComponets/FooterComp.vue";
 // import HeaderComp from "./components/ReuseComponets/HeaderComp.vue";
-import HeaderComp from "./components/Edit/NewnavBar.vue";
+import HeaderComp from "./components/ReuseComponets/NewnavBar.vue";
 import PreloaderComp from "./PreloaderComp.vue";
 
 export default {

@@ -3,7 +3,7 @@ import NewProfileVid from '../Edit/NewProfileVid.vue';
 import NewqueVid from '../Edit/NewqueVid.vue';
 import VidUserComp from './VidUserComp.vue';
 import axios from 'axios';
-import NewnavBar from '../Edit/NewnavBar.vue'
+import NewnavBar from '../ReuseComponets/NewnavBar.vue'
 
 export default {
     components: {

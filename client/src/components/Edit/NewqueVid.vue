@@ -66,6 +66,8 @@ p {
     width: 100%;
     height: 100%;
 
+    padding: 10px 0;
+
     margin-left: 0px;
 }
 
@@ -87,7 +89,7 @@ p {
 
     width: 900px;
     height: auto;
-    border: 2px solid #000;
+    border: 1px solid #000;
     border-radius: 20px;
 
     transition: all 300ms;
@@ -95,7 +97,7 @@ p {
 
 .vid-block:hover {
     transform: translateY(-10px);
-    box-shadow: 10px 5px 5px rgb(0, 0, 0, 0.5);
+    box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
 .info {
@@ -117,7 +119,7 @@ p {
     height: 50px;
     object-fit: cover;
     border-radius: 50px;
-    border: 2px solid #000;
+    border: 1px solid #000;
 }
 
 .avatar-name-rank {

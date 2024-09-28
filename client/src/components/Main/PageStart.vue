@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import NewHeader from '../Edit/NewnavBar.vue'
+import NewHeader from '../ReuseComponets/NewnavBar.vue'
 
 export default {
     components: {

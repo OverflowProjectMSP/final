@@ -119,7 +119,7 @@ export default createRouter({
     },
     {
       path: "/editNewNav",
-      component: () => import('../components/Edit/NewnavBar.vue')
+      component: () => import('../components/ReuseComponets/NewnavBar.vue')
     },
     {
       path: "/uftwo",
@@ -135,7 +135,7 @@ export default createRouter({
     },
     {
       path: "/newsetting",
-      component: () => import('../components/Edit/NewsettingComp.vue')
+      component: () => import('../components/Profile/NewsettingComp.vue')
     },
     {
       path: "/NewProfile",
