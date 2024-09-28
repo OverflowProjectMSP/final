@@ -121,7 +121,7 @@ p {
     height: 50px;
     object-fit: cover;
     border-radius: 50px;
-    border: 2px solid #000;
+    border: 1px solid #000;
 }
 
 .avatar-name-rank {
