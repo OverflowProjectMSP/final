@@ -45,10 +45,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ECEDEE;
+  background-color: #fff;
 
   width: 100%;
-  height: 100vh;
+  height: 1000px;
   overflow: hidden;
 }
 
@@ -62,7 +62,12 @@ export default {
   background-color: #ffffff;
   border-radius: 50px;
   padding: 0;
+  margin-top: -120px;
   position: relative;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
 }
 
 .mount {
@@ -189,6 +194,9 @@ export default {
 
 
 @media (max-width: 1280px) {
+  .window {
+    height: 800px;
+  }
   .main-container {
     width: 1000px;
     height: 600px;
@@ -225,6 +233,10 @@ export default {
 }
 
 @media (max-width: 1015px) {
+  .window {
+    height: 700px;
+  }
+
   .main-container {
     width: 700px;
     height: 500px;

@@ -89,7 +89,7 @@ export default {
             <div class="main-info">
                 <h3>{{user.username}}</h3>
                 <h5>Работяга</h5>
-                <p>{{user.interestings}}sldkfjsldkf sldkjfsldkjf sldkfjsldkjf sldkjfslkdjf slkdfjsldkjf slkdjfsldkfj slkdjfsldkfj </p>
+                <p>{{user.interestings}} </p>
                 <p class="date">19.09.2024</p>
             </div>
         </div>

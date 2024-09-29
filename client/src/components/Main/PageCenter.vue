@@ -105,22 +105,22 @@ export default {
     <div class="languages">
       <button @click="prevLang" class="btn-arrow leftarrow">&lt;</button>
       <div class="lang-items">
-        <a :href="`/Forum/${links[index]}`">
+        <a :href="`/Questions`">
           <div class="lang-item lang-item-col-1" :class="stylesLang[index]">{{ langueges[index] }}</div>
         </a>
-        <a :href="`/Forum/${links[index1]}`">
+        <a :href="`/Questions`">
           <div class="lang-item lang-item-col-2" :class="stylesLang[index1]">{{ langueges[index1] }}</div>
         </a>
-        <a :href="`/Forum/${links[index2]}`">
+        <a :href="`/Questions`">
           <div class="lang-item lang-item-col-3" :class="stylesLang[index2]">{{ langueges[index2] }}</div>
         </a>
-        <a :href="`/Forum/${links[index3]}`">
+        <a :href="`/Questions`">
           <div class="lang-item lang-item-col-4" :class="stylesLang[index3]">{{ langueges[index3] }}</div>
         </a>
-        <a :href="`/Forum/${links[index4]}`">
+        <a :href="`/Questions`">
           <div class="lang-item lang-item-col-5" :class="stylesLang[index4]">{{ langueges[index4] }}</div>
         </a>
-        <a :href="`/Forum/${links[index5]}`">
+        <a :href="`/Questions`">
           <div class="lang-item lang-item-col-6" :class="stylesLang[index5]">{{ langueges[index5] }}</div>
         </a>
       </div>
@@ -439,7 +439,7 @@ body {
   }
 
   .languages {
-    width: 90%;
+    width: 100%;
   }
 
   .lang-item-col-4,
