@@ -89,7 +89,7 @@ export default {
             <div class="main-info">
                 <h3>{{user.username}}</h3>
                 <h5>Работяга</h5>
-                <p>{{user.interestings}}</p>
+                <p>{{user.interestings}}sldkfjsldkf sldkjfsldkjf sldkfjsldkjf sldkjfslkdjf slkdfjsldkjf slkdjfsldkfj slkdjfsldkfj </p>
                 <p class="date">19.09.2024</p>
             </div>
         </div>
@@ -298,15 +298,15 @@ p {
 
 .main-info p {
     color: #212121;
-    font-size: 34px;
+    font-size: 26px;
     font-weight: 500;
     margin-bottom: 0;
     line-height: 42px;
     display: -webkit-box;             /* Используем флексбокс */
             -webkit-box-orient: vertical;      /* Устанавливаем вертикальную ориентацию */
-            -webkit-line-clamp: 4;             /* Ограничиваем количество строк */
+            -webkit-line-clamp: 2;             /* Ограничиваем количество строк */
     overflow: hidden;                  /* Скрываем всё, что выходит за пределы блока */
-    max-width: 300px;                  /* Ширина блока для переноса */
+    max-width: 110vh;                  /* Ширина блока для переноса */
     word-wrap: break-word;             /* Позволяет разрывать слова */
     white-space: normal;  ;  
 }
@@ -419,6 +419,10 @@ p {
     .main-info p {
         font-size: 22px;
         line-height: 30px;
+    }
+
+    .main-info p {
+         -webkit-line-clamp: 3; 
     }
 
     .date {
