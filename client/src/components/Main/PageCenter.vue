@@ -103,7 +103,7 @@ export default {
   <div class="pagecenter">
     <p class="center-desc">Здесь вы можете задать вопросы по таким языкам <br> программирования как</p>
     <div class="languages">
-      <button @click="prevLang" class="btn-arrow leftarrow">&lt;</button>
+      <button @click="prevLang" class="btn-arrow leftarrow"><img src="../../assets/Main/arrow-prev.svg" alt=""></button>
       <div class="lang-items">
         <a :href="`/Questions`">
           <div class="lang-item lang-item-col-1" :class="stylesLang[index]">{{ langueges[index] }}</div>
@@ -124,7 +124,7 @@ export default {
           <div class="lang-item lang-item-col-6" :class="stylesLang[index5]">{{ langueges[index5] }}</div>
         </a>
       </div>
-      <button @click="nextLang" class="btn-arrow rightarrow">&gt;</button>
+      <button @click="nextLang" class="btn-arrow rightarrow"><img src="../../assets/Main/arrow-next.svg" alt=""></button>
     </div>
     <div class="wehave">
       <p class="wehave-title">В данный момент на нашем сайте:</p>
@@ -164,6 +164,10 @@ body {
 
 .pagecenter {
   margin-top: 70px;
+}
+
+.btn-arrow img {
+  width: 60px;
 }
 
 .pagecenter {

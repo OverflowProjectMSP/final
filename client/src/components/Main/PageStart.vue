@@ -35,7 +35,7 @@ export default {
                 <!-- <NewHeader class="NewHeader" /> -->
             </div>
             <div class="greeting-text">
-                <h1 class="title">Форум по <span style="color: #3b82f6;">программированию</span></h1>
+                <h1 class="title">Форум по <span style="color: #3b82f6;"><a href="http://localhost:5173/StateItem/16340d03-241c-462e-83c6-7ca12326b1d3">программированию</a></span></h1>
                 <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
                 <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
             </div>
@@ -98,7 +98,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+}
+
+.greeting-text a:hover {
+    color: #2c71e2
 }
 
 .NewHeader {
@@ -143,7 +146,7 @@ body {
     font-size: 40px;
     font-weight: 500;
     margin-top: 150px;
-    text-shadow: 0px 1px 2px #707070;
+    text-shadow: 1px 2px 2px #3b3b3b;
     margin-bottom: 80px;
 }
 
