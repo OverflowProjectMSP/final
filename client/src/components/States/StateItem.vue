@@ -332,6 +332,20 @@ export default {
     opacity: 1 !important;
 }
 
+
+.dropdown{
+  border-radius: 20px;
+  border: none;
+  -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+}
+
+.dropdown-toggle {
+    border: none !important;
+}
+
+
 .no-button {
   background-color: #D20000 !important;
   border-color: #D20000;
@@ -436,7 +450,10 @@ img {
     width: 60px;
     height: 60px;
     border-radius: 50px;
-    border: 3px solid #1d1d1d;
+    -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
 }
 
 img {
@@ -482,7 +499,10 @@ img {
 
     padding: 19px;
 
-    border: 1px solid #000;
+    -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
     border-radius: 25px;
 }
 
@@ -502,6 +522,12 @@ img {
     font-weight: 700;
     color: #8355E3;
     margin-right: 10px;
+}
+
+.toMain {
+    background-color: #3b82f6;
+    padding: 10px 20px !important;
+    border: none;
 }
 
 
@@ -596,8 +622,18 @@ img {
 
     padding: 19px;
 
-    border: 1px solid #000;
+    -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
     border-radius: 25px;
+
+    transition: all 0.5s;
+}
+
+.content-2:hover {
+    transform: scale(1.03);
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
 }
 
 .difficult-ans {
@@ -686,7 +722,10 @@ img {
 
     padding: 19px;
 
-    border: 1px solid #000;
+    -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+
     border-radius: 25px;
 
     position: relative;
@@ -723,6 +762,14 @@ img {
 
     .answer-btn:hover {
         background-color: #20498b
+    }
+
+    .toMain:hover {
+        background-color: #2e6cd2;
+    }
+
+    .toMain:active {
+        background-color: #20498b;
     }
 
     .more:hover {

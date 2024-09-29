@@ -724,7 +724,7 @@ img {
   transition: all 0.5s;
 }
 .content-2:hover {
-        transform: translateY(-10px);
+        transform: scale(1.03);
         box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
     }
 .difficult-ans {
