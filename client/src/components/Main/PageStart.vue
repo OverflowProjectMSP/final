@@ -134,6 +134,7 @@ body {
 
 .description p {
     margin: 0;
+    text-align: center;
 }
 
 
@@ -185,14 +186,38 @@ body {
 
 }
 
+@media (max-width: 820px) {
+    .title {
+        font-size: 30px;
+    }
+
+    .btn-join {
+        width: 300px;
+        height: 65px;
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 760px) {
+    .description {
+        width: 88%;
+    }
+
+    
+}
+
 @media (max-width: 720px) {
     .title {
         margin-top: 30px;
     }
 
     .description {
-        width: 95%;
         margin-top: 10px;
+        margin-bottom: 70px;
+    }
+
+    .greetings {
+        height: auto;
     }
 }
 
@@ -200,12 +225,26 @@ body {
     .hr-end {
         margin-top: 10px !important;
     }
+
+    .description {
+        padding: 10px 40px;
+    }
+
+    .description p {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 450px) {
     .btn-join {
         width: 300px;
         font-size: 24px;
+    }
+}
+
+@media (max-width: 420px) {
+    .btn-join {
+        width: 260px;
     }
 }
 
