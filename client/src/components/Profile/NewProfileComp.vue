@@ -207,7 +207,7 @@ p {
     height: 400px;
     position: relative;
     
-    border-radius: 30px;
+    border-radius: 30px !important;
 
     background-image: url(../../assets/Profile/profbag.png);
     background-size: cover;
@@ -241,9 +241,10 @@ p {
 .ava {
     width: 160px;
     height: 160px;
-    border-radius: 50%;
+    border-radius: 50% !important;
     display: block;
-    overflow: visible;
+    /* overflow: visible; */
+    object-fit: cover;
     position: absolute;
     top: 10px;
     left: 10px;
@@ -255,7 +256,7 @@ p {
     width: 180px;
     height: 180px;
     border: 2px dashed #fff;
-    border-radius: 50%; /* для закругленных углов */
+    border-radius: 50% !important; /* для закругленных углов */ 
     z-index: 30; /* Псевдоэлемент за картинкой */
     animation: rotate-outline 45s linear infinite;
 }
