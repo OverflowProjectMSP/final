@@ -31,15 +31,19 @@ export default {
                         <p>Звание: {{ data.rang }}</p>
                     </div>
                 </div>
-                <div class="language">
-                    <p>{{ data.tag }}</p>
-                </div>
                 <div class="text">
                     <p>{{ data.descriptions }}</p>
                 </div>
-                <div class="date">
-                    <p>{{ data.date }}</p>
+                <div class="lan-date">
+                    <div class="language">
+                        <p>{{ data.tag }}</p>
+                    </div>
+                
+                    <div class="date">
+                        <p>{{ data.data }}</p>
+                    </div> 
                 </div>
+                
             </div>
             <div class="answers">
                 <div class="count-ans">
@@ -56,6 +60,12 @@ export default {
 <style scoped>
 p {
     margin: 0;
+}
+
+.lan-date {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .window {
@@ -156,7 +166,7 @@ p {
 
 .date p {
     color: #3382FF;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .answers {
@@ -215,7 +225,16 @@ p {
         flex-direction: column;
         width: 400px;
         position: relative;
-        height: 250px;
+        height: 270px;
+    }
+
+    .date {
+        width: 100%;
+    }
+
+    .date p {
+        width: 100%;
+        font-size: 14px;
     }
 
     .answers {
@@ -225,7 +244,7 @@ p {
         flex-direction: row;
 
         position: absolute;
-        top: 130px;
+        top: 155px;
         left: 100px;
         gap: 40px;
     }
@@ -247,9 +266,9 @@ p {
         height: 66px;
     }
 
-    .date {
+    /*.date {
         margin-bottom: 100px;
-    }
+    } */
 
     .text p {
         -webkit-line-clamp: 2;
@@ -264,6 +283,22 @@ p {
 
     .name-rank p {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 550px) {
+    .lan-date {
+        flex-direction: column;
+        align-items: start;
+        gap: 0px;
+    }
+
+    .language p {
+        padding-bottom: 0;
+    }
+
+    .name-rank {
+        padding-bottom: 0;
     }
 }
 
