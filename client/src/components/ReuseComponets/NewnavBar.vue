@@ -408,7 +408,7 @@ export default {
   .navbar {
     min-height: 60px !important;
     width: 100%;
-    border-radius: 0 0 20px 20px !important;
+    border-radius: 0 0 15px 15px !important;
   }
 
   .enter button {
