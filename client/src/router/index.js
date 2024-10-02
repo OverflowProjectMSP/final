@@ -140,6 +140,11 @@ export default createRouter({
     {
       path: "/NewProfile",
       component: () => import('../components/Profile/NewProfileComp.vue')
-    }
+    },
+    {
+      path: "/OfferTheme",   
+      component: () => import('../components/Other/OfferComp.vue')
+    },
+    
   ],
 });

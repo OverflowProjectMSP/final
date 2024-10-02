@@ -151,7 +151,7 @@ export default {
       </div>
       <div class="main-content">
         <div class="main-ccc">
-          <h1>Сообщить об ошибке</h1>
+          <h1>Предложите свою тему</h1>
           <div class="inputs-cont">
             <div class="div-username">
               <input
@@ -165,44 +165,21 @@ export default {
             </div>
 
             <div class="div-nickname">
-              <input
-                type="text"
-                class="input"
-                v-model="form.email"
-                autofocus
-                required
-              />
-              <span сlass="nick">Почта</span>
-            </div>
-
-            <div class="password">
-              <input
-                :type="showPassword"
-                v-model="form.password"
-                class="input"
-                required
-                @input="passwordValidation($event)"
-              />
-              <span>Пароль</span>
-              <img
-                :src="eyeImg1"
-                alt=""
-                class="eye"
-                @click="toggleVisibility1"
-              />
+              <textarea id="" name="" cols="30" rows="10"></textarea>
+              <span сlass="nick">Тема</span>
             </div>
 
             
+            
           </div>
           <div class="btn-container">
-            <button class="bt reg" @click="login">Войти</button>
             <button
               type="submit"
               :class="{ login: button, grey: gre }"
               @click="check"
               :disabled="gre"
             >
-              Зарегистрироваться
+              Отправить 
             </button>
           </div>
           <div class="errors">
@@ -215,17 +192,7 @@ export default {
 </template>
 
 <style>
-h6 {
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 25px;
-  color: #3b82f6;
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: block;
-  z-index: 6;
-}
+
 .err {
   font-family: var(--font-family);
   font-weight: 700;
@@ -251,14 +218,15 @@ h1 {
   font-size: 39px;
   color: #000;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .main-cont {
   display: flex;
-  margin-top: -60px;
 
   width: 1200px;
   height: 630px;
+  margin-top: -80px;
   background-color: #fff;
   border-radius: 50px;
   
@@ -288,6 +256,18 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+
+h6 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #3b82f6;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: block;
+  z-index: 6;
 }
 
 .input {
@@ -332,14 +312,29 @@ h1 {
   font-family: var(--font-family);
   font-weight: 700;
   font-size: 22px;
-  width: 300px !important;
   color: #5b5a5a;
+  width: 300px !important;
   top: 14px;
   left: 18px;
   pointer-events: none;
   transition: 0.3s ease;
   border-radius: 15px;
   width: 375px;
+}
+
+textarea {
+  border-radius: 15px;
+  width: 480px;
+  height: 200px;
+  background: #eae9e9;
+  border: none;
+  padding: 20px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 20px;
+  color: #000000;
+  
+  resize: none;
 }
 
 input:focus {
@@ -349,21 +344,11 @@ input:focus {
   transition: all 0.1s;
 }
 
-.password {
-  position: relative;
-}
-
-.password span {
-  position: absolute;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 22px;
-  color: #5b5a5a;
-  top: 14px;
-  left: 18px;
-  pointer-events: none;
-  transition: 0.3s ease;
-  border-radius: 15px;
+textarea:focus {
+  outline: none;
+  border: none;
+  border: 4px solid #3b82f6;
+  transition: all 0.1s;
 }
 
 .eye {
@@ -376,24 +361,6 @@ input:focus {
   right: 22px;
 }
 
-.rep-password {
-  position: relative;
-}
-
-.rep-password span {
-  position: absolute;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 22px;
-  color: #5b5a5a;
-  top: 14px;
-  left: 18px;
-  width: 240px !important;
-  pointer-events: none;
-  transition: 0.3s ease;
-  border-radius: 15px;
-}
-
 .login {
   font-family: var(--font-family);
   font-weight: 700;
@@ -402,22 +369,12 @@ input:focus {
   background: #3b82f6;
   cursor: pointer;
   border-radius: 15px;
-  width: 250px;
+  width: 100%;
   height: 60px;
   border: none;
   z-index: 7000;
 }
-.login:disabled {
-  color: #5b5a5a;
-  background: #eae9e9;
-  border-radius: 15px;
-  width: 250px;
-  height: 60px;
-  border: none;
-  z-index: 7000;
-  font-family: var(--font-family);
-  font-weight: 700;
-}
+
 .grey {
   color: #5b5a5a;
   background: #eae9e9;
@@ -439,6 +396,19 @@ input:focus {
   transform: translateY(-115%);
   font-size: 20px;
   left: 25px;
+  border: solid #3b82f6;
+  background: #3b82f6;
+  color: #fff;
+  width: 110px;
+  text-align: center;
+  border-radius: 15px;
+}
+
+textarea:focus ~ span,
+textarea:valid ~ span {
+  transform: translateY(-115%);
+  font-size: 20px;
+  left: 15px;
   border: solid #3b82f6;
   background: #3b82f6;
   color: #fff;
@@ -504,8 +474,7 @@ input:focus {
   }
 
   .btn-container {
-    width: 100%;
-    padding: 0 10px;
+    width: 430px;
   }
 
   .login {
@@ -520,7 +489,7 @@ input:focus {
     display: flex;
     border-radius: 50px;
     margin: 80px;
-    margin-top: -100px;
+    margin-top: -50px;
     width: 550px;
     height: 600px;
     background: #fff;
@@ -549,6 +518,15 @@ input:focus {
     height: 55px;
   }
 
+  textarea {
+    width: 340px;
+  }
+
+  .main-cont {
+    margin-top: -190px;
+  }
+
+
   input {
     font-size: 22px !important;
   }
@@ -558,23 +536,24 @@ input:focus {
   }
 
   .btn-container {
+    justify-content: center;
+    width: 100%;
   }
-
-  
   .grey {
     font-size: 13px;
     height: 50px;
     width: 150px;
   }
   .reg {
-    font-size: 16px !important;
+    font-size: 22px;
     height: 50px;
-    width: 120px;
+    width: 150px;
   }
 
   .login {
     font-size: 16px;
     height: 50px;
+    width: 340px;
   }
   .window {
     background: #fff;
@@ -583,16 +562,8 @@ input:focus {
 
 @media (max-width: 505px) {
   .main-cont {
-    margin-top: -200px;
     box-shadow: none;
-  }
-
-  .btn-container {
-    padding: 0;
-  }
-
-  .reg {
-    width: 100px;
   }
 }
 </style>
+
