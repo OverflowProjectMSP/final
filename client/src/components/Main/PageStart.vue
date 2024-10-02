@@ -37,7 +37,7 @@ export default {
             <div class="greeting-text">
                 <h1 class="title">Форум по <span style="color: #3b82f6;"><a href="http://localhost:5173/StateItem/16340d03-241c-462e-83c6-7ca12326b1d3">программированию</a></span></h1>
                 <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
-                <a href="/ForumPage" v-else><button class="btn-join user-select-none">На форум</button></a>
+                <a href="/Questions" v-else><button class="btn-join user-select-none">К вопросам</button></a>
             </div>
             <div class="description">
                 <p>Здесь вы можете задать свой вопрос и вам обязательно на него ответят!</p>
