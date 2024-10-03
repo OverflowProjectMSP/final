@@ -161,7 +161,7 @@ export default {
 }
 
 .change-block {
-  width: 60%;
+  width: 70%;
 }
 
 .inputs {
