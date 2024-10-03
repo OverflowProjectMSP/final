@@ -145,6 +145,10 @@ export default createRouter({
       path: "/OfferTheme",   
       component: () => import('../components/Other/OfferComp.vue')
     },
+    {
+      path: "/Changepass",
+      component: () => import('../components/Profile/ChangepassComp.vue')
+    },
     
   ],
 });

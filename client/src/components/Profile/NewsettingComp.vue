@@ -7,7 +7,7 @@ export default {
         name: ``,
         surname: ``,
         interestings: ``,
-        about: ``,
+    about: ``,
         country: ``,
         region: ``,
         city: ``,
@@ -254,7 +254,7 @@ export default {
 }
 
 .comp {
-  width: 80%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -262,12 +262,14 @@ export default {
 
 .comp h1 {
   width: 100%;
+  font-size: 30px;
   border-bottom: 2px solid #000;
   padding-bottom: 30px;
 }
 
 .comp h2 {
   color: #000;
+  font-size: 30px !important;
 }
 
 .links {
@@ -286,8 +288,8 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+  gap: 60px;
   padding-top: 50px;
-  gap: 15%;
   padding-bottom: 40px;
   border-bottom: 2px solid #000;
 }
@@ -300,8 +302,8 @@ export default {
 }
 
 .avatar img {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   border: 2px solid #000;
   border-radius: 8px;
 }
@@ -339,8 +341,8 @@ export default {
 }
 
 .username input {
-  width: 350px;
-  height: 50px;
+  width: 300px;
+  height: 40px;
   border: 2px solid #000;
   border-radius: 8px;
   font-size: 20px;
@@ -355,18 +357,18 @@ export default {
 .username span {
   position: absolute;
   left: 10px;
-  top: -25px;
+  top: -22px;
   background-color: #3b82f6;
-  padding: 3px 25px;
+  padding: 1px 20px;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   border-radius: 8px;
 }
 
 .surename input {
-  width: 350px;
-  height: 50px;
+  width: 300px;
+  height: 40px;
   border: 2px solid #000;
   border-radius: 8px;
   font-size: 20px;
@@ -380,17 +382,17 @@ export default {
 .surename span {
   position: absolute;
   left: 10px;
-  top: -25px;
+  top: -22px;
   background-color: #3b82f6;
-  padding: 3px 25px;
+  padding: 1px 20px;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   border-radius: 8px;
 }
 
 .interests textarea{
-  width: 750px;
+  width: 650px;
   height: 200px;
   border: 2px solid #000;
   border-radius: 8px;
@@ -406,11 +408,11 @@ export default {
 .interests span {
   position: absolute;
   left: 10px;
-  top: -25px;
+  top: -22px;
   background-color: #3b82f6;
-  padding: 3px 25px;
+  padding: 1px 20px;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   border-radius: 8px;
 }
@@ -426,10 +428,6 @@ export default {
   border-bottom: 2px solid #000;
 }
 
-.action h2 {
-  font-size: 40px;
-}
-
 .btns-act {
   display: flex;
   justify-content: space-evenly;
@@ -440,9 +438,9 @@ export default {
   color: #fff;
   border: none;
   border-radius: 14px;
-  width: 300px;
-  height: 56px;
-  font-size: 22px;
+  width: 230px;
+  height: 46px;
+  font-size: 20px;
 }
 
 .aboutme {
@@ -467,21 +465,22 @@ export default {
   border: 2px solid #000;
   border-radius: 12px;
   padding: 20px 10px;
-  font-size: 30px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 400;
   resize: none;
 }
 
 .aboutme span {
   position: absolute;
   left: 50px;
-  top: -25px;
+  top: -22px;
 
   background-color: #3b82f6;
   color: #fff;
-  font-size: 20px;
-  padding: 5px 25px;
-  border-radius: 12px;
+  font-size: 18px;
+  padding: 1px 20px;
+  border-radius: 8px;
+  font-weight: 500;
 }
 
 button {
@@ -548,16 +547,22 @@ input[type="number"] {
 
 @media (max-width: 1550px) {
   .main-info {
-    gap: 5%;
   }
 }
 
 @media (max-width: 1400px) {
   .main-info {
-    gap: 15%;
   }
   .name-sure {
     flex-direction: column;
+  }
+
+  .username input {
+    width: 350px;
+  }
+
+  .surename input {
+    width: 350px;
   }
 
   .interests textarea {
@@ -591,6 +596,18 @@ input[type="number"] {
 @media (max-width: 1120px) {
   .btns-act button {
     width: 290px;
+  }
+
+  .username input {
+    width: 300px;
+  }
+
+  .surename input {
+    width: 300px;
+  }
+
+  .interests textarea {
+    width: 300px;
   }
 }
 
@@ -641,7 +658,17 @@ input[type="number"] {
   }
 }
 
+@media (max-width: 750px) {
+  .comp {
+    width: 90%;
+  }
+}
+
 @media (max-width: 730px) {
+  .comp {
+    margin-top: -20px;
+  }
+  
   .main-info {
     flex-direction: column;
     gap: 30px;
@@ -674,8 +701,8 @@ input[type="number"] {
   }
 
   .avatar img {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
   }
 
   .btns-act {
