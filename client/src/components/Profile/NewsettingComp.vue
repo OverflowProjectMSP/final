@@ -125,10 +125,16 @@ export default {
 
     <div class="comp">
       <h1>Настройки профиля</h1>
-      <div class="links">
-        <p>Страница</p>
-        <p>Аккаунт</p>
+      
+      <div class="ancet d-flex" style="display: flex; gap: 40px">
+        <h5 role="button" class="mb-0 border-bottom border-2 border-dark">
+          <a href="/NewSetting">Анкета</a>
+        </h5>
+        <h5 role="button" class="mb-0" style="color: gray; font-weight: 400">
+          <a href="/Changepass">Аккаунт</a>
+        </h5>
       </div>
+    
       <div class="main-info">
         <div class="avatar">
           <img v-if="this.form.avatar == ``"

@@ -1,59 +1,110 @@
 <script>
+import axios from 'axios';
 export default {
-  data() {
-    return {
-      
-    }
-  },
-
-  methods: {
-    async putInfo() {
-      this.form.interestings = this.form.interestings.substr(0, 48);
-      this.isLoading = true;
-      this.isUploading = true; // Включаем индикатор загрузки
-      try {
-        await axios.put(
-          "/user-info",
-          {
-            form: this.form,
-          },
-          {
-            onUploadProgress: (progressEvent) => {
-              const percentCompleted = Math.round(
-                (progressEvent.loaded * 100) / progressEvent.total
-              );
-              this.percentCompleted = percentCompleted;
-            },
-          }
-        );
-        this.isUploading = true; // Выключаем индикатор загрузки
-       // this.$router.push(`/Profile/${this.id}`)
-      } catch (error) {
-        console.error("Ошибка при отправке данных:", error);
-        this.isUploading = false; // Выключаем индикатор загрузки
-        // Добавьте обработку ошибки
-      }
+    data() {
+        return {
+            oldPassword: ``,
+            newPassword: ``,
+            exPassword: ``,
+            error: '',
+            id:'',
+            isInSession: false,
+        }
     },
-  }
-}
-</script>
 
-<template>
-<form @submit.prevent="putInfo"> 
+    methods: {
+        check(){
+            if (!this.newPassword.includes('~') && 
+                !this.newPassword.includes('`') && 
+                !this.newPassword.includes('!') && 
+                !this.newPassword.includes('@') && 
+                !this.newPassword.includes('#') && 
+                !this.newPassword.includes('%') && 
+                !this.newPassword.includes('^') && 
+                !this.newPassword.includes('&') && 
+                !this.newPassword.includes('*') && 
+                !this.newPassword.includes('(') && 
+                !this.newPassword.includes(')') && 
+                !this.newPassword.includes('-') && 
+                !this.newPassword.includes('_') && 
+                !this.newPassword.includes('=') && 
+                !this.newPassword.includes('+') && 
+                !this.newPassword.includes('[') && 
+                !this.newPassword.includes(']') && 
+                !this.newPassword.includes('{') && 
+                !this.newPassword.includes('}') && 
+                !this.newPassword.includes('\\') && 
+                !this.newPassword.includes('|') && 
+                !this.newPassword.includes(';') && 
+                !this.newPassword.includes(':') && 
+                !this.newPassword.includes('"') && 
+                !this.newPassword.includes(',') && 
+                !this.newPassword.includes('<') && 
+                !this.newPassword.includes('.') && 
+                !this.newPassword.includes('>') && 
+                !this.newPassword.includes('/') && 
+                !this.newPassword.includes('?')) {
+                    this.error = '*Пароль должен включать спец символ*';
+                } else if (this.newPassword.includes('$')) {
+                    this.error = '*Ты че, не патриот? Доллары всякие тут ставишь*';
+                } else {
+                    this.putInfo();
+                }
+        },
+        async putInfo() {
+            if (this.newPassword == this.exPassword ) {
+                let res = await axios.put('/new-password-old', {
+                    old_password: this.oldPassword,
+                    new_password: this.newPassword,
+                });
+                if (res.data.res == 'Error') {
+                    this.error = '*Ошибка отправки*';
+                } else if (res.data.res == 'True') {
+                    this.$router.push(`/Profile?id=${this.id}`);
+                } else {
+                    this.error = 'Неизветсная ошибка';
+                }
+            } else {
+                this.error = 'Пароли не совпадают';
+            }
+
+
+        },
+        async getId(){
+            let res = await axios.get(`/session`);
+            this.id = res.data.id;
+            if(!this.id) {
+                this.$router.push('/Login')
+            }
+        }
+    },
+    mounted(){
+        this.getId()
+    }
+}
+</script><template>
+<form @submit.prevent="check" v-if="this.id"> 
   <div class="window">
     <div class="change-block">
       <h1>Изменить пароль</h1>
+      <div class="ancet d-flex" style="display: flex; gap: 40px;">
+          <h5 role="button" class="mb-0" style="color: gray; font-weight: 400;"><a href="/NewSetting">Анкета</a>
+          </h5>
+          <h5 role="button" class="mb-0 border-bottom border-2 border-dark"><a href="/Changepass">Аккаунт</a>
+          </h5>
+      </div>
+
       <div class="inputs">
         <div class="old-pass">
-          <input type="password">
+          <input type="password" v-model="oldPassword">
           <span>Старый пароль</span>  
         </div>
         <div class="new-pass">
-          <input type="password">
+          <input type="password" v-model="newPassword">
           <span>Новый пароль</span>
         </div>
         <div class="res-pass">
-          <input type="password">
+          <input type="password" v-model="exPassword">
           <span>Повторите пароль</span>
         </div>
         <div class="save">
@@ -67,6 +118,10 @@ export default {
 </template>
 
 <style scoped>
+
+.ancet {
+  margin-bottom: 60px;
+}
 
 .save {
   display: flex;
@@ -99,7 +154,7 @@ export default {
 
 .window {
   width: 100%;
-  height: 100vh;
+  height: 600px;
 
   display: flex;
   justify-content: center;
@@ -137,7 +192,6 @@ input {
   border-bottom: 2px solid #000;
   padding-bottom: 20px;
   font-size: 30px;
-  margin-bottom: 50px;
 }
 
 .old-pass input {
@@ -200,6 +254,17 @@ input {
   border-radius: 8px;
 }
 
+@media (max-width: 830px) {
+  .change-block {
+    width: 80%;
+  }
+}
+
+@media (max-width: 530px) {
+  .inputs div {
+    width: 100%;
+  }
+}
 
 
 
