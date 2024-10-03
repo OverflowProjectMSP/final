@@ -7,7 +7,7 @@ export default {
         name: ``,
         surname: ``,
         interestings: ``,
-    about: ``,
+        about: ``,
         country: ``,
         region: ``,
         city: ``,
@@ -53,7 +53,7 @@ export default {
           }
         );
         this.isUploading = true; // Выключаем индикатор загрузки
-       // this.$router.push(`/Profile/${this.id}`)
+        // this.$router.push(`/Profile/${this.id}`)
       } catch (error) {
         console.error("Ошибка при отправке данных:", error);
         this.isUploading = false; // Выключаем индикатор загрузки
@@ -96,7 +96,7 @@ export default {
       this.form.avatar = this.defaultAvatar;
     },
     async logout() {
-      
+
 
       this.$router.push("/Login");
       let res = await axios.get("/");
@@ -120,107 +120,162 @@ export default {
 
 
 <template>
-<form @submit.prevent="putInfo" v-if='this.isAllLoad'>
-  <div class="window">
+  <form @submit.prevent="putInfo" v-if='this.isAllLoad'>
+    <div class="window">
 
-    <div class="comp">
-      <h1>Настройки профиля</h1>
-      
-      <div class="ancet d-flex" style="display: flex; gap: 40px">
-        <h5 role="button" class="mb-0 border-bottom border-2 border-dark">
-          <a href="/NewSetting">Анкета</a>
-        </h5>
-        <h5 role="button" class="mb-0" style="color: gray; font-weight: 400">
-          <a href="/Changepass">Аккаунт</a>
-        </h5>
-      </div>
-    
-      <div class="main-info">
-        <div class="avatar">
-          <img v-if="this.form.avatar == ``"
-              :src="defaultAvatar" alt="Фото профиля">
-          <img v-else
-              :src="form.avatar" alt="Фото профиля">
-          <div class="btns">
-            <button @click="deleteAvatar">Удалить</button>
-            <button @click="triggerFileInput">Заменить</button>
-            <input type="file"
-                   id="fileInput"
-                   @change="convertFileAvatar"
-                   style="display: none;"
+      <div class="comp">
+        <h1>Настройки профиля</h1>
 
-               >
-          </div>
-          <p>Размер загружаемого изображения <br> не должен превышать 10 мб</p>
+        <div class="ancet d-flex" style="display: flex; gap: 40px">
+          <h5 role="button" class="mb-0 border-bottom border-2 border-dark">
+            <a href="/NewSetting">Анкета</a>
+          </h5>
+          <h5 role="button" class="mb-0" style="color: gray; font-weight: 400">
+            <a href="/Changepass">Аккаунт</a>
+          </h5>
         </div>
-        <div class="name">
-          <div class="name-sure">
-            <div class="username">
-              <input v-model="form.name" type="text" maxlength="50">
-              <span>Имя</span>
+
+        <div class="main-info">
+          <div class="avatar">
+            <div class="cscscsc">
+              <img v-if='this.id' :src="form.avatar" alt="Фото профиля"> 
             </div>
-            <div class="surename">
-              <input v-model="form.surname" type="text" maxlength="50">
-              <span>Фамилия</span>
+            <div class="btns">
+              <button @click="deleteAvatar">Удалить</button>
+              <button @click="triggerFileInput">Заменить</button>
+              <input type="file" id="fileInput" @change="convertFileAvatar" style="display: none;">
+            </div>
+            <p>Размер загружаемого изображения <br> не должен превышать 10 мб</p>
+          </div>
+          <div class="name">
+            <div class="name-sure">
+              <div class="username">
+                <input v-model="form.name" type="text" maxlength="50">
+                <span>Имя</span>
+              </div>
+              <div class="surename">
+                <input v-model="form.surname" type="text" maxlength="50">
+                <span>Фамилия</span>
+              </div>
+            </div>
+
+            <div class="interests">
+              <textarea v-model="form.interestings" id="" name="" cols="30" rows="10" maxlength="2000"></textarea>
+              <span>Интересы</span>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="action">
+          <h2>Действия с аккаунтом</h2>
+          <div class="btns-act">
+            <button @click="des">Привязать Telegram</button>
+            <button @click="logout">Выйти из аккаунта</button>
+            <button @click="forgot">Забыли пароль?</button>
+          </div>
+        </div>
+        <div class="aboutme">
+          <div class="about-comp">
+            <textarea v-model="form.about" id="" name="" cols="30" rows="10" maxlength="2000"></textarea>
+            <span>О себе</span>
+          </div>
+
+          <div class="about-links">
+            <div class="email bl">
+              <h3>Email</h3>
+              <input type="email" v-model="form.email">
+            </div>
+            <div class="github bl">
+              <h3>GitHub</h3>
+              <input type="text" v-model="form.github">
+            </div>
+            <div class="telegram-link bl">
+              <h3>Telegram</h3>
+              <input type="text" v-model="form.telegram">
+            </div>
+            <div class="discord bl">
+              <h3>Discord</h3>
+              <input type="text" v-model="form.discord">
+            </div>
+            <div class="phone-number bl">
+              <h3>Номер телефона</h3>
+              <input type="number" v-model="form.phonenumber">
+            </div>
+            <div class="save">
+              <button type="submit">Сохранить изменениия</button>
             </div>
           </div>
-          
-          <div class="interests">
-            <textarea v-model="form.interestings" id="" name="" cols="30" rows="10" maxlength="2000"></textarea>
-            <span>Интересы</span>
-          </div>
-
-        </div>
-      </div>
-   
-      <div class="action">
-        <h2>Действия с аккаунтом</h2>
-        <div class="btns-act">
-          <button @click="des">Привязать Telegram</button>
-          <button @click="logout">Выйти из аккаунта</button>
-          <button @click="forgot">Забыли пароль?</button>
-        </div>
-      </div>
-      <div class="aboutme">
-        <div class="about-comp">
-          <textarea v-model="form.about" id="" name="" cols="30" rows="10" maxlength="2000"></textarea>
-          <span>О себе</span>
         </div>
 
-        <div class="about-links">
-          <div class="email bl">
-            <h3>Email</h3>
-            <input type="email" v-model="form.email">
-          </div>
-          <div class="github bl">
-            <h3>GitHub</h3>
-            <input type="text" v-model="form.github">
-          </div>
-          <div class="telegram-link bl">
-            <h3>Telegram</h3>
-            <input type="text" v-model="form.telegram">
-          </div>
-          <div class="discord bl">
-            <h3>Discord</h3>
-            <input type="text" v-model="form.discord">
-          </div>
-          <div class="phone-number bl">
-            <h3>Номер телефона</h3>
-            <input type="number" v-model="form.phonenumber">
-          </div>
-          <div class="save">
-            <button type="submit">Сохранить изменениия</button>
-          </div>
-        </div>
       </div>
-      
     </div>
-  </div>
-</form>
+    <div v-if='this.id == null' class='w-100 h-100 d-flex justify-content-center align-items-center'>
+      <div class="bg-black1"></div>
+      <div class="modal-cenel d-flex flex-column align-items-center">
+        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+        <h6>У вас недостаточно прав доступа, войдите в аккаунт</h6>
+        <button @click='this.$router.push("/Login")'>Войти</button>
+      </div>
+    </div>
+  </form>
 </template>
 
 <style scoped>
+.cscscsc {
+  width: 250px;
+  height: 250px;
+  border: 2px solid #000;
+  border-radius: 8px;
+}
 
+.modal-cenel {
+  opacity: 1 !important;
+  position: fixed;
+  top: calc(50% - 160px);
+  z-index: 52 !important;
+  background: rgba(59, 130, 246, 0.65);
+  padding: 24px;
+  border-radius: 10px;
+  color: #fff;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .modal-cenel {
+    margin: 0 32px !important;
+  }
+}
+
+.modal-cenel button {
+  border-radius: 10px;
+  border: 1px solid#fff;
+  padding: 4px 24px;
+  background: none;
+  color: #fff;
+  opacity: 1 !important;
+}
+
+.modal-cenel h6 {
+  opacity: 1 !important;
+}
+
+.modal-cenel img {
+  border-radius: 0% !important;
+  width: 150px;
+  opacity: 1 !important;
+}
+
+.bg-black1 {
+  background: rgba(41, 41, 41, 0.7) !important; /* Полупрозрачный фон */
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px) !important;
+}
 
 .save {
   display: flex;
@@ -229,16 +284,16 @@ export default {
 }
 
 .save button {
-    background-color: rgb(255, 255, 255);
-    font-size: 22px;
-    font-weight: 550;
-    color: #7ac97a;
-    border: 2px solid #7ac97a;
-    border-radius: 5px;
-    width: 360px;
-    padding: 5px 15px;
-    text-align: center;
-    transition: all 200ms;
+  background-color: rgb(255, 255, 255);
+  font-size: 22px;
+  font-weight: 550;
+  color: #7ac97a;
+  border: 2px solid #7ac97a;
+  border-radius: 5px;
+  width: 360px;
+  padding: 5px 15px;
+  text-align: center;
+  transition: all 200ms;
 }
 
 .save button:hover {
@@ -312,6 +367,7 @@ export default {
   height: 250px;
   border: 2px solid #000;
   border-radius: 8px;
+  object-fit: cover;
 }
 
 .avatar p {
@@ -397,7 +453,7 @@ export default {
   border-radius: 8px;
 }
 
-.interests textarea{
+.interests textarea {
   width: 650px;
   height: 200px;
   border: 2px solid #000;
@@ -552,13 +608,12 @@ input[type="number"] {
 /* Адаптивка */
 
 @media (max-width: 1550px) {
-  .main-info {
-  }
+  .main-info {}
 }
 
 @media (max-width: 1400px) {
-  .main-info {
-  }
+  .main-info {}
+
   .name-sure {
     flex-direction: column;
   }
@@ -574,7 +629,7 @@ input[type="number"] {
   .interests textarea {
     width: 350px;
   }
-  
+
 }
 
 @media (max-width: 1350px) {
@@ -674,7 +729,7 @@ input[type="number"] {
   .comp {
     margin-top: -20px;
   }
-  
+
   .main-info {
     flex-direction: column;
     gap: 30px;
@@ -813,4 +868,3 @@ input[type="number"] {
   }
 }
 </style>
-
