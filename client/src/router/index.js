@@ -149,6 +149,10 @@ export default createRouter({
       path: "/Changepass",
       component: () => import('../components/Profile/ChangepassComp.vue')
     },
+    {
+      path: "/LeaderTable",
+      component: () => import('../components/Other/LeadertableComp.vue')
+    },
     
   ],
 });
