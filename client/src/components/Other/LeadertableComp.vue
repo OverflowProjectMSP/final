@@ -205,7 +205,7 @@ export default {
 }
 
 .window-phone h1 {
-  margin-top: 120px;
+  margin-top: -120px;
 }
 
 .dec {
@@ -223,7 +223,7 @@ export default {
 .window-phone {
   margin-top: -10px;
   width: 100%;
-  height: 935px;
+  height: 1500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -252,7 +252,6 @@ export default {
   justify-content: center;
   width: 700px;
   height: 800px;
-  overflow-y: auto;
 }
 
 .line {
