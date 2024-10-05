@@ -142,9 +142,9 @@ def add_user_todb(name, email, pas):
         # Проверка существует ли такой пользователь
         if send_user[0][0] == 0 and send_user[1][0] == 0:
             rand_avatar = random.randint(1, 12)
-            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', f'http://api.upfollow.ru/avatar/default_avatar_{rand_avatar}', False, datetime.now().isoformat())
+            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', f'http://api.upfollow.ru/avatar/default_avatar_{rand_avatar}', False, datetime.now().isoformat(), 0, 'Амеба')
 
-            cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c) VALUES {user_to_write}""")
+            cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c, c_active, rang) VALUES {user_to_write}""")
 
             pg.commit()
 
