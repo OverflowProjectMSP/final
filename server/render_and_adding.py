@@ -745,7 +745,7 @@ def add_ans(text, isQ, idO, id_u):
         if id_u!= "Err": tg_sendMessage(chat_id, f'На ваш вопрос "{name}" поступил ответ!')
     else:
         obj = "comments(id, id_u, id_s, text, data)"
-        if id_u!= "Err": tg_sendMessage(chat_id, f'Вашу статью "{name}" прокмментировали')
+        if id_u!= "Err": tg_sendMessage(chat_id, f'Вашу статью "{name}" прокомментировали')
 
     try:
         pg = psycopg2.connect(f"""

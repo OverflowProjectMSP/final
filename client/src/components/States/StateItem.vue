@@ -294,7 +294,7 @@ export default {
                             <div class="bg-black"></div>
                             <div class="modal-cenel d-flex flex-column align-items-center">
                                 <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
-                                <h6>Вы действительно хотите удалить комментарий?</h6>
+                                <h6 class='text-center'>Вы действительно хотите удалить комментарий?</h6>
                                 <div class="d-flex gap-2">
                                     <button @click='deleteAnswer(answer.id, index)'>Да</button>
                                     <button class='no-button' @click='answer.isOpenRemoved = false'>Нет</button>
@@ -354,13 +354,19 @@ export default {
 .modal-cenel {
   opacity: 1 !important;
   position: fixed;
-  top: calc(50% - 260px);
+  top: calc(50% - 160px);
   z-index: 52 !important;
   background: rgba(59, 130, 246, 0.65);
   padding: 24px;
   border-radius: 10px;
   color: #fff;
   gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .modal-cenel {
+        margin: 0 32px !important;
+    }
 }
 
 .modal-cenel button {
@@ -632,8 +638,11 @@ img {
 }
 
 .content-2:hover {
-    transform: scale(1.03);
+    /* transition: scale(1.03); */
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
+    /* zoom: 1.03; */
+    /* padding: 27px 19px; */
+    /* font-size: 1.1rem; */
 }
 
 .difficult-ans {

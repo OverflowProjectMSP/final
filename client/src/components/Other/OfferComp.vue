@@ -1,49 +1,23 @@
 <script>
 import axios from "axios";
-import eye_img from "@/assets/Login/eye-open.svg";
 
 export default {
   data() {
     return {
-      form: {
-        nickname: "",
-        email: "",
-        password: "",
-        exPassword: "",
-      },
-
-      error: "",
-      eyeOpen1: true,
-      eyeOpen2: true,
-      eyeImg1: eye_img,
-      eyeImg2: eye_img,
-      isShowPassword: false,
-      showPassword: "password",
-      isShowExPassword: false,
-      showExPassword: "password",
-      a: "",
-      button: true,
+      contactData: ``,
+      theme: ``,
       gre: false,
       disabled: false,
       button: true,
-      gre: false,
-      disabled: false,
+      error: ``
     };
   },
   methods: {
     check() {
-      if (this.form.username === "") {
-        this.error = "Вы не ввели Никнейм!";
-      } else if (this.form.email === "") {
-        this.error = "Вы не ввели Email!";
-      } else if (this.form.password === "") {
-        this.error = "Вы не ввели Пароль!";
-      } else if (this.form.exPassword === "") {
-        this.error = "Вы не Повторили Пароль!";
-      } else if (this.form.password != this.form.exPassword) {
-        this.error = "Повторно введенный пароль неверный!";
-      } else if (this.password< 5) {
-        this.error = "* Пароль должен включать 5 символов *";
+      if (this.contactData == "") {
+        this.error = "Вы не ввели контактные данные!";
+      } else if (this.theme === "") {
+        this.error = "Вы не ввели тему!";
       } else {
         this.error = "";
         this.register()
@@ -51,93 +25,21 @@ export default {
     },
     async register() {
         try{
-      const res =  await axios.post("/registration", {
-          name: this.form.nickname,
-          email: this.form.email,
-          password: this.form.password,
-        });
-          if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
-          this.error = 'Пользователь с таким именем или почтой уже существует!'
-          } else if ("Некорректная почта") {
-            this.error = 'Почта невалидна.'
-          } else if("Ok"){
-            this.$router.push("/EnterCode");
-        }
+          let res = await axios.post("/helper", {
+            isNewTopic: true,
+            theme: this.theme,
+            email: this.contactData,
+          });
+          if (res.data.res == 'Error') {
+            this.error = 'Неизвестаня ошибка!'
+          } else if(res.data.res == "Ok"){
+            this.$router.push("/Questions");
+          }
       } catch(err) {
           console.error(err)
           this.error = "Ошибка сервера"
       }
-      },
-    toggleVisibility1() {
-      this.isShowPassword = !this.isShowPassword;
-      this.eyeOpen1 = !this.eyeOpen1;
-
-      if (this.isShowPassword) {
-        this.showPassword = "text";
-        this.eyeImg1 = "/src/assets/Login/eye-close.svg";
-      } else {
-        this.showPassword = "password";
-        this.eyeImg1 = eye_img;
-      }
     },
-
-    toggleVisibility2() {
-      this.isShowExPassword = !this.isShowExPassword;
-      this.eyeOpen2 = !this.eyeOpen2;
-
-      if (this.isShowExPassword) {
-        this.showExPassword = "text";
-        this.eyeImg2 = "/src/assets/Login/eye-close.svg";
-      } else {
-        this.showExPassword = "password";
-        this.eyeImg2 = eye_img;
-      }
-    },
-
-    //   async login() {
-    //     try {
-    //       let res = await axios.post("/login", {
-    //         email: this.form.email,
-    //         password: this.form.password,
-    //       });
-    //       if (res.data.message == "ok") {
-    //         this.$router.push("/");
-    //       } else if (res.data.message == "wrong!") {
-    //         this.error = "Пароль и почта не совпадают!";
-    //       } else {
-    //         this.error = "Неизвестная ошибка.";
-    //       }
-    //     } catch (err) {
-    //       this.error = "Ошибка сервера."
-    //       console.error(err)
-    //     }
-    //   },
-
-    passwordValidation($event) {
-      this.button = false;
-      this.gre = true;
-      if ($event) {
-        if (!this.form.email.includes("@") && !this.form.email.includes(".")) {
-          this.error = "Некорректный Email!";
-          this.button = false;
-          this.gre = true;
-        } else if (this.form.password.length < 5) {
-          this.error = "Пароль должен включать минимум 5 символов!";
-          this.button = false;
-          this.gre = true;
-        } else if (this.form.password !== this.form.exPassword) {
-          this.error = "Пароли не совпадают!";
-          this.button = false;
-          this.gre = true;
-          this.error = null;
-          this.button = true;
-          this.gre = false;
-        }
-      }
-    },
-    login() {
-      this.$router.push("/Login")
-    }
   },
 };
 </script>
@@ -150,13 +52,13 @@ export default {
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
       </div>
       <div class="main-content">
-        <div class="main-ccc">
+        <form class="main-ccc" @submit.prevent='check'>
           <h1>Предложите свою тему</h1>
           <div class="inputs-cont">
             <div class="div-username">
               <input
                 type="text"
-                v-model="form.nickname"
+                v-model="contactData"
                 class="input"
                 autofocus
                 required
@@ -165,7 +67,7 @@ export default {
             </div>
 
             <div class="div-nickname">
-              <textarea id="" name="" cols="30" rows="10"></textarea>
+              <textarea id="" name="" cols="30" rows="10" v-model='theme'></textarea>
               <span сlass="nick">Тема</span>
             </div>
 
@@ -176,22 +78,21 @@ export default {
             <button
               type="submit"
               :class="{ login: button, grey: gre }"
-              @click="check"
               :disabled="gre"
             >
               Отправить 
             </button>
           </div>
-          <div class="errors">
+          <div class="errors" v-if='this.error'>
             <p class="err">{{ error }}</p>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 
 .err {
   font-family: var(--font-family);

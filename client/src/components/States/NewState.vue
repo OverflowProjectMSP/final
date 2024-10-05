@@ -20,6 +20,8 @@ export default {
             imagePast: '<img src=``>',
 
             filename: ``,
+
+            isUserInSession: false,
         }
     },
 
@@ -91,15 +93,24 @@ export default {
             });
         },
         limitText() {
-                if (this.form.details.length > 20000) {
-                    this.form.details - this.form.details.substring(0, 20000);
-                }
+            if (this.form.details.length > 20000) {
+                this.form.details - this.form.details.substring(0, 20000);
+            }
         },
-         multimethod() {
+        multimethod() {
             this.updateCursor(event);
             this.limitText();
+        },
+
+        async isUserSession() {
+            let res = await axios.get('/check-r');
+            this.isUserInSession = res.data.all;
         }
-     }
+    },
+
+    mounted() {
+        this.isUserSession();
+    }
  }
 </script>
 
@@ -161,17 +172,73 @@ export default {
     
         <div class="row  block">
             <div class="change-public">
-                
                 <div class="btn-error">
                     <button class="btn btn-public" @click="addState"><b>Опубликовать</b></button>
                     <span class="text-danger" v-if="this.error">{{ error }}</span>
                 </div>
             </div>
         </div>
+
     </div>
+    <div v-if='this.isUserInSession'class='w-100 h-100 d-flex justify-content-center align-items-center'>
+    <div class="bg-black"></div>
+    <div class="modal-cenel d-flex flex-column align-items-center">
+        <img src="../../assets/Lending/bookModal.png" alt="Грусть(">
+        <h6>У вас недостаточно прав доступа, войдите в аккаунт</h6>
+        <button @click='this.$router.push("/Login")'>Войти</button>
+    </div>
+</div>
 </template>
 
 <style scoped>
+.modal-cenel {
+  opacity: 1 !important;
+  position: fixed;
+  top: calc(50% - 160px);
+  z-index: 52 !important;
+  background: rgba(59, 130, 246, 0.65);
+  padding: 24px;
+  border-radius: 10px;
+  color: #fff;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .modal-cenel {
+        margin: 0 32px !important;
+    }
+}
+
+.modal-cenel button {
+    border-radius: 10px;
+    border: 1px solid#fff;
+    padding: 4px 24px;
+    background: none;
+    color: #fff;
+    opacity: 1 !important;
+}
+
+.modal-cenel h6 {
+    opacity: 1 !important;
+}
+
+.modal-cenel img {
+    border-radius: 0% !important;
+    width: 150px;
+    opacity: 1 !important;
+}
+
+.bg-black {
+    background: #000;
+    opacity: 0.5;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 /* стили кнопок */
 .a52 {
     overflow: hidden !important;

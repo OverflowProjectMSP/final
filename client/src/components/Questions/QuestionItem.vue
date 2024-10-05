@@ -365,7 +365,7 @@ export default {
               <div class="bg-black"></div>
               <div class="modal-cenel d-flex flex-column align-items-center">
                 <img src="../../assets/Lending/bookModal.png" alt="Грусть(" />
-                <h6>Вы действительно хотите удалить комментарий?</h6>
+                <h6 class='text-center'>Вы действительно хотите удалить комментарий?</h6>
                 <div class="d-flex gap-2">
                   <button @click="deleteAnswer(answer.id, index)">Да</button>
                   <button
@@ -457,9 +457,15 @@ export default {
 </template>
 
 <style scoped>
+@media (max-width: 900px) {
+    .modal-cenel {
+        margin: 0 32px !important;
+    }
+}
+
 .dropdown{
   border-radius: 20px;
-  border: none;
+  border: none !important;
   -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
@@ -724,7 +730,7 @@ img {
   transition: all 0.5s;
 }
 .content-2:hover {
-        transform: scale(1.03);
+        /* transform: scale(1.03); */
         box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
     }
 .difficult-ans {
