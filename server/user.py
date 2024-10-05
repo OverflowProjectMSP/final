@@ -4,19 +4,15 @@ from render_and_adding import add_img
 import os
 import uuid
 import psycopg2
-from psycopg2 import extras, Error
-from flask import Flask, jsonify, request, session, make_response, send_from_directory
-from flask_cors import CORS
+from psycopg2 import Error
+from flask import jsonify, request, session
 import smtplib
 from email.mime.text import MIMEText
 import random
 from datetime import datetime
 from dotenv import load_dotenv
-import base64
 import logging
-import asyncio
-import random
-
+from email.message import EmailMessage
 import requests as req
 
 load_dotenv()
@@ -272,36 +268,128 @@ def change_password_send(password, email):
 
 # Отпрака кода на почту
 def send_code(email):
+    message_1 = """<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title></title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>
+    * {
+        margin: 0;
+        font-family: "Rubik", system-ui;
+    }
+
+    @media (max-width: 500px) {
+        .window {
+        width: 370px;
+        }
+
+        h1 {
+        font-size: 21px;
+        }
+
+        p {
+        font-size: 10px;
+        }
+
+        h2 {
+        font-size: 22px;
+        width: 30px;
+        }
+    }
+    
+    
+    </style>
+    </head>"""
+
     sender = "upfollow835@gmail.com"
     send_password = "zwrx qgne arwj jblp"
 
     code_pas = ""
+    
+    a = random.randint(0, 9)
+    b = random.randint(0, 9)
+    c = random.randint(0, 9)
+    d = random.randint(0, 9)
+    code_pas = str(a) + str(b) + str(c) + str(d)
 
-    # ------------------------Улучшить бы----------------------------------------------------
-    for _ in range(4):
-        a = random.randint(0, 9) # А че тут улучшать? (Без негатива, от febolo)
-        code_pas += str(a)
-    #-----------------------------------------------------------------------------------------
+    message_2 = f"""<body style="width: 100%">
+        <div style="width: 100%; height: 450px; text-align: center; font-family: 'Rubik', system-ui;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <h1 style="color: #3b82f6; border-bottom: 3px solid #3b82f6; padding-bottom: 20px; margin-bottom: 20px; text-align: center; width: 500px;">UpFollow</h1>
+                    </td>
+                </tr>
+            </table>
+            <p style="color: #3b82f6; font-weight: 600; font-size: 13px; margin-bottom: 60px;">Здравствуйте!</p>
+            <p style="color: #3b82f6; font-weight: 600; font-size: 13px; margin-bottom: 40px;">Для сброса пароля введите в поле этот код:</p>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:20px;">
+                <tr>
+                    <td align="center">
+                        <table width="20%" border="0" cellspacing="0" cellpadding="0"" style="border: 2px solid black; border-radius: 8px; padding:16px 10px; background-color: #E2EEFF">
+                            <tr>
+                                <td align="center">
+                                    <td align="center"><h2>{a}</h2></td> <td align="center"><h2>{b}</h2></td> <td align="center"><h2>{c}</h2></td> <td align="center"><h2>{d}</h2></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <p style="color: #3b82f6; font-weight: 600; font-size: 13px; text-align: center;">
+                            Пожалуйста! Обратите внимание, кто-то пытается сбросить ваш пароль. <br>
+                            Если это были не вы, срочно поменяйте пароль от вашего <br>
+                            аккаунта на форуме UpFollow!
+                        </p>
 
-    msg = MIMEText(f"Ваш код для изменения пароля: {code_pas}. Не сообщайте его никому!")
+                        <p style="border-top: 3px solid #3b82f6; padding-top: 20px; color: #3b82f6; font-weight: 600; font-size: 13px; text-align: center; width: 500px; margin-top: 30px;">
+                            Спасибо, что остаетесь с нами! <br> С заботой о Вас, команда UpFollow
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    </html>"""
+
+    msg = EmailMessage()
+
     msg["Subject"] = "Ваш код"
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content("Код для подтверждения регистрации")
+    msg.add_alternative(message_1 + message_2, subtype="html")
+    
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login(sender, send_password)
+        server.send_message(msg)
+        logging.info("Email sent successfully!")
+    except smtplib.SMTPRecipientsRefused:
+        logging.info("Error: Recipient's email does not exist.")
+        return 1
+    finally:
+        server.quit()
+        # держим пароль в сессии
+        session['code'] = str(code_pas)
+        session.modified = True
+        session['email'] = str(email)
+        session.modified = True
 
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
+        logging.info(f'Пароль {code_pas} отправлен на почту {email}')
 
-    server.login(sender, send_password)
-
-    server.sendmail(sender, email, msg.as_string())
-
-    # держим пароль в сессии
-    session['code'] = str(code_pas)
-    session.modified = True
-    session['email'] = str(email)
-    session.modified = True
-
-    logging.info(f'Пароль {code_pas} отправлен на почту {email}')
-
-    return 0
+        return 0
 
 # Проверка совпадения кода с Frontend и реального кода
 def check_password(password, true_password):
@@ -458,28 +546,114 @@ def tg_sendMessage(chat_id, text):
         logging.info(res)
         return "err"
     return "ok"
-# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def send_pas_code(email):
+    message_1 = """<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title></title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>
+    * {
+        margin: 0;
+        font-family: "Rubik", system-ui;
+    }
+
+    @media (max-width: 500px) {
+        .window {
+        width: 370px;
+        }
+
+        h1 {
+        font-size: 21px;
+        }
+
+        p {
+        font-size: 10px;
+        }
+
+        h2 {
+        font-size: 22px;
+        width: 30px;
+        }
+    }
+    
+    
+    </style>
+    </head>"""
+
     sender = "upfollow835@gmail.com"
     send_password = "zwrx qgne arwj jblp"
 
     code_pas = ""
+    
+    a = random.randint(0, 9)
+    b = random.randint(0, 9)
+    c = random.randint(0, 9)
+    d = random.randint(0, 9)
+    code_pas = str(a) + str(b) + str(c) + str(d)
 
-    # ------------------------Улучшить бы----------------------------------------------------
-    for _ in range(4):
-        a = random.randint(0, 9) # А че тут улучшать? (Без негатива, от febolo)
-        code_pas += str(a)
-    #-----------------------------------------------------------------------------------------
+    message_2 = f"""<body style="width: 100%">
+        <div style="width: 100%; height: 450px; text-align: center; font-family: 'Rubik', system-ui;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <h1 style="color: #3b82f6; border-bottom: 3px solid #3b82f6; padding-bottom: 20px; margin-bottom: 20px; text-align: center; width: 500px;">UpFollow</h1>
+                    </td>
+                </tr>
+            </table>
+            <p style="color: #3b82f6; font-weight: 600; font-size: 13px; margin-bottom: 60px;">Добро пожаловать на наш форум!</p>
+            <p style="color: #3b82f6; font-weight: 600; font-size: 13px; margin-bottom: 40px;">Для завершения регистрации введите в поле этот код:</p>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:20px;">
+                <tr>
+                    <td align="center">
+                        <table width="20%" border="0" cellspacing="0" cellpadding="0"" style="border: 2px solid black; border-radius: 8px; padding:16px 10px; background-color: #E2EEFF">
+                            <tr>
+                                <td align="center">
+                                    <td align="center"><h2>{a}</h2></td> <td align="center"><h2>{b}</h2></td> <td align="center"><h2>{c}</h2></td> <td align="center"><h2>{d}</h2></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <p style="color: #3b82f6; font-weight: 600; font-size: 13px; text-align: center;">
+                            Пожалуйста! Обратите внимание, кто-то пытается зарегистрироваться с помощью данной почты. <br>
+                            Если это были не вы, просто проигнорируйте это сообщение.
+                        </p>
 
-    msg = MIMEText(f"Ваш код для изменения пароля: {code_pas}. Не сообщайте его никому!")
+                        <p style="border-top: 3px solid #3b82f6; padding-top: 20px; color: #3b82f6; font-weight: 600; font-size: 13px; text-align: center; width: 500px; margin-top: 30px;">
+                            Спасибо, что остаетесь с нами! <br> С заботой о Вас, команда UpFollow
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    </html>"""
+
+    msg = EmailMessage()
+
     msg["Subject"] = "Ваш код"
-
+    msg["From"] = sender
+    msg["To"] = email
+    msg.set_content("Код для подтверждения регистрации")
+    msg.add_alternative(message_1 + message_2, subtype="html")
+    
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
         server.starttls()
+        server.ehlo()
         server.login(sender, send_password)
-        server.sendmail(sender, email, msg.as_string())
+        server.send_message(msg)
         logging.info("Email sent successfully!")
     except smtplib.SMTPRecipientsRefused:
         logging.info("Error: Recipient's email does not exist.")
@@ -496,20 +670,22 @@ def send_pas_code(email):
 
         return 0
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 #Регистрация
-@app.route('/registration', methods=['GET', 'POST'])
+@app.route('/registration', methods=['POST'])
 def user_registration():
     response_object = {'status': 'success'} #БаZа
-    if request.method == 'POST':
-        post_data = request.get_json()
-        res = send_pas_code(post_data.get('email'))
-        if res == 0:
-            session["name"] = post_data.get('name')
-            session.modified = True
-            session['password'] = post_data.get('password')
-            session.modified = True
-            response_object["res"] = "Ok"
-        else: response_object["res"] = "Некорректная почта"
+    post_data = request.get_json()
+    res = send_pas_code(post_data.get('email'))
+    if res == 0:
+        session["name"] = post_data.get('name')
+        session.modified = True
+        session['password'] = post_data.get('password')
+        session.modified = True
+        response_object["res"] = "Ok"
+    else: response_object["res"] = "Некорректная почта"
         # logging.info(add_user_todb(post_data.get('name'), post_data.get('email'), post_data.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
 
     return jsonify(response_object)
@@ -532,8 +708,9 @@ def reg_fhjfhf():
     post_data = request.get_json()
 
     if session["code"] == post_data.get("code"):
-        logging.info(add_user_todb(session.get('name'), session.get('email'),session.get('password'))) #Вызов фунции добавления пользователя в бд и ее debug
-        response_object["res"] = "Ok"
+        res = add_user_todb(session.get('name'), session.get('email'),session.get('password')) #Вызов фунции добавления пользователя в бд и ее debug
+        response_object["res"] = res
+        logging.info(res)
     else: response_object["res"] = "Некорректный код"
 
     return jsonify(response_object)
