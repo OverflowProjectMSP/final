@@ -657,18 +657,21 @@ def send_pas_code(email):
         logging.info("Email sent successfully!")
     except smtplib.SMTPRecipientsRefused:
         logging.info("Error: Recipient's email does not exist.")
-        return 1
+        return 1, 0, 0
     finally:
         server.quit()
         # держим пароль в сессии
+        logging.info(code_pas)
         session['code'] = str(code_pas)
+        session.permanent = True
+        logging.info(code_pas)
         session.modified = True
         session['email'] = str(email)
         session.modified = True
 
         logging.info(f'Пароль {code_pas} отправлен на почту {email}')
 
-        return 0
+        return 0, str(code_pas), str(email)
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -678,8 +681,12 @@ def send_pas_code(email):
 def user_registration():
     response_object = {'status': 'success'} #БаZа
     post_data = request.get_json()
-    res = send_pas_code(post_data.get('email'))
+    res, code, email = send_pas_code(post_data.get('email'))
     if res == 0:
+        session["code"] = code
+        session.modified = True
+        session["email"] = email
+        session.modified = True
         session["name"] = post_data.get('name')
         session.modified = True
         session['password'] = post_data.get('password')
@@ -706,8 +713,9 @@ def add_img_f(file, name):
 def reg_fhjfhf():
     response_object = {'status': 'success'} #БаZа
     post_data = request.get_json()
-
-    if session["code"] == post_data.get("code"):
+    logging.info(session.get("code"))
+    logging.info(post_data.get("emailCode"))
+    if session.get("code") == post_data.get("emailCode"):
         res = add_user_todb(session.get('name'), session.get('email'),session.get('password')) #Вызов фунции добавления пользователя в бд и ее debug
         response_object["res"] = res
         logging.info(res)
