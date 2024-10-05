@@ -145,6 +145,13 @@ def add_tables():
                 email text,
                 id_u uuid
             )""")
+        cursor.execute(f"""create table if not exists news(
+                id uuid,
+                text text,
+                phone text,
+                time_end timestamp,
+                id_reviewed uuid[]
+            )""")
 
         pg.commit()
     except (Exception, Error) as error:
