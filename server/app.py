@@ -30,7 +30,7 @@ AVATAR = os.getenv('AVATAR')
 SECRET_KEY = os.getenv('SECRET_KEY')
 TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
 
-print(PASSWORD_PG)
+print(SECRET_KEY)
 
 def escape_quotes(text):
     return text.replace("'", "''")
@@ -43,8 +43,10 @@ app = Flask(__name__)
 
 app.secret_key = SECRET_KEY
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] =  'None'
+# app.config["SESSION_COOKIE_SAMESITE"] = "None"
+# app.config["SESSION_COOKIE_SECURE"] =  'None'
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = False
 
 # enable CORS
 CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
@@ -145,6 +147,13 @@ def add_tables():
                 email text,
                 id_u uuid
             )""")
+        cursor.execute(f"""create table if not exists news(
+                id uuid,
+                text text,
+                phone text,
+                time_end timestamp,
+                id_reviewed uuid[]
+            )""")
 
         pg.commit()
     except (Exception, Error) as error:
@@ -168,6 +177,9 @@ from python_gowno import *
 if __name__ == '__main__':
     add_tables()
     app.run(host='0.0.0.0', port=80)
+    # session["id"] = 0
+    # session.modified = True
+    # session.permanent = True
 
 
 

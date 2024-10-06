@@ -2,9 +2,9 @@
 import UpdateQuestion from "./UpdateQuestion.vue";
 import Preloader from "../Preloader2.vue";
 import axios from "axios";
-
+import Pagination from "../Pagination/PaginationComments.vue";
 export default {
-  components: { UpdateQuestion,Preloader },
+  components: { UpdateQuestion, Preloader, Pagination },
   data() {
     return {
       questionInfo: {}, //главная возня
@@ -35,6 +35,8 @@ export default {
       isAllLoad: false,
 
       isOpenDeleteAnswer: false,
+      currentPage: 1,
+      rowsPerPage: 5,
     };
   },
 
@@ -55,8 +57,7 @@ export default {
       );
       this.preloader();
       this.loadAnswerUser();
-      
-     
+      console.log(this.answers.length)
     },
 
     async loadAnswerUser() {
@@ -227,15 +228,34 @@ export default {
       if (this.questionInfo && this.userCreater) {
         setTimeout(() => {
           this.isAllLoad = true;
-       }, 1000)
+        }, 1000);
       }
+    },
+    setCurrentPage(number) {
+      this.currentPage = number;
     },
   },
   mounted() {
     this.loadQuestion();
     this.checkUser();
     this.getNowUser();
-     document.title = 'UpFollow'
+    document.title = "UpFollow";
+  },
+  computed: {
+    pageCount() {
+      return Math.ceil(this.answers.length / this.rowsPerPage);
+    },
+    paginatedData() {
+      return this.answers.slice(
+        (this.currentPage - 1) * this.rowsPerPage,
+        this.currentPage * this.rowsPerPage
+      );
+    },
+    watch: {
+    currentPage() {
+      // Пересчитываем paginatedAnswers при изменении currentPage
+    }
+  },
   },
 };
 </script>
@@ -365,7 +385,9 @@ export default {
               <div class="bg-black"></div>
               <div class="modal-cenel d-flex flex-column align-items-center">
                 <img src="../../assets/Lending/bookModal.png" alt="Грусть(" />
-                <h6 class='text-center'>Вы действительно хотите удалить комментарий?</h6>
+                <h6 class="text-center">
+                  Вы действительно хотите удалить комментарий?
+                </h6>
                 <div class="d-flex gap-2">
                   <button @click="deleteAnswer(answer.id, index)">Да</button>
                   <button
@@ -379,7 +401,10 @@ export default {
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-center content p-2 w-100" v-if="this.answers.length == 0">
+        <div
+          class="d-flex justify-content-center content p-2 w-100"
+          v-if="this.answers.length == 0"
+        >
           <h2 class="my-0 user-select-none text-black">
             Будь первым, кто даст ответ на этот вопрос!
           </h2>
@@ -402,6 +427,12 @@ export default {
         @submit.prevent="addComment"
         id="iii"
       >
+        <Pagination
+          class="pag"
+          :currentPage="currentPage"
+          :pageCount="pageCount"
+          @set-currentpage="setCurrentPage"
+        />
         <div class="account">
           <a
             :href="`/Profile/${this.userNow.id}`"
@@ -439,8 +470,9 @@ export default {
         </div>
       </form>
     </div>
-    <div  v-else>
-      <preloader/>
+    <div v-else>
+      <preloader
+      />
     </div>
   </div>
   <div
@@ -458,12 +490,18 @@ export default {
 
 <style scoped>
 @media (max-width: 900px) {
-    .modal-cenel {
-        margin: 0 32px !important;
-    }
+  .modal-cenel {
+    margin: 0 32px !important;
+  }
 }
-
-.dropdown{
+.pag {
+  width: 100%;
+  display: flexbox;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.dropdown {
   border-radius: 20px;
   border: none !important;
   -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
@@ -639,7 +677,6 @@ img {
   border: none;
 }
 
-
 .name-ring p {
   margin: 0;
 }
@@ -730,9 +767,9 @@ img {
   transition: all 0.5s;
 }
 .content-2:hover {
-        /* transform: scale(1.03); */
-        box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
-    }
+  /* transform: scale(1.03); */
+  box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
+}
 .difficult-ans {
   margin-left: 5px;
   color: #e65c00;
@@ -847,8 +884,6 @@ img {
   outline: none;
 }
 
-
-
 /* АДАПТИВКА */
 
 @media (hover: hover) {
@@ -868,8 +903,6 @@ img {
     background-color: #20498b;
   }
 
-  
-
   .more:hover {
     color: #20498b;
   }
@@ -883,8 +916,6 @@ img {
   .description img {
     width: 700px;
   }
-
-  
 }
 
 @media (max-width: 1020px) {
@@ -984,6 +1015,4 @@ img {
     margin: 0;
   }
 }
-
-
 </style>

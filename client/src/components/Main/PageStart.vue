@@ -149,7 +149,7 @@ body {
     align-items: center;
     gap: 150px;
     width: 100%;
-    height: 800px;
+    height: 100vh;
 
     color: #fff;
     background-image: url(../../assets/Main/background20.png);
