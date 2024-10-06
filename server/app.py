@@ -45,11 +45,13 @@ app.secret_key = SECRET_KEY
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
 # app.config["SESSION_COOKIE_SAMESITE"] = "None"
 # app.config["SESSION_COOKIE_SECURE"] =  'None'
-app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-app.config["SESSION_COOKIE_SECURE"] = False
+# Настройки для cookies
+app.config["SESSION_COOKIE_SAMESITE"] = "None"  # None позволяет отправлять cookie в кросс-доменных запросах
+app.config["SESSION_COOKIE_SECURE"] = True    # False, так как мы используем HTTP
 
-# enable CORS
-CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
+# Настройка CORS для работы с кросс-доменными запросами
+CORS(app, resources={r"*": {"origins": "http://localhost:5173", 'supports_credentials': True}})
+
 
 #Главная страница
 @app.route('/', methods=['GET'])
