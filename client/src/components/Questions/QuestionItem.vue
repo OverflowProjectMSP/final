@@ -472,9 +472,6 @@ export default {
     </div>
     <div v-else>
       <preloader
-        :currentPage="currentPage"
-        :pageCount="pageCount"
-        @set-currentpage="setCurrentPage"
       />
     </div>
   </div>
