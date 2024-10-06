@@ -224,6 +224,11 @@ p {
 
 .set-link img {
     width: 50px;
+    transition: all 200ms;
+}
+
+.set-link img:hover {
+    transform: rotate(15deg); 
 }
 
 .scroll {
@@ -390,6 +395,8 @@ p {
     font-size: 20px;
 
     resize: none; 
+
+    cursor: default;
 }
 
 .aboutmee:focus {
