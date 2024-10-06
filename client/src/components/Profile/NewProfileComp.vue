@@ -105,7 +105,7 @@ export default {
                 <p>GitHub: <span>{{user.github}}</span></p>
             </div>
         </div>
-        
+        <textarea id="" name="" readonly class="aboutmee" >{{user.about}}</textarea>
         <div class="container d-flex align-items-center flex-column">
             <div class="q-user head-1 mb-3 mt-1 user-select-none">
                 <div class="swit d-flex flex-row align-items-center gap-4">
@@ -379,6 +379,26 @@ p {
     color: #000;
 }
 
+.aboutmee {
+    margin-top: 30px;
+    
+    width: 900px;
+    height: 180px;
+    border: 2px solid #757575;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 20px;
+
+    resize: none; 
+}
+
+.aboutmee:focus {
+    outline: none;
+}
+
+
+
+
 
 @media (max-width: 1400px) {
     .prof-banner {
@@ -443,6 +463,10 @@ p {
     }
 
     .links-info {
+        width: 90%;
+    }
+
+    .aboutmee {
         width: 90%;
     }
 }
