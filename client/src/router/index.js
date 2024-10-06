@@ -153,6 +153,10 @@ export default createRouter({
       path: "/LeaderTable",
       component: () => import('../components/Other/LeadertableComp.vue')
     },
+    {
+      path: "/Pagination",
+      component: () => import('../components/Pagination/PaginationComments.vue')
+    },
     
   ],
 });
