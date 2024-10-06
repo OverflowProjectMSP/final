@@ -51,22 +51,33 @@ export default {
     },
     async register() {
         try{
-      const res =  await axios.post("/registration", {
-          name: this.form.nickname,
-          email: this.form.email,
-          password: this.form.password,
-        });
-          if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
-          this.error = 'Пользователь с таким именем или почтой уже существует!'
-          } else if ("Некорректная почта") {
-            this.error = 'Почта невалидна.'
-          } else if("Ok"){
-            this.$router.push("/EnterCode");
-        }
-      } catch(err) {
-          console.error(err)
-          this.error = "Ошибка сервера"
-      }
+          const res =  await axios.post("/registration", {
+              name: this.form.nickname,
+              email: this.form.email,
+              password: this.form.password,
+            });
+             switch(res.data.res){
+                case 'Пользователь с таким именем или почтой уже существует!':
+                  this.error = 'Пользователь с таким именем или почтой уже существует!'
+                  break;
+                case "Некорректная почта":
+                  this.error = 'Почта невалидна.'
+                  break;
+                case "Ok":
+                  this.$router.push("/EnterCode");
+                  break;
+             }
+              // if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
+              // this.error = 'Пользователь с таким именем или почтой уже существует!'
+              // } else if ("Некорректная почта") {
+              //   this.error = 'Почта невалидна.'
+              // } else if("Ok"){
+              //   this.$router.push("/EnterCode");
+              // }
+          } catch(err) {
+              console.error(err)
+              this.error = "Ошибка сервера"
+          }
       },
     toggleVisibility1() {
       this.isShowPassword = !this.isShowPassword;
@@ -584,10 +595,6 @@ input:focus {
 @media (max-width: 600px) {
   h1 {
     font-size: 34px;
-  }
-
-  .input {
-
   }
 
 

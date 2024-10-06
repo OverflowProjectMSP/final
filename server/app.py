@@ -30,7 +30,7 @@ AVATAR = os.getenv('AVATAR')
 SECRET_KEY = os.getenv('SECRET_KEY')
 TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
 
-print(PASSWORD_PG)
+print(SECRET_KEY)
 
 def escape_quotes(text):
     return text.replace("'", "''")
@@ -144,6 +144,13 @@ def add_tables():
                 phone text,
                 email text,
                 id_u uuid
+            )""")
+        cursor.execute(f"""create table if not exists news(
+                id uuid,
+                text text,
+                phone text,
+                time_end timestamp,
+                id_reviewed uuid[]
             )""")
 
         pg.commit()
