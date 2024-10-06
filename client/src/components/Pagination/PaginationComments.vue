@@ -2,19 +2,37 @@
 import Pagination from "vuejs-paginate-next";
 export default {
   data() {
-    return {};
+    return {
+      currentPageNumber: this.currentPage,
+    };
   },
   components: {
     Pagination,
   },
+  props: {
+    currentPage: Number,
+    pageCount: Number,
+  },
+  methods: {
+    clickCallback() {
+      console.log(
+        "Call Back Triggered",
+        `Current Page - ${this.currentPageNumber}`
+      );
+      this.$emit("set-currentpage", this.currentPageNumber);
+      console.log(this.currentPage, this.pageCount);
+    },
+  },
+  mounted() {
+  },
 };
 </script>
 <template>
-  <h1>dolfsd;lfsjldkfjl</h1>
   <Pagination
-    :margin-pages="3"
-    :page-count="3"
-    :page-range="3"
+    v-model="currentPageNumber"
+    :page-count="pageCount"
+    :click-handler="clickCallback"
+
     :prev-text="'<'"
     :next-text="'>'"
     :container-class="'pagination'"
@@ -65,14 +83,14 @@ export default {
   padding: 10px 15px;
   font-size: 15px;
   font-weight: 550;
-  transition: all .5s;
-    &:hover {
+  transition: all 0.5s;
+  &:hover {
     color: white;
-    background-color: #3B82F6 !important;
+    background-color: #3b82f6 !important;
     border: none;
     transition: none;
     cursor: pointer;
-    transition: all .5s;
+    transition: all 0.5s;
   }
 }
 
@@ -112,7 +130,7 @@ export default {
   // }
 }
 
-.active-page a{
+.active-page a {
   background-color: #629bf7 !important;
   color: white !important;
   outline: none !important;
