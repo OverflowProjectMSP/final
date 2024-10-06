@@ -96,11 +96,9 @@ export default {
       this.form.avatar = this.defaultAvatar;
     },
     async logout() {
-
-
-      this.$router.push("/Login");
+      this.$router.push("/");
       let res = await axios.get("/");
-      this.$router.go(0);
+      // this.$router.go(0);
     },
     forgot() {
       this.$router.push("/RecoveryPassPage");
