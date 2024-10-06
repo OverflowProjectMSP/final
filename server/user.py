@@ -661,13 +661,7 @@ def send_pas_code(email):
     finally:
         server.quit()
         # держим пароль в сессии
-        logging.info(code_pas)
-        session['code'] = str(code_pas)
-        session.permanent = True
-        logging.info(code_pas)
-        session.modified = True
-        session['email'] = str(email)
-        session.modified = True
+
 
         logging.info(f'Пароль {code_pas} отправлен на почту {email}')
 
@@ -684,6 +678,7 @@ def user_registration():
     res, code, email = send_pas_code(post_data.get('email'))
     if res == 0:
         session["code"] = code
+        session.permanent = True
         session.modified = True
         session["email"] = email
         session.modified = True

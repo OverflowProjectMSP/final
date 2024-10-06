@@ -175,6 +175,9 @@ from python_gowno import *
 if __name__ == '__main__':
     add_tables()
     app.run(host='0.0.0.0', port=80)
+    # session["id"] = 0
+    # session.modified = True
+    # session.permanent = True
 
 
 
