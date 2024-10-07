@@ -393,6 +393,10 @@ input:focus {
   border-radius: 15px;
 }
 
+.password input {
+  padding-right: 70px;
+}
+
 .eye {
   position: absolute;
   width: 40px;
@@ -419,6 +423,10 @@ input:focus {
   pointer-events: none;
   transition: 0.3s ease;
   border-radius: 15px;
+}
+
+.rep-password input {
+  padding-right: 70px;
 }
 
 .login {
@@ -560,6 +568,14 @@ input:focus {
 
   .window {
     height: 900px;
+  }
+
+  .password input {
+    padding-right: 55px;
+  }
+
+  .rep-password input {
+    padding-right: 55px;
   }
 }
 

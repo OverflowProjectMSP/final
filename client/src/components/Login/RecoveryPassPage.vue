@@ -478,10 +478,13 @@ input:focus {
 
 @media (max-width: 420px) {
   .main-cont {
-    margin-top: -170px;
     -webkit-box-shadow: none;
     box-shadow: none;
     width: 90%;
+  }
+
+  .window {
+    height: 500px;
   }
 
   .div-username {

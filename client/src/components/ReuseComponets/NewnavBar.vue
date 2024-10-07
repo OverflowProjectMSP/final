@@ -221,6 +221,7 @@ export default {
   position: relative;
   font-weight: 500;
   transition: all 200ms;
+
 }
 
 
@@ -357,12 +358,12 @@ export default {
   }
 
   .items a {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   .enter button {
     width: 100px;
-    height: 40px;
+    height: 42px;
   }
 
   .enter button span {
@@ -384,6 +385,7 @@ export default {
   .burgmenu {
     display: none;
   }
+
 }
 
 @media (max-width: 720px) {
@@ -412,8 +414,8 @@ export default {
   }
 
   .enter button {
-    width: 100px !important;
-    height: 30px;
+    width: 90px !important;
+    height: 40px;
     line-height: 30px;
   }
 
@@ -440,6 +442,7 @@ export default {
 
   .enter button {
     width: 70px !important;
+    height: 36px;
   }
 
   .enter span {
