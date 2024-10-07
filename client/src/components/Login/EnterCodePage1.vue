@@ -37,7 +37,7 @@ export default {
         });
         if(res.data.res == 'Error') {
           this.error = 'Ошибка отправки.';
-        } else if(res.data.res == 'True') {
+        } else if(res.data.res == 'Ok') {
           this.$router.push('/Login');
         } else if(res.data.res == 'Некорректный код') {
             this.error = 'Неверный код.';
