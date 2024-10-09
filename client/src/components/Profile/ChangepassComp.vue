@@ -96,7 +96,7 @@ export default {
 
       <div class="inputs">
         <div class="old-pass">
-          <input type="password" v-model="oldPassword">
+          <input type="password" v-model="oldPassword"  autocomplete="new-password">
           <span>Старый пароль</span>  
         </div>
         <div class="new-pass">
@@ -216,6 +216,7 @@ export default {
 
 .change-block {
   width: 70%;
+  margin-top: 45px !important;
 }
 
 .inputs {
