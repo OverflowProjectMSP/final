@@ -193,6 +193,7 @@ export default {
                 class="input"
                 required
                 @input="passwordValidation($event)"
+                autocomplete="new-password"
               />
               <span>Пароль</span>
               <img
