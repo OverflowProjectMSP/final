@@ -100,9 +100,9 @@ export default {
         </div>
         <div class="links-info">
             <div class="li-block">
-                <p>Discord: <span>{{user.discord}}</span></p>
-                <p>Telegram: <span>{{user.telegram}}</span></p>
-                <p>GitHub: <span>{{user.github}}</span></p>
+                <p v-if='user.discord'>Discord: <span>{{user.discord}}</span></p>
+                <p v-if='user.telegram'>Telegram: <span>{{user.telegram}}</span></p>
+                <p v-if='user.github'>GitHub: <span>{{user.github}}</span></p>
             </div>
         </div>
         <textarea id="" name="" readonly class="aboutmee" >{{user.about}}</textarea>

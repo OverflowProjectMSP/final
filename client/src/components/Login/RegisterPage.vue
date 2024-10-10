@@ -51,32 +51,29 @@ export default {
     },
     async register() {
         try{
+          this.gre = true;
           const res =  await axios.post("/registration", {
               name: this.form.nickname,
               email: this.form.email,
               password: this.form.password,
             });
-             switch(res.data.res){
-                case 'Пользователь с таким именем или почтой уже существует!':
-                  this.error = 'Пользователь с таким именем или почтой уже существует!'
-                  break;
-                case "Некорректная почта":
-                  this.error = 'Почта невалидна.'
-                  break;
-                case "Ok":
-                  this.$router.push("/EnterCode");
-                  break;
-             }
-              // if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
-              // this.error = 'Пользователь с таким именем или почтой уже существует!'
-              // } else if ("Некорректная почта") {
-              //   this.error = 'Почта невалидна.'
-              // } else if("Ok"){
-              //   this.$router.push("/EnterCode");
-              // }
+            switch(res.data.res) {
+              case 'Пользователь с таким именем или почтой уже существует!':
+                this.gre = false;
+                this.error = 'Пользователь с таким именем или почтой уже существует!'
+                break;
+              case "Некорректная почта":
+                this.gre = false;
+                this.error = 'Почта невалидна.'
+                break;
+              case "Ok":
+                this.$router.push("/EnterCode");
+                break;
+            }
           } catch(err) {
               console.error(err)
               this.error = "Ошибка сервера"
+              this.gre = false;
           }
       },
     toggleVisibility1() {
