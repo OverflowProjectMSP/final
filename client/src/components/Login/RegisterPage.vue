@@ -376,6 +376,7 @@ input:focus {
 
 .password {
   position: relative;
+  width: 480px;
 }
 
 .password span {
@@ -402,11 +403,12 @@ input:focus {
   z-index: 400;
   cursor: pointer;
   top: 7px;
-  right: 22px;
+  right: 12px;
 }
 
 .rep-password {
   position: relative;
+  width: 480px;
 }
 
 .rep-password span {
@@ -532,6 +534,14 @@ input:focus {
     width: 430px;
   }
 
+  .password {
+    width: 430px;
+  }
+
+  .rep-password {
+    width: 430px;
+  }
+
   .eye {
     right: 10px;
   }
@@ -604,6 +614,10 @@ input:focus {
     gap: 10px;
     padding: 0 25px;
   }
+  
+  .errors {
+    padding-left: 30px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -622,9 +636,9 @@ input:focus {
 
   
   .grey {
-    font-size: 13px;
+    font-size: 16px;
     height: 50px;
-    width: 150px;
+    width: 190px;
   }
   .reg {
     font-size: 16px;
