@@ -51,32 +51,29 @@ export default {
     },
     async register() {
         try{
+          this.gre = true;
           const res =  await axios.post("/registration", {
               name: this.form.nickname,
               email: this.form.email,
               password: this.form.password,
             });
-             switch(res.data.res){
-                case 'Пользователь с таким именем или почтой уже существует!':
-                  this.error = 'Пользователь с таким именем или почтой уже существует!'
-                  break;
-                case "Некорректная почта":
-                  this.error = 'Почта невалидна.'
-                  break;
-                case "Ok":
-                  this.$router.push("/EnterCode");
-                  break;
-             }
-              // if (res.data.res == 'Пользователь с таким именем или почтой уже существует!') {
-              // this.error = 'Пользователь с таким именем или почтой уже существует!'
-              // } else if ("Некорректная почта") {
-              //   this.error = 'Почта невалидна.'
-              // } else if("Ok"){
-              //   this.$router.push("/EnterCode");
-              // }
+            switch(res.data.res) {
+              case 'Пользователь с таким именем или почтой уже существует!':
+                this.gre = false;
+                this.error = 'Пользователь с таким именем или почтой уже существует!'
+                break;
+              case "Некорректная почта":
+                this.gre = false;
+                this.error = 'Почта невалидна.'
+                break;
+              case "Ok":
+                this.$router.push("/EnterCode");
+                break;
+            }
           } catch(err) {
               console.error(err)
               this.error = "Ошибка сервера"
+              this.gre = false;
           }
       },
     toggleVisibility1() {
@@ -193,6 +190,7 @@ export default {
                 class="input"
                 required
                 @input="passwordValidation($event)"
+                autocomplete="new-password"
               />
               <span>Пароль</span>
               <img
@@ -378,6 +376,7 @@ input:focus {
 
 .password {
   position: relative;
+  width: 480px;
 }
 
 .password span {
@@ -393,6 +392,10 @@ input:focus {
   border-radius: 15px;
 }
 
+.password input {
+  padding-right: 70px;
+}
+
 .eye {
   position: absolute;
   width: 40px;
@@ -400,11 +403,12 @@ input:focus {
   z-index: 400;
   cursor: pointer;
   top: 7px;
-  right: 22px;
+  right: 12px;
 }
 
 .rep-password {
   position: relative;
+  width: 480px;
 }
 
 .rep-password span {
@@ -419,6 +423,10 @@ input:focus {
   pointer-events: none;
   transition: 0.3s ease;
   border-radius: 15px;
+}
+
+.rep-password input {
+  padding-right: 70px;
 }
 
 .login {
@@ -526,6 +534,14 @@ input:focus {
     width: 430px;
   }
 
+  .password {
+    width: 430px;
+  }
+
+  .rep-password {
+    width: 430px;
+  }
+
   .eye {
     right: 10px;
   }
@@ -561,6 +577,14 @@ input:focus {
   .window {
     height: 900px;
   }
+
+  .password input {
+    padding-right: 55px;
+  }
+
+  .rep-password input {
+    padding-right: 55px;
+  }
 }
 
 @media (max-width: 810px) {
@@ -590,6 +614,10 @@ input:focus {
     gap: 10px;
     padding: 0 25px;
   }
+  
+  .errors {
+    padding-left: 30px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -608,9 +636,9 @@ input:focus {
 
   
   .grey {
-    font-size: 13px;
+    font-size: 16px;
     height: 50px;
-    width: 150px;
+    width: 190px;
   }
   .reg {
     font-size: 16px;

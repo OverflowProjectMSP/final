@@ -43,11 +43,15 @@ app = Flask(__name__)
 
 app.secret_key = SECRET_KEY
 app.permanent_session_lifetime = 60 * 60 * 24 * 28
-app.config["SESSION_COOKIE_SAMESITE"] = "None"
-app.config["SESSION_COOKIE_SECURE"] =  'None'
+# app.config["SESSION_COOKIE_SAMESITE"] = "None"
+# app.config["SESSION_COOKIE_SECURE"] =  'None'
+# Настройки для cookies
+app.config["SESSION_COOKIE_SAMESITE"] = "None"  # None позволяет отправлять cookie в кросс-доменных запросах
+app.config["SESSION_COOKIE_SECURE"] = True    # False, так как мы используем HTTP
 
-# enable CORS
-CORS(app, resources={r"*": {"origins": "*", 'supports_credentials': True}})
+# Настройка CORS для работы с кросс-доменными запросами
+CORS(app, resources={r"*": {"origins": "http://localhost:5173", 'supports_credentials': True}})
+
 
 #Главная страница
 @app.route('/', methods=['GET'])
@@ -175,6 +179,9 @@ from python_gowno import *
 if __name__ == '__main__':
     add_tables()
     app.run(host='0.0.0.0', port=80)
+    # session["id"] = 0
+    # session.modified = True
+    # session.permanent = True
 
 
 

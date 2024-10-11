@@ -291,6 +291,11 @@ h6 {
   transition: 0.3s ease;
   border-radius: 15px;
 }
+
+.password input {
+  padding-right: 80px;
+}
+
 h1 {
   font-weight: 700;
   font-size: 80px;
@@ -508,6 +513,10 @@ h1 {
     font-weight: 500;
     font-size: 18px;
     color: #000000;
+  }
+
+  .password input {
+    padding-right: 50px;
   }
 
   .div-nickname span {

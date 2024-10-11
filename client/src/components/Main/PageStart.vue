@@ -1,41 +1,63 @@
 <script>
 import axios from 'axios';
-import NewHeader from '../ReuseComponets/NewnavBar.vue'
+import HeaderComp from "../../components/ReuseComponets/NewnavBar.vue";
 
 export default {
     components: {
-        NewHeader,
+        HeaderComp,
     },
     data() {
         return {
-            isL: true
+            isL: true,
+            show: true,
+            load: true,
+            onload: false,
         }
     },
-    methods:{
-        async isLogin(){
+    methods: {
+        async isLogin() {
             let res = await axios.get('/check-r')
 
-            if (res.data.all=='true') {
-                this.isL = false; 
+            if (res.data.all == 'true') {
+                this.isL = false;
                 return
             }
             this.isL = true;
-        }
+        },
+        setShow() {
+            setTimeout(() => {
+                this.show = false;
+            }, 1000);
+        },
     },
-    mounted(){
-        this.isLogin()
-    }
+    mounted() {
+        this.isLogin();
+        this.setShow();
+        window.onload = () => {
+            // Используем стрелочную функцию
+            setTimeout(() => {
+                console.log("Страница полностью загружена!");
+                this.load = false;
+                this.onload = true;
+                console.log(this.load);
+            }, 1000);
+        };
+    },
 }
 </script>
 
 <template>
+    <div class="headernew" style="margin-bottom: 80px">
+        <header-comp class="header" />
+    </div>
     <div class="pagestart">
         <div class="greetings">
             <div class="headernew bg-bottom">
-                <!-- <NewHeader class="NewHeader" /> -->
             </div>
             <div class="greeting-text">
-                <h1 class="title">Форум по <span style="color: #3b82f6;"><a href="http://localhost:5173/StateItem/16340d03-241c-462e-83c6-7ca12326b1d3">программированию</a></span></h1>
+                <h1 class="title">Форум по <span style="color: #3b82f6;"><a
+                            href="http://localhost:5173/StateItem/16340d03-241c-462e-83c6-7ca12326b1d3">программированию</a></span>
+                </h1>
                 <a href="/SignUp" v-if='isL'><button class="btn-join user-select-none">Присоединиться</button></a>
                 <a href="/Questions" v-else><button class="btn-join user-select-none">К вопросам</button></a>
             </div>
@@ -47,6 +69,18 @@ export default {
 </template>
 
 <style>
+.header {
+    position: fixed;
+    top: 10px;
+    z-index: 15000;
+}
+
+.headernew {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 @import url('https://fonts.cdnfonts.com/css/rubik');
 
 html,
@@ -130,7 +164,7 @@ body {
     margin-top: 50px;
     background-color: rgba(0, 0, 0, 0.3);
     padding: 12px 70px;
-    border-radius: 20px; 
+    border-radius: 20px;
     font-size: 16px;
     font-weight: 550;
 }
@@ -206,7 +240,7 @@ body {
         width: 88%;
     }
 
-    
+
 }
 
 @media (max-width: 720px) {
@@ -256,5 +290,4 @@ body {
         background-color: rgba(0, 0, 0, 0.3);
     }
 }
-
 </style>

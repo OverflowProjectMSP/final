@@ -195,6 +195,14 @@ export default {
   transition: background-color 0.3s ease; 
 }
 
+.new-pass input {
+  padding-right: 60px;
+}
+
+.c-pass input {
+  padding-right: 60px;
+}
+
 .login {
   font-family: var(--font-family);
   font-weight: 700;
@@ -593,7 +601,7 @@ h6 {
     display: flex;
     border-radius: 50px;
     margin: 80px;
-    margin-top: -170px !important;
+    margin-top: 0  !important;
     width: 430px;
     height: 600px;
     background: #fff;
@@ -666,7 +674,7 @@ h6 {
   }
 
   .login-container {
-    margin-top: -290px !important;
+    margin-top: 0px !important;
   }
   
   .login {
@@ -732,11 +740,12 @@ h6 {
   }
 
   .pass {
-    width: 200px !important;
+    width: 240px !important;
   }
 
   .login-container {
     margin: 0;
+    margin-top: -140px !important;
     box-shadow: none;
     -webkit-box-shadow: none;
   }

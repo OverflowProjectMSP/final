@@ -37,7 +37,7 @@ export default {
         });
         if(res.data.res == 'Error') {
           this.error = 'Ошибка отправки.';
-        } else if(res.data.res == 'True') {
+        } else if(res.data.res == 'Ok') {
           this.$router.push('/Login');
         } else if(res.data.res == 'Некорректный код') {
             this.error = 'Неверный код.';
@@ -619,4 +619,37 @@ h1 {
     margin-left: 50px;
   } */
 }
+
+@media (max-width: 540px) {
+  .login-container {
+    box-shadow: none;
+    margin-top: -150px;
+  }
+
+  .input-container {
+    width: 300px;
+  }
+
+  .head h1 {
+    width: 300px;
+  }
+
+  .head p {
+    width: 300px;
+  }
+} 
+
+    @media (max-width: 400px) {
+      .head h1 {
+        margin-left: 25px;
+      }
+      
+      .head p {
+        margin-left: 25px;
+      }
+
+      .input-container {
+        margin-left: -20px;
+      }
+    }
 </style>

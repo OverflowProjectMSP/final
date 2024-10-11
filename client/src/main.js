@@ -1,7 +1,7 @@
 import '../style.css';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'https://api.upfollow.ru';
+axios.defaults.baseURL = 'https://api.upfollow.ru/';
 axios.defaults.withCredentials = true;
 
 import { createApp } from 'vue'

@@ -661,13 +661,7 @@ def send_pas_code(email):
     finally:
         server.quit()
         # держим пароль в сессии
-        logging.info(code_pas)
-        session['code'] = str(code_pas)
-        session.permanent = True
-        logging.info(code_pas)
-        session.modified = True
-        session['email'] = str(email)
-        session.modified = True
+
 
         logging.info(f'Пароль {code_pas} отправлен на почту {email}')
 
@@ -680,10 +674,16 @@ def send_pas_code(email):
 @app.route('/registration', methods=['POST'])
 def user_registration():
     response_object = {'status': 'success'} #БаZа
+    if "code" in session:
+        response_object["res"] = "вам уже был направлен код"
+        return jsonify(response_object)
+    session["code"] = "0"
     post_data = request.get_json()
     res, code, email = send_pas_code(post_data.get('email'))
+    session.pop("code", None)
     if res == 0:
         session["code"] = code
+        session.permanent = True
         session.modified = True
         session["email"] = email
         session.modified = True
@@ -719,6 +719,10 @@ def reg_fhjfhf():
         res = add_user_todb(session.get('name'), session.get('email'),session.get('password')) #Вызов фунции добавления пользователя в бд и ее debug
         response_object["res"] = res
         logging.info(res)
+        session.pop("code", None)
+        session.pop("name", None)
+        session.pop("email", None)
+        session.pop("password", None)
     else: response_object["res"] = "Некорректный код"
 
     return jsonify(response_object)

@@ -42,7 +42,7 @@ export default {
 <template>
   <preloader-comp v-if="load"></preloader-comp>
   <div v-if="onload">
-    <div class="headernew" style="margin-bottom: 80px">
+    <div class="headernew" style="margin-bottom: 80px" v-if='this.$route.path != `/`'>
       <header-comp class="header" />
     </div>
     <div class="f" style="display: flex; flex-direction: column">
