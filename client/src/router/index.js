@@ -155,7 +155,7 @@ export default createRouter({
     },
     {
       path: "/Pagination",
-      component: () => import('../components/Pagination/PaginationComments.vue')
+      component: () => import('../components/Pagination/Testpag.vue')
     },
     
   ],
