@@ -1,20 +1,22 @@
 <script>
+import axios from "axios";
 export default {
   components: {
     // QuestionItem,
   },
   data() {
     return {
+      $axios: axios,
       questions: [], // Массив вопросов
       currentPage: 1, // Номер текущей страницы
-      questionsPerPage: 10, // Количество вопросов на странице
+      questionsPerPage: 5, // Количество вопросов на странице
       totalQuestions: 0, // Общее количество вопросов
       totalPages: 0, // Общее количество страниц
       maxVisiblePages: 4, // Максимальное количество отображаемых номеров страниц
     };
   },
   mounted() {
-    this.loadQuestions(1); // Загрузка первой страницы при монтировании компонента
+    this.loadQuestions(2); // Загрузка первой страницы при монтировании компонента
   },
   computed: {
     visiblePages() {
@@ -47,20 +49,26 @@ export default {
   methods: {
     loadQuestions(page) {
       this.currentPage = page;
-      const start = (page - 1) * this.questionsPerPage; // Начало интервала
-      const end = start + this.questionsPerPage; // Конец интервала
+      const start = page * this.questionsPerPage - this.questionsPerPage + 1; // Начало интервала
+      const end = page * this.questionsPerPage + 1; // Конец интервала
       // Отправка запроса на бекенд с интервалом start-end
-      this.$axios
-        .get(`/api/questions?start=${start}&end=${end}`)
-        .then((response) => {
-          this.questions = response.data;
-          this.totalQuestions = response.headers['total-questions']; // Получение общего количества вопросов от бекенда
-          this.totalPages = Math.ceil(this.totalQuestions / this.questionsPerPage); // Обновление общего количества страниц
-        })
-        .catch((error) => {
-          console.error('Ошибка при получении вопросов:', error);
-        });
+      console.log(start, end);
+      this.getQuestions(start, end);
     },
+    async getQuestions(start, end) {
+      try {
+        const res = await axios.get(
+          `https://api.upfollow.ru/get-questions?start=${start}&end=${end}`
+        );
+        this.questions = res.data;
+        console.log(this.questions)
+        this.totalQuestions = res.data.count; // Получение общего количества вопросов от бекенда
+        this.totalPages = Math.ceil(
+          this.totalQuestions / this.questionsPerPage
+        ); // Обновление общего количества страниц
+      } catch (err) {}
+    },
+
     loadPage(page) {
       this.loadQuestions(page);
     },
@@ -75,9 +83,9 @@ export default {
       }
     },
     handleDotsClick(direction) {
-      if (direction === 'left') {
+      if (direction === "left") {
         this.loadPage(this.currentPage - this.maxVisiblePages); // Переход на первую страницу из видимого диапазона
-      } else if (direction === 'right') {
+      } else if (direction === "right") {
         this.loadPage(this.currentPage + this.maxVisiblePages); // Переход на последнюю страницу из видимого диапазона
       }
     },
@@ -87,7 +95,7 @@ export default {
 <template>
   <div class="pagination">
     <ul>
-    {{ questions }}
+      {{ questions }}
     </ul>
     <div class="pagination-controls">
       <button @click="loadPreviousPage" :disabled="currentPage === 1">
@@ -113,9 +121,6 @@ export default {
     </div>
   </div>
 </template>
-
-
-
 
 <style scoped>
 .pagination {
