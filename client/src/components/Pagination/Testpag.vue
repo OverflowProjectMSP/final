@@ -16,7 +16,7 @@ export default {
     };
   },
   mounted() {
-    this.loadQuestions(2); // Загрузка первой страницы при монтировании компонента
+    this.loadQuestions(1); // Загрузка первой страницы при монтировании компонента
   },
   computed: {
     visiblePages() {
@@ -61,7 +61,7 @@ export default {
           `https://api.upfollow.ru/get-questions?start=${start}&end=${end}`
         );
         this.questions = res.data;
-        console.log(this.questions)
+        console.log(this.questions);
         this.totalQuestions = res.data.count; // Получение общего количества вопросов от бекенда
         this.totalPages = Math.ceil(
           this.totalQuestions / this.questionsPerPage
@@ -93,30 +93,46 @@ export default {
 };
 </script>
 <template>
+  <ul>
+    {{
+      questions
+    }}
+  </ul>
   <div class="pagination">
-    <ul>
-      {{ questions }}
-    </ul>
     <div class="pagination-controls">
-      <button @click="loadPreviousPage" :disabled="currentPage === 1">
-        Предыдущая
+      <button
+        @click="loadPreviousPage"
+        :disabled="currentPage === 1"
+        class="todo"
+        style="margin-right: 3px;"
+      >
+        <
       </button>
-      <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')"
+      <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')" 
         >...</span
       >
-      <span
+      <div class="span-div">
+      <button
         v-for="page in visiblePages"
         :key="page"
         :class="{ active: page === currentPage }"
         @click="loadPage(page)"
+        class="span"
       >
+
         {{ page }}
-      </span>
-      <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')"
+      </button>
+    </div>
+      <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')" 
         >...</span
       >
-      <button @click="loadNextPage" :disabled="currentPage === totalPages">
-        Следующая
+      <button
+        @click="loadNextPage"
+        :disabled="currentPage === totalPages"
+        class="todo"
+        style="margin-left: 3px;"
+      >
+        >
       </button>
     </div>
   </div>
@@ -128,6 +144,57 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 20px;
+  gap: 50px;
+}
+.span-div {
+  display: flex;
+  gap: 5px;
+}
+.dots a{
+  color: white
+}
+.dots{
+  display: grid;
+  place-items: center;
+  background-color: #629bf7;
+  text-align: center;
+  width: 41px;
+  height: 41px;
+  border: none;
+  border-radius: 50% !important;
+  color: white !important;
+  font-weight: 500;
+}
+.span {
+  display: grid;
+  place-items: center;
+  background-color: #629bf7;
+  text-align: center;
+  width: 41px;
+  height: 41px;
+  border: none;
+  border-radius: 50% !important;
+  color: white;
+  font-weight: 500;
+  cursor: poiner;
+}
+span{
+  cursor: poiner;
+
+}
+.todo {
+  display: grid;
+  place-items: center;
+  background-color: #629bf7;
+  text-align: center;
+  width: 41px;
+  height: 41px;
+  border: none;
+  border-radius: 50% !important;
+  color: white;
+  font-weight: 500;
+  cursor: poiner !important;
 }
 
 .pagination-controls {
@@ -144,9 +211,16 @@ export default {
 .dots:hover {
   text-decoration: underline;
 }
+.todo:disabled{
+  font-weight: bold;
+  background-color: #8a9096;
+  color: white;
 
+}
 .active {
   font-weight: bold;
-  color: #007bff; /* Синий цвет для активной страницы */
+  background-color: #8a9096; 
+  color: white;
+
 }
 </style>
