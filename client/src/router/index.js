@@ -157,6 +157,10 @@ export default createRouter({
       path: "/Pagination",
       component: () => import('../components/Pagination/Testpag.vue')
     },
+    {
+      path: "/vid",
+      component: () => import('../components/Edit/NewqueVid.vue')
+    },
     
   ],
 });

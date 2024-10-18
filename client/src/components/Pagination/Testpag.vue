@@ -52,7 +52,6 @@ export default {
       const start = page * this.questionsPerPage - this.questionsPerPage + 1; // Начало интервала
       const end = page * this.questionsPerPage + 1; // Конец интервала
       // Отправка запроса на бекенд с интервалом start-end
-      console.log(start, end);
       this.getQuestions(start, end);
     },
     async getQuestions(start, end) {
@@ -60,13 +59,15 @@ export default {
         const res = await axios.get(
           `https://api.upfollow.ru/get-questions?start=${start}&end=${end}`
         );
-        this.questions = res.data;
-        console.log(this.questions);
+        this.questions = res.data.res;
+        console.log();
         this.totalQuestions = res.data.count; // Получение общего количества вопросов от бекенда
         this.totalPages = Math.ceil(
           this.totalQuestions / this.questionsPerPage
         ); // Обновление общего количества страниц
-      } catch (err) {}
+      } catch (err) {
+        console.error(err, "Ошибка сервера")
+      }
     },
 
     loadPage(page) {
@@ -93,9 +94,10 @@ export default {
 };
 </script>
 <template>
-  <ul>
+  {{ questions }}
+  <ul v-for="item in questions">
     {{
-      questions
+      item.id
     }}
   </ul>
   <div class="pagination">

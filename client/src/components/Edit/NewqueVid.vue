@@ -13,7 +13,20 @@ export default {
     },
 
     props: {
-        data: Object,
+        data: {
+            data: String,
+            acnt: Number,
+            descriptions: String,
+            tag: String,
+            user: {
+                username: String,
+                avatar: String,
+                id: String,
+            }
+        },
+    },
+    mounted() {
+        console.log(this.data.user)
     }
 }
 </script>
@@ -28,19 +41,22 @@ export default {
                     </div>
                     <div class="name-rank">
                         <h5 class="user-name">{{ data.user.username }}</h5>
-                        <p>Звание: {{ data.rang }}</p>
+                        <p>Звание: Пользователь</p>
                     </div>
                 </div>
                 <div class="text">
+                        <!-- тайтл -->
                     <p>{{ data.descriptions }}</p>
                 </div>
                 <div class="lan-date">
                     <div class="language">
+                        <!-- язык -->
                         <p>{{ data.tag }}</p>
                     </div>
                 
                     <div class="date">
-                        <p>{{ data.data }}</p>
+                        <!-- дата -->
+                        <p>{{ data.data }}</p> 
                     </div> 
                 </div>
                 
