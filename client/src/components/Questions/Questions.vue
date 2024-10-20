@@ -38,7 +38,7 @@ export default {
     loadQuestions(page) {
       this.currentPage = page;
       const start = page * this.questionsPerPage - this.questionsPerPage + 1; // Начало интервала
-      const end = page * this.questionsPerPage + 1; // Конец интервала
+      const end = page * this.questionsPerPage; // Конец интервала
       // Отправка запроса на бекенд с интервалом start-end
       this.getQuestions(start, end);
     },
