@@ -23,29 +23,60 @@ export default {
 
       isAllLoad: false,
 
+
+      
+
       // пагинация
-      $axios: axios,
-      questions: [], // Массив вопросов
       currentPage: 1, // Номер текущей страницы
-      questionsPerPage: 5, // Количество вопросов на странице
+      questionsPerPage: 2, // Количество вопросов на странице
       totalQuestions: 0, // Общее количество вопросов
       totalPages: 0, // Общее количество страниц
       maxVisiblePages: 4, // Максимальное количество отображаемых номеров страниц
     };
   },
   methods: {
-    OpenModal() {
-      this.Show = !this.Show;
+    loadQuestions(page) {
+      this.currentPage = page;
+      const start = page * this.questionsPerPage - this.questionsPerPage + 1; // Начало интервала
+      const end = page * this.questionsPerPage + 1; // Конец интервала
+      // Отправка запроса на бекенд с интервалом start-end
+      this.getQuestions(start, end);
     },
-    CloseModal(Show) {
-      this.Show = false;
+    async getQuestions(start, end) {
+      console.log(start,end)
+      try {
+        const res = await axios.get(
+          `/get-states?start=${start}&end=${end}`
+        );
+        this.states = res.data.res;
+        console.log(this.states);
+        this.totalQuestions = res.data.count; // Получение общего количества вопросов от бекенда
+        this.totalPages = Math.ceil(
+          this.totalQuestions / this.questionsPerPage
+        ); // Обновление общего количества страниц
+      } catch (err) {
+        console.error(err)
+      }
     },
-    async loadStates() {
-      let res = await axios.get("/show-states");
-      this.states = res.data.all;
-      this.cnt++;
-      // console.log(res.data)
-      this.preloader();
+    loadPage(page) {
+      this.loadQuestions(page);
+    },
+    loadPreviousPage() {
+      if (this.currentPage > 1) {
+        this.loadQuestions(this.currentPage - 1);
+      }
+    },
+    loadNextPage() {
+      if (this.currentPage * this.questionsPerPage < this.totalQuestions) {
+        this.loadQuestions(this.currentPage + 1);
+      }
+    },
+    handleDotsClick(direction) {
+      if (direction === "left") {
+        this.loadPage(this.currentPage - this.maxVisiblePages); // Переход на первую страницу из видимого диапазона
+      } else if (direction === "right") {
+        this.loadPage(this.currentPage + this.maxVisiblePages); // Переход на последнюю страницу из видимого диапазона
+      }
     },
 
     async searchStates() {
@@ -68,21 +99,44 @@ export default {
       });
       this.states = res.data.all;
     },
-
-    async preloader() {
-      if (this.states.length) {
-        this.isAllLoad = true;
-      }
-    },
   },
   mounted() {
-    this.loadStates();
+    document.title = "UF | Статьи";
+    this.loadQuestions(1);
+  },
+  computed: {
+    visiblePages() {
+      const pages = [];
+      // Отображаем 4 страницы, но если меньше, то все
+      const start = Math.max(1, this.currentPage - 1);
+      const end = Math.min(this.totalPages, this.currentPage + 2);
+
+      // Если общее количество страниц меньше, чем maxVisiblePages,
+      // отображаем все страницы
+      if (this.totalPages <= this.maxVisiblePages) {
+        for (let i = 1; i <= this.totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        for (let i = start; i <= end; i++) {
+          pages.push(i);
+        }
+      }
+
+      return pages;
+    },
+    showDotsLeft() {
+      return this.currentPage > this.maxVisiblePages + 1;
+    },
+    showDotsRight() {
+      return this.currentPage + this.maxVisiblePages < this.totalPages;
+    },
   },
 };
 </script>
 
 <template>
-  <div class="content-cont d-flex align-items-center" v-if="this.isAllLoad">
+  <div class="content-cont d-flex align-items-center" >
     <!-- Компонент поиска -->
 
     <div class="all-inputs">
@@ -134,7 +188,7 @@ export default {
     </div>
   </div>
   <!-- Див с виджетами -->
-  <div class="conr" v-if="this.isAllLoad">
+  <div class="conr" >
     <div class="con" v-for="item in states">
       <a :href="`/StateItem/` + item.id">
         <NewqueVid :data="item" :user="{}" />
@@ -143,68 +197,55 @@ export default {
   </div>
   <div
     class="content p-2"
-    v-if="this.states.length == 0 && this.cnt == 1 && this.isAllLoad"
+    v-if="this.states.length == 0 && this.isAllLoad"
   >
     <h2 class="d-flex justify-content-center my-5 user-select-none">
       Будь первым, кто даст ответ на этот вопрос!
     </h2>
   </div>
 
-  <model-wind v-if="Show" @CloseModal="CloseModal" />
+  <!-- Пагинация -->
 
-
-
-
-
-
-
-<!-- Пагинация -->
-
-
-<div class="pagination">
+  <div class="pagination">
     <div class="pagination-controls">
       <button
         @click="loadPreviousPage"
         :disabled="currentPage === 1"
         class="todo"
-        style="margin-right: 3px;"
+        style="margin-right: 3px"
       >
         <
       </button>
-      <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')" 
+      <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')"
         >...</span
       >
       <div class="span-div">
-      <button
-        v-for="page in visiblePages"
-        :key="page"
-        :class="{ active: page === currentPage }"
-        @click="loadPage(page)"
-        class="span"
-      >
-
-        {{ page }}
-      </button>
-    </div>
-      <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')" 
+        <button
+          v-for="page in visiblePages"
+          :key="page"
+          :class="{ active: page === currentPage }"
+          @click="loadPage(page)"
+          class="span"
+        >
+          {{ page }}
+        </button>
+      </div>
+      <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')"
         >...</span
       >
       <button
         @click="loadNextPage"
         :disabled="currentPage === totalPages"
         class="todo"
-        style="margin-left: 3px;"
+        style="margin-left: 3px"
       >
         >
       </button>
     </div>
   </div>
-
-
 </template>
 
 <style scoped>
-
 /* ПАГИНАЦИЯ */
 
 .pagination {
@@ -219,10 +260,10 @@ export default {
   display: flex;
   gap: 5px;
 }
-.dots a{
-  color: white
+.dots a {
+  color: white;
 }
-.dots{
+.dots {
   display: grid;
   place-items: center;
   background-color: #629bf7;
@@ -247,9 +288,8 @@ export default {
   font-weight: 500;
   cursor: poiner;
 }
-span{
+span {
   cursor: poiner;
-
 }
 .todo {
   display: grid;
@@ -279,30 +319,16 @@ span{
 .dots:hover {
   text-decoration: underline;
 }
-.todo:disabled{
+.todo:disabled {
   font-weight: bold;
   background-color: #8a9096;
   color: white;
-
 }
 .active {
   font-weight: bold;
-  background-color: #8a9096; 
+  background-color: #8a9096;
   color: white;
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 .all-inputs {
   display: flex;
@@ -333,8 +359,8 @@ span{
   flex-direction: column;
   align-items: center;
   /* overflow: scroll; */
-  overflow-x: hidden;
-  height: 680px;
+  /* overflow-x: hidden; */
+  height: 500px;
   padding-top: 10px;
   gap: 5px;
   margin-top: 20px;

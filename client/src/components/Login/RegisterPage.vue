@@ -147,12 +147,14 @@ export default {
       this.$router.push("/Login")
     }
   },
+  mounted() {
+    document.title = 'UF | Регистрация'
+  }
 };
 </script>
 
 <template>
   <div class="window">
-    <h6>UF 2.0</h6>
     <div class="main-cont">
       <div class="image">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />

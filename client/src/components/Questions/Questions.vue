@@ -25,7 +25,7 @@ export default {
 
       // Пагинация
       currentPage: 1, // Номер текущей страницы
-      questionsPerPage: 5, // Количество вопросов на странице
+      questionsPerPage: 2, // Количество вопросов на странице
       totalQuestions: 0, // Общее количество вопросов
       totalPages: 0, // Общее количество страниц
       maxVisiblePages: 4, // Максимальное количество отображаемых номеров страниц
@@ -33,6 +33,7 @@ export default {
   },
   mounted() {
     this.loadQuestions(1);
+    document.title = 'UF | Вопросы'
   },
   methods: {
     loadQuestions(page) {
@@ -361,6 +362,7 @@ span {
   margin-left: auto;
   margin-right: auto;
   padding-top: 10px;
+  height: 500px;
 
   gap: 5px;
 }

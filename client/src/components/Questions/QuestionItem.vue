@@ -37,6 +37,14 @@ export default {
       isOpenDeleteAnswer: false,
       currentPage: 1,
       rowsPerPage: 5,
+
+      // ПАГИНАЦИЯ
+
+      currentPage: 1, // Номер текущей страницы
+      questionsPerPage: 2, // Количество вопросов на странице
+      totalQuestions: 0, // Общее количество вопросов
+      totalPages: 0, // Общее количество страниц
+      maxVisiblePages: 4, // Максимальное количество отображаемых номеров страниц
     };
   },
 
@@ -57,7 +65,7 @@ export default {
       );
       this.preloader();
       this.loadAnswerUser();
-      console.log(this.answers.length)
+      console.log(this.answers.length);
     },
 
     async loadAnswerUser() {
@@ -242,20 +250,32 @@ export default {
     document.title = "UpFollow";
   },
   computed: {
-    pageCount() {
-      return Math.ceil(this.answers.length / this.rowsPerPage);
+    visiblePages() {
+      const pages = [];
+      // Отображаем 4 страницы, но если меньше, то все
+      const start = Math.max(1, this.currentPage - 1);
+      const end = Math.min(this.totalPages, this.currentPage + 2);
+
+      // Если общее количество страниц меньше, чем maxVisiblePages,
+      // отображаем все страницы
+      if (this.totalPages <= this.maxVisiblePages) {
+        for (let i = 1; i <= this.totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        for (let i = start; i <= end; i++) {
+          pages.push(i);
+        }
+      }
+
+      return pages;
     },
-    paginatedData() {
-      return this.answers.slice(
-        (this.currentPage - 1) * this.rowsPerPage,
-        this.currentPage * this.rowsPerPage
-      );
+    showDotsLeft() {
+      return this.currentPage > this.maxVisiblePages + 1;
     },
-    watch: {
-    currentPage() {
-      // Пересчитываем paginatedAnswers при изменении currentPage
-    }
-  },
+    showDotsRight() {
+      return this.currentPage + this.maxVisiblePages < this.totalPages;
+    },
   },
 };
 </script>
@@ -421,18 +441,69 @@ export default {
         </div>
       </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      <!-- Пагинация -->
+    <div class="pagination">
+        <div class="pagination-controls">
+          <button
+            @click="loadPreviousPage"
+            :disabled="currentPage === 1"
+            class="todo"
+            style="margin-right: 3px"
+          >
+            <
+          </button>
+          <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')"
+            >...</span
+          >
+          <div class="span-div">
+            <button
+              v-for="page in visiblePages"
+              :key="page"
+              :class="{ active: page === currentPage }"
+              @click="loadPage(page)"
+              class="span"
+            >
+              {{ page }}
+            </button>
+          </div>
+          <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')"
+            >...</span
+          >
+          <button
+            @click="loadNextPage"
+            :disabled="currentPage === totalPages"
+            class="todo"
+            style="margin-left: 3px"
+          >
+            >
+          </button>
+        </div>
+      </div>
+
+
+
+
+
+
       <form
         v-if="this.ShowAdd"
         class="content-3"
         @submit.prevent="addComment"
         id="iii"
       >
-        <Pagination
-          class="pag"
-          :currentPage="currentPage"
-          :pageCount="pageCount"
-          @set-currentpage="setCurrentPage"
-        />
         <div class="account">
           <a
             :href="`/Profile/${this.userNow.id}`"
@@ -470,10 +541,6 @@ export default {
         </div>
       </form>
     </div>
-    <div v-else>
-      <preloader
-      />
-    </div>
   </div>
   <div
     v-else
@@ -486,9 +553,104 @@ export default {
       <button @click="this.$router.push('/Quetions')">Назад</button>
     </div>
   </div>
+
+
+
+
+
+
+
+
 </template>
 
 <style scoped>
+/* ПАГИНАЦИЯ */
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  gap: 50px;
+}
+.span-div {
+  display: flex;
+  gap: 5px;
+}
+.dots a {
+  color: white;
+}
+.dots {
+  display: grid;
+  place-items: center;
+  background-color: #629bf7;
+  text-align: center;
+  width: 41px;
+  height: 41px;
+  border: none;
+  border-radius: 50% !important;
+  color: white !important;
+  font-weight: 500;
+}
+.span {
+  display: grid;
+  place-items: center;
+  background-color: #629bf7;
+  text-align: center;
+  width: 41px;
+  height: 41px;
+  border: none;
+  border-radius: 50% !important;
+  color: white;
+  font-weight: 500;
+  cursor: poiner;
+}
+span {
+  cursor: poiner;
+}
+.todo {
+  display: grid;
+  place-items: center;
+  background-color: #629bf7;
+  text-align: center;
+  width: 41px;
+  height: 41px;
+  border: none;
+  border-radius: 50% !important;
+  color: white;
+  font-weight: 500;
+  cursor: poiner !important;
+}
+
+.pagination-controls {
+  display: flex;
+  margin-top: 10px;
+}
+
+.dots {
+  margin: 0 5px;
+  cursor: pointer;
+  color: #333;
+}
+
+.dots:hover {
+  text-decoration: underline;
+}
+.todo:disabled {
+  font-weight: bold;
+  background-color: #8a9096;
+  color: white;
+}
+.active {
+  font-weight: bold;
+  background-color: #8a9096;
+  color: white;
+}
+
+
+
+
+
 @media (max-width: 900px) {
   .modal-cenel {
     margin: 0 32px !important;
