@@ -881,21 +881,21 @@ def get_top():
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute("""SELECT 
-                        u.id, 
-                        u.username, 
-                        u.avatar,
-                        COALESCE(c.comment_count, 0) AS comment_count, 
-                        COALESCE(a.answer_count, 0) AS answer_count,
-                        COALESCE(c.comment_count, 0) + COALESCE(a.answer_count, 0) AS total_count
-                    FROM 
-                        users u
-                    LEFT JOIN 
-                        (SELECT id_u, COUNT(*) AS comment_count FROM comments GROUP BY id_u) c ON u.id = c.id_u
-                    LEFT JOIN 
-                        (SELECT id_u, COUNT(*) AS answer_count FROM answers GROUP BY id_u) a ON u.id = a.id_u
-                    ORDER BY 
-                        total_count DESC
-                    LIMIT 10;""")
+                            u.id, 
+                            u.username, 
+                            u.avatar,
+                            COALESCE(c.comment_count, 0) AS comment_count, 
+                            COALESCE(a.answer_count, 0) AS answer_count,
+                            COALESCE(c.comment_count, 0) + COALESCE(a.answer_count, 0) AS total_count
+                        FROM 
+                            users u
+                        LEFT JOIN 
+                            (SELECT id_u::uuid, COUNT(*) AS comment_count FROM comments GROUP BY id_u::uuid) c ON u.id = c.id_u
+                        LEFT JOIN 
+                            (SELECT id_u::uuid, COUNT(*) AS answer_count FROM answers GROUP BY id_u::uuid) a ON u.id = a.id_u
+                        ORDER BY 
+                            total_count DESC
+                        LIMIT 10;""")
 
         r = cursor.fetchall()
         return_data = []
