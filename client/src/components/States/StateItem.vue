@@ -29,6 +29,7 @@ export default {
             ShowAdd: true,
 
             isAllLoad: false,
+            errorComment: '',
         }
     },
 
@@ -93,19 +94,25 @@ export default {
         },
 
         async addComment() {
-            if (this.text != "") {
-                await axios.post(`/answers`, {
+            if (this.text.length >= 3) {
+                let res = await axios.post(`/answers`, {
                     id: this.$route.params.id,
                     q: 'false',
                     text: this.text,
                 });
-                this.answers.push({
-                    id_u: this.userNow.id,
-                    text: this.text,
-                    user: this.userNow
-                });
-                this.text = ``;
-                this.v_For1();
+                if(res.status == 500) {
+                    this.errorComment = 'Ошибка сервера! Повторите попытку позже.';
+                } else {
+                    this.answers.push({
+                        id_u: this.userNow.id,
+                        text: this.text,
+                        user: this.userNow
+                    });
+                    this.text = ``;
+                    this.v_For1();
+                }
+            } else {
+                this.errorComment = 'Комментарий должен сдержать более 2 символов';
             }
         },
         async deleteState() {
@@ -257,6 +264,7 @@ export default {
                 <div class="send-ans d-flex justify-content-end">
                     <button type="submit" class="toMain btn btn-primary p-2 fs-5">Отправить!</button>
                 </div>
+                <span class='text-danger' v-if='this.errorComment'>{{ errorComment }}</span>
             </form>
             <div v-if="!this.loading && this.answers.length != 0">
                 <h3 class="answer-a user-select-none mb-0">Комментарии: </h3>
