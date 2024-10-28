@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 import base64
 import logging
 import asyncio
+import hashlib
 
 load_dotenv()
 
@@ -63,6 +64,8 @@ def home():
     # logging.info(session.get('id')) #debug
     logging.warning(response_object)
     session.pop('id', None)
+    session.pop("code", None)
+
     return jsonify(response_object)
 
 @app.route('/newssss', methods=['GET'])
@@ -167,7 +170,14 @@ def add_tables():
             pg.close
             logging.info("Соединение с PostgreSQL закрыто")
 
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
+def verify_password(stored_hash, password):
+    return stored_hash == hash_password(password)
+
+def check_password_hash(stored_hash, input_password):
+    return verify_password(stored_hash, input_password)
 
 
 from user import *

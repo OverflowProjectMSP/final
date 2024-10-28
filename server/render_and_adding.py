@@ -5,6 +5,7 @@ from datetime import timedelta, datetime, timezone
 import time
 import locale
 locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
+from typing import Union, Optional, Tuple
 
 load_dotenv()
 
@@ -38,9 +39,10 @@ def add_question(discriptions='', details='', dificulty='', tag='', id=''):
         # Существует ли такой же вопрос
         if send_question[0][0]==0:
             logging.info(details, 1)
+            aa = datetime.now().isoformat()
             question_to_write = (uuid.uuid4().hex, escape_quotes(discriptions), escape_quotes(details), dificulty, tag, id, datetime.now().isoformat(), False)
-            # cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES ('{uuid.uuid4().hex}', '{escape_quotes(discriptions)}', '{escape_quotes(details)}', '{dificulty}', '{tag}', '{id}', {datetime.now().isoformat()}, False)")
-            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")   
+            cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES ('{uuid.uuid4().hex}', '{escape_quotes(discriptions)}', '{escape_quotes(details)}', '{dificulty}', '{tag}', '{id}', '{datetime.now().isoformat()}', False)")
+            # cursor.execute(f"INSERT INTO questions(id, descriptions, details, dificulty, tag, id_u, data, is_solved) VALUES {question_to_write}")   
             pg.commit()
             return_data = "Вопрос добавлен"
         else : return_data = "Уже существует"
@@ -476,8 +478,8 @@ def render_states():
         # logging.info(reslt_info)
         lst = [len(return_data), len(reslt_info), len(ids_creators), text]
         
-        for i in lst:
-            logging.info(i)
+        # for i in lst:
+        #     logging.info(i)
         
         
         return_last_data = []
@@ -1232,3 +1234,393 @@ def add_a():
         return jsonify(response_object)
     response_object['all'] =  add_ans(text, False, post_data.get('id'), session.get('id'))
     return jsonify(response_object)
+
+#TODO: get_cont() function
+def get_all_ans():
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute("SELECT COUNT(*) FROM answers")
+
+        return_data = cursor.fetchall()[0]
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+@app.route("/get-answers", methods=["GET"])
+def get_ans_y():
+    response_object = {'status': 'success'} #БаZа
+
+    response_object["count"] = get_all_ans()[0]
+
+    return jsonify(response_object)
+
+def get_count(name_table: str, id: Optional[str]) -> Union[int, str]:
+    if id is None: 
+        try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+            cursor.execute(f"SELECT COUNT(*) FROM {name_table}")
+
+            return_data = cursor.fetchall()[0][0]
+
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
+
+            return_data = f"Error"
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+    else:
+        try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+            ans_com = {
+                "answers": "id_q",
+                "comments" : "id_s"
+            }
+
+            cursor.execute(f"SELECT COUNT(*) FROM {name_table} WHERE {ans_com[name_table]}=$${id}$$")
+
+            return_data = cursor.fetchall()[0][0]
+
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
+
+            return_data = f"Error"
+
+        finally:
+            if pg:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def get_pagination(start: int, end: int, name_table: str) -> Union[list, str]:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        anw_com = {
+            "questions": ["answers", "id_q"],
+            "states": ["comments", "id_s"]
+        }
+        
+        cursor.execute(f"SELECT * FROM {name_table} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}")
+
+        all_q = cursor.fetchall()
+
+        return_data = []
+
+        for row in all_q:
+            a = dict(row)
+            cursor.execute(f"SELECT COUNT(*) from {anw_com[name_table][0]} WHERE {anw_com[name_table][1]}=$${a['id']}$$")
+            a['acnt'] = cursor.fetchone()[0]
+            return_data.append(a)
+
+        ids_creators = []
+
+        for row in return_data:
+            ids_creators.append(row["id_u"])
+        
+        # logging.info(ids_creators)
+       
+        text = ""
+
+        for i in ids_creators:
+            if text == "":
+                text += f"id = $${i}$$"
+                continue
+            text += f" OR id = $${i}$$"
+
+        # logging.info(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        cursor.execute(f"SELECT id, username, avatar FROM users WHERE {text}")
+
+        result_info = cursor.fetchall()
+
+        reslt_info = {}
+
+        for row in result_info:
+            reslt_info[dict(row)["id"]] = dict(row)
+
+        # logging.info(reslt_info)
+
+        print(len(return_data), len(reslt_info), len(ids_creators), text)
+        
+        return_last_data = []
+
+        for i in return_data:
+            i["user"] = reslt_info[i["id_u"]]
+            return_last_data.append(i)
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+           
+@app.route("/get-questions", methods=["GET"])
+def get_q():
+    response_object = {'status': 'success'}
+
+    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+    response_object["res"] = get_pagination(start, end, "questions")
+    response_object["count"] = get_count("questions", None)
+
+    logging.info(f"Вопросы от {start} до {end} отображены")
+
+    return jsonify(response_object)
+
+@app.route("/get-states", methods=["GET"])
+def get_s():
+    response_object = {'status': 'success'}
+
+    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+    response_object["res"] = get_pagination(start, end, "states")
+    response_object["count"] = get_count("states", None)
+
+    logging.info(f"Статьи от {start} до {end} отображены")
+
+    return jsonify(response_object)
+
+
+@app.route("/get-answ", methods=["GET"])
+def get_answ():
+    response_object = {'status': 'success'}
+
+    start, end, id = int(request.args.get("start"))-1, int(request.args.get('end'))-1, request.args.get('id')
+    response_object["res"] = get_pagination_small(start, end, id, "answers")
+    response_object["count"] = get_count("answers", id)
+
+    logging.info(f"Ответы от {start} до {end} в вопросе с id={id} отображены")
+
+    return jsonify(response_object)
+
+@app.route("/get-comm", methods=["GET"])
+def get_comm():
+    response_object = {'status': 'success'}
+
+    start, end, id = int(request.args.get("start"))-1, int(request.args.get('end'))-1, request.args.get('id')
+    response_object["res"] = get_pagination_small(start, end, id,"comments")
+    response_object["count"] = get_count("comments", id)
+
+    logging.info(f"Комментарии от {start} до {end} в статье с id={id} отображены")
+
+    return jsonify(response_object)
+
+def get_pagination_small(start: int, end: int, id: int, name_table: str) -> Union[list, str]:
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        ans_com = {
+                "answers": "id_q",
+                "comments" : "id_s"
+            }
+
+        cursor.execute(f'''SELECT * FROM {name_table}
+                       WHERE {ans_com[name_table]} = $${id}$$
+                       ORDER BY data 
+                       LIMIT {end-start+1} 
+                       OFFSET {start} ''')
+        
+        data_ = cursor.fetchall()
+        return_data = []
+        for row in data_:
+            return_data.append(dict(row))
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+
+        return_data = f"Error"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data
+
+def get_q_filt(fil: dict, start: int, end: int) -> Tuple[Union[list, str], str]:
+    status = 0
+    query = ''
+    filtrs = ''
+    for i in fil:
+        if fil[i] != '':
+            print(i)
+            if filtrs!='':
+                if i!='name' and i!='descriptions':
+                    filtrs+=f' and {i}=$${fil[i]}$$'
+            else:
+                if i!='name' and i!='descriptions':
+                    filtrs+=f'{i}=$${fil[i]}$$'
+    if (filtrs != '' or fil['name'] != '') or fil['descriptions'] != '':
+        try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            ids = []
+            if fil['name'] != '':
+                cursor.execute(f'''select id from users where username like '%{fil["name"]}%' ''')
+                ids = cursor.fetchall()
+                ors = '('
+                for i in ids:
+                    if ors !='(': ors+=f' or id_u=$${i[0]}$$'
+                    else: ors+=f'id_u=$${i[0]}$$'
+                ors+=')'
+            else: ors = ''
+            # print(filtrs, ids, fil['descriptions'])
+            # print(filtrs == '' and ids != [], ids != [], ids == [] and filtrs != '', fil['descriptions'] != '' and filtrs != '', fil['descriptions'] != '' and (fil['name'] == '' and ids == []))
+            if filtrs == '' and ids != []: 
+                query = f'''select coint(*) from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}'''    
+                cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}''')
+            elif ids != []: 
+                query = f'''select count(*) from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}'''
+                cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}''')
+            elif (ids == [] and filtrs != '') or (fil['descriptions'] != '' and filtrs != ''):
+                query = f'''select count(*) from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}''' 
+                cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {filtrs} ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}''')
+            elif fil['descriptions'] != '' and (fil['name'] == '' and ids == []): 
+                query = f'''select count(*) from questions where descriptions like '%{fil["descriptions"]}%' ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}'''
+                cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}''')
+            # elif fil['descriptions'] != '': cursor.execute(f'''select * from questions where descriptions like '%{fil["descriptions"]}%' and {ors} ''')
+            else:
+                status = 1
+                return [], ""
+            # print(f'''select * from states where descriptions like '%{fil["descriptions"]}%' and {filtrs} and {ors}''')
+            q = cursor.fetchall()
+            return_data = []
+            for row in q:
+                a = dict(row)
+                cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+                a['acnt'] = cursor.fetchone()[0]
+                return_data.append(a)
+
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
+
+            return_data = f"Error"
+
+        finally:
+            if pg and status == 0:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+                return return_data, query
+    else:
+        try:
+            pg = psycopg2.connect(f"""
+                host={HOST_PG}
+                dbname=postgres
+                user={USER_PG}
+                password={PASSWORD_PG}
+                port={PORT_PG}
+            """)
+
+            cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute(f'''select * from questions ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}''')
+            q = cursor.fetchall()
+            return_data = []
+            query = f'''select count(*) from questions ORDER BY data DESC LIMIT {end-start+1} OFFSET {start}'''
+            for row in q:
+                a = dict(row)
+                cursor.execute(f"SELECT COUNT(*) from answers WHERE id_q=$${a['id']}$$")
+                a['acnt'] = cursor.fetchone()[0]
+                return_data.append(a)
+        except (Exception, Error) as error:
+            logging.error(f'DB: ', error)
+
+            return_data = f"Error"
+
+        finally:
+            if pg and status == 0:
+                cursor.close
+                pg.close
+                logging.info("Соединение с PostgreSQL закрыто")
+         
+                return return_data, query
+
+
+
+@app.route("/get-questions-filter", methods=["GET"])
+def get_q_fil():
+    response_object = {'status': 'success'} #БаZа
+
+    start, end = int(request.args.get("start"))-1, int(request.args.get('end'))-1
+
+    filtrs = {
+        'descriptions': request.args.get('title'),
+        'name': request.args.get('author'),
+        'tag': request.args.get('tag'),
+        'dificulty': request.args.get('dificulty'),
+    }
+
+    response_object["res"], count_query = get_q_filt(filtrs, start, end)
+    response_object["count"] = do_query(count_query)
+
+    return jsonify(response_object)
+
+#TODO: фильтры+пагинация для статей

@@ -1,4 +1,5 @@
 from app import *
+from app import hash_password, verify_password, check_password_hash
 # from app import HOST_PG, USER_PG, PASSWORD_PG, PORT_PG
 from render_and_adding import add_img
 import os
@@ -92,7 +93,7 @@ def login_user(email, pas):
 
 
             # Проверка пароля
-            if user[3] == pas:
+            if check_password_hash(user[3], pas):
                 return_data = user[2]
 
                 logging.info(f"Вход выполнен! Здравствуйте, {user[2]}")
@@ -138,7 +139,7 @@ def add_user_todb(name, email, pas):
         # Проверка существует ли такой пользователь
         if send_user[0][0] == 0 and send_user[1][0] == 0:
             rand_avatar = random.randint(1, 12)
-            user_to_write = (uuid.uuid4().hex, name, email, pas, '', '', '', '', '', '', '', '', '', '', '', '', '', f'http://api.upfollow.ru/avatar/default_avatar_{rand_avatar}', False, datetime.now().isoformat(), 0, 'Амеба')
+            user_to_write = (uuid.uuid4().hex, name, email,hash_password(pas), '', '', '', '', '', '', '', '', '', '', '', '', '', f'http://api.upfollow.ru/avatar/default_avatar_{rand_avatar}', False, datetime.now().isoformat(), 0, 'Амеба')
 
             cursor.execute(f"""INSERT INTO users(id, username, email, password, name, surname, interestings, about, country, region, city, telegram, skype, discord, facebook, phonenumber, github, avatar, admin, data_c, c_active, rang) VALUES {user_to_write}""")
 
@@ -213,7 +214,7 @@ def check_old_password(id, password):
         cursor.execute(f'SELECT password FROM users WHERE id=$${id}$$')
         password_to_check = cursor.fetchone()
         print(password_to_check, password)
-        if password_to_check[0] == str(password):
+        if check_password_hash(password_to_check[0], str(password)):
             return_data = True
             logging.info('Пароли не совпадают')
         else: return_data = False
@@ -808,7 +809,7 @@ def login():
     response_object = {'status': 'success'} #БаZа
 
     post_data = request.get_json()
-    a = login_user(post_data.get('email'), post_data.get('password'))
+    a = login_user(post_data.get('email'),post_data.get('password'))
     if a[0] == "ok": #Вызов и debug функции проверки пароля пользователя (вход в аккаунт)
         session['id'] = a[1]
         session.permanent = True
@@ -828,7 +829,7 @@ def new_password_with_old():
     #Вызов, debug и возврат ответа на клиент функции обновления пароля
     if request.method=='PUT':
         print(session.get('id'))
-        response_object['res'] = change_password(post_data.get('new_password'),post_data.get('old_password'), session.get('id'))
+        response_object['res'] = change_password(hash_password(post_data.get('new_password')), post_data.get('old_password'), session.get('id'))
         logging.info(response_object['res'])
 
     return jsonify(response_object)
@@ -842,7 +843,7 @@ def new_password_with_email():
     if request.method=='PUT':
         #Восстановление пароля если мы в аккаунте
         print(post_data.get('password'), session.get('email'))
-        response_object['res'] = change_password_send(post_data.get('password'), session.get('email'))
+        response_object['res'] = change_password_send(hash_password(post_data.get('password')), session.get('email'))
     # if post_data.get("email") is None:
     elif request.method == 'POST' and post_data.get('email'):
         logging.info(post_data.get("email"))
@@ -880,21 +881,21 @@ def get_top():
         cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cursor.execute("""SELECT 
-                        u.id, 
-                        u.username, 
-                        u.avatar,
-                        COALESCE(c.comment_count, 0) AS comment_count, 
-                        COALESCE(a.answer_count, 0) AS answer_count,
-                        COALESCE(c.comment_count, 0) + COALESCE(a.answer_count, 0) AS total_count
-                    FROM 
-                        users u
-                    LEFT JOIN 
-                        (SELECT id_u, COUNT(*) AS comment_count FROM comments GROUP BY id_u) c ON u.id = c.id_u
-                    LEFT JOIN 
-                        (SELECT id_u, COUNT(*) AS answer_count FROM answers GROUP BY id_u) a ON u.id = a.id_u
-                    ORDER BY 
-                        total_count DESC
-                    LIMIT 10;""")
+                            u.id, 
+                            u.username, 
+                            u.avatar,
+                            COALESCE(c.comment_count, 0) AS comment_count, 
+                            COALESCE(a.answer_count, 0) AS answer_count,
+                            COALESCE(c.comment_count, 0) + COALESCE(a.answer_count, 0) AS total_count
+                        FROM 
+                            users u
+                        LEFT JOIN 
+                            (SELECT id_u::uuid, COUNT(*) AS comment_count FROM comments GROUP BY id_u::uuid) c ON u.id = c.id_u
+                        LEFT JOIN 
+                            (SELECT id_u::uuid, COUNT(*) AS answer_count FROM answers GROUP BY id_u::uuid) a ON u.id = a.id_u
+                        ORDER BY 
+                            total_count DESC
+                        LIMIT 10;""")
 
         r = cursor.fetchall()
         return_data = []

@@ -300,20 +300,23 @@ def add_img_():
 
     post_data = request.get_json()
     if post_data.get("base") != "":
-        responce_object['link'] = add_img_qs(post_data.get('base'), post_data.get('name'))
+        link = add_img_qs_(post_data.get('name'))
+        responce_object["link"] = link
 
+        # session["link"] = link
+        # session.modified = True
         return jsonify(responce_object)
     responce_object['link'] = 'base64 is ""'
     return jsonify(responce_object)
 
 
-def add_img_qs(base, name):
-    base=base[base.find(',')+1:]
-    decoded_bytes = base64.b64decode(base)
+def add_img_qs_(name):
+    # base=base[base.find(',')+1:]
+    # decoded_bytes = base64.b64decode(base)
     dote = name[name.find('.'):]
     name = 'm_'+uuid.uuid4().hex+dote
-    with open(os.path.join(MEDIA, name), "wb") as file:
-        file.write(decoded_bytes)
+    # with open(os.path.join(MEDIA, name), "wb") as file:
+    #     file.write(decoded_bytes)
     return 'https://api.upfollow.ru/media/'+name
 
 
@@ -382,3 +385,30 @@ def get_news_r():
     else:
         responce_object["res"] = "Пользователь не в аккаунте"
     return jsonify(responce_object)
+
+
+def do_query(query: str):
+    try:
+        pg = psycopg2.connect(f"""
+            host={HOST_PG}
+            dbname=postgres
+            user={USER_PG}
+            password={PASSWORD_PG}
+            port={PORT_PG}
+        """)
+        cursor = pg.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        cursor.execute(query)
+
+        return_data = cursor.fetchall()
+
+    except (Exception, Error) as error:
+        logging.error(f'DB: ', error)
+        return_data = f"Ошибка обращения к базе данных: {error}"
+
+    finally:
+        if pg:
+            cursor.close
+            pg.close
+            logging.info("Соединение с PostgreSQL закрыто")
+            return return_data

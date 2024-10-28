@@ -76,11 +76,8 @@ def is_can_edit(idO: str, isQ: bool, id_u: str) -> str:
             return_data = cursor.fetchone()[0] == id_u
         else: 
             cursor.execute(f"SELECT id_u FROM comments WHERE id=$${idO}$$")
-            logging.info(id_u)
-            logging.info(cursor.fetchone()[0])
-            logging.info(cursor.fetchone()[0] == id_u)
             return_data = cursor.fetchone()[0] == id_u
-
+        logging.info(cursor.fetchone())
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
         return_data = f"Error"
