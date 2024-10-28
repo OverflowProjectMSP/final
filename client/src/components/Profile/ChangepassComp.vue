@@ -57,12 +57,18 @@ export default {
                     old_password: this.oldPassword,
                     new_password: this.newPassword,
                 });
+                console.log(res);
                 if (res.data.res == 'Error') {
-                    this.error = '*Ошибка отправки*';
+                    this.error = 'Ошибка сервера! Повторите попытку позже.';
                 } else if (res.data.res == 'True') {
+                    this.error = '';
                     this.$router.push(`/Profile?id=${this.id}`);
+                } else if(this.newPassword.length < 8) {
+                    this.error = 'Ошибка! Пароль должен включать больше 7 символов!';
+                } else if(!res.data.res) {
+                    this.error = 'Старый пароль не подходит!';
                 } else {
-                    this.error = 'Неизветсная ошибка';
+                  this.error = 'Неизвестная ошибка!';
                 }
             } else {
                 this.error = 'Пароли не совпадают';
@@ -110,7 +116,7 @@ export default {
         <div class="save">
           <button type="submit">Сохранить изменениия</button>
         </div>
-
+        <span v-if='this.error'class="text-danger">{{ error }}</span>
       </div>
     </div>
   </div>
