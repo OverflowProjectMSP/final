@@ -70,9 +70,16 @@ export default {
                 this.isAllLoad = true;
             }
         },
+
+        
+    },
+
+    computed: {
+        hasLinks() {
+            return this.user.discord || this.user.telegram || this.user.github;
+        },
     },
 }
-
 </script>
 
 <template>
@@ -100,12 +107,16 @@ export default {
         </div>
         <div class="links-info">
             <div class="li-block">
-                <p v-if='user.discord'>Discord: <span>{{user.discord}}</span></p>
-                <p v-if='user.telegram'>Telegram: <span>{{user.telegram}}</span></p>
-                <p v-if='user.github'>GitHub: <span>{{user.github}}</span></p>
+                <span class="hasLinks" v-if='hasLinks'>
+                    <p v-if='user.discord'>Discord: <span>{{user.discord}}</span></p>
+                    <p v-if='user.telegram'>Telegram: <span>{{user.telegram}}</span></p>
+                    <p v-if='user.github'>GitHub: <span>{{user.github}}</span></p>
+                </span>
+                <span v-else class="noData">Нет данных</span>
+                
             </div>
         </div>
-        <textarea id="" name="" readonly class="aboutmee" >{{user.about}}</textarea>
+        <textarea readonly  :class="{'aboutmee': user.about, 'no_data': !user.about}">{{user.about || 'Нет данных'}}</textarea>
         <div class="container d-flex align-items-center flex-column">
             <div class="q-user head-1 mb-3 mt-1 user-select-none">
                 <div class="swit d-flex flex-row align-items-center gap-4">
@@ -154,6 +165,29 @@ p {
 }
 
 
+.hasLinks {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.noData {
+    width: 100%;
+    text-align: center;
+    font-size: 26px !important;
+    font-weight: 600;
+    color: #505050 !important;
+}
+
+.no_data {
+    padding-top: 70px !important;
+    width: 100%;
+    text-align: center;
+    font-size: 26px !important;
+    font-weight: 600;
+    color: #505050 !important;
+}
 
 .active-shose {
     text-decoration: underline;
