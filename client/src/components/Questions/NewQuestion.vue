@@ -182,7 +182,7 @@ export default {
             </div>
         </div>
     </div>
-    <div v-if='this.isUserInSession'class='w-100 h-100 d-flex justify-content-center align-items-center'>
+    <div v-if='false'class='w-100 h-100 d-flex justify-content-center align-items-center'>
         <div class="bg-black"></div>
         <div class="modal-cenel d-flex flex-column align-items-center">
             <img src="../../assets/Lending/bookModal.png" alt="Грусть(">

@@ -144,7 +144,6 @@ export default {
 
 <template>
   <div class="window">
-    <h6>UF 2.0</h6>
     <div class="main-cont">
       <div class="image">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />
@@ -152,7 +151,7 @@ export default {
       <div class="main-content">
         <div class="main-ccc">
           <h1>Сообщить об ошибке</h1>
-          <div class="inputs-cont">
+          <div class="inputs-cont mt-3">
             <div class="div-username">
               <input
                 type="text"
@@ -242,7 +241,7 @@ h6 {
   background-color: #fff;
 
   width: 100%;
-  height: 900px;
+  height: 700px;
 }
 
 h1 {

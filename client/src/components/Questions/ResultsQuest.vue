@@ -10,7 +10,12 @@ export default {
     ModelWind,
     NewqueVid,
   },
-
+  props: {
+    title: String,
+    author: String,
+    tag: String,
+    dificulty: String,
+  },
   data() {
     return {
       quetions: [],
@@ -40,13 +45,22 @@ export default {
       this.currentPage = page;
       const start = page * this.questionsPerPage - this.questionsPerPage + 1;
       const end = page * this.questionsPerPage;
-      this.getQuestions(start, end);
+      this.getFilteredQuestions(start, end);
     },
-    async getQuestions(start, end) {
+
+    async getFilteredQuestions(start, end) {
       try {
-        const res = await axios.get(
-          `https://api.upfollow.ru/get-questions?start=${start}&end=${end}`
-        );
+        const res = await axios.get("/get-questions-filter", {
+          params: {
+            title: this.title,
+            author: this.author,
+            tag: this.tag,
+            dificulty: this.dificulty,
+            start: start,
+            end: end,
+          },
+        });
+        console.log(res.data.res);
         this.quetions = res.data.res;
         this.totalQuestions = res.data.count;
         this.totalPages = Math.ceil(
@@ -79,15 +93,16 @@ export default {
     },
 
     async filtre() {
-      this.$router.push({
-        name: "res-que", // Имя маршрута, которое вы определили в router.js
-        data: JSON.stringify({
-          title: this.title,
-          tag: this.tag,
-          author: this.author,
-          dificulty: this.dificulty,
-        }),
-      });
+      this.isFilterActive = true; // Устанавливаем флаг фильтра в активное состояние
+      this.currentPage = 1; // Сброс на первую страницу при новом фильтре
+      this.loadQuestions(this.currentPage);
+      this.object = {
+        title: this.title,
+        author: this.author,
+        tag: this.tag,
+        dificulty: this.dificulty,
+      };
+      console.log(this.object);
     },
 
     CloseModal(Show) {
@@ -125,77 +140,13 @@ export default {
   <div>
     <div class="quest-menu mt-3">
       <div class="active-container d-flex flex-column p-2">
-        <h2 class="mar">
-          Активные вопросы
-          <img src="https://i.gifer.com/7ZFG.gif" class="gif" />
+        <h2 class="h2">
+          Результаты поиска
+          <img src="https://i.gifer.com/4EE0.gif" class="gif" />
         </h2>
         <p class="mar">
-          В данном разделе находятся вопросы, которые ждут именно
-          <b>твоего</b> ответа!
+          В данном разделе находятся вопросы, подобранные по твоему запросу!
         </p>
-        <div class="all-inputs">
-          <div class="inputs">
-            <input
-              v-model="title"
-              type="search"
-              class="form-control w-25"
-              placeholder="Вопрос"
-              aria-label="First name"
-            />
-            <input
-              v-model="author"
-              type="search"
-              class="form-control w-25"
-              placeholder="Автор вопроса"
-              aria-label="Last name"
-            />
-            <div class="button-select">
-              <div class="selects">
-                <select class="form-select form-2 me-2" v-model="tag">
-                  <option value="">Тема вопроса</option>
-                  <option value="javascript">JavaScript</option>
-                  <option value="ts">TS</option>
-                  <option value="python">Python</option>
-                  <option value="php">PHP</option>
-                  <option value="cpp">C++</option>
-                  <option value="java">Java</option>
-                  <option value="cs">C#</option>
-                  <option value="go">Golang</option>
-                  <option value="IB">ИБ</option>
-                </select>
-
-                <div class="img-select">
-                  <!-- <img class="border pe-2 ps-2" src="../../assets/States/image.png" alt="level"> -->
-                  <select class="form-select form-1" v-model="dificulty">
-                    <option value="">Степень сложности</option>
-                    <option value="Простой" selected>Лёгкие</option>
-                    <option value="Средний">Средние</option>
-                    <option value="Сложный">Сложные</option>
-                  </select>
-                </div>
-                <button
-                  class="btn find-btn btn-outline-primary text-dark ms-4"
-                  @click="filtre"
-                >
-                  Найти
-                </button>
-              </div>
-              <!-- <div class="select-block d-flex border rounded-3 gap-1 py-0  me-2"> -->
-              <!-- </div> -->
-              <div class="down-menu d-flex align-items-center">
-                <div class="d-flex align-items-center">
-                  <!-- плюсик -->
-                  <!-- <div class="contain" @click="OpenModal">
-                                        <img src="../../assets/States/add.png" class="add">
-                                    </div> -->
-                </div>
-              </div>
-              <a href="/NewQuestion"
-                ><button class="create-quetion">Создать вопрос</button></a
-              >
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -256,10 +207,12 @@ export default {
 
 <style scoped>
 .gif {
-  width: 35px;
-  height: 35px;
+  width: 50px;
+  height: 50px;
   border-radius: 10px;
-  display: inline;
+}
+.active-container h2 {
+  font-size: 70px;
 }
 /* Пагиинацииия */
 
@@ -348,10 +301,6 @@ span {
 .mar {
   margin-left: 5px;
   color: #000;
-}
-
-.active-container h2 {
-  font-size: 30px !important;
 }
 
 .find-btn {
@@ -486,7 +435,7 @@ a {
 }
 
 .active-container {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 h4 {

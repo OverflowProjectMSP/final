@@ -455,7 +455,7 @@ export default {
 
       
       <!-- Пагинация -->
-    <div class="pagination">
+    <div class="pagination" v-if="false">
         <div class="pagination-controls">
           <button
             @click="loadPreviousPage"

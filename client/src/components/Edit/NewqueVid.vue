@@ -26,7 +26,7 @@ export default {
         },
     },
     mounted() {
-        console.log(this.data.user)
+        console.log(this.data.user.avatar)
     }
 }
 </script>
@@ -37,10 +37,10 @@ export default {
             <div class="info">
                 <div class="avatar-name-rank">
                     <div class="avatar">
-                        <img :src="data.user.avatar" alt="">
+                        <!-- <img :src="data.user.avatar" alt=""> -->
                     </div>
                     <div class="name-rank">
-                        <h5 class="user-name">{{ data.user.username }}</h5>
+                        <!-- <h5 class="user-name">{{ data.user.username }}</h5> -->
                         <p>Звание: Пользователь</p>
                     </div>
                 </div>
@@ -115,7 +115,10 @@ p {
 
     width: 900px;
     height: auto;
-    border: 1px solid #000;
+    border: none;
+    -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
     border-radius: 20px;
 
     transition: all 300ms;
@@ -145,7 +148,10 @@ p {
     height: 50px;
     object-fit: cover;
     border-radius: 50px;
-    border: 1px solid #000;
+    border: none;
+    -webkit-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
 
 .avatar-name-rank {

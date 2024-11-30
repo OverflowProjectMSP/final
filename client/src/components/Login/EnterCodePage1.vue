@@ -83,7 +83,6 @@ export default {
 
 <template>
   <div class="all-container">
-    <h6>UF 2.0</h6>
     <div class="login-container container">
       <div class="img-container">
         <img src="../../assets/Login/mounted.png" alt="" class="img" />

@@ -161,6 +161,11 @@ export default createRouter({
       path: "/vid",
       component: () => import('../components/Edit/NewqueVid.vue')
     },
+    {
+      path: "/Results-question/:title/:author/:tag/:dificultly",
+      name: 'res-que',
+      component: () => import('../components/Questions/ResultsQuest.vue')
+    },
     
   ],
 });
