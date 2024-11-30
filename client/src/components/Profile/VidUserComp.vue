@@ -62,7 +62,6 @@ export default {
     justify-content: space-between;
     /* margin: -15px; */
     border-bottom: 1px solid #000000;
-    width: 60%;
     padding-bottom: 5px;
 }
 

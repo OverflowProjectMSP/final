@@ -37,6 +37,7 @@ export default {
       isOpenDeleteAnswer: false,
       currentPage: 1,
       rowsPerPage: 5,
+      errorComment: '',
 
       // ПАГИНАЦИЯ
 
@@ -99,19 +100,25 @@ export default {
 
     async addComment() {
       if (this.text.length >= 3) {
-        await axios.post(`/answers`, {
+        let res = await axios.post(`/answers`, {
           id: this.$route.params.id,
           q: "true",
           text: this.text,
         });
-        this.answers.push({
-          id_u: this.userNow.id,
-          text: this.text,
-          user: this.userNow,
-        });
+        if (res.status == 500) {
+          this.errorComment = 'Ошибка сервера! Повторите попытку позже.';
+        } else {
+          this.answers.push({
+            id_u: this.userNow.id,
+            text: this.text,
+            user: this.userNow,
+          });
 
-        this.text = ``;
-        this.v_For1();
+          this.text = ``;
+          this.v_For1();
+        }
+      } else {
+        this.errorComment = 'Комментарий должен сдержать более 2 символов';
       }
     },
     async deleteQuestion() {
@@ -285,62 +292,34 @@ export default {
     <div class="main-container mb-4" v-if="this.isAllLoad">
       <div class="content-1">
         <div class="account justify-content-between">
-          <a
-            class="creator-info d-flex flex-row align-items-center gap-3"
-            :href="`/Profile/${this.userCreater.id}`"
-          >
-            <img
-              class="accountIcon"
-              :src="userCreater.avatar"
-              width="70px"
-              alt=""
-            />
+          <a class="creator-info d-flex flex-row align-items-center gap-3" :href="`/Profile/${this.userCreater.id}`">
+            <img class="accountIcon" :src="userCreater.avatar" width="70px" alt="" />
             <div class="name-ring">
               <div>
                 <span class="name">{{ userCreater.username }}</span>
               </div>
             </div>
           </a>
-          <div
-            class="action-select"
-            v-if="this.isCheck == 'true' || this.isAdmin == true"
-          >
+          <div class="action-select" v-if="this.isCheck == 'true' || this.isAdmin == true">
             <div class="dropdown">
-              <button
-                class="btn dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Действие
               </button>
               <ul class="dropdown-menu">
-                <li
-                  v-if="
-                    this.questionInfo.is_solved == true &&
-                    this.isCheck == 'true'
-                  "
-                >
-                  <a class="dropdown-item" @click="solveQuestion(false)"
-                    >Вопрос решён!</a
-                  >
+                <li v-if="
+                  this.questionInfo.is_solved == true &&
+                  this.isCheck == 'true'
+                ">
+                  <a class="dropdown-item" @click="solveQuestion(false)">Вопрос решён!</a>
                 </li>
                 <li v-else-if="this.isCheck == 'true'">
-                  <a class="dropdown-item" @click="solveQuestion(true)"
-                    >Вопрос ещё не решён!</a
-                  >
+                  <a class="dropdown-item" @click="solveQuestion(true)">Вопрос ещё не решён!</a>
                 </li>
                 <li v-if="this.isCheck == 'true' || this.isAdmin == true">
-                  <a
-                    class="dropdown-item"
-                    :href="`/UpdateQuestion/${this.$route.params.id}`"
-                    >Редактировать</a
-                  >
+                  <a class="dropdown-item" :href="`/UpdateQuestion/${this.$route.params.id}`">Редактировать</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#" @click="deleteQuestion"
-                    >Удалить</a
-                  >
+                  <a class="dropdown-item" href="#" @click="deleteQuestion">Удалить</a>
                 </li>
               </ul>
             </div>
@@ -366,16 +345,8 @@ export default {
         <div class="answers-all" v-if="this.answers.length != 0">
           <div class="content-2" v-for="(answer, index) in answers">
             <div class="account">
-              <a
-                :href="`/Profile/${answer.user.id}`"
-                class="creator-info d-flex flex-row align-items-center gap-3"
-              >
-                <img
-                  class="accountIcon"
-                  :src="answer.user.avatar"
-                  width="70px"
-                  :alt="answer.user.username"
-                />
+              <a :href="`/Profile/${answer.user.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+                <img class="accountIcon" :src="answer.user.avatar" width="70px" :alt="answer.user.username" />
                 <div class="name-ring">
                   <p>
                     <span class="name" role="button">{{
@@ -386,22 +357,13 @@ export default {
               </a>
             </div>
             <div class="description my-1">
-              <span
-                style="word-break: break-all"
-                v-html="fixN(answer.text)"
-              ></span>
+              <span style="word-break: break-all" v-html="fixN(answer.text)"></span>
             </div>
-            <div
-              class="delete-btn"
-              @click="answer.isOpenRemoved = true"
-              v-if="(userNow.id == answer.id_u || isAdmin) && this.ShowAdd"
-            >
+            <div class="delete-btn" @click="answer.isOpenRemoved = true"
+              v-if="(userNow.id == answer.id_u || isAdmin) && this.ShowAdd">
               <button class="comm-add btgr">X</button>
             </div>
-            <div
-              v-if="answer.isOpenRemoved"
-              class="w-100 h-100 d-flex justify-content-center align-items-center"
-            >
+            <div v-if="answer.isOpenRemoved" class="w-100 h-100 d-flex justify-content-center align-items-center">
               <div class="bg-black"></div>
               <div class="modal-cenel d-flex flex-column align-items-center">
                 <img src="../../assets/Lending/bookModal.png" alt="Грусть(" />
@@ -410,10 +372,7 @@ export default {
                 </h6>
                 <div class="d-flex gap-2">
                   <button @click="deleteAnswer(answer.id, index)">Да</button>
-                  <button
-                    class="no-button"
-                    @click="answer.isOpenRemoved = false"
-                  >
+                  <button class="no-button" @click="answer.isOpenRemoved = false">
                     Нет
                   </button>
                 </div>
@@ -421,20 +380,14 @@ export default {
             </div>
           </div>
         </div>
-        <div
-          class="d-flex justify-content-center content p-2 w-100"
-          v-if="this.answers.length == 0"
-        >
+        <div class="d-flex justify-content-center content p-2 w-100" v-if="this.answers.length == 0">
           <h2 class="my-0 user-select-none text-black">
             Будь первым, кто даст ответ на этот вопрос!
           </h2>
         </div>
       </div>
       <div v-else>
-        <div
-          class="d-flex justify-content-center"
-          v-if="this.answers.length != 0"
-        >
+        <div class="d-flex justify-content-center" v-if="this.answers.length != 0">
           <div class="spinner-border text-primary mt-5" role="status">
             <span class="visually-hidden text-center">Loading...</span>
           </div>
@@ -453,43 +406,24 @@ export default {
 
 
 
-      
+
       <!-- Пагинация -->
     <div class="pagination" v-if="false">
         <div class="pagination-controls">
-          <button
-            @click="loadPreviousPage"
-            :disabled="currentPage === 1"
-            class="todo"
-            style="margin-right: 3px"
-          >
-            <
-          </button>
-          <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')"
-            >...</span
-          >
-          <div class="span-div">
-            <button
-              v-for="page in visiblePages"
-              :key="page"
-              :class="{ active: page === currentPage }"
-              @click="loadPage(page)"
-              class="span"
-            >
-              {{ page }}
-            </button>
-          </div>
-          <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')"
-            >...</span
-          >
-          <button
-            @click="loadNextPage"
-            :disabled="currentPage === totalPages"
-            class="todo"
-            style="margin-left: 3px"
-          >
-            >
-          </button>
+          <button @click="loadPreviousPage" :disabled="currentPage === 1" class="todo" style="margin-right: 3px">
+            < </button>
+              <span v-if="showDotsLeft" class="dots" @click="handleDotsClick('left')">...</span>
+              <div class="span-div">
+                <button v-for="page in visiblePages" :key="page" :class="{ active: page === currentPage }"
+                  @click="loadPage(page)" class="span">
+                  {{ page }}
+                </button>
+              </div>
+              <span v-if="showDotsRight" class="dots" @click="handleDotsClick('right')">...</span>
+              <button @click="loadNextPage" :disabled="currentPage === totalPages" class="todo"
+                style="margin-left: 3px">
+                >
+              </button>
         </div>
       </div>
 
@@ -498,23 +432,10 @@ export default {
 
 
 
-      <form
-        v-if="this.ShowAdd"
-        class="content-3"
-        @submit.prevent="addComment"
-        id="iii"
-      >
+      <form v-if="this.ShowAdd" class="content-3" @submit.prevent="addComment" id="iii">
         <div class="account">
-          <a
-            :href="`/Profile/${this.userNow.id}`"
-            class="creator-info d-flex flex-row align-items-center gap-3"
-          >
-            <img
-              class="accountIcon"
-              :src="userNow.avatar"
-              width="70px"
-              alt=""
-            />
+          <a :href="`/Profile/${this.userNow.id}`" class="creator-info d-flex flex-row align-items-center gap-3">
+            <img class="accountIcon" :src="userNow.avatar" width="70px" alt="" />
             <div class="name-ring">
               <div>
                 <span class="name">{{ userNow.username }}</span>
@@ -524,13 +445,8 @@ export default {
         </div>
         <div class="mb-3">
           <div class="content-3-without mb-3">
-            <textarea
-              v-model="text"
-              @input="symbolsCount"
-              maxlength="2000"
-              class="comm-input border-0"
-              placeholder="Оставь свой комментарий:"
-            ></textarea>
+            <textarea v-model="text" @input="symbolsCount" maxlength="2000" class="comm-input border-0"
+              placeholder="Оставь свой комментарий:"></textarea>
             <p :class="{ 'red-text': symbCount }">{{ symbols }} / 2000</p>
           </div>
         </div>
@@ -539,13 +455,11 @@ export default {
             Отправить!
           </button>
         </div>
+        <span class='text-danger' v-if='this.errorComment'>{{ errorComment }}</span>
       </form>
     </div>
   </div>
-  <div
-    v-else
-    class="w-100 h-100 d-flex justify-content-center align-items-center"
-  >
+  <div v-else class="w-100 h-100 d-flex justify-content-center align-items-center">
     <div class="bg-black"></div>
     <div class="modal-cenel d-flex flex-column align-items-center">
       <img src="../../assets/Lending/bookModal.png" alt="Грусть(" />
@@ -573,13 +487,16 @@ export default {
   margin: 20px;
   gap: 50px;
 }
+
 .span-div {
   display: flex;
   gap: 5px;
 }
+
 .dots a {
   color: white;
 }
+
 .dots {
   display: grid;
   place-items: center;
@@ -592,6 +509,7 @@ export default {
   color: white !important;
   font-weight: 500;
 }
+
 .span {
   display: grid;
   place-items: center;
@@ -605,9 +523,11 @@ export default {
   font-weight: 500;
   cursor: poiner;
 }
+
 span {
   cursor: poiner;
 }
+
 .todo {
   display: grid;
   place-items: center;
@@ -636,11 +556,13 @@ span {
 .dots:hover {
   text-decoration: underline;
 }
+
 .todo:disabled {
   font-weight: bold;
   background-color: #8a9096;
   color: white;
 }
+
 .active {
   font-weight: bold;
   background-color: #8a9096;
@@ -656,6 +578,7 @@ span {
     margin: 0 32px !important;
   }
 }
+
 .pag {
   width: 100%;
   display: flexbox;
@@ -663,6 +586,7 @@ span {
   justify-content: center;
   margin-bottom: 30px;
 }
+
 .dropdown {
   border-radius: 20px;
   border: none !important;
@@ -670,6 +594,7 @@ span {
   -moz-box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
   box-shadow: 4px 1px 8px 2px rgba(34, 60, 80, 0.2);
 }
+
 .no-button {
   background-color: #d20000 !important;
   border-color: #d20000;
@@ -928,10 +853,12 @@ img {
   padding-top: 10px;
   transition: all 0.5s;
 }
+
 .content-2:hover {
   /* transform: scale(1.03); */
   box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.179);
 }
+
 .difficult-ans {
   margin-left: 5px;
   color: #e65c00;
