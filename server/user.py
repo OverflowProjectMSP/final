@@ -101,14 +101,14 @@ def login_user(email, pas):
 
             else:
                 logging.warning("Неверный пароль!")
-                return_data = 'Неверный пароль!'
+                return_data = ['Неверный пароль!', ""]
         else:
             logging.warning("Аккаунта с такой почтой не существует!")
-            return_data = "Аккаунта с такой почтой не существует!"
+            return_data = ["Аккаунта с такой почтой не существует!", ""]
 
     except (Exception, Error) as error:
         logging.error(f'DB: ', error)
-        return_data = f"Error"
+        return_data = ["Error", ""]
 
     finally:
         if pg:
@@ -816,7 +816,7 @@ def login():
         session.modified = True
         response_object['message'] = 'ok'
 
-    else: response_object['message'] = 'wrong!'
+    else: response_object['message'] = a[0]
     return response_object
 
 #Обновление пароля
